@@ -1,22 +1,21 @@
 ---
-title: Open in v0
-description: Integrate your registry with Open in v0.
+title: 在 v0 中打开
+description: 将您的注册表与 v0 集成。
 ---
 
-If your registry is hosted and publicly accessible via a URL, you can open a registry item in v0 by using the `https://v0.dev/chat/api/open?url=[URL]` endpoint.
+如果您的注册表已托管并通过 URL 可以公开访问，您可以使用 `https://v0.dev/chat/api/open?url=[URL]` 端点在 v0 中打开注册表项。
 
-eg. [https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json](https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json)
+例如：[https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json](https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json)
 
 <Callout className="mt-6">
-  **Note:** The `Open in v0` button does not support `cssVars` and `tailwind`
-  properties.
+  **注意：** `在 v0 中打开` 按钮不支持 `cssVars` 和 `tailwind` 属性。
 </Callout>
 
-## Button
+## 按钮
 
-See [Build your Open in v0 button](https://v0.dev/chat/button) for more information on how to build your own `Open in v0` button.
+请参阅 [构建您的在 v0 中打开按钮](https://v0.dev/chat/button)，了解如何构建您自己的 `在 v0 中打开` 按钮的更多信息。
 
-Here's a simple example of how to add a `Open in v0` button to your site.
+以下是如何将 `在 v0 中打开` 按钮添加到您的网站的简单示例。
 
 ```jsx
 import { Button } from "@/components/ui/button"
@@ -24,7 +23,7 @@ import { Button } from "@/components/ui/button"
 export function OpenInV0Button({ url }: { url: string }) {
   return (
     <Button
-      aria-label="Open in v0"
+      aria-label="在 v0 中打开"
       className="h-8 gap-1 rounded-[6px] bg-black px-3 text-xs text-white hover:bg-black hover:text-white dark:bg-white dark:text-black"
       asChild
     >
@@ -33,7 +32,7 @@ export function OpenInV0Button({ url }: { url: string }) {
         target="_blank"
         rel="noreferrer"
       >
-        Open in{" "}
+        在{" "}
         <svg
           viewBox="0 0 40 20"
           fill="none"
@@ -59,6 +58,6 @@ export function OpenInV0Button({ url }: { url: string }) {
 <OpenInV0Button url="https://example.com/r/hello-world.json" />
 ```
 
-## Authentication
+## 认证
 
-See the [Adding Auth](/docs/registry/getting-started#adding-auth) section for more information on how to authenticate requests to your registry and Open in v0.
+有关如何对请求进行身份验证以访问您的注册表和 v0 的更多信息，请参阅 [添加身份验证](/docs/registry/getting-started#adding-auth) 部分。

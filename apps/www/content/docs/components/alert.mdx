@@ -1,22 +1,22 @@
 ---
-title: Alert
-description: Displays a callout for user attention.
+title: 警告
+description: 显示一个需要用户注意的提示。
 component: true
 ---
 
 <ComponentPreview
   name="alert-demo"
-  title="An alert with an icon, title and description."
-  description="An alert with an icon, title and description. The title says 'Heads up!' and the description is 'You can add components to your app using the cli.'."
+  title="带图标、标题和描述的警告."
+  description="带图标、标题和描述的警告. 标题为 '注意!' 描述为 '您可以使用 cli 将组件添加到您的应用中.'."
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -30,11 +30,11 @@ npx shadcn@latest add alert
 
 <Steps>
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中.</Step>
 
 <ComponentSource name="alert" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置.</Step>
 
 </Steps>
 
@@ -42,7 +42,7 @@ npx shadcn@latest add alert
 
 </CodeTabs>
 
-## Usage
+## 使用
 
 ```tsx
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -51,27 +51,27 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 ```tsx
 <Alert>
   <Terminal className="h-4 w-4" />
-  <AlertTitle>Heads up!</AlertTitle>
+  <AlertTitle>注意!</AlertTitle>
   <AlertDescription>
-    You can add components and dependencies to your app using the cli.
+    您可以使用 cli 将组件和依赖项添加到您的应用中.
   </AlertDescription>
 </Alert>
 ```
 
-## Examples
+## 示例
 
-### Default
+### 默认
 
 <ComponentPreview
   name="alert-demo"
-  title="An alert with an icon, title and description."
-  description="An alert with an icon, title and description. The title says 'Heads up!' and the description is 'You can add components to your app using the cli.'."
+  title="带图标、标题和描述的警告."
+  description="带图标、标题和描述的警告. 标题为 '注意!' 描述为 '您可以使用 cli 将组件添加到您的应用中.'."
 />
 
-### Destructive
+### 销毁性
 
 <ComponentPreview
   name="alert-destructive"
-  title="An alert with a destructive variant."
-  description="An alert with a destructive variant. The title says 'Delete this item?' and the description is 'This action cannot be undone.'."
+  title="带有销毁性变体的警告."
+  description="带有销毁性变体的警告. 标题为 '删除此项?' 描述为 '此操作无法撤消.'."
 />

@@ -1,101 +1,101 @@
 ---
 title: shadcn
-description: Use the shadcn CLI to add components to your project.
+description: 使用 shadcn CLI 向您的项目添加组件。
 ---
 
 ## init
 
-Use the `init` command to initialize configuration and dependencies for a new project.
+使用 `init` 命令为新项目初始化配置和依赖关系。
 
-The `init` command installs dependencies, adds the `cn` util and configures CSS variables for the project.
+`init` 命令安装依赖关系，添加 `cn` 工具并为项目配置 CSS 变量。
 
 ```bash
 npx shadcn@latest init
 ```
 
-### Options
+### 选项
 
 ```txt
-Usage: shadcn init [options] [components...]
+用法: shadcn init [选项] [组件...]
 
-initialize your project and install dependencies
+初始化您的项目并安装依赖关系
 
-Arguments:
-  components         the components to add or a url to the component.
+参数:
+  components         要添加的组件或组件的 URL。
 
-Options:
-  -y, --yes           skip confirmation prompt. (default: true)
-  -d, --defaults,     use default configuration. (default: false)
-  -f, --force         force overwrite of existing configuration. (default: false)
-  -c, --cwd <cwd>     the working directory. defaults to the current directory. (default: "/Users/shadcn/Desktop")
-  -s, --silent        mute output. (default: false)
-  --src-dir           use the src directory when creating a new project. (default: false)
-  --no-src-dir        do not use the src directory when creating a new project.
-  --css-variables     use css variables for theming. (default: true)
-  --no-css-variables  do not use css variables for theming.
-  -h, --help          display help for command
+选项:
+  -y, --yes           跳过确认提示。 (默认: true)
+  -d, --defaults      使用默认配置。 (默认: false)
+  -f, --force         强制覆盖现有配置。 (默认: false)
+  -c, --cwd <cwd>     工作目录。默认为当前目录。 (默认: "/Users/shadcn/Desktop")
+  -s, --silent        静音输出。 (默认: false)
+  --src-dir           创建新项目时使用 src 目录。 (默认: false)
+  --no-src-dir        创建新项目时不使用 src 目录。
+  --css-variables     使用 css 变量进行主题设置。 (默认: true)
+  --no-css-variables  不使用 css 变量进行主题设置。
+  -h, --help          显示命令帮助
 ```
 
 ## add
 
-Use the `add` command to add components and dependencies to your project.
+使用 `add` 命令向您的项目添加组件和依赖关系。
 
 ```bash
-npx shadcn@latest add [component]
+npx shadcn@latest add [组件]
 ```
 
-### Options
+### 选项
 
 ```txt
-Usage: shadcn add [options] [components...]
+用法: shadcn add [选项] [组件...]
 
-add a component to your project
+向您的项目添加一个组件
 
-Arguments:
-  components         the components to add or a url to the component.
+参数:
+  components         要添加的组件或组件的 URL。
 
-Options:
-  -y, --yes           skip confirmation prompt. (default: false)
-  -o, --overwrite     overwrite existing files. (default: false)
-  -c, --cwd <cwd>     the working directory. defaults to the current directory. (default: "/Users/shadcn/Desktop")
-  -a, --all           add all available components (default: false)
-  -p, --path <path>   the path to add the component to.
-  -s, --silent        mute output. (default: false)
-  --src-dir           use the src directory when creating a new project. (default: false)
-  --no-src-dir        do not use the src directory when creating a new project.
-  --css-variables     use css variables for theming. (default: true)
-  --no-css-variables  do not use css variables for theming.
-  -h, --help          display help for command
+选项:
+  -y, --yes           跳过确认提示。 (默认: false)
+  -o, --overwrite     覆盖现有文件。 (默认: false)
+  -c, --cwd <cwd>     工作目录。默认为当前目录。 (默认: "/Users/shadcn/Desktop")
+  -a, --all           添加所有可用组件 (默认: false)
+  -p, --path <path>   添加组件的路径。
+  -s, --silent        静音输出。 (默认: false)
+  --src-dir           创建新项目时使用 src 目录。 (默认: false)
+  --no-src-dir        创建新项目时不使用 src 目录。
+  --css-variables     使用 css 变量进行主题设置。 (默认: true)
+  --no-css-variables  不使用 css 变量进行主题设置。
+  -h, --help          显示命令帮助
 ```
 
 ## build
 
-Use the `build` command to generate the registry JSON files.
+使用 `build` 命令生成注册表 JSON 文件。
 
 ```bash
 npx shadcn@latest build
 ```
 
-This command reads the `registry.json` file and generates the registry JSON files in the `public/r` directory.
+此命令读取 `registry.json` 文件并在 `public/r` 目录中生成注册表 JSON 文件。
 
-### Options
+### 选项
 
 ```txt
-Usage: shadcn build [options] [registry]
+用法: shadcn build [选项] [registry]
 
-build components for a shadcn registry
+为 shadcn 注册表构建组件
 
-Arguments:
-  registry             path to registry.json file (default: "./registry.json")
+参数:
+  registry             registry.json 文件的路径 (默认: "./registry.json")
 
-Options:
-  -o, --output <path>  destination directory for json files (default: "./public/r")
-  -c, --cwd <cwd>      the working directory. defaults to the current directory. (default:
+选项:
+  -o, --output <path>  JSON 文件的目标目录 (默认: "./public/r")
+  -c, --cwd <cwd>      工作目录。默认为当前目录。 (默认:
                        "/Users/shadcn/Code/shadcn/ui/packages/shadcn")
-  -h, --help           display help for command
+  -h, --help           显示命令帮助
 ```
 
-To customize the output directory, use the `--output` option.
+要自定义输出目录，请使用 `--output` 选项。
 
 ```bash
 npx shadcn@latest build --output ./public/registry

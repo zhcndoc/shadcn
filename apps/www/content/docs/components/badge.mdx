@@ -1,22 +1,22 @@
 ---
-title: Badge
-description: Displays a badge or a component that looks like a badge.
+title: 徽章
+description: 显示徽章或看起来像徽章的组件。
 component: true
 ---
 
 <ComponentPreview
   name="badge-demo"
-  title="Badge"
-  description="A default badge"
+  title="徽章"
+  description="一个默认的徽章"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -30,11 +30,11 @@ npx shadcn@latest add badge
 
 <Steps>
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
 
 <ComponentSource name="badge" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
 </Steps>
 
@@ -42,60 +42,60 @@ npx shadcn@latest add badge
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx
 import { Badge } from "@/components/ui/badge"
 ```
 
 ```tsx
-<Badge variant="outline">Badge</Badge>
+<Badge variant="outline">徽章</Badge>
 ```
 
-### Link
+### 链接
 
-You can use the `badgeVariants` helper to create a link that looks like a badge.
+您可以使用 `badgeVariants` 辅助函数创建一个看起来像徽章的链接。
 
 ```tsx
 import { badgeVariants } from "@/components/ui/badge"
 ```
 
 ```tsx
-<Link className={badgeVariants({ variant: "outline" })}>Badge</Link>
+<Link className={badgeVariants({ variant: "outline" })}>徽章</Link>
 ```
 
-## Examples
+## 示例
 
-### Default
+### 默认
 
 <ComponentPreview
   name="badge-demo"
-  title="Badge"
-  description="A default badge"
+  title="徽章"
+  description="一个默认的徽章"
 />
 
 ---
 
-### Secondary
+### 次要
 
 <ComponentPreview
   name="badge-secondary"
-  title="Badge"
-  description="A badge using secondary as variant."
+  title="徽章"
+  description="使用次要作为变体的徽章."
 />
 
 ---
 
-### Outline
+### 轮廓
 
 <ComponentPreview
   name="badge-outline"
-  title="Badge"
-  description="A badge using outline as variant."
+  title="徽章"
+  description="使用轮廓作为变体的徽章."
 />
 
 ---
 
-### Destructive
+### 破坏性
 
-<ComponentPreview name="badge-destructive" description="A destructive badge." />
+<ComponentPreview name="badge-destructive" description="一个破坏性徽章." />

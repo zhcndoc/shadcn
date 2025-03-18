@@ -1,21 +1,21 @@
 ---
-title: Sheet
-description: Extends the Dialog component to display content that complements the main content of the screen.
+title: 抽屉
+description: 扩展 Dialog 组件以显示与屏幕主内容互补的内容。
 component: true
 links:
   doc: https://www.radix-ui.com/docs/primitives/components/dialog
   api: https://www.radix-ui.com/docs/primitives/components/dialog#api-reference
 ---
 
-<ComponentPreview name="sheet-demo" description="A sheet component." />
+<ComponentPreview name="sheet-demo" description="一个抽屉组件。" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -29,17 +29,17 @@ npx shadcn@latest add sheet
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-dialog
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
 
 <ComponentSource name="sheet" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
 </Steps>
 
@@ -47,7 +47,7 @@ npm install @radix-ui/react-dialog
 
 </CodeTabs>
 
-### Usage
+### 用法
 
 ```tsx
 import {
@@ -62,40 +62,38 @@ import {
 
 ```tsx
 <Sheet>
-  <SheetTrigger>Open</SheetTrigger>
+  <SheetTrigger>打开</SheetTrigger>
   <SheetContent>
     <SheetHeader>
-      <SheetTitle>Are you absolutely sure?</SheetTitle>
+      <SheetTitle>您确定吗？</SheetTitle>
       <SheetDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
+        此操作无法撤消。这将永久删除您的帐户并从我们的服务器中移除您的数据。
       </SheetDescription>
     </SheetHeader>
   </SheetContent>
 </Sheet>
 ```
 
-## Examples
+## 示例
 
-### Side
+### 侧边
 
-Use the `side` property to `<SheetContent />` to indicate the edge of the screen where the component will appear. The values can be `top`, `right`, `bottom` or `left`.
+使用 `side` 属性来 `<SheetContent />` 指示组件将出现在屏幕的哪个边缘。值可以是 `top`、`right`、`bottom` 或 `left`。
 
 <ComponentPreview name="sheet-side" />
 
-### Size
+### 尺寸
 
-You can adjust the size of the sheet using CSS classes:
+您可以使用 CSS 类调整抽屉的大小：
 
 ```tsx {3}
 <Sheet>
-  <SheetTrigger>Open</SheetTrigger>
+  <SheetTrigger>打开</SheetTrigger>
   <SheetContent className="w-[400px] sm:w-[540px]">
     <SheetHeader>
-      <SheetTitle>Are you absolutely sure?</SheetTitle>
+      <SheetTitle>您确定吗？</SheetTitle>
       <SheetDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
+        此操作无法撤消。这将永久删除您的帐户并从我们的服务器中移除您的数据。
       </SheetDescription>
     </SheetHeader>
   </SheetContent>

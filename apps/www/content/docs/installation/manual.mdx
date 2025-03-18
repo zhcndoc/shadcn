@@ -1,27 +1,27 @@
 ---
-title: Manual Installation
-description: Add dependencies to your project manually.
+title: 手动安装
+description: 手动将依赖添加到您的项目中。
 ---
 
 <Steps>
 
-### Add Tailwind CSS
+### 添加 Tailwind CSS
 
-Components are styled using Tailwind CSS. You need to install Tailwind CSS in your project.
+组件使用 Tailwind CSS 进行样式设置。您需要在项目中安装 Tailwind CSS。
 
-[Follow the Tailwind CSS installation instructions to get started.](https://tailwindcss.com/docs/installation)
+[按照 Tailwind CSS 安装说明开始。](https://tailwindcss.com/docs/installation)
 
-### Add dependencies
+### 添加依赖
 
-Add the following dependencies to your project:
+将以下依赖添加到您的项目中：
 
 ```bash
 npm install tailwindcss-animate class-variance-authority clsx tailwind-merge lucide-react
 ```
 
-### Configure path aliases
+### 配置路径别名
 
-Configure the path aliases in your `tsconfig.json` file.
+在您的 `tsconfig.json` 文件中配置路径别名。
 
 ```json {3-6} title="tsconfig.json" showLineNumbers
 {
@@ -34,11 +34,11 @@ Configure the path aliases in your `tsconfig.json` file.
 }
 ```
 
-The `@` alias is a preference. You can use other aliases if you want.
+`@` 别名是一个偏好。如果您愿意，可以使用其他别名。
 
-### Configure styles
+### 配置样式
 
-Add the following to your styles/globals.css file. You can learn more about using CSS variables for theming in the [theming section](/docs/theming).
+在您的 styles/globals.css 文件中添加以下内容。您可以在 [主题部分](/docs/theming) 中了解有关使用 CSS 变量进行主题设置的更多信息。
 
 ```css showLineNumbers title="src/styles/globals.css"
 @import "tailwindcss";
@@ -167,7 +167,7 @@ Add the following to your styles/globals.css file. You can learn more about usin
 }
 ```
 
-### Add a cn helper
+### 添加 cn 辅助函数
 
 ```ts showLineNumbers title="lib/utils.ts"
 import { clsx, type ClassValue } from "clsx"
@@ -178,9 +178,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-### Create a `components.json` file
+### 创建 `components.json` 文件
 
-Create a `components.json` file in the root of your project.
+在项目的根目录下创建一个 `components.json` 文件。
 
 ```json title="components.json" showLineNumbers
 {
@@ -206,8 +206,8 @@ Create a `components.json` file in the root of your project.
 }
 ```
 
-### That's it
+### 完成
 
-You can now start adding components to your project.
+您现在可以开始向您的项目添加组件了。
 
 </Steps>

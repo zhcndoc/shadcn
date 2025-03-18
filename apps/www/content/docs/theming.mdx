@@ -1,17 +1,17 @@
 ---
-title: Theming
-description: Using CSS Variables and color utilities for theming.
+title: 主题
+description: 使用 CSS 变量和颜色工具进行主题化。
 ---
 
-You can choose between using CSS variables (recommended) or utility classes for theming.
+您可以选择使用 CSS 变量（推荐）或工具类来进行主题设置。
 
-## CSS Variables
+## CSS 变量
 
 ```tsx /bg-background/ /text-foreground/
 <div className="bg-background text-foreground" />
 ```
 
-To use CSS variables for theming set `tailwind.cssVariables` to `true` in your `components.json` file.
+要使用 CSS 变量进行主题设置，请在 `components.json` 文件中将 `tailwind.cssVariables` 设置为 `true`。
 
 ```json {8} title="components.json"
 {
@@ -34,13 +34,13 @@ To use CSS variables for theming set `tailwind.cssVariables` to `true` in your `
 }
 ```
 
-## Utility classes
+## 工具类
 
 ```tsx /bg-zinc-950/ /text-zinc-50/ /dark:bg-white/ /dark:text-zinc-950/
 <div className="bg-zinc-950 dark:bg-white" />
 ```
 
-To use utility classes for theming set `tailwind.cssVariables` to `false` in your `components.json` file.
+要使用工具类进行主题设置，请在 `components.json` 文件中将 `tailwind.cssVariables` 设置为 `false`。
 
 ```json {8} title="components.json"
 {
@@ -63,32 +63,32 @@ To use utility classes for theming set `tailwind.cssVariables` to `false` in you
 }
 ```
 
-## Convention
+## 约定
 
-We use a simple `background` and `foreground` convention for colors. The `background` variable is used for the background color of the component and the `foreground` variable is used for the text color.
+我们使用简单的 `background` 和 `foreground` 约定来表示颜色。`background` 变量用于组件的背景色，`foreground` 变量用于文本色。
 
 <Callout className="mt-4">
 
-The `background` suffix is omitted when the variable is used for the background color of the component.
+当变量用于组件的背景色时，会省略 `background` 后缀。
 
 </Callout>
 
-Given the following CSS variables:
+给定以下 CSS 变量：
 
 ```css
 --primary: oklch(0.205 0 0);
 --primary-foreground: oklch(0.985 0 0);
 ```
 
-The `background` color of the following component will be `var(--primary)` and the `foreground` color will be `var(--primary-foreground)`.
+以下组件的 `background` 颜色将是 `var(--primary)`，`foreground` 颜色将是 `var(--primary-foreground)`。
 
 ```tsx
-<div className="bg-primary text-primary-foreground">Hello</div>
+<div className="bg-primary text-primary-foreground">你好</div>
 ```
 
-## List of variables
+## 变量列表
 
-Here's the list of variables available for customization:
+以下是可供自定义的变量列表：
 
 ```css title="app/globals.css"
 :root {
@@ -163,9 +163,9 @@ Here's the list of variables available for customization:
 }
 ```
 
-## Adding new colors
+## 添加新颜色
 
-To add new colors, you need to add them to your CSS file and to your `tailwind.config.js` file.
+要添加新颜色，您需要将它们添加到您的 CSS 文件和 `tailwind.config.js` 文件中。
 
 ```css title="app/globals.css"
 :root {
@@ -184,21 +184,21 @@ To add new colors, you need to add them to your CSS file and to your `tailwind.c
 }
 ```
 
-You can now use the `warning` utility class in your components.
+现在可以在您的组件中使用 `warning` 工具类。
 
 ```tsx /bg-warning/ /text-warning-foreground/
 <div className="bg-warning text-warning-foreground" />
 ```
 
-## Other color formats
+## 其他颜色格式
 
-See the [Tailwind CSS documentation](https://tailwindcss.com/docs/colors) for more information on using colors in Tailwind CSS.
+有关在 Tailwind CSS 中使用颜色的更多信息，请参阅 [Tailwind CSS 文档](https://tailwindcss.com/docs/colors)。
 
-## Base Colors
+## 基础颜色
 
-For reference, here's a list of the base colors that are available.
+供参考，以下是可用的基础颜色列表。
 
-### Stone
+### 石材
 
 ```css title="app/globals.css"
 :root {
@@ -271,7 +271,7 @@ For reference, here's a list of the base colors that are available.
 }
 ```
 
-### Zinc
+### 锌
 
 ```css title="app/globals.css"
 :root {
@@ -344,7 +344,7 @@ For reference, here's a list of the base colors that are available.
 }
 ```
 
-### Neutral
+### 中性
 
 ```css title="app/globals.css"
 :root {
@@ -417,7 +417,7 @@ For reference, here's a list of the base colors that are available.
 }
 ```
 
-### Gray
+### 灰色
 
 ```css title="app/globals.css"
 :root {
@@ -490,7 +490,7 @@ For reference, here's a list of the base colors that are available.
 }
 ```
 
-### Slate
+### 石板
 
 ```css title="app/globals.css"
 :root {

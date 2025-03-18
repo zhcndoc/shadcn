@@ -1,25 +1,25 @@
 ---
-title: Getting Started
-description: Learn how to get setup and run your own component registry.
+title: 入门指南
+description: 学习如何设置和运行您自己的组件注册中心。
 ---
 
-This guide will walk you through the process of setting up your own component registry.
+本指南将带您了解设置自己的组件注册中心的过程。
 
-It assumes you already have a project with components and would like to turn it into a registry.
+它假设您已经有一个包含组件的项目，并希望将其转换为注册中心。
 
-If you're starting a new registry project, you can use the [registry template](https://github.com/shadcn-ui/registry-template) as a starting point. We have already configured it for you.
+如果您正在启动一个新的注册中心项目，可以使用 [注册中心模板](https://github.com/shadcn-ui/registry-template) 作为起点。我们已经为您配置好了。
 
 ## registry.json
 
-The `registry.json` file is only required if you're using the `shadcn` CLI to build your registry.
+只有在使用 `shadcn` CLI 来构建您的注册中心时，才需要 `registry.json` 文件。
 
-If you're using a different build system, you can skip this step as long as your build system produces valid JSON files that conform to the [registry-item schema specification](/docs/registry/registry-item-json).
+如果您使用其他构建系统，可以跳过此步骤，只要您的构建系统生成符合 [registry-item 模式规范](/docs/registry/registry-item-json) 的有效 JSON 文件即可。
 
 <Steps>
 
-### Add a registry.json file
+### 添加 registry.json 文件
 
-Create a `registry.json` file in the root of your project. Your project can be a Next.js, Remix, Vite, or any other project that supports React.
+在项目根目录下创建一个 `registry.json` 文件。您的项目可以是 Next.js、Remix、Vite 或任何其他支持 React 的项目。
 
 ```json title="registry.json" showLineNumbers
 {
@@ -32,31 +32,31 @@ Create a `registry.json` file in the root of your project. Your project can be a
 }
 ```
 
-This `registry.json` file must conform to the [registry schema specification](/docs/registry/registry-json).
+此 `registry.json` 文件必须符合 [注册中心模式规范](/docs/registry/registry-json)。
 
 </Steps>
 
-## Add a registry item
+## 添加注册中心项目
 
 <Steps>
 
-### Create your component
+### 创建您的组件
 
-Add your first component. Here's an example of a simple `<HelloWorld />` component:
+添加您的第一个组件。以下是一个简单的 `<HelloWorld />` 组件的示例：
 
 ```tsx title="registry/new-york/hello-world/hello-world.tsx" showLineNumbers
 import { Button } from "@/components/ui/button"
 
 export function HelloWorld() {
-  return <Button>Hello World</Button>
+  return <Button>你好，世界</Button>
 }
 ```
 
 <Callout className="mt-6">
-  **Note:** This example places the component in the `registry/new-york`
-  directory. You can place it anywhere in your project as long as you set the
-  correct path in the `registry.json` file and you follow the `registry/[NAME]`
-  directory structure.
+  **注意：** 该示例将组件放置在 `registry/new-york`
+  目录下。您可以将其放在项目中的任何位置，只要在 `registry.json` 文件中设置
+  正确的路径，并遵循 `registry/[NAME]`
+  目录结构即可。
 </Callout>
 
 ```txt
@@ -67,8 +67,7 @@ registry
 ```
 
 <Callout className="mt-6 [&_[data-rehype-pretty-code-title]]:pt-1 [&_pre]:mb-0">
-  **Important:** If you're placing your component in a custom directory, make
-  sure it is configured in your `tailwind.config.ts` file.
+  **重要：** 如果您将组件放置在自定义目录中，请确保在 `tailwind.config.ts` 文件中进行了配置。
 
 ```ts showLineNumbers
 // tailwind.config.ts
@@ -79,9 +78,9 @@ export default {
 
 </Callout>
 
-### Add your component to the registry
+### 将您的组件添加到注册中心
 
-To add your component to the registry, you need to add your component definition to `registry.json`.
+要将组件添加到注册中心，您需要将组件定义添加到 `registry.json`。
 
 ```json title="registry.json" showLineNumbers {6-17}
 {
@@ -92,8 +91,8 @@ To add your component to the registry, you need to add your component definition
     {
       "name": "hello-world",
       "type": "registry:block",
-      "title": "Hello World",
-      "description": "A simple hello world component.",
+      "title": "你好，世界",
+      "description": "一个简单的 hello world 组件。",
       "files": [
         {
           "path": "registry/new-york/hello-world/hello-world.tsx",
@@ -105,29 +104,29 @@ To add your component to the registry, you need to add your component definition
 }
 ```
 
-You define your registry item by adding a `name`, `type`, `title`, `description` and `files`.
+您通过添加 `name`、`type`、`title`、`description` 和 `files` 来定义您的注册中心项目。
 
-For every file you add, you must specify the `path` and `type` of the file. The `path` is the relative path to the file from the root of your project. The `type` is the type of the file.
+对于每个添加的文件，您必须指定 `path` 和 `type`。`path` 是从项目根目录到文件的相对路径。`type` 是文件的类型。
 
-You can read more about the registry item schema and file types in the [registry item schema docs](/docs/registry/registry-item-json).
+有关注册中心项目模式和文件类型的更多信息，请阅读 [注册项目模式文档](/docs/registry/registry-item-json)。
 
 </Steps>
 
-## Build your registry
+## 构建您的注册中心
 
 <Steps>
 
-### Install the shadcn CLI
+### 安装 shadcn CLI
 
-Note: the `build` command is currently only available in the `shadcn@canary` version of the CLI.
+注意：`build` 命令目前仅在 `shadcn@canary` 版本的 CLI 中可用。
 
 ```bash
 npm install shadcn@canary
 ```
 
-### Add a build script
+### 添加构建脚本
 
-Add a `registry:build` script to your `package.json` file.
+在 `package.json` 中添加一个 `registry:build` 脚本。
 
 ```json title="package.json" showLineNumbers
 {
@@ -137,64 +136,63 @@ Add a `registry:build` script to your `package.json` file.
 }
 ```
 
-### Run the build script
+### 运行构建脚本
 
-Run the build script to generate the registry JSON files.
+运行构建脚本以生成注册中心 JSON 文件。
 
 ```bash
 npm run registry:build
 ```
 
 <Callout className="mt-6">
-  **Note:** By default, the build script will generate the registry JSON files
-  in `public/r` e.g `public/r/hello-world.json`.
+  **注意：** 默认情况下，构建脚本将在 `public/r` 中生成注册中心 JSON 文件，例如 `public/r/hello-world.json`。
 
-You can change the output directory by passing the `--output` option. See the [shadcn build command](/docs/cli#build) for more information.
+您可以通过传递 `--output` 选项来更改输出目录。详细信息请参见 [shadcn build 命令](/docs/cli#build)。
 
 </Callout>
 
 </Steps>
 
-## Serve your registry
+## 提供您的注册中心
 
-If you're running your registry on Next.js, you can now serve your registry by running the `next` server. The command might differ for other frameworks.
+如果您在 Next.js 上运行注册中心，现在可以通过运行 `next` 服务器来提供注册中心。对于其他框架，命令可能会有所不同。
 
 ```bash
 npm run dev
 ```
 
-Your files will now be served at `http://localhost:3000/r/[NAME].json` eg. `http://localhost:3000/r/hello-world.json`.
+您的文件现在将在 `http://localhost:3000/r/[NAME].json` 上提供，例如 `http://localhost:3000/r/hello-world.json`。
 
-## Publish your registry
+## 发布您的注册中心
 
-To make your registry available to other developers, you can publish it by deploying your project to a public URL.
+为了让其他开发人员可以使用您的注册中心，您可以通过将项目部署到公共 URL 来发布它。
 
-## Adding Auth
+## 添加身份验证
 
-The `shadcn` CLI does not offer a built-in way to add auth to your registry. We recommend handling authorization on your registry server.
+`shadcn` CLI 没有提供内置的方法来为您的注册中心添加身份验证。我们建议在您的注册中心服务器上处理授权。
 
-A common simple approach is to use a `token` query parameter to authenticate requests to your registry. e.g. `http://localhost:3000/r/hello-world.json?token=[SECURE_TOKEN_HERE]`.
+一种常见的简单方法是使用 `token` 查询参数来验证对注册中心的请求。例如 `http://localhost:3000/r/hello-world.json?token=[SECURE_TOKEN_HERE]`。
 
-Use the secure token to authenticate requests and return a 401 Unauthorized response if the token is invalid. Both the `shadcn` CLI and `Open in v0` will handle the 401 response and display a message to the user.
+使用安全令牌进行请求身份验证，如果令牌无效，则返回 401 未授权响应。 `shadcn` CLI 和 `Open in v0` 都会处理 401 响应并向用户显示消息。
 
 <Callout className="mt-6">
-  **Note:** Make sure to encrypt and expire tokens.
+  **注意：** 确保加密和设置令牌过期时间。
 </Callout>
 
-## Guidelines
+## 指南
 
-Here are some guidelines to follow when building components for a registry.
+以下是构建注册中心组件时需要遵循的一些指南。
 
-- Place your registry item in the `registry/[STYLE]/[NAME]` directory. I'm using `new-york` as an example. It can be anything you want as long as it's nested under the `registry` directory.
-- The following properties are required for the block definition: `name`, `description`, `type` and `files`.
-- Make sure to list all registry dependencies in `registryDependencies`. A registry dependency is the name of the component in the registry eg. `input`, `button`, `card`, etc or a URL to a registry item eg. `http://localhost:3000/r/editor.json`.
-- Make sure to list all dependencies in `dependencies`. A dependency is the name of the package in the registry eg. `zod`, `sonner`, etc. To set a version, you can use the `name@version` format eg. `zod@^3.20.0`.
-- **Imports should always use the `@/registry` path.** eg. `import { HelloWorld } from "@/registry/new-york/hello-world/hello-world"`
-- Ideally, place your files within a registry item in `components`, `hooks`, `lib` directories.
+- 将注册中心项目放在 `registry/[STYLE]/[NAME]` 目录下。我使用 `new-york` 作为示例。它可以是您想要的任何名称，只要嵌套在 `registry` 目录下即可。
+- 块定义所需的属性包括：`name`、`description`、`type` 和 `files`。
+- 确保在 `registryDependencies` 中列出所有注册中心依赖项。注册中心依赖项是注册中心中组件的名称，例如 `input`、`button`、`card` 等，或者指向注册中心项目的 URL，例如 `http://localhost:3000/r/editor.json`。
+- 确保在 `dependencies` 中列出所有依赖项。依赖项是注册中心中包的名称，例如 `zod`、`sonner` 等。要设置版本，可以使用 `name@version` 格式，例如 `zod@^3.20.0`。
+- **导入应始终使用 `@/registry` 路径。** 例如：`import { HelloWorld } from "@/registry/new-york/hello-world/hello-world"`
+- 理想情况下，将文件放置在 `components`、`hooks`、`lib` 目录下的注册中心项目中。
 
-## Install using the CLI
+## 使用 CLI 安装
 
-To install a registry item using the `shadcn` CLI, use the `add` command followed by the URL of the registry item.
+要使用 `shadcn` CLI 安装注册中心项目，请使用 `add` 命令后跟注册中心项目的 URL。
 
 ```bash
 npx shadcn@latest add http://localhost:3000/r/hello-world.json

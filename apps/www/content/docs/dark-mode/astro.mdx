@@ -1,13 +1,13 @@
 ---
 title: Astro
-description: Adding dark mode to your astro app.
+description: 为你的 Astro 应用添加暗黑模式。
 ---
 
-## Dark mode
+## 暗黑模式
 
 <Steps>
 
-### Create an inline theme script
+### 创建内联主题脚本
 
 ```astro title="src/pages/index.astro"
 ---
@@ -40,7 +40,7 @@ import '../styles/globals.css'
 </html>
 ```
 
-### Add a mode toggle
+### 添加模式切换
 
 ```tsx title="src/components/ModeToggle.tsx"
 import * as React from "react"
@@ -78,18 +78,18 @@ export function ModeToggle() {
         <Button variant="outline" size="icon">
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
+          <span className="sr-only">切换主题</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setThemeState("theme-light")}>
-          Light
+          浅色
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setThemeState("dark")}>
-          Dark
+          深色
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setThemeState("system")}>
-          System
+          系统
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -97,9 +97,9 @@ export function ModeToggle() {
 }
 ```
 
-### Display the mode toggle
+### 显示模式切换
 
-Place a mode toggle on your site to toggle between light and dark mode.
+在你的网站上放置一个模式切换，来切换浅色和深色模式。
 
 ```astro title="src/pages/index.astro"
 ---
@@ -107,7 +107,7 @@ import '../styles/globals.css'
 import { ModeToggle } from '@/components/ModeToggle';
 ---
 
-<!-- Inline script -->
+<!-- 内联脚本 -->
 
 <html lang="en">
 	<body>

@@ -1,6 +1,6 @@
 ---
-title: Tabs
-description: A set of layered sections of content—known as tab panels—that are displayed one at a time.
+title: 标签
+description: 一组分层的内容部分——称为标签面板——一次显示一个。
 component: true
 links:
   doc: https://www.radix-ui.com/docs/primitives/components/tabs
@@ -9,16 +9,16 @@ links:
 
 <ComponentPreview
   name="tabs-demo"
-  description="A tabs component with two forms."
+  description="一个包含两个表单的标签组件."
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -32,17 +32,17 @@ npx shadcn@latest add tabs
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖项:</Step>
 
 ```bash
 npm install @radix-ui/react-tabs
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="tabs" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目设置。</Step>
 
 </Steps>
 
@@ -50,7 +50,7 @@ npm install @radix-ui/react-tabs
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -59,10 +59,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 ```tsx
 <Tabs defaultValue="account" className="w-[400px]">
   <TabsList>
-    <TabsTrigger value="account">Account</TabsTrigger>
-    <TabsTrigger value="password">Password</TabsTrigger>
+    <TabsTrigger value="account">账户</TabsTrigger>
+    <TabsTrigger value="password">密码</TabsTrigger>
   </TabsList>
-  <TabsContent value="account">Make changes to your account here.</TabsContent>
-  <TabsContent value="password">Change your password here.</TabsContent>
+  <TabsContent value="account">在这里修改你的账户信息。</TabsContent>
+  <TabsContent value="password">在这里更改你的密码。</TabsContent>
 </Tabs>
 ```

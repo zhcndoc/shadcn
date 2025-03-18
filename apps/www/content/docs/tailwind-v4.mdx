@@ -1,45 +1,45 @@
 ---
 title: Tailwind v4
-description: How to use shadcn/ui with Tailwind v4 and React 19.
+description: 如何在 Tailwind v4 和 React 19 中使用 shadcn/ui。
 ---
 
-It’s here! Tailwind v4 and React 19. Ready for you to try out. You can start using it today.
+来了！Tailwind v4 和 React 19。准备好让你尝试。你今天就可以开始使用它。
 
 <div className="flex gap-2 items-center mt-6">
   <Button asChild size="sm" className="rounded-lg">
-    <a href="#try-it-out">Get Started</a>
+    <a href="#try-it-out">开始使用</a>
   </Button>
   <Button asChild size="sm" variant="outline" className="rounded-lg">
     <a href="https://v4.shadcn.com" target="_blank" rel="noopener noreferrer">
-      See Demo
+      查看演示
     </a>
   </Button>
 </div>
 
-## What's New
+## 新特性
 
-- The CLI can now initialize projects with Tailwind v4.
-- Full support for the new `@theme` directive and `@theme inline` option.
-- All components are updated for Tailwind v4 and React 19.
-- We’ve removed the forwardRefs and adjusted the types.
-- Every primitive now has a `data-slot` attribute for styling.
-- We've fixed and cleaned up the style of the components.
-- We're deprecating the `toast` component in favor of `sonner`.
-- Buttons now use the default cursor.
-- We're deprecating the `default` style. New projects will use `new-york`.
-- HSL colors are now converted to OKLCH.
+- CLI 现已可以使用 Tailwind v4 初始化项目。
+- 完全支持新的 `@theme` 指令和 `@theme inline` 选项。
+- 所有组件均已更新以兼容 Tailwind v4 和 React 19。
+- 我们已移除 forwardRefs 并调整了类型。
+- 每个原语现在都有一个 `data-slot` 属性用于样式调整。
+- 我们修复并清理了组件的样式。
+- 我们已弃用 `toast` 组件，推荐使用 `sonner`。
+- 按钮现在使用默认光标。
+- 我们已弃用 `default` 样式。新项目将使用 `new-york`。
+- HSL 颜色现已转换为 OKLCH。
 
-**Note: this is non-breaking. Your existing apps with Tailwind v3 and React 18 will still work. When you add new components, they'll still be in v3 and React 18 until you upgrade. Only new projects start with Tailwind v4 and React 19.**
+**注意：这是非破坏性的。您现有的使用 Tailwind v3 和 React 18 的应用仍然可以工作。当您添加新组件时，它们仍将保持在 v3 和 React 18，直到您升级。只有新项目会使用 Tailwind v4 和 React 19。**
 
-## See it Live
+## 现场体验
 
-I put together a demo with all the updated components here: https://v4.shadcn.com
+我在这里准备了一个演示，展示所有更新的组件：https://v4.shadcn.com
 
-Take a look and test the components. If you find any bugs, please let me know on [GitHub](https://github.com/shadcn-ui/ui).
+请查看并测试这些组件。如果发现任何错误，请在 [GitHub](https://github.com/shadcn-ui/ui) 上告诉我。
 
-## Try It Out
+## 尝试一下
 
-You can test Tailwind v4 + React 19 today using the `canary` release of the CLI. See the framework specific guides below for how to get started.
+今天您可以使用 CLI 的 `canary` 版本测试 Tailwind v4 + React 19。请参阅下面的框架特定指南以了解如何开始。
 
 <div className="grid sm:grid-cols-2 gap-4 mt-8 sm:gap-6">
   <LinkedCard href="/docs/installation/next">
@@ -142,33 +142,30 @@ You can test Tailwind v4 + React 19 today using the `canary` release of the CLI.
       <title>React</title>
       <path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z" />
     </svg>
-    <p className="font-medium mt-2">Manual</p>
+    <p className="font-medium mt-2">手动</p>
   </LinkedCard>
 </div>
 
-## Upgrade Your Project
+## 升级您的项目
 
 <Callout className="bg-blue-50 mt-6 border-blue-600 dark:border-blue-900 dark:bg-blue-950 mb-6 [&_code]:bg-blue-100 dark:[&_code]:bg-blue-900">
-  **Important:** Before upgrading, please read the [Tailwind v4 Compatibility
-  Docs](https://tailwindcss.com/docs/compatibility) and make sure your project
-  is ready for the upgrade. Tailwind v4 uses bleeding-edge browser features and
-  is designed for modern browsers.
+  **重要：** 在升级之前，请阅读 [Tailwind v4 兼容性文档](https://tailwindcss.com/docs/compatibility) 并确保您的项目已准备好进行升级。Tailwind v4 使用前沿浏览器特性，并专为现代浏览器设计。
 </Callout>
 
-One of the major advantages of using `shadcn/ui` is that the code you end up with is exactly what you'd write yourself. There are no hidden abstractions.
+使用 `shadcn/ui` 的一个主要优点是，您得到的代码正是您自己编写的代码。没有隐藏的抽象。
 
-This means when a dependency has a new release, you can just follow the official upgrade paths.
+这意味着当依赖项有新版本发布时，您只需遵循官方的升级路径。
 
-Here's how to upgrade your existing projects (full docs are on the way):
+以下是如何升级您现有项目的方法（完整文档即将上线）：
 
-### 1. Follow the Tailwind v4 Upgrade Guide
+### 1. 遵循 Tailwind v4 升级指南
 
-- Upgrade to Tailwind v4 by following the official upgrade guide: https://tailwindcss.com/docs/upgrade-guide
-- Use the `@tailwindcss/upgrade@next` codemod to remove deprecated utility classes and update tailwind config.
+- 按照官方升级指南升级到 Tailwind v4：https://tailwindcss.com/docs/upgrade-guide
+- 使用 `@tailwindcss/upgrade@next` codemod 移除已弃用的工具类并更新 tailwind 配置。
 
-### 2. Update your CSS variables
+### 2. 更新您的 CSS 变量
 
-The codemod will migrate your CSS variables as references under the `@theme` directive.
+该 codemod 将迁移您的 CSS 变量作为 `@theme` 指令下的引用。
 
 ```css showLineNumbers
 @layer base {
@@ -184,37 +181,37 @@ The codemod will migrate your CSS variables as references under the `@theme` dir
 }
 ```
 
-This works. But to make it easier to work with colors and other variables, we'll need to move the `hsl` wrappers and use `@theme inline`.
+这有效。但是为了更易于处理颜色和其他变量，我们需要移动 `hsl` 包装并使用 `@theme inline`。
 
-Here's how you do it:
+以下是操作步骤：
 
-1. Move `:root` and `.dark` out of the `@layer` base.
-2. Wrap the color values in `hsl()`
-3. Add the `inline` option to `@theme` i.e `@theme inline`
-4. Remove the `hsl()` wrappers from `@theme`
+1. 将 `:root` 和 `.dark` 移出 `@layer` base。
+2. 将颜色值包装在 `hsl()` 中。
+3. 将 `inline` 选项添加到 `@theme`，即 `@theme inline`。
+4. 从 `@theme` 中移除 `hsl()` 包装。
 
 ```css showLineNumbers
 :root {
-  --background: hsl(0 0% 100%); // <-- Wrap in hsl
+  --background: hsl(0 0% 100%); // <-- 包装在 hsl 中
   --foreground: hsl(0 0% 3.9%);
 }
 
 .dark {
-  --background: hsl(0 0% 3.9%); // <-- Wrap in hsl
+  --background: hsl(0 0% 3.9%); // <-- 包装在 hsl 中
   --foreground: hsl(0 0% 98%);
 }
 
 @theme inline {
-  --color-background: var(--background); // <-- Remove hsl
+  --color-background: var(--background); // <-- 移除 hsl
   --color-foreground: var(--foreground);
 }
 ```
 
-This change makes it much simpler to access your theme variables in both utility classes and outside of CSS for eg. using color values in JavaScript.
+这个更改使得在工具类和 CSS 以外访问您的主题变量变得更加简单，例如在 JavaScript 中使用颜色值。
 
-### 3. Update colors for charts
+### 3. 更新图表的颜色
 
-Now that the theme colors come with `hsl()`, you can remove the wrapper in your `chartConfig`:
+现在主题颜色带有 `hsl()`，您可以在图表配置中移除包装：
 
 ```diff
 const chartConfig = {
@@ -231,35 +228,35 @@ const chartConfig = {
 } satisfies ChartConfig
 ```
 
-### 4. Use new `size-*` utility
+### 4. 使用新的 `size-*` 工具类
 
-The new `size-*` utility (added in Tailwind v3.4), is now fully supported by `tailwind-merge`. You can replace `w-* h-*` with the new `size-*` utility:
+新的 `size-*` 工具类（在 Tailwind v3.4 中新增）现在完全支持 `tailwind-merge`。您可以用新的 `size-*` 工具类替换 `w-* h-*`：
 
 ```diff
 - w-4 h-4
 + size-4
 ```
 
-### 5. Update your dependencies
+### 5. 更新您的依赖
 
 ```bash
 pnpm up "@radix-ui/*" cmdk lucide-react recharts tailwind-merge clsx --latest
 ```
 
-### 6. Remove forwardRef
+### 6. 移除 forwardRef
 
-You can use the `remove-forward-ref` codemod to migrate your `forwardRef` to props or manually update the primitives.
+您可以使用 `remove-forward-ref` codemod 将 `forwardRef` 迁移到 props 或手动更新原语。
 
-For the codemod, see https://github.com/reactjs/react-codemod#remove-forward-ref.
+有关 codemod 的详细信息，请参见 https://github.com/reactjs/react-codemod#remove-forward-ref。
 
-If you want to do it manually, here's how to do it step by step:
+如果您想手动完成，以下是逐步说明：
 
-1. Replace `React.forwardRef<...>` with `React.ComponentProps<...>`
-2. Remove `ref={ref}` from the component.
-3. Add a `data-slot` attribute. This will come in handy for styling with Tailwind.
-4. You can optionally convert to a named function and remove the `displayName`.
+1. 将 `React.forwardRef<...>` 替换为 `React.ComponentProps<...>`。
+2. 从组件中移除 `ref={ref}`。
+3. 添加一个 `data-slot` 属性。这将有助于使用 Tailwind 进行样式调整。
+4. 您可以选择将其转换为命名函数并移除 `displayName`。
 
-#### Before
+#### 之前
 
 ```tsx showLineNumbers
 const AccordionItem = React.forwardRef<
@@ -275,7 +272,7 @@ const AccordionItem = React.forwardRef<
 AccordionItem.displayName = "AccordionItem"
 ```
 
-#### After
+#### 之后
 
 ```tsx showLineNumbers
 function AccordionItem({
@@ -292,40 +289,39 @@ function AccordionItem({
 }
 ```
 
-## Changelog
+## 更新日志
 
-### March 12, 2025 - New Dark Mode Colors
+### 2025年3月12日 - 新的暗模式颜色
 
-We've revisted the dark mode colors and updated them to be more accessible.
+我们对暗模式颜色进行了重新审视，并将其更新为更具可访问性。
 
-If you're running an existing Tailwind v4 project (**not an upgraded one**[^1]), you can update your components to use the new dark mode colors by re-adding your components using the CLI[^2].
+如果您正在运行现有的 Tailwind v4 项目（**不是升级过的项目**[^1]），您可以通过重新添加组件使用 CLI 来更新组件以使用新的暗模式颜色[^2]。
 
 <Steps>
+<Step>提交任何更改</Step>
 
-<Step>Commit any changes</Step>
-
-**The CLI will overwrite your existing components.** We recommend committing any changes you've made to your components before running the CLI.
+**CLI 将覆盖您现有的组件。** 我们建议在运行 CLI 之前提交对组件所做的任何更改。
 
 ```bash
 git add .
 git commit -m "..."
 ```
 
-<Step>Update components</Step>
+<Step>更新组件</Step>
 
 ```bash
 npx shadcn@latest add --all --overwrite
 ```
 
-<Step>Update colors</Step>
+<Step>更新颜色</Step>
 
-Update the dark mode colors in your `globals.css` file to new OKLCH colors. See the [Base Colors](/docs/theming#base-colors) reference for a list of colors.
+更新 `globals.css` 文件中的暗模式颜色为新的 OKLCH 颜色。请参阅 [基础颜色](/docs/theming#base-colors) 参考以获取颜色列表。
 
-<Step>Review changes</Step>
+<Step>审查更改</Step>
 
-Review and re-apply any changes you made to your components.
+审查并重新应用您对组件所做的任何更改。
 
 </Steps>
 
-[^1]: Upgraded projects are not affected by this change. You can continue using the old dark mode colors.
-[^2]: Updating your components will overwrite your existing components.
+[^1]: 升级的项目不受此更改影响。您可以继续使用旧的暗模式颜色。
+[^2]: 更新您的组件将覆盖您现有的组件。

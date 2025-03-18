@@ -1,6 +1,6 @@
 ---
-title: Carousel
-description: A carousel with motion and swipe built using Embla.
+title: 轮播图
+description: 使用 Embla 构建的具有动画和滑动功能的轮播图。
 component: true
 links:
   doc: https://www.embla-carousel.com/get-started/react
@@ -9,21 +9,21 @@ links:
 
 <ComponentPreview
   name="carousel-demo"
-  title="Carousel"
-  description="A carousel with 5 items and a previous and next button."
+  title="轮播图"
+  description="一个包含5个项目和上一页、下一页按钮的轮播图."
 />
 
-## About
+## 关于
 
-The carousel component is built using the [Embla Carousel](https://www.embla-carousel.com/) library.
+轮播图组件是使用 [Embla Carousel](https://www.embla-carousel.com/) 库构建的。
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 
 <TabsContent value="cli">
@@ -38,17 +38,17 @@ npx shadcn@latest add carousel
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install embla-carousel-react
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="carousel" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目设置。</Step>
 
 </Steps>
 
@@ -56,7 +56,7 @@ npm install embla-carousel-react
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx
 import {
@@ -80,20 +80,20 @@ import {
 </Carousel>
 ```
 
-## Examples
+## 示例
 
-### Sizes
+### 尺寸
 
-To set the size of the items, you can use the `basis` utility class on the `<CarouselItem />`.
+要设置项目的大小，可以在 `<CarouselItem />` 上使用 `basis` 工具类。
 
 <ComponentPreview
   name="carousel-size"
-  title="Carousel"
-  description="A carousel with 3 active items of equal size."
+  title="轮播图"
+  description="一个包含3个相同大小的活动项目的轮播图."
 />
 
-```tsx title="Example" showLineNumbers {4-6}
-// 33% of the carousel width.
+```tsx title="示例" showLineNumbers {4-6}
+// 轮播图宽度的33%。
 <Carousel>
   <CarouselContent>
     <CarouselItem className="basis-1/3">...</CarouselItem>
@@ -103,8 +103,8 @@ To set the size of the items, you can use the `basis` utility class on the `<Car
 </Carousel>
 ```
 
-```tsx title="Responsive" showLineNumbers {4-6}
-// 50% on small screens and 33% on larger screens.
+```tsx title="响应式" showLineNumbers {4-6}
+// 小屏幕上50%，大屏幕上33%。
 <Carousel>
   <CarouselContent>
     <CarouselItem className="md:basis-1/2 lg:basis-1/3">...</CarouselItem>
@@ -114,27 +114,24 @@ To set the size of the items, you can use the `basis` utility class on the `<Car
 </Carousel>
 ```
 
-### Spacing
+### 间距
 
-To set the spacing between the items, we use a `pl-[VALUE]` utility on the `<CarouselItem />` and a negative `-ml-[VALUE]` on the `<CarouselContent />`.
+要设置项目之间的间距，我们在 `<CarouselItem />` 上使用 `pl-[VALUE]` 工具类，并在 `<CarouselContent />` 上使用负的 `-ml-[VALUE]`。
 
 <Callout className="mt-6">
-  **Why:** I tried to use the `gap` property or a `grid` layout on the `
-  <CarouselContent />` but it required a lot of math and mental effort to get the
-  spacing right. I found `pl-[VALUE]` and `-ml-[VALUE]` utilities much easier to
-  use.
+  **为什么：** 我尝试在 `<CarouselContent />` 上使用 `gap` 属性或 `grid` 布局，但这需要大量的数学计算和心理努力来正确设置间距。我发现使用 `pl-[VALUE]` 和 `-ml-[VALUE]` 工具类更容易使用。
 
-You can always adjust this in your own project if you need to.
+如果需要，你可以在自己的项目中随时进行调整。
 
 </Callout>
 
 <ComponentPreview
   name="carousel-spacing"
-  title="Carousel"
-  description="A carousel with 3 items with a spacing of 1rem."
+  title="轮播图"
+  description="一个包含3个项目、间距为1rem的轮播图."
 />
 
-```tsx title="Example" showLineNumbers /-ml-4/ /pl-4/
+```tsx title="示例" showLineNumbers /-ml-4/ /pl-4/
 <Carousel>
   <CarouselContent className="-ml-4">
     <CarouselItem className="pl-4">...</CarouselItem>
@@ -144,7 +141,7 @@ You can always adjust this in your own project if you need to.
 </Carousel>
 ```
 
-```tsx title="Responsive" showLineNumbers /-ml-2/ /pl-2/ /md:-ml-4/ /md:pl-4/
+```tsx title="响应式" showLineNumbers /-ml-2/ /pl-2/ /md:-ml-4/ /md:pl-4/
 <Carousel>
   <CarouselContent className="-ml-2 md:-ml-4">
     <CarouselItem className="pl-2 md:pl-4">...</CarouselItem>
@@ -154,14 +151,14 @@ You can always adjust this in your own project if you need to.
 </Carousel>
 ```
 
-### Orientation
+### 方向
 
-Use the `orientation` prop to set the orientation of the carousel.
+使用 `orientation` 属性设置轮播图的方向。
 
 <ComponentPreview
   name="carousel-orientation"
-  title="Carousel"
-  description="A vertical carousel."
+  title="轮播图"
+  description="一个垂直的轮播图."
 />
 
 ```tsx showLineNumbers /vertical | horizontal/
@@ -174,9 +171,9 @@ Use the `orientation` prop to set the orientation of the carousel.
 </Carousel>
 ```
 
-## Options
+## 选项
 
-You can pass options to the carousel using the `opts` prop. See the [Embla Carousel docs](https://www.embla-carousel.com/api/options/) for more information.
+你可以通过 `opts` 属性向轮播图传递选项。有关更多信息，请参见 [Embla Carousel 文档](https://www.embla-carousel.com/api/options/)。
 
 ```tsx showLineNumbers {2-5}
 <Carousel
@@ -195,12 +192,12 @@ You can pass options to the carousel using the `opts` prop. See the [Embla Carou
 
 ## API
 
-Use a state and the `setApi` props to get an instance of the carousel API.
+使用状态和 `setApi` 属性获取轮播图 API 实例。
 
 <ComponentPreview
   name="carousel-api"
-  title="Carousel"
-  description="A carousel with a slide counter."
+  title="轮播图"
+  description="一个带有幻灯片计数器的轮播图."
 />
 
 ```tsx showLineNumbers {1,4,22}
@@ -236,9 +233,9 @@ export function Example() {
 }
 ```
 
-## Events
+## 事件
 
-You can listen to events using the api instance from `setApi`.
+你可以使用来自 `setApi` 的 api 实例来监听事件。
 
 ```tsx showLineNumbers {1,4-14,16}
 import { type CarouselApi } from "@/components/ui/carousel"
@@ -252,7 +249,7 @@ export function Example() {
     }
 
     api.on("select", () => {
-      // Do something on select.
+      // 在选择时执行某些操作。
     })
   }, [api])
 
@@ -268,11 +265,11 @@ export function Example() {
 }
 ```
 
-See the [Embla Carousel docs](https://www.embla-carousel.com/api/events/) for more information on using events.
+有关使用事件的更多信息，请参见 [Embla Carousel 文档](https://www.embla-carousel.com/api/events/)。
 
-## Plugins
+## 插件
 
-You can use the `plugins` prop to add plugins to the carousel.
+你可以使用 `plugins` 属性向轮播图添加插件。
 
 ```ts showLineNumbers {1,6-10}
 import Autoplay from "embla-carousel-autoplay"
@@ -294,8 +291,8 @@ export function Example() {
 
 <ComponentPreview
   name="carousel-plugin"
-  title="Carousel"
-  description="A carousel with the autoplay plugin."
+  title="轮播图"
+  description="一个带有自动播放插件的轮播图."
 />
 
-See the [Embla Carousel docs](https://www.embla-carousel.com/api/plugins/) for more information on using plugins.
+有关使用插件的更多信息，请参见 [Embla Carousel 文档](https://www.embla-carousel.com/api/plugins/)。

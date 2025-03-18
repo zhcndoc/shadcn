@@ -1,33 +1,33 @@
 ---
 title: React Router
-description: Install and configure shadcn/ui for React Router.
+description: 安装并配置 shadcn/ui 以用于 React Router。
 ---
 
 <Steps>
 
-### Create project
+### 创建项目
 
 ```bash
 npx create-react-router@latest my-app
 ```
 
-### Run the CLI
+### 运行 CLI
 
-Run the `shadcn-ui` init command to setup your project:
+运行 `shadcn-ui` 初始化命令以设置你的项目：
 
 ```bash
 npx shadcn@latest init
 ```
 
-### Add Components
+### 添加组件
 
-You can now start adding components to your project.
+现在你可以开始向你的项目添加组件。
 
 ```bash
 npx shadcn@latest add button
 ```
 
-The command above will add the `Button` component to your project. You can then import it like this:
+上面的命令将把 `Button` 组件添加到你的项目。你可以像这样导入它：
 
 ```tsx showLineNumbers title="app/routes/home.tsx"
 import { Button } from "~/components/ui/button"
@@ -36,15 +36,15 @@ import type { Route } from "./+types/home"
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "新的 React Router 应用" },
+    { name: "description", content: "欢迎使用 React Router！" },
   ]
 }
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-svh">
-      <Button>Click me</Button>
+      <Button>点击我</Button>
     </div>
   )
 }

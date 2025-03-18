@@ -1,6 +1,6 @@
 ---
-title: Data Table
-description: Powerful table and datagrids built using TanStack Table.
+title: 数据表格
+description: 使用 TanStack Table 构建的强大表格和数据网格。
 component: true
 links:
   doc: https://tanstack.com/table/v8/docs/introduction
@@ -8,52 +8,52 @@ links:
 
 <ComponentPreview name="data-table-demo" className="[&_.preview]:items-start" />
 
-## Introduction
+## 介绍
 
-Every data table or datagrid I've created has been unique. They all behave differently, have specific sorting and filtering requirements, and work with different data sources.
+我创建的每个数据表格或数据网格都是独特的。它们的行为各不相同，有特定的排序和过滤需求，并且处理不同的数据源。
 
-It doesn't make sense to combine all of these variations into a single component. If we do that, we'll lose the flexibility that [headless UI](https://tanstack.com/table/v8/docs/introduction#what-is-headless-ui) provides.
+将所有这些变体组合成一个单独的组件没有意义。如果我们这样做，我们将失去 [无头 UI](https://tanstack.com/table/v8/docs/introduction#what-is-headless-ui) 所提供的灵活性。
 
-So instead of a data-table component, I thought it would be more helpful to provide a guide on how to build your own.
+因此，与其直接提供一个数据表格组件，我认为提供一个构建自己数据表格的指南会更有帮助。
 
-We'll start with the basic `<Table />` component and build a complex data table from scratch.
+我们将从基本的 `<Table />` 组件开始，从头构建一个复杂的数据表格。
 
 <Callout className="mt-4">
 
-**Tip:** If you find yourself using the same table in multiple places in your app, you can always extract it into a reusable component.
+**提示：** 如果您发现自己在应用程序的多个地方使用相同的表格，您可以将其提取到一个可重用的组件中。
 
 </Callout>
 
-## Table of Contents
+## 目录
 
-This guide will show you how to use [TanStack Table](https://tanstack.com/table) and the `<Table />` component to build your own custom data table. We'll cover the following topics:
+本指南将向您展示如何使用 [TanStack Table](https://tanstack.com/table) 和 `<Table />` 组件构建自己的自定义数据表格。我们将涵盖以下主题：
 
-- [Basic Table](#basic-table)
-- [Row Actions](#row-actions)
-- [Pagination](#pagination)
-- [Sorting](#sorting)
-- [Filtering](#filtering)
-- [Visibility](#visibility)
-- [Row Selection](#row-selection)
-- [Reusable Components](#reusable-components)
+- [基本表格](#basic-table)
+- [行操作](#row-actions)
+- [分页](#pagination)
+- [排序](#sorting)
+- [过滤](#filtering)
+- [可见性](#visibility)
+- [行选择](#row-selection)
+- [可重用组件](#reusable-components)
 
-## Installation
+## 安装
 
-1. Add the `<Table />` component to your project:
+1. 将 `<Table />` 组件添加到您的项目中：
 
 ```bash
 npx shadcn@latest add table
 ```
 
-2. Add `tanstack/react-table` dependency:
+2. 添加 `tanstack/react-table` 依赖：
 
 ```bash
 npm install @tanstack/react-table
 ```
 
-## Prerequisites
+## 先决条件
 
-We are going to build a table to show recent payments. Here's what our data looks like:
+我们将构建一个表格来显示最近的支付记录。我们的数据如下所示：
 
 ```tsx showLineNumbers
 type Payment = {
@@ -80,9 +80,9 @@ export const payments: Payment[] = [
 ]
 ```
 
-## Project Structure
+## 项目结构
 
-Start by creating the following file structure:
+请创建以下文件结构：
 
 ```txt
 app
@@ -92,29 +92,29 @@ app
     └── page.tsx
 ```
 
-I'm using a Next.js example here but this works for any other React framework.
+这里使用的是 Next.js 示例，但这适用于任何其他 React 框架。
 
-- `columns.tsx` (client component) will contain our column definitions.
-- `data-table.tsx` (client component) will contain our `<DataTable />` component.
-- `page.tsx` (server component) is where we'll fetch data and render our table.
+- `columns.tsx`（客户端组件）将包含我们的列定义。
+- `data-table.tsx`（客户端组件）将包含我们的 `<DataTable />` 组件。
+- `page.tsx`（服务器组件）是我们将获取数据并呈现表格的地方。
 
-## Basic Table
+## 基本表格
 
-Let's start by building a basic table.
+让我们开始构建一个基本的表格。
 
 <Steps>
 
-### Column Definitions
+### 列定义
 
-First, we'll define our columns.
+首先，我们将定义我们的列。
 
 ```tsx showLineNumbers title="app/payments/columns.tsx" {3,14-27}
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+// 这个类型用于定义我们数据的形状。
+// 如果需要，您可以在这里使用 Zod 模式。
 export type Payment = {
   id: string
   amount: number
@@ -125,30 +125,28 @@ export type Payment = {
 export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "status",
-    header: "Status",
+    header: "状态",
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: "电子邮件",
   },
   {
     accessorKey: "amount",
-    header: "Amount",
+    header: "金额",
   },
 ]
 ```
 
 <Callout className="mt-4">
 
-**Note:** Columns are where you define the core of what your table
-will look like. They define the data that will be displayed, how it will be
-formatted, sorted and filtered.
+**注意：** 列是定义您的表格外观的核心。它们定义了将要显示的数据、如何格式化、排序和过滤。
 
 </Callout>
 
-### `<DataTable />` component
+### `<DataTable />` 组件
 
-Next, we'll create a `<DataTable />` component to render our table.
+接下来，我们将创建一个 `<DataTable />` 组件来呈现我们的表格。
 
 ```tsx showLineNumbers title="app/payments/data-table.tsx"
 "use client"
@@ -222,7 +220,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                没有结果。
               </TableCell>
             </TableRow>
           )}
@@ -235,22 +233,22 @@ export function DataTable<TData, TValue>({
 
 <Callout>
 
-**Tip**: If you find yourself using `<DataTable />` in multiple places, this is the component you could make reusable by extracting it to `components/ui/data-table.tsx`.
+**提示**: 如果您发现自己在多个地方使用 `<DataTable />`，您可以通过将其提取到 `components/ui/data-table.tsx` 来使其可重用。
 
 `<DataTable columns={columns} data={data} />`
 
 </Callout>
 
-### Render the table
+### 渲染表格
 
-Finally, we'll render our table in our page component.
+最后，我们将在我们的页面组件中渲染我们的表格。
 
 ```tsx showLineNumbers title="app/payments/page.tsx" {22}
 import { Payment, columns } from "./columns"
 import { DataTable } from "./data-table"
 
 async function getData(): Promise<Payment[]> {
-  // Fetch data from your API here.
+  // 在此处从 API 获取数据。
   return [
     {
       id: "728ed52f",
@@ -275,21 +273,21 @@ export default async function DemoPage() {
 
 </Steps>
 
-## Cell Formatting
+## 单元格格式化
 
-Let's format the amount cell to display the dollar amount. We'll also align the cell to the right.
+让我们格式化金额单元格以显示美元金额。同时将单元格对齐到右边。
 
 <Steps>
 
-### Update columns definition
+### 更新列定义
 
-Update the `header` and `cell` definitions for amount as follows:
+将金额的 `header` 和 `cell` 定义更新如下：
 
 ```tsx showLineNumbers title="app/payments/columns.tsx" {4-15}
 export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
+    header: () => <div className="text-right">金额</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"))
       const formatted = new Intl.NumberFormat("en-US", {
@@ -303,19 +301,19 @@ export const columns: ColumnDef<Payment>[] = [
 ]
 ```
 
-You can use the same approach to format other cells and headers.
+您可以使用相同的方法格式化其他单元格和表头。
 
 </Steps>
 
-## Row Actions
+## 行操作
 
-Let's add row actions to our table. We'll use a `<Dropdown />` component for this.
+让我们为表格添加行操作。我们将使用 `<Dropdown />` 组件来实现这一点。
 
 <Steps>
 
-### Update columns definition
+### 更新列定义
 
-Update our columns definition to add a new `actions` column. The `actions` cell returns a `<Dropdown />` component.
+更新我们的列定义以添加一个新的 `actions` 列。`actions` 单元格返回一个 `<Dropdown />` 组件。
 
 ```tsx showLineNumbers title="app/payments/columns.tsx" {4,6-14,18-45}
 "use client"
@@ -344,20 +342,20 @@ export const columns: ColumnDef<Payment>[] = [
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">打开菜单</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>操作</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              Copy payment ID
+              复制支付 ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>查看客户</DropdownMenuItem>
+            <DropdownMenuItem>查看支付详情</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -367,17 +365,17 @@ export const columns: ColumnDef<Payment>[] = [
 ]
 ```
 
-You can access the row data using `row.original` in the `cell` function. Use this to handle actions for your row eg. use the `id` to make a DELETE call to your API.
+您可以在 `cell` 函数中使用 `row.original` 访问行数据。使用此数据处理行的操作，例如使用 `id` 对 API 进行 DELETE 调用。
 
 </Steps>
 
-## Pagination
+## 分页
 
-Next, we'll add pagination to our table.
+接下来，我们将为表格添加分页功能。
 
 <Steps>
 
-### Update `<DataTable>`
+### 更新 `<DataTable>`
 
 ```tsx showLineNumbers title="app/payments/data-table.tsx" {5,17}
 import {
@@ -403,11 +401,11 @@ export function DataTable<TData, TValue>({
 }
 ```
 
-This will automatically paginate your rows into pages of 10. See the [pagination docs](https://tanstack.com/table/v8/docs/api/features/pagination) for more information on customizing page size and implementing manual pagination.
+这将自动将您的行分页为 10 条数据一页。有关自定义页面大小和实现手动分页的更多信息，请参阅 [分页文档](https://tanstack.com/table/v8/docs/api/features/pagination)。
 
-### Add pagination controls
+### 添加分页控件
 
-We can add pagination controls to our table using the `<Button />` component and the `table.previousPage()`, `table.nextPage()` API methods.
+我们可以使用 `<Button />` 组件和 `table.previousPage()`、`table.nextPage()` API 方法为表格添加分页控件。
 
 ```tsx showLineNumbers title="app/payments/data-table.tsx" {1,15,21-39}
 import { Button } from "@/components/ui/button"
@@ -437,7 +435,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          上一页
         </Button>
         <Button
           variant="outline"
@@ -445,7 +443,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          下一页
         </Button>
       </div>
     </div>
@@ -453,17 +451,17 @@ export function DataTable<TData, TValue>({
 }
 ```
 
-See [Reusable Components](#reusable-components) section for a more advanced pagination component.
+请参阅 [可重用组件](#reusable-components) 部分以获取更高级的分页组件。
 
 </Steps>
 
-## Sorting
+## 排序
 
-Let's make the email column sortable.
+让我们使电子邮件列可以排序。
 
 <Steps>
 
-### Update `<DataTable>`
+### 更新 `<DataTable>`
 
 ```tsx showLineNumbers title="app/payments/data-table.tsx" showLineNumbers {3,6,10,18,25-28}
 "use client"
@@ -507,9 +505,9 @@ export function DataTable<TData, TValue>({
 }
 ```
 
-### Make header cell sortable
+### 使表头单元格可排序
 
-We can now update the `email` header cell to add sorting controls.
+我们可以现在更新 `email` 表头单元格以添加排序控件。
 
 ```tsx showLineNumbers title="app/payments/columns.tsx" {4,9-19}
 "use client"
@@ -526,7 +524,7 @@ export const columns: ColumnDef<Payment>[] = [
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          电子邮件
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
@@ -535,17 +533,17 @@ export const columns: ColumnDef<Payment>[] = [
 ]
 ```
 
-This will automatically sort the table (asc and desc) when the user toggles on the header cell.
+这将使表格在用户切换表头单元格时自动进行升序和降序排序。
 
 </Steps>
 
-## Filtering
+## 过滤
 
-Let's add a search input to filter emails in our table.
+让我们为表格添加一个搜索输入框来过滤电子邮件。
 
 <Steps>
 
-### Update `<DataTable>`
+### 更新 `<DataTable>`
 
 ```tsx showLineNumbers title="app/payments/data-table.tsx" {6,10,17,24-26,35-36,39,45-54}
 "use client"
@@ -594,7 +592,7 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
+          placeholder="过滤电子邮件..."
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)
@@ -610,17 +608,17 @@ export function DataTable<TData, TValue>({
 }
 ```
 
-Filtering is now enabled for the `email` column. You can add filters to other columns as well. See the [filtering docs](https://tanstack.com/table/v8/docs/guide/filters) for more information on customizing filters.
+现在，`email` 列已启用过滤功能。您可以为其他列添加过滤器。有关自定义过滤器的更多信息，请参阅 [过滤文档](https://tanstack.com/table/v8/docs/guide/filters)。
 
 </Steps>
 
-## Visibility
+## 可见性
 
-Adding column visibility is fairly simple using `@tanstack/react-table` visibility API.
+通过使用 `@tanstack/react-table` 可见性 API 添加列可见性相对简单。
 
 <Steps>
 
-### Update `<DataTable>`
+### 更新 `<DataTable>`
 
 ```tsx showLineNumbers title="app/payments/data-table.tsx" {8,18-23,33-34,45,49,64-91}
 "use client"
@@ -679,7 +677,7 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
+          placeholder="过滤电子邮件..."
           value={table.getColumn("email")?.getFilterValue() as string}
           onChange={(event) =>
             table.getColumn("email")?.setFilterValue(event.target.value)
@@ -689,7 +687,7 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns
+              列
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -723,17 +721,17 @@ export function DataTable<TData, TValue>({
 }
 ```
 
-This adds a dropdown menu that you can use to toggle column visibility.
+这添加了一个下拉菜单，您可以使用它来切换列的可见性。
 
 </Steps>
 
-## Row Selection
+## 行选择
 
-Next, we're going to add row selection to our table.
+接下来，我们将为表格添加行选择。
 
 <Steps>
 
-### Update column definitions
+### 更新列定义
 
 ```tsx showLineNumbers title="app/payments/columns.tsx" {6,9-27}
 "use client"
@@ -753,14 +751,14 @@ export const columns: ColumnDef<Payment>[] = [
           (table.getIsSomePageRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
+        aria-label="选择全部"
       />
     ),
     cell: ({ row }) => (
       <Checkbox
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        aria-label="选择行"
       />
     ),
     enableSorting: false,
@@ -769,7 +767,7 @@ export const columns: ColumnDef<Payment>[] = [
 ]
 ```
 
-### Update `<DataTable>`
+### 更新 `<DataTable>`
 
 ```tsx showLineNumbers title="app/payments/data-table.tsx" {11,23,28}
 export function DataTable<TData, TValue>({
@@ -813,28 +811,28 @@ export function DataTable<TData, TValue>({
 }
 ```
 
-This adds a checkbox to each row and a checkbox in the header to select all rows.
+这为每一行添加了一个复选框，并在表头中添加了一个复选框以选择所有行。
 
-### Show selected rows
+### 显示已选中的行
 
-You can show the number of selected rows using the `table.getFilteredSelectedRowModel()` API.
+您可以使用 `table.getFilteredSelectedRowModel()` API 显示已选中的行数。
 
 ```tsx
 <div className="flex-1 text-sm text-muted-foreground">
-  {table.getFilteredSelectedRowModel().rows.length} of{" "}
-  {table.getFilteredRowModel().rows.length} row(s) selected.
+  {table.getFilteredSelectedRowModel().rows.length} 条已选中的行，共{" "}
+  {table.getFilteredRowModel().rows.length} 条。
 </div>
 ```
 
 </Steps>
 
-## Reusable Components
+## 可重用组件
 
-Here are some components you can use to build your data tables. This is from the [Tasks](/examples/tasks) demo.
+这里有一些组件，您可以使用它们来构建数据表格。以下是来自 [任务示例](/examples/tasks) 的组件。
 
-### Column header
+### 列表头
 
-Make any column header sortable and hideable.
+使任何列头可排序和可隐藏。
 
 <ComponentSource src="/app/(app)/examples/tasks/components/data-table-column-header.tsx" />
 
@@ -843,15 +841,15 @@ export const columns = [
   {
     accessorKey: "email",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
+      <DataTableColumnHeader column={column} title="电子邮件" />
     ),
   },
 ]
 ```
 
-### Pagination
+### 分页
 
-Add pagination controls to your table including page size and selection count.
+向表格添加分页控件，包括页面大小和选择计数。
 
 <ComponentSource src="/app/(app)/examples/tasks/components/data-table-pagination.tsx" />
 
@@ -859,9 +857,9 @@ Add pagination controls to your table including page size and selection count.
 <DataTablePagination table={table} />
 ```
 
-### Column toggle
+### 列切换
 
-A component to toggle column visibility.
+一个切换列可见性的组件。
 
 <ComponentSource src="/app/(app)/examples/tasks/components/data-table-view-options.tsx" />
 

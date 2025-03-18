@@ -1,18 +1,18 @@
 ---
-title: Card
-description: Displays a card with header, content, and footer.
+title: 卡片
+description: 显示一个包含标题、内容和脚注的卡片。
 component: true
 ---
 
-<ComponentPreview name="card-with-form" description="A card with a form" />
+<ComponentPreview name="card-with-form" description="一个带表单的卡片" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -26,11 +26,11 @@ npx shadcn@latest add card
 
 <Steps>
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
 
 <ComponentSource name="card" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
 </Steps>
 
@@ -38,7 +38,7 @@ npx shadcn@latest add card
 
 </CodeTabs>
 
-## Usage
+## 使用
 
 ```tsx
 import {
@@ -54,30 +54,30 @@ import {
 ```tsx
 <Card>
   <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card Description</CardDescription>
+    <CardTitle>卡片标题</CardTitle>
+    <CardDescription>卡片描述</CardDescription>
   </CardHeader>
   <CardContent>
-    <p>Card Content</p>
+    <p>卡片内容</p>
   </CardContent>
   <CardFooter>
-    <p>Card Footer</p>
+    <p>卡片脚注</p>
   </CardFooter>
 </Card>
 ```
 
-## Examples
+## 示例
 
 <ComponentPreview
   name="card-demo"
-  description="A card showing notifications settings."
+  description="一个显示通知设置的卡片."
 />
 
-## Changelog
+## 更新日志
 
-### 11-03-2024 a11y for title and description
+### 2024年3月11日 标题和描述的无障碍性
 
-- Changed the `CardTitle` and `CardDescription` components to use `div` instead of `h3` and `p` to improve accessibility.
+- 将 `CardTitle` 和 `CardDescription` 组件从使用 `h3` 和 `p` 更改为使用 `div`，以改善无障碍性。
 
 ```tsx showLineNumbers title="card.tsx"
 const CardTitle = React.forwardRef<

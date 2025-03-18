@@ -1,9 +1,9 @@
 ---
 title: registry.json
-description: Schema for running your own component registry.
+description: 运行您自己的组件注册表的模式。
 ---
 
-The `registry.json` schema is used to define your custom component registry.
+`registry.json` 模式用于定义您自定义的组件注册表。
 
 ```json title="registry.json" showLineNumbers
 {
@@ -15,7 +15,7 @@ The `registry.json` schema is used to define your custom component registry.
       "name": "hello-world",
       "type": "registry:block",
       "title": "Hello World",
-      "description": "A simple hello world component.",
+      "description": "一个简单的 hello world 组件。",
       "files": [
         {
           "path": "registry/new-york/hello-world/hello-world.tsx",
@@ -27,13 +27,13 @@ The `registry.json` schema is used to define your custom component registry.
 }
 ```
 
-## Definitions
+## 定义
 
-You can see the JSON Schema for `registry.json` [here](https://ui.shadcn.com/schema/registry.json).
+您可以在 [这里](https://ui.shadcn.com/schema/registry.json) 查看 `registry.json` 的 JSON 模式。
 
 ### $schema
 
-The `$schema` property is used to specify the schema for the `registry.json` file.
+`$schema` 属性用于指定 `registry.json` 文件的模式。
 
 ```json title="registry.json" showLineNumbers
 {
@@ -43,7 +43,7 @@ The `$schema` property is used to specify the schema for the `registry.json` fil
 
 ### name
 
-The `name` property is used to specify the name of your registry. This is used for data attributes and other metadata.
+`name` 属性用于指定您的注册表的名称。这将用于数据属性和其他元数据。
 
 ```json title="registry.json" showLineNumbers
 {
@@ -53,7 +53,7 @@ The `name` property is used to specify the name of your registry. This is used f
 
 ### homepage
 
-The homepage of your registry. This is used for data attributes and other metadata.
+您注册表的主页。这将用于数据属性和其他元数据。
 
 ```json title="registry.json" showLineNumbers
 {
@@ -63,7 +63,7 @@ The homepage of your registry. This is used for data attributes and other metada
 
 ### items
 
-The `items` in your registry. Each item must implement the [registry-item schema specification](https://ui.shadcn.com/schema/registry-item.json).
+您注册表中的 `items`。每个项目必须实现 [registry-item 模式规范](https://ui.shadcn.com/schema/registry-item.json)。
 
 ```json title="registry.json" showLineNumbers
 {
@@ -72,7 +72,7 @@ The `items` in your registry. Each item must implement the [registry-item schema
       "name": "hello-world",
       "type": "registry:block",
       "title": "Hello World",
-      "description": "A simple hello world component.",
+      "description": "一个简单的 hello world 组件。",
       "files": [
         {
           "path": "registry/new-york/hello-world/hello-world.tsx",
@@ -84,4 +84,4 @@ The `items` in your registry. Each item must implement the [registry-item schema
 }
 ```
 
-See the [registry-item schema documentation](/docs/registry/registry-item-json) for more information.
+有关更多信息，请参见 [registry-item 模式文档](/docs/registry/registry-item-json)。

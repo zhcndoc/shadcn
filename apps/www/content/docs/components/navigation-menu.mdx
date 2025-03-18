@@ -1,6 +1,6 @@
 ---
-title: Navigation Menu
-description: A collection of links for navigating websites.
+title: 导航菜单
+description: 用于导航网站的链接集合。
 component: true
 links:
   doc: https://www.radix-ui.com/docs/primitives/components/navigation-menu
@@ -9,13 +9,13 @@ links:
 
 <ComponentPreview name="navigation-menu-demo" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -29,17 +29,17 @@ npx shadcn@latest add navigation-menu
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-navigation-menu
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
 
 <ComponentSource name="navigation-menu" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
 </Steps>
 
@@ -47,7 +47,7 @@ npm install @radix-ui/react-navigation-menu
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx
 import {
@@ -66,20 +66,20 @@ import {
 <NavigationMenu>
   <NavigationMenuList>
     <NavigationMenuItem>
-      <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
+      <NavigationMenuTrigger>选项一</NavigationMenuTrigger>
       <NavigationMenuContent>
-        <NavigationMenuLink>Link</NavigationMenuLink>
+        <NavigationMenuLink>链接</NavigationMenuLink>
       </NavigationMenuContent>
     </NavigationMenuItem>
   </NavigationMenuList>
 </NavigationMenu>
 ```
 
-## Examples
+## 示例
 
-### Link Component
+### 链接组件
 
-When using the Next.js `<Link />` component, you can use `navigationMenuTriggerStyle()` to apply the correct styles to the trigger.
+当使用 Next.js 的 `<Link />` 组件时，可以使用 `navigationMenuTriggerStyle()` 来为触发器应用正确的样式。
 
 ```tsx
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
@@ -89,10 +89,10 @@ import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 <NavigationMenuItem>
   <Link href="/docs" legacyBehavior passHref>
     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-      Documentation
+      文档
     </NavigationMenuLink>
   </Link>
 </NavigationMenuItem>
 ```
 
-See also the [Radix UI documentation](https://www.radix-ui.com/docs/primitives/components/navigation-menu#with-client-side-routing) for handling client side routing.
+另请参见 [Radix UI 文档](https://www.radix-ui.com/docs/primitives/components/navigation-menu#with-client-side-routing)，以处理客户端路由。

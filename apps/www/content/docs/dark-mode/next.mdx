@@ -1,21 +1,21 @@
 ---
 title: Next.js
-description: Adding dark mode to your next app.
+description: 为你的下一个应用添加黑暗模式。
 ---
 
-## Dark mode
+## 黑暗模式
 
 <Steps>
 
-### Install next-themes
+### 安装 next-themes
 
-Start by installing `next-themes`:
+首先安装 `next-themes`：
 
 ```bash
 npm install next-themes
 ```
 
-### Create a theme provider
+### 创建主题提供者
 
 ```tsx title="components/theme-provider.tsx"
 "use client"
@@ -31,9 +31,9 @@ export function ThemeProvider({
 }
 ```
 
-### Wrap your root layout
+### 包裹你的根布局
 
-Add the `ThemeProvider` to your root layout and add the `suppressHydrationWarning` prop to the `html` tag.
+将 `ThemeProvider` 添加到你的根布局，并在 `html` 标签上添加 `suppressHydrationWarning` 属性。
 
 ```tsx {1,6,9-14,16} title="app/layout.tsx"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -41,7 +41,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="zh" suppressHydrationWarning>
         <head />
         <body>
           <ThemeProvider
@@ -59,9 +59,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 }
 ```
 
-### Add a mode toggle
+### 添加模式切换
 
-Place a mode toggle on your site to toggle between light and dark mode.
+在你的站点上放置一个模式切换器，以在亮模式和暗模式之间切换。
 
 <ComponentPreview name="mode-toggle" className="[&_.preview]:items-start" />
 

@@ -1,21 +1,21 @@
 ---
-title: FAQ
-description: Frequently asked questions about running a registry.
+title: 常见问题
+description: 关于运行注册表的常见问题解答。
 ---
 
-## Frequently asked questions
+## 常见问题
 
-### What does a complex component look like?
+### 复杂组件是什么样的？
 
-Here's an example of a complex component that installs a page, two components, a hook, a format-date utils and a config file.
+以下是一个复杂组件的示例，它安装一个页面、两个组件、一个钩子、一个格式化日期的工具和一个配置文件。
 
 ```json showLineNumbers
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "hello-world",
-  "title": "Hello World",
+  "title": "你好，世界",
   "type": "registry:block",
-  "description": "A complex hello world component",
+  "description": "一个复杂的你好，世界组件",
   "files": [
     {
       "path": "registry/new-york/hello-world/page.tsx",
@@ -47,17 +47,17 @@ Here's an example of a complex component that installs a page, two components, a
 }
 ```
 
-### How do I add a new Tailwind color?
+### 如何添加新的 Tailwind 颜色？
 
-To add a new color you need to add it to `cssVars` and `tailwind.config.theme.extend.colors`.
+要添加新颜色，您需要将其添加到 `cssVars` 和 `tailwind.config.theme.extend.colors` 中。
 
 ```json showLineNumbers {10-19} {24-29}
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "hello-world",
-  "title": "Hello World",
+  "title": "你好，世界",
   "type": "registry:block",
-  "description": "A complex hello world component",
+  "description": "一个复杂的你好，世界组件",
   "files": [
     // ...
   ],
@@ -88,19 +88,19 @@ To add a new color you need to add it to `cssVars` and `tailwind.config.theme.ex
 }
 ```
 
-The CLI will update the project CSS file and tailwind.config.js file. Once updated, the new colors will be available to be used as utility classes: `bg-brand` and `text-brand-accent`.
+CLI 将更新项目的 CSS 文件和 tailwind.config.js 文件。更新后，这些新颜色将可以作为实用类使用：`bg-brand` 和 `text-brand-accent`。
 
-### How do I add a Tailwind animation?
+### 如何添加 Tailwind 动画？
 
-To add a new animation you add it to `tailwind.config.theme.extend.animation` and `tailwind.config.theme.extend.keyframes`.
+要添加新的动画，您需要将其添加到 `tailwind.config.theme.extend.animation` 和 `tailwind.config.theme.extend.keyframes` 中。
 
 ```json showLineNumbers {14-22}
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "hello-world",
-  "title": "Hello World",
+  "title": "你好，世界",
   "type": "registry:block",
-  "description": "A complex hello world component",
+  "description": "一个复杂的你好，世界组件",
   "files": [
     // ...
   ],

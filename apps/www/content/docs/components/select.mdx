@@ -1,6 +1,6 @@
 ---
-title: Select
-description: Displays a list of options for the user to pick from—triggered by a button.
+title: 选择
+description: 显示一组选项供用户选择——通过按钮触发。
 component: true
 featured: true
 links:
@@ -10,16 +10,16 @@ links:
 
 <ComponentPreview
   name="select-demo"
-  description="A select component with a list of options."
+  description="一个带有选项列表的选择组件."
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -33,17 +33,17 @@ npx shadcn@latest add select
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖:</Step>
 
 ```bash
 npm install @radix-ui/react-select
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中.</Step>
 
 <ComponentSource name="select" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目配置.</Step>
 
 </Steps>
 
@@ -51,7 +51,7 @@ npm install @radix-ui/react-select
 
 </CodeTabs>
 
-## Usage
+## 使用
 
 ```tsx
 import {
@@ -66,25 +66,25 @@ import {
 ```tsx
 <Select>
   <SelectTrigger className="w-[180px]">
-    <SelectValue placeholder="Theme" />
+    <SelectValue placeholder="主题" />
   </SelectTrigger>
   <SelectContent>
-    <SelectItem value="light">Light</SelectItem>
-    <SelectItem value="dark">Dark</SelectItem>
-    <SelectItem value="system">System</SelectItem>
+    <SelectItem value="light">亮色</SelectItem>
+    <SelectItem value="dark">暗色</SelectItem>
+    <SelectItem value="system">系统</SelectItem>
   </SelectContent>
 </Select>
 ```
 
-## Examples
+## 示例
 
-### Scrollable
+### 可滚动
 
 <ComponentPreview
   name="select-scrollable"
-  description="A select component with a scrollable list of options."
+  description="一个带有可滚动选项列表的选择组件."
 />
 
-### Form
+### 表单
 
 <ComponentPreview name="select-form" />

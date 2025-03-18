@@ -1,19 +1,19 @@
 ---
-title: Button
-description: Displays a button or a component that looks like a button.
+title: 按钮
+description: 显示一个按钮或一个看起来像按钮的组件。
 featured: true
 component: true
 ---
 
-<ComponentPreview name="button-demo" description="A button" />
+<ComponentPreview name="button-demo" description="一个按钮" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -27,17 +27,17 @@ npx shadcn@latest add button
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-slot
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="button" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目设置。</Step>
 
 </Steps>
 
@@ -45,103 +45,103 @@ npm install @radix-ui/react-slot
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx
 import { Button } from "@/components/ui/button"
 ```
 
 ```tsx
-<Button variant="outline">Button</Button>
+<Button variant="outline">按钮</Button>
 ```
 
-## Link
+## 链接
 
-You can use the `buttonVariants` helper to create a link that looks like a button.
+你可以使用 `buttonVariants` 辅助函数创建一个看起来像按钮的链接。
 
 ```tsx
 import { buttonVariants } from "@/components/ui/button"
 ```
 
 ```tsx
-<Link className={buttonVariants({ variant: "outline" })}>Click here</Link>
+<Link className={buttonVariants({ variant: "outline" })}>点击这里</Link>
 ```
 
-Alternatively, you can set the `asChild` parameter and nest the link component.
+或者，你可以设置 `asChild` 参数并嵌套链接组件。
 
 ```tsx
 <Button asChild>
-  <Link href="/login">Login</Link>
+  <Link href="/login">登录</Link>
 </Button>
 ```
 
-## Examples
+## 示例
 
-### Primary
+### 主要
 
-<ComponentPreview name="button-demo" description="A primary button" />
+<ComponentPreview name="button-demo" description="一个主要按钮" />
 
-### Secondary
+### 次要
 
-<ComponentPreview name="button-secondary" description="A secondary button" />
+<ComponentPreview name="button-secondary" description="一个次要按钮" />
 
-### Destructive
+### 破坏性
 
 <ComponentPreview
   name="button-destructive"
-  description="A destructive button"
+  description="一个破坏性按钮"
 />
 
-### Outline
+### 轮廓
 
 <ComponentPreview
   name="button-outline"
-  description="A button using the outline variant."
+  description="一个使用轮廓变体的按钮."
 />
 
-### Ghost
+### 幽灵
 
 <ComponentPreview
   name="button-ghost"
-  description="A button using the ghost variant"
+  description="一个使用幽灵变体的按钮"
 />
 
-### Link
+### 链接
 
 <ComponentPreview
   name="button-link"
-  description="A button using the link variant."
+  description="一个使用链接变体的按钮."
 />
 
-### Icon
+### 图标
 
-<ComponentPreview name="button-icon" description="An icon button" />
+<ComponentPreview name="button-icon" description="一个图标按钮" />
 
-### With Icon
+### 带图标
 
-<ComponentPreview name="button-with-icon" description="A button with an icon" />
+<ComponentPreview name="button-with-icon" description="一个带图标的按钮" />
 
-### Loading
+### 加载中
 
 <ComponentPreview
   name="button-loading"
-  description="A button with a loading state."
+  description="一个具有加载状态的按钮."
 />
 
-### As Child
+### 作为子组件
 
 <ComponentPreview
   name="button-as-child"
-  description="A button wrapping a custom Link component"
+  description="一个包装自定义链接组件的按钮"
 />
 
-## Changelog
+## 更新日志
 
-### 2024-10-16 Classes for icons
+### 2024-10-16 图标的类
 
-Added `gap-2 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0` to the button to automatically style icon inside the button.
+已将 `gap-2 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0` 添加到按钮中，以便自动设置按钮内图标的样式。
 
-Add the following classes to the `cva` call in your `button.tsx` file.
+在你的 `button.tsx` 文件中的 `cva` 调用中添加以下类。
 
 ```diff showLineNumbers title="button.tsx"
 const buttonVariants = cva(

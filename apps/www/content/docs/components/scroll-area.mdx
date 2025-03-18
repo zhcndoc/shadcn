@@ -1,6 +1,6 @@
 ---
-title: Scroll-area
-description: Augments native scroll functionality for custom, cross-browser styling.
+title: 滚动区域
+description: 增强原生滚动功能，以便进行自定义的跨浏览器样式。
 component: true
 links:
   doc: https://www.radix-ui.com/docs/primitives/components/scroll-area
@@ -9,16 +9,16 @@ links:
 
 <ComponentPreview
   name="scroll-area-demo"
-  description="A scroll area component."
+  description="一个滚动区域组件."
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -32,17 +32,17 @@ npx shadcn@latest add scroll-area
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-scroll-area
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="scroll-area" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目设置。</Step>
 
 </Steps>
 
@@ -50,7 +50,7 @@ npm install @radix-ui/react-scroll-area
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -58,17 +58,12 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 ```tsx
 <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
-  Jokester began sneaking into the castle in the middle of the night and leaving
-  jokes all over the place: under the king's pillow, in his soup, even in the
-  royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-  then, one day, the people of the kingdom discovered that the jokes left by
-  Jokester were so funny that they couldn't help but laugh. And once they
-  started laughing, they couldn't stop.
+  开玩笑者在深夜悄悄溜进王宫，到处留下笑话：在国王的枕头下，在他的汤里，甚至在皇家马桶里。国王怒不可遏，但似乎无法阻止开玩笑者。然后，有一天，王国的人民发现开玩笑者留下的笑话是如此搞笑，以至于他们忍不住笑出声来。一旦他们开始笑，就停不下来了。
 </ScrollArea>
 ```
 
-## Examples
+## 示例
 
-### Horizontal Scrolling
+### 水平滚动
 
 <ComponentPreview name="scroll-area-horizontal-demo" />

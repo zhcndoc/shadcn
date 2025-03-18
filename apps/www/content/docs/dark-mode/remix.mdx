@@ -1,15 +1,15 @@
 ---
 title: Remix
-description: Adding dark mode to your remix app.
+description: 为你的 remix 应用添加暗黑模式。
 ---
 
-## Dark mode
+## 暗黑模式
 
 <Steps>
 
-### Modify your tailwind.css file
+### 修改你的 tailwind.css 文件
 
-Add `:root[class~="dark"]` to your tailwind.css file. This will allow you to use the `dark` class on your html element to apply dark mode styles.
+在你的 tailwind.css 文件中添加 `:root[class~="dark"]`。这将允许你在 html 元素上使用 `dark` 类来应用暗黑模式样式。
 
 ```css {2} title="app/tailwind.css"
 .dark,
@@ -18,20 +18,20 @@ Add `:root[class~="dark"]` to your tailwind.css file. This will allow you to use
 }
 ```
 
-### Install remix-themes
+### 安装 remix-themes
 
-Start by installing `remix-themes`:
+首先安装 `remix-themes`：
 
 ```bash
 npm install remix-themes
 ```
 
-### Create a session storage and theme session resolver
+### 创建会话存储和主题会话解析器
 
 ```tsx title="app/sessions.server.tsx"
 import { createThemeSessionResolver } from "remix-themes"
 
-// You can default to 'development' if process.env.NODE_ENV is not set
+// 如果没有设置 process.env.NODE_ENV，可以默认使用 'development'
 const isProduction = process.env.NODE_ENV === "production"
 
 const sessionStorage = createCookieSessionStorage({
@@ -41,7 +41,7 @@ const sessionStorage = createCookieSessionStorage({
     httpOnly: true,
     sameSite: "lax",
     secrets: ["s3cr3t"],
-    // Set domain and secure only if in production
+    // 仅在生产环境中设置域和安全
     ...(isProduction
       ? { domain: "your-production-domain.com", secure: true }
       : {}),
@@ -51,9 +51,9 @@ const sessionStorage = createCookieSessionStorage({
 export const themeSessionResolver = createThemeSessionResolver(sessionStorage)
 ```
 
-### Set up Remix Themes
+### 设置 Remix 主题
 
-Add the `ThemeProvider` to your root layout.
+将 `ThemeProvider` 添加到你的根布局。
 
 ```tsx {1-3,6-11,15-22,25-26,28,33} title="app/root.tsx"
 import clsx from "clsx"
@@ -61,16 +61,16 @@ import { PreventFlashOnWrongTheme, ThemeProvider, useTheme } from "remix-themes"
 
 import { themeSessionResolver } from "./sessions.server"
 
-// Return the theme from the session storage using the loader
+// 使用加载器从会话存储中返回主题
 export async function loader({ request }: LoaderFunctionArgs) {
   const { getTheme } = await themeSessionResolver(request)
   return {
     theme: getTheme(),
   }
 }
-// Wrap your app with ThemeProvider.
-// `specifiedTheme` is the stored theme in the session storage.
-// `themeAction` is the action name that's used to change the theme in the session storage.
+// 用 ThemeProvider 包裹你的应用。
+// `specifiedTheme` 是存储在会话存储中的主题。
+// `themeAction` 是用于在会话存储中更改主题的操作名称。
 export default function AppWithProviders() {
   const data = useLoaderData<typeof loader>()
   return (
@@ -103,9 +103,9 @@ export function App() {
 }
 ```
 
-### Add an action route
+### 添加一个动作路由
 
-Create a file in `/routes/action.set-theme.ts`. Ensure that you pass the filename to the ThemeProvider component. This route it's used to store the preferred theme in the session storage when the user changes it.
+在 `/routes/action.set-theme.ts` 中创建一个文件。确保将文件名传递给 ThemeProvider 组件。此路由用于在用户更改主题时将首选主题存储在会话存储中。
 
 ```tsx title="app/routes/action.set-theme.ts"
 import { createThemeAction } from "remix-themes"
@@ -115,9 +115,9 @@ import { themeSessionResolver } from "./sessions.server"
 export const action = createThemeAction(themeSessionResolver)
 ```
 
-### Add a mode toggle
+### 添加模式切换
 
-Place a mode toggle on your site to toggle between light and dark mode.
+在你的网站上放置模式切换，以便在明亮模式和暗黑模式之间切换。
 
 ```tsx title="components/mode-toggle.tsx"
 import { Moon, Sun } from "lucide-react"
@@ -140,15 +140,15 @@ export function ModeToggle() {
         <Button variant="ghost" size="icon">
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
+          <span className="sr-only">切换主题</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme(Theme.LIGHT)}>
-          Light
+          明亮模式
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme(Theme.DARK)}>
-          Dark
+          暗黑模式
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

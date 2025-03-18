@@ -1,9 +1,9 @@
 ---
 title: registry-item.json
-description: Specification for registry items.
+description: 注册表项目的规范。
 ---
 
-The `registry-item.json` schema is used to define your custom registry items.
+`registry-item.json` 架构用于定义您的自定义注册表项目。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -11,7 +11,7 @@ The `registry-item.json` schema is used to define your custom registry items.
   "name": "hello-world",
   "type": "registry:block",
   "title": "Hello World",
-  "description": "A simple hello world component.",
+  "description": "一个简单的 hello world 组件。",
   "files": [
     {
       "path": "registry/new-york/hello-world/hello-world.tsx",
@@ -25,13 +25,13 @@ The `registry-item.json` schema is used to define your custom registry items.
 }
 ```
 
-## Definitions
+## 定义
 
-You can see the JSON Schema for `registry-item.json` [here](https://ui.shadcn.com/schema/registry-item.json).
+您可以在 [这里](https://ui.shadcn.com/schema/registry-item.json) 查看 `registry-item.json` 的 JSON Schema。
 
 ### $schema
 
-The `$schema` property is used to specify the schema for the `registry-item.json` file.
+`$schema` 属性用于指定 `registry-item.json` 文件的架构。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -41,7 +41,7 @@ The `$schema` property is used to specify the schema for the `registry-item.json
 
 ### name
 
-The `name` property is used to specify the name of your registry item.
+`name` 属性用于指定您的注册表项目的名称。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -51,7 +51,7 @@ The `name` property is used to specify the name of your registry item.
 
 ### title
 
-A human-readable title for your registry item. Keep it short and descriptive.
+您的注册表项目的可读标题。保持简短且具描述性。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -61,17 +61,17 @@ A human-readable title for your registry item. Keep it short and descriptive.
 
 ### description
 
-A description of your registry item. This can be longer and more detailed than the `title`.
+您注册表项目的描述。这可以比 `title` 更长且更详细。
 
 ```json title="registry-item.json" showLineNumbers
 {
-  "description": "A simple hello world component."
+  "description": "一个简单的 hello world 组件。"
 }
 ```
 
 ### type
 
-The `type` property is used to specify the type of your registry item.
+`type` 属性用于指定您注册表项目的类型。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -79,23 +79,23 @@ The `type` property is used to specify the type of your registry item.
 }
 ```
 
-The following types are supported:
+支持以下类型：
 
-| Type                 | Description                                      |
-| -------------------- | ------------------------------------------------ |
-| `registry:block`     | Use for complex components with multiple files.  |
-| `registry:component` | Use for simple components.                       |
-| `registry:lib`       | Use for lib and utils.                           |
-| `registry:hook`      | Use for hooks.                                   |
-| `registry:ui`        | Use for UI components and single-file primitives |
-| `registry:page`      | Use for page or file-based routes.               |
-| `registry:file`      | Use for miscellaneous files.                     |
+| 类型                   | 描述                                          |
+| ---------------------- | --------------------------------------------- |
+| `registry:block`       | 用于具有多个文件的复杂组件。                  |
+| `registry:component`   | 用于简单组件。                               |
+| `registry:lib`         | 用于库和工具。                               |
+| `registry:hook`        | 用于 hooks。                                 |
+| `registry:ui`          | 用于 UI 组件和单文件原语                     |
+| `registry:page`        | 用于页面或基于文件的路由。                   |
+| `registry:file`        | 用于杂项文件。                               |
 
 ### author
 
-The `author` property is used to specify the author of the registry item.
+`author` 属性用于指定注册表项目的作者。
 
-It can be unique to the registry item or the same as the author of the registry.
+它可以是注册表项目的唯一作者或与注册表的作者相同。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -105,9 +105,9 @@ It can be unique to the registry item or the same as the author of the registry.
 
 ### dependencies
 
-The `dependencies` property is used to specify the dependencies of your registry item. This is for `npm` packages.
+`dependencies` 属性用于指定您注册表项目的依赖项。这是针对 `npm` 包。
 
-Use `@version` to specify the version of your registry item.
+使用 `@version` 指定您注册表项目的版本。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -122,10 +122,10 @@ Use `@version` to specify the version of your registry item.
 
 ### registryDependencies
 
-Used for registry dependencies. Can be names or URLs.
+用于注册表依赖项。可以是名称或 URL。
 
-- For `shadcn/ui` registry items such as `button`, `input`, `select`, etc use the name eg. `['button', 'input', 'select']`.
-- For custom registry items use the URL of the registry item eg. `['https://example.com/r/hello-world.json']`.
+- 对于 `shadcn/ui` 注册表项目，例如 `button`、`input`、`select` 等，使用名称，例如 `['button', 'input', 'select']`。
+- 对于自定义注册表项目，使用注册表项目的 URL，例如 `['https://example.com/r/hello-world.json']`。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -138,13 +138,13 @@ Used for registry dependencies. Can be names or URLs.
 }
 ```
 
-Note: The CLI will automatically resolve remote registry dependencies.
+注意：CLI 将自动解析远程注册表依赖项。
 
 ### files
 
-The `files` property is used to specify the files of your registry item. Each file has a `path`, `type` and `target` (optional) property.
+`files` 属性用于指定您注册表项目的文件。每个文件都有 `path`、`type` 和 `target`（可选）属性。
 
-**The `target` property is required for `registry:page` and `registry:file` types.**
+**`target` 属性是 `registry:page` 和 `registry:file` 类型所必需的。**
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -173,25 +173,25 @@ The `files` property is used to specify the files of your registry item. Each fi
 
 #### path
 
-The `path` property is used to specify the path to the file in your registry. This path is used by the build script to parse, transform and build the registry JSON payload.
+`path` 属性用于指定您注册表中文件的路径。此路径由构建脚本用于解析、转换和构建注册表 JSON 负载。
 
 #### type
 
-The `type` property is used to specify the type of the file. See the [type](#type) section for more information.
+`type` 属性用于指定文件的类型。有关更多信息，请参见 [type](#type) 部分。
 
 #### target
 
-The `target` property is used to indicate where the file should be placed in a project. This is optional and only required for `registry:page` and `registry:file` types.
+`target` 属性用于指示文件应放置在项目中的位置。此属性是可选的，且仅对 `registry:page` 和 `registry:file` 类型必需。
 
-By default, the `shadcn` cli will read a project's `components.json` file to determine the target path. For some files, such as routes or config you can specify the target path manually.
+默认情况下，`shadcn` CLI 将读取项目的 `components.json` 文件以确定目标路径。对于某些文件，例如路由或配置，您可以手动指定目标路径。
 
-Use `~` to refer to the root of the project e.g `~/foo.config.js`.
+使用 `~` 来引用项目的根目录，例如 `~/foo.config.js`。
 
 ### tailwind
 
-The `tailwind` property is used for tailwind configuration such as `theme`, `plugins` and `content`.
+`tailwind` 属性用于 tailwind 配置，例如 `theme`、`plugins` 和 `content`。
 
-You can use the `tailwind.config` property to add colors, animations and plugins to your registry item.
+您可以使用 `tailwind.config` 属性将颜色、动画和插件添加到您的注册表项目中。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -220,7 +220,7 @@ You can use the `tailwind.config` property to add colors, animations and plugins
 
 ### cssVars
 
-Use to define CSS variables for your registry item.
+用于定义您注册表项目的 CSS 变量。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -237,23 +237,23 @@ Use to define CSS variables for your registry item.
 ```
 
 <Callout>
-  **Note:** When adding colors, make sure to also add them to the
-  `tailwind.config.theme.extend.colors` property.
+  **注意：** 添加颜色时，请确保也将其添加到
+  `tailwind.config.theme.extend.colors` 属性中。
 </Callout>
 
 ### docs
 
-Use `docs` to show custom documentation or message when installing your registry item via the CLI.
+使用 `docs` 在通过 CLI 安装注册表项目时显示自定义文档或消息。
 
 ```json title="registry-item.json" showLineNumbers
 {
-  "docs": "Remember to add the FOO_BAR environment variable to your .env file."
+  "docs": "请记得将 FOO_BAR 环境变量添加到您的 .env 文件中。"
 }
 ```
 
 ### categories
 
-Use `categories` to organize your registry item.
+使用 `categories` 组织您的注册表项目。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -263,7 +263,7 @@ Use `categories` to organize your registry item.
 
 ### meta
 
-Use `meta` to add additional metadata to your registry item. You can add any key/value pair that you want to be available to the registry item.
+使用 `meta` 为您的注册表项目添加额外的元数据。您可以添加任何希望在注册表项目中可用的键/值对。
 
 ```json title="registry-item.json" showLineNumbers
 {

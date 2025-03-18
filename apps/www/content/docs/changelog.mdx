@@ -1,31 +1,31 @@
 ---
-title: Changelog
-description: Latest updates and announcements.
+title: 更新日志
+description: 最新更新和公告。
 toc: false
 ---
 
-## August 2024 - npx shadcn init
+## 2024 年 8 月 - npx shadcn init
 
-The new CLI is now available. It's a complete rewrite with a lot of new features and improvements. You can now install components, themes, hooks, utils and more using `npx shadcn add`.
+新的 CLI 现已可用。这是一次完整的重写，包含许多新特性和改进。现在您可以使用 `npx shadcn add` 安装组件、主题、钩子、工具等。
 
-This is a major step towards distributing code that you and your LLMs can access and use.
+这是向您和您的 LLM 可以访问和使用的代码分发迈出的重要一步。
 
-1. First up, the cli now has support for all major React framework out of the box. Next.js, Remix, Vite and Laravel. And when you init into a new app, we update your existing Tailwind files instead of overriding.
-2. A component now ship its own dependencies. Take the accordion for example, it can define its Tailwind keyframes. When you add it to your project, we’ll update your tailwind.config.ts file accordingly.
-3. You can also install remote components using url. `npx shadcn add https://acme.com/registry/navbar.json`.
-4. We have also improve the init command. It does framework detection and can even init a brand new Next.js app in one command. `npx shadcn init`.
-5. We have created a new schema that you can use to ship your own component registry. And since it has support for urls, you can even use it to distribute private components.
-6. And a few more updates like better error handling and monorepo support.
+1. 首先，CLI 现在支持所有主要的 React 框架，包括 Next.js、Remix、Vite 和 Laravel。当您初始化新应用时，我们会更新您现有的 Tailwind 文件，而不是覆盖它们。
+2. 组件现在可以随附自己的依赖。例如，手风琴组件可以定义其 Tailwind 关键帧。当您将其添加到项目时，我们将相应地更新您的 tailwind.config.ts 文件。
+3. 您还可以使用 URL 安装远程组件。`npx shadcn add https://acme.com/registry/navbar.json`。
+4. 我们还改进了初始化命令。它支持框架检测，甚至可以用一条命令初始化一个全新的 Next.js 应用。`npx shadcn init`。
+5. 我们创建了一个新的模式，您可以用来分发自己的组件注册表。由于它支持 URL，您甚至可以用来分发私有组件。
+6. 还有一些额外的更新，比如更好的错误处理和 monorepo 支持。
 
-You can try the new cli today.
+今天您可以尝试新的 CLI。
 
 ```bash
 npx shadcn init sidebar-01 login-01
 ```
 
-### Update Your Project
+### 更新你的项目
 
-To update an existing project to use the new CLI, update your `components.json` file to include import aliases for your **components**, **utils**, **ui**, **lib** and **hooks**.
+要更新现有项目以使用新的 CLI，请更新您的 `components.json` 文件，以包含您 **组件**、**工具**、**UI**、**库** 和 **钩子** 的导入别名。
 
 ```json showLineNumbers {7-13} title="components.json"
 {
@@ -44,111 +44,111 @@ To update an existing project to use the new CLI, update your `components.json` 
 }
 ```
 
-If you're using a different import alias prefix eg `~`, replace `@` with your prefix.
+如果您使用不同的导入别名前缀，例如 `~`，请将 `@` 替换为您的前缀。
 
-## April 2024 - Introducing Lift Mode
+## 2024 年 4 月 - 引入提升模式
 
-We're introducing a new mode for [Blocks](/blocks) called **Lift Mode**.
+我们正在为 [Blocks](/blocks) 引入一种新模式，称为 **提升模式**。
 
-Enable Lift Mode to automatically "lift" smaller components from a block template for copy and paste.
+启用提升模式可以自动“提取”块模板中的较小组件以进行复制和粘贴。
 
 <a href="/blocks">
   <Image
     src="/images/lift-mode-light.png"
     width="1432"
     height="1050"
-    alt="Lift Mode"
+    alt="提升模式"
     className="border dark:hidden shadow-sm rounded-lg overflow-hidden mt-6 w-full"
   />
   <Image
     src="/images/lift-mode-dark.png"
     width="1432"
     height="1069"
-    alt="Lift Mode"
+    alt="提升模式"
     className="border hidden dark:block shadow-sm rounded-lg overflow-hidden mt-6 w-full"
   />
-  <span class="sr-only">View the blocks library</span>
+  <span class="sr-only">查看块库</span>
 </a>
 
-With Lift Mode, you'll be able to copy the smaller components that make up a block template, like cards, buttons, and forms, and paste them directly into your project.
+使用提升模式，您将能够复制组成块模板的小组件，如卡片、按钮和表单，并直接将它们粘贴到项目中。
 
-Visit the [Blocks](/blocks) page to try it out.
+访问 [Blocks](/blocks) 页面进行试用。
 
-## March 2024 - Introducing Blocks
+## 2024 年 3 月 - 引入块
 
-One of the most requested features since launch has been layouts: admin dashboards with sidebar, marketing page sections, cards and more.
+自上线以来，最受欢迎的特性之一就是布局：带侧边栏的管理仪表板、营销页面部分、卡片等等。
 
-**Today, we're launching [**Blocks**](/blocks)**.
+**今天，我们推出了 [**Blocks**](/blocks)**。
 
 <a href="/blocks">
   <Image
     src="/images/dashboard-1.jpg"
     width="716"
     height="430"
-    alt="Admin dashboard"
+    alt="管理仪表板"
     className="border dark:hidden shadow-sm rounded-lg overflow-hidden mt-6 w-full"
   />
   <Image
     src="/images/dashboard-1-dark.jpg"
     width="716"
     height="430"
-    alt="Admin dashboard"
+    alt="管理仪表板"
     className="border hidden dark:block shadow-sm rounded-lg overflow-hidden mt-6 w-full"
   />
-  <span class="sr-only">View the blocks library</span>
+  <span class="sr-only">查看块库</span>
 </a>
 
-Blocks are ready-made components that you can use to build your apps. They are fully responsive, accessible, and composable, meaning they are built using the same principles as the rest of the components in shadcn/ui.
+块是现成组件，您可以用于构建应用程序。它们是完全响应式、可访问和可组合的，意味着它们是使用与 shadcn/ui 中其他组件相同的原则构建的。
 
-We're starting with dashboard layouts and authentication pages, with plans to add more blocks in the coming weeks.
+我们从仪表板布局和身份验证页面开始，计划在接下来的几周中添加更多块。
 
-### Open Source
+### 开源
 
-Blocks are open source. You can find the source on GitHub. Use them in your projects, customize them and contribute back.
+块是开源的。您可以在 GitHub 上找到源代码。在您的项目中使用它们，进行自定义并贡献回来。
 
 <a href="/blocks">
   <Image
     src="/images/dashboard-2.jpg"
     width="716"
     height="420"
-    alt="AI Playground"
+    alt="AI 游乐场"
     className="border dark:hidden shadow-sm rounded-lg overflow-hidden mt-6 w-full"
   />
   <Image
     src="/images/dashboard-2-dark.jpg"
     width="716"
     height="420"
-    alt="AI Playground"
+    alt="AI 游乐场"
     className="border hidden dark:block shadow-sm rounded-lg overflow-hidden mt-6 w-full"
   />
-  <span class="sr-only">View the blocks library</span>
+  <span class="sr-only">查看块库</span>
 </a>
 
-### Request a Block
+### 请求一个块
 
-We're also introducing a "Request a Block" feature. If there's a specific block you'd like to see, simply create a request on GitHub and the community can upvote and build it.
+我们也引入了“请求一个块”功能。如果您想看到特定的块，只需在 GitHub 上创建一个请求，社区可以进行投票和构建。
 
 <a href="/blocks">
   <Image
     src="/images/dashboard-3.jpg"
     width="716"
     height="420"
-    alt="Settings Page"
+    alt="设置页面"
     className="border dark:hidden shadow-sm rounded-lg overflow-hidden mt-6 w-full"
   />
   <Image
     src="/images/dashboard-3-dark.jpg"
     width="716"
     height="420"
-    alt="Settings Page"
+    alt="设置页面"
     className="border hidden dark:block shadow-sm rounded-lg overflow-hidden mt-6 w-full"
   />
-  <span class="sr-only">View the blocks library</span>
+  <span class="sr-only">查看块库</span>
 </a>
 
 ### v0
 
-If you have a [v0](https://v0.dev) account, you can use the **Edit in v0** feature to open the code on v0 for prompting and further generation.
+如果您有 [v0](https://v0.dev) 账户，您可以使用 **在 v0 中编辑** 功能以打开代码进行提示和进一步生成。
 
 <div class="w-full aspect-video bg-background flex items-center justify-center border shadow-sm rounded-lg overflow-hidden mt-6">
   <svg
@@ -168,106 +168,106 @@ If you have a [v0](https://v0.dev) account, you can use the **Edit in v0** featu
   </svg>
 </div>
 
-That's it. _Looking forward to seeing what you build with Blocks_.
+就是这样。_期待看到您使用块构建的内容_。
 
-## March 2024 - Breadcrumb and Input OTP
+## 2024 年 3 月 - 面包屑和输入 OTP
 
-We've added a new Breadcrumb component and an Input OTP component.
+我们添加了一个新的面包屑组件和一个输入 OTP 组件。
 
-### Breadcrumb
+### 面包屑
 
-An accessible and flexible breadcrumb component. It has support for collapsed items, custom separators, bring-your-own routing `<Link />` and composable with other shadcn/ui components.
+一个可访问且灵活的面包屑组件。它支持折叠项、自定义分隔符、带您自己的路由 `<Link />` 和与其他 shadcn/ui 组件组合。
 
 <ComponentPreview name="breadcrumb-demo" />
 
-[See more examples](/docs/components/breadcrumb)
+[查看更多示例](/docs/components/breadcrumb)
 
-### Input OTP
+### 输入 OTP
 
-A fully featured input OTP component. It has support for numeric and alphanumeric codes, custom length, copy-paste and accessible. Input OTP is built on top of [input-otp](https://github.com/guilhermerodz/input-otp) by [@guilherme_rodz](https://twitter.com/guilherme_rodz).
+一个功能齐全的输入 OTP 组件。它支持数字和字母数字代码、自定义长度、复制粘贴和可访问性。输入 OTP 基于 [input-otp](https://github.com/guilhermerodz/input-otp)，由 [@guilherme_rodz](https://twitter.com/guilherme_rodz) 创建。
 
 <ComponentPreview name="input-otp-demo" />
 
-[Read the docs](/docs/components/input-otp)
+[阅读文档](/docs/components/input-otp)
 
-If you have a [v0](https://v0.dev), the new components are available for generation.
+如果您有 [v0](https://v0.dev)，新组件可用于生成。
 
-## December 2023 - New components, CLI and more
+## 2023 年 12 月 - 新组件、CLI 和更多
 
-We've added new components to shadcn/ui and made a lot of improvements to the CLI.
+我们为 shadcn/ui 添加了新组件，并对 CLI 进行了大量改进。
 
-Here's a quick overview of what's new:
+以下是新内容的快速概述：
 
-- [**Carousel**](#carousel) - A carousel component with motion, swipe gestures and keyboard support.
-- [**Drawer**](#drawer) - A drawer component that looks amazing on mobile.
-- [**Pagination**](#pagination) - A pagination component with page navigation, previous and next buttons.
-- [**Resizable**](#resizable) - A resizable component for building resizable panel groups and layouts.
-- [**Sonner**](#sonner) - The last toast component you'll ever need.
-- [**CLI updates**](#cli-updates) - Support for custom **Tailwind prefix** and `tailwind.config.ts`.
+- [**轮播**](#carousel) - 具有运动、滑动手势和键盘支持的轮播组件。
+- [**抽屉**](#drawer) - 在移动设备上看起来很棒的抽屉组件。
+- [**分页**](#pagination) - 具有页面导航、上一页和下一页按钮的分页组件。
+- [**可调整大小**](#resizable) - 用于构建可调整大小面板组和布局的可调整大小组件。
+- [**Sonner**](#sonner) - 您需要的最后一个吐司组件。
+- [**CLI 更新**](#cli-updates) - 支持自定义 **Tailwind 前缀** 和 `tailwind.config.ts`。
 
-### Carousel
+### 轮播
 
-We've added a fully featured carousel component with motion, swipe gestures and keyboard support. Built on top of [Embla Carousel](https://www.embla-carousel.com).
+我们添加了一个功能齐全的轮播组件，具有运动、滑动手势和键盘支持。基于 [Embla Carousel](https://www.embla-carousel.com)。
 
-It has support for infinite looping, autoplay, vertical orientation, and more.
+它支持无限循环、自动播放、垂直方向等。
 
 <ComponentPreview name="carousel-demo" />
 
-### Drawer
+### 抽屉
 
-Oh the drawer component 😍. Built on top of [Vaul](https://github.com/emilkowalski/vaul) by [emilkowalski\_](https://twitter.com/emilkowalski_).
+哦，抽屉组件 😍。基于 [Vaul](https://github.com/emilkowalski/vaul) 由 [emilkowalski\_](https://twitter.com/emilkowalski_) 创建。
 
-Try opening the following drawer on mobile. It looks amazing!
+尝试在移动设备上打开以下抽屉。看起来很棒！
 
 <ComponentPreview name="drawer-demo" />
 
-### Pagination
+### 分页
 
-We've added a pagination component with page navigation, previous and next buttons. Simple, flexible and works with your framework's `<Link />` component.
+我们添加了一个带有页面导航、上一页和下一页按钮的分页组件。简单、灵活，适用于您框架的 `<Link />` 组件。
 
 <ComponentPreview name="pagination-demo" />
 
-### Resizable
+### 可调整大小
 
-Build resizable panel groups and layouts with this `<Resizable />` component.
+使用此 `<Resizable />` 组件构建可调整大小的面板组和布局。
 
 <ComponentPreview name="resizable-demo-with-handle" />
 
-`<Resizable />` is built using [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels) by [bvaughn](https://github.com/bvaughn). It has support for mouse, touch and keyboard.
+`<Resizable />` 基于 [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels) 由 [bvaughn](https://github.com/bvaughn) 创建。支持鼠标、触摸和键盘。
 
 ### Sonner
 
-Another one by [emilkowalski\_](https://twitter.com/emilkowalski_). The last toast component you'll ever need. Sonner is now availabe in shadcn/ui.
+另一个由 [emilkowalski\_](https://twitter.com/emilkowalski_) 创建的组件。您需要的最后一个吐司组件。Sonner 现已在 shadcn/ui 中提供。
 
 <ComponentPreview name="sonner-demo" />
 
-### CLI updates
+### CLI 更新
 
-This has been one of the most requested features. You can now configure a custom Tailwind prefix and the cli will automatically prefix your utility classes when adding components.
+这是最受欢迎的功能之一。您现在可以配置自定义 Tailwind 前缀，CLI 会在添加组件时自动为您的实用类添加前缀。
 
-This means you can now easily add shadcn/ui components to existing projects like Docusaurus, Nextra...etc. A drop-in for your existing design system with no conflict. 🔥
+这意味着您现在可以轻松地将 shadcn/ui 组件添加到现有项目，如 Docusaurus、Nextra 等。这是您现有设计系统的无冲突解决方案。🔥
 
 ```tsx /tw-/
 <AlertDialog className="tw-grid tw-gap-4 tw-border tw-bg-background tw-shadow-lg" />
 ```
 
-It works with `cn`, `cva` and CSS variables.
+它与 `cn`、`cva` 和 CSS 变量一起工作。
 
-The cli can now also detect `tailwind.config.ts` and add the TypeScript version of the config for you.
+CLI 现在还可以检测 `tailwind.config.ts` 并为您添加 TypeScript 版本的配置。
 
-That's it. Happy Holidays.
+就这些。祝您节日快乐。
 
-## July 2023 - JavaScript
+## 2023 年 7 月 - JavaScript
 
-This project and the components are written in TypeScript. **We recommend using TypeScript for your project as well**.
+该项目及其组件均使用 TypeScript 编写。**我们建议您的项目也使用 TypeScript**。
 
-However we provide a JavaScript version of the components, available via the [cli](/docs/cli).
+但是我们提供了组件的 JavaScript 版本，可通过 [cli](/docs/cli) 获取。
 
 ```txt
-Would you like to use TypeScript (recommended)? no
+您希望使用 TypeScript（推荐）吗？否
 ```
 
-To opt-out of TypeScript, you can use the `tsx` flag in your `components.json` file.
+要退出 TypeScript，您可以在 `components.json` 文件中使用 `tsx` 标志。
 
 ```json {10} title="components.json"
 {
@@ -287,7 +287,7 @@ To opt-out of TypeScript, you can use the `tsx` flag in your `components.json` f
 }
 ```
 
-To configure import aliases, you can use the following `jsconfig.json`:
+要配置导入别名，您可以使用以下 `jsconfig.json`：
 
 ```json {4} title="jsconfig.json"
 {
@@ -299,24 +299,24 @@ To configure import aliases, you can use the following `jsconfig.json`:
 }
 ```
 
-## June 2023 - New CLI, Styles and more
+## 2023 年 6 月 - 新 CLI、样式及更多
 
-I have a lot of updates to share with you today:
+我有很多更新要与您分享：
 
-- [**New CLI**](#new-cli) - Rewrote the CLI from scratch. You can now add components, dependencies and configure import paths.
-- [**Theming**](#theming-with-css-variables-or-tailwind-colors) - Choose between using CSS variables or Tailwind CSS utility classes for theming.
-- [**Base color**](#base-color) - Configure the base color for your project. This will be used to generate the default color palette for your components.
-- [**React Server Components**](#react-server-components) - Opt out of using React Server Components. The CLI will automatically append or remove the `use client` directive.
-- [**Styles**](#styles) - Introducing a new concept called _Style_. A style comes with its own set of components, animations, icons and more.
-- [**Exit animations**](#exit-animations) - Added exit animations to all components.
-- [**Other updates**](#other-updates) - New `icon` button size, updated `sheet` component and more.
-- [**Updating your project**](#updating-your-project) - How to update your project to get the latest changes.
+- [**新 CLI**](#new-cli) - 从头开始重写 CLI。您现在可以添加组件、依赖项并配置导入路径。
+- [**主题**](#theming-with-css-variables-or-tailwind-colors) - 选择使用 CSS 变量或 Tailwind CSS 工具类进行主题设置。
+- [**基础颜色**](#base-color) - 配置项目的基础颜色。这将用于生成组件的默认色板。
+- [**React 服务器组件**](#react-server-components) - 选择退出使用 React 服务器组件。CLI 将自动附加或移除 `use client` 指令。
+- [**样式**](#styles) - 引入了一个新概念，称为 _Style_。样式带有自己的一组组件、动画、图标等。
+- [**退出动画**](#exit-animations) - 为所有组件添加了退出动画。
+- [**其他更新**](#other-updates) - 新的 `icon` 按钮大小，更新的 `sheet` 组件等。
+- [**更新您的项目**](#updating-your-project) - 如何更新您的项目以获取最新更改。
 
 ---
 
-### New CLI
+### 新 CLI
 
-I've been working on a new CLI for the past few weeks. It's a complete rewrite. It comes with a lot of new features and improvements.
+我在过去几周一直在开发新的 CLI。这是一次完整的重写。它带来了很多新功能和改进。
 
 ### `init`
 
@@ -324,22 +324,22 @@ I've been working on a new CLI for the past few weeks. It's a complete rewrite. 
 npx shadcn-ui@latest init
 ```
 
-When you run the `init` command, you will be asked a few questions to configure `components.json`:
+当您运行 `init` 命令时，将会询问您一些问题以配置 `components.json`：
 
 ```txt showLineNumbers
-Which style would you like to use? › Default
-Which color would you like to use as base color? › Slate
-Where is your global CSS file? › › app/globals.css
-Do you want to use CSS variables for colors? › no / yes
-Where is your tailwind.config.js located? › tailwind.config.js
-Configure the import alias for components: › @/components
-Configure the import alias for utils: › @/lib/utils
-Are you using React Server Components? › no / yes
+您希望使用什么样式？ › 默认
+您希望使用什么颜色作为基础颜色？ › Slate
+您的全局 CSS 文件在哪里？ › › app/globals.css
+您想对颜色使用 CSS 变量吗？ › 否 / 是
+您的 tailwind.config.js 位于哪里？ › tailwind.config.js
+为组件配置导入别名：› @/components
+为工具配置导入别名：› @/lib/utils
+您正在使用 React 服务器组件吗？ › 否 / 是
 ```
 
-This file contains all the information about your components: where to install them, the import paths, how they are styled...etc.
+此文件包含有关您的组件的所有信息：安装位置、导入路径、样式等。
 
-You can use this file to change the import path of a component, set a baseColor or change the styling method.
+您可以使用此文件更改组件的导入路径，设置基础颜色或更改样式方法。
 
 ```json title="components.json"
 {
@@ -358,7 +358,7 @@ You can use this file to change the import path of a component, set a baseColor 
 }
 ```
 
-This means you can now use the CLI with any directory structure including `src` and `app` directories.
+这意味着您现在可以使用 CLI 进行任何目录结构的操作，包括 `src` 和 `app` 目录。
 
 ### `add`
 
@@ -366,28 +366,28 @@ This means you can now use the CLI with any directory structure including `src` 
 npx shadcn-ui@latest add
 ```
 
-The `add` command is now much more capable. You can now add UI components but also import more complex components (coming soon).
+`add` 命令现在功能更强大。您现在可以添加 UI 组件，还可以导入更复杂的组件（即将推出）。
 
-The CLI will automatically resolve all components and dependencies, format them based on your custom config and add them to your project.
+CLI 将自动解析所有组件和依赖关系，根据您的自定义配置格式化它们并将其添加到您的项目中。
 
-### `diff` (experimental)
+### `diff`（实验性）
 
 ```bash
 npx shadcn-ui diff
 ```
 
-We're also introducing a new `diff` command to help you keep track of upstream updates.
+我们还引入了新的 `diff` 命令，以帮助您跟踪上游更新。
 
-You can use this command to see what has changed in the upstream repository and update your project accordingly.
+您可以使用此命令查看上游存储库中已更改的内容，并相应地更新项目。
 
-Run the `diff` command to get a list of components that have updates available:
+运行 `diff` 命令可以获取可用更新的组件列表：
 
 ```bash
 npx shadcn-ui diff
 ```
 
 ```txt
-The following components have updates available:
+以下组件有可用更新：
 - button
   - /path/to/my-app/components/ui/button.tsx
 - toast
@@ -395,7 +395,7 @@ The following components have updates available:
   - /path/to/my-app/components/ui/toaster.tsx
 ```
 
-Then run `diff [component]` to see the changes:
+然后运行 `diff [component]` 以查看更改：
 
 ```bash
 npx shadcn-ui diff alert
@@ -410,19 +410,19 @@ const alertVariants = cva(
 
 ---
 
-### Theming with CSS Variables or Tailwind Colors
+### 主题使用 CSS 变量或 Tailwind 颜色
 
-You can choose between using CSS variables or Tailwind CSS utility classes for theming.
+您可以选择使用 CSS 变量或 Tailwind CSS 工具类进行主题设置。
 
-When you add new components, the CLI will automatically use the correct theming methods based on your `components.json` configuration.
+当您添加新组件时，CLI 将根据您的 `components.json` 配置自动使用正确的主题设置方法。
 
-#### Utility classes
+#### 工具类
 
 ```tsx /bg-zinc-950/ /text-zinc-50/ /dark:bg-white/ /dark:text-zinc-950/
 <div className="bg-zinc-950 dark:bg-white" />
 ```
 
-To use utility classes for theming set `tailwind.cssVariables` to `false` in your `components.json` file.
+要使用工具类进行主题设置，请在 `components.json` 文件中将 `tailwind.cssVariables` 设置为 `false`。
 
 ```json {6} title="components.json"
 {
@@ -435,13 +435,13 @@ To use utility classes for theming set `tailwind.cssVariables` to `false` in you
 }
 ```
 
-#### CSS Variables
+#### CSS 变量
 
 ```tsx /bg-background/ /text-foreground/
 <div className="bg-background text-foreground" />
 ```
 
-To use CSS variables classes for theming set `tailwind.cssVariables` to `true` in your `components.json` file.
+要使用 CSS 变量类进行主题设置，请在 `components.json` 文件中将 `tailwind.cssVariables` 设置为 `true`。
 
 ```json {6} title="components.json"
 {
@@ -456,9 +456,9 @@ To use CSS variables classes for theming set `tailwind.cssVariables` to `true` i
 
 ---
 
-### Base color
+### 基础颜色
 
-You can now configure the base color for your project. This will be used to generate the default color palette for your components.
+您现在可以配置项目的基础颜色。这将用于生成组件的默认色板。
 
 ```json {5} title="components.json"
 {
@@ -471,15 +471,15 @@ You can now configure the base color for your project. This will be used to gene
 }
 ```
 
-Choose between `gray`, `neutral`, `slate`, `stone` or `zinc`.
+可以选择 `gray`、`neutral`、`slate`、`stone` 或 `zinc`。
 
-If you have `cssVariables` set to `true`, we will set the base colors as CSS variables in your `globals.css` file. If you have `cssVariables` set to `false`, we will inline the Tailwind CSS utility classes in your components.
+如果您将 `cssVariables` 设置为 `true`，我们将在您的 `globals.css` 文件中将基础颜色设置为 CSS 变量。如果您将 `cssVariables` 设置为 `false`，我们将在组件中内联 Tailwind CSS 工具类。
 
 ---
 
-### React Server Components
+### React 服务器组件
 
-If you're using a framework that does not support React Server Components, you can now opt out by setting `rsc` to `false`. We will automatically append or remove the `use client` directive when adding components.
+如果您使用的框架不支持 React 服务器组件，您现在可以通过将 `rsc` 设置为 `false` 来选择退出。添加组件时，我们将自动附加或移除 `use client` 指令。
 
 ```json title="components.json"
 {
@@ -489,27 +489,27 @@ If you're using a framework that does not support React Server Components, you c
 
 ---
 
-### Styles
+### 样式
 
-We are introducing a new concept called _Style_.
+我们引入了一个新概念，称为 _Style_。
 
-_You can think of style as the visual foundation: shapes, icons, animations & typography._ A style comes with its own set of components, animations, icons and more.
+_您可以将样式视为视觉基础：形状、图标、动画和排版。_ 一种样式带有自己的一组组件、动画、图标等。
 
-We are shipping two styles: `default` and `new-york` (with more coming soon).
+我们将推出两种样式：`default` 和 `new-york`（未来将会有更多）。
 
 <Image
   src="/images/style.jpg"
   width="716"
   height="402"
-  alt="Default vs New York style"
+  alt="默认样式与纽约样式"
   className="border rounded-lg overflow-hidden mt-6"
 />
 
-The `default` style is the one you are used to. It's the one we've been using since the beginning of this project. It uses `lucide-react` for icons and `tailwindcss-animate` for animations.
+`default` 样式是您熟悉的。这是我们自该项目开始以来使用的样式。它使用 `lucide-react` 作为图标和 `tailwindcss-animate` 作为动画。
 
-The `new-york` style is a new style. It ships with smaller buttons, cards with shadows and a new set of icons from [Radix Icons](https://icons.radix-ui.com).
+`new-york` 样式是一个新样式。它配备了更小的按钮、带阴影的卡片和一套来自 [Radix Icons](https://icons.radix-ui.com) 的新图标。
 
-When you run the `init` command, you will be asked which style you would like to use. This is saved in your `components.json` file.
+当您运行 `init` 命令时，将会询问您想使用哪种样式。这将保存在您的 `components.json` 文件中。
 
 ```json title="components.json"
 {
@@ -517,62 +517,61 @@ When you run the `init` command, you will be asked which style you would like to
 }
 ```
 
-### Theming
+### 主题
 
-Start with a style as the base then theme using CSS variables or Tailwind CSS utility classes to completely change the look of your components.
+从样式开始，然后使用 CSS 变量或 Tailwind CSS 工具类进行主题设置，以完全改变组件的外观。
 
 <Image
   src="/images/style-with-theming.jpg"
   width="716"
   height="402"
-  alt="Style with theming"
+  alt="带主题的样式"
   className="border rounded-lg overflow-hidden mt-6"
 />
 
 ---
 
-### Exit animations
+### 退出动画
 
-I added exit animations to all components. Click on the combobox below to see the subtle exit animation.
+我为所有组件添加了退出动画。点击下面的组合框以查看细腻的退出动画。
 
 <ComponentPreview name="combobox-demo" className="[&_.preview]:items-start" />
 
-The animations can be customized using utility classes.
+可以使用工具类自定义动画。
 
 ---
 
-### Other updates
+### 其他更新
 
-### Button
+### 按钮
 
-- Added a new button size `icon`:
+- 添加了一种新的按钮大小 `icon`：
 
 <ComponentPreview name="button-icon" />
 
-### Sheet
+### 工作表
 
-- Renamed `position` to `side` to match the other elements.
+- 将 `position` 重命名为 `side` 以匹配其他元素。
 
 <ComponentPreview name="sheet-side" />
 
-- Removed the `size` props. Use `className="w-[200px] md:w-[450px]"` for responsive sizing.
+- 移除了 `size` 属性。请使用 `className="w-[200px] md:w-[450px]"` 进行响应式调整大小。
 
 ---
 
-### Updating your project
+### 更新您的项目
 
-Since we follow a copy and paste approach, you will need to manually update your project to get the latest changes.
+由于我们遵循复制和粘贴的方法，您需要手动更新项目以获取最新更改。
 
 <Callout className="mt-4">
-  Note: we are working on a [`diff`](#diff-experimental) command to help you
-  keep track of upstream updates.
+  注意：我们正在开发一个 [`diff`](#diff-experimental) 命令，以帮助您跟踪上游更新。
 </Callout>
 
 <Steps>
 
-### Add `components.json`
+### 添加 `components.json`
 
-Creating a `components.json` file at the root:
+在根目录创建 `components.json` 文件：
 
 ```json title="components.json"
 {
@@ -591,11 +590,11 @@ Creating a `components.json` file at the root:
 }
 ```
 
-Update the values for `tailwind.css` and `aliases` to match your project structure.
+更新 `tailwind.css` 和 `aliases` 的值以匹配您的项目结构。
 
-### Button
+### 按钮
 
-Add the `icon` size to the `buttonVariants`:
+将 `icon` 大小添加到 `buttonVariants`：
 
 ```tsx {7} title="components/ui/button.tsx"
 const buttonVariants = cva({
@@ -610,9 +609,9 @@ const buttonVariants = cva({
 })
 ```
 
-### Sheet
+### 工作表
 
-1. Replace the content of `sheet.tsx` with the following:
+1. 用以下内容替换 `sheet.tsx` 的内容：
 
 ```tsx title="components/ui/sheet.tsx"
 "use client"
@@ -690,7 +689,7 @@ const SheetContent = React.forwardRef<
       {children}
       <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
         <X className="h-4 w-4" />
-        <span className="sr-only">Close</span>
+        <span className="sr-only">关闭</span>
       </SheetPrimitive.Close>
     </SheetPrimitive.Content>
   </SheetPortal>
@@ -761,7 +760,7 @@ export {
 }
 ```
 
-2. Rename `position` to `side`
+2. 将 `position` 重命名为 `side`
 
 ```diff /position/ /side/
 - <Sheet position="right" />
@@ -770,6 +769,6 @@ export {
 
 </Steps>
 
-### Thank you
+### 感谢
 
-I'd like to thank everyone who has been using this project, providing feedback and contributing to it. I really appreciate it. Thank you 🙏
+我想感谢所有使用这个项目、提供反馈和贡献的人。我非常感激。谢谢 🙏

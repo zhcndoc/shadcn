@@ -1,6 +1,6 @@
 ---
 title: Toast
-description: A succinct message that is displayed temporarily.
+description: 一个临时显示的简洁消息。
 component: true
 links:
   doc: https://www.radix-ui.com/docs/primitives/components/toast
@@ -9,25 +9,25 @@ links:
 
 <ComponentPreview name="toast-demo" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
 <Steps>
 
-<Step>Run the following command:</Step>
+<Step>运行以下命令：</Step>
 
 ```bash
 npx shadcn@latest add toast
 ```
 
-<Step>Add the Toaster component</Step>
+<Step>添加 Toaster 组件</Step>
 
 ```tsx title="app/layout.tsx" {1,9}
 import { Toaster } from "@/components/ui/toaster"
@@ -53,13 +53,13 @@ export default function RootLayout({ children }) {
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-toast
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
 
 `toast.tsx`
 
@@ -73,9 +73,9 @@ npm install @radix-ui/react-toast
 
 <ComponentSource name="toast" fileName="use-toast" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
-<Step>Add the Toaster component</Step>
+<Step>添加 Toaster 组件</Step>
 
 ```tsx title="app/layout.tsx" {1,9}
 import { Toaster } from "@/components/ui/toaster"
@@ -99,9 +99,9 @@ export default function RootLayout({ children }) {
 
 </CodeTabs>
 
-## Usage
+## 使用方法
 
-The `useToast` hook returns a `toast` function that you can use to display a toast.
+`useToast` 钩子返回一个 `toast` 函数，您可以用它来显示 toast。
 
 ```tsx
 import { useToast } from "@/hooks/use-toast"
@@ -115,12 +115,12 @@ export const ToastDemo = () => {
     <Button
       onClick={() => {
         toast({
-          title: "Scheduled: Catch up",
-          description: "Friday, February 10, 2023 at 5:57 PM",
+          title: "计划：跟进",
+          description: "2023年2月10日星期五下午5:57",
         })
       }}
     >
-      Show Toast
+      显示 Toast
     </Button>
   )
 }
@@ -128,26 +128,26 @@ export const ToastDemo = () => {
 
 <Callout>
 
-To display multiple toasts at the same time, you can update the `TOAST_LIMIT` in `use-toast.tsx`.
+要同时显示多个 toast，您可以在 `use-toast.tsx` 中更新 `TOAST_LIMIT`。
 
 </Callout>
 
-## Examples
+## 示例
 
-### Simple
+### 简单
 
 <ComponentPreview name="toast-simple" />
 
-### With title
+### 带标题
 
 <ComponentPreview name="toast-with-title" />
 
-### With Action
+### 带操作
 
 <ComponentPreview name="toast-with-action" />
 
-### Destructive
+### 危险
 
-Use `toast({ variant: "destructive" })` to display a destructive toast.
+使用 `toast({ variant: "destructive" })` 来显示一个危险的 toast。
 
 <ComponentPreview name="toast-destructive" />

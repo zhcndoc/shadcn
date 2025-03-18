@@ -1,26 +1,25 @@
 ---
 title: Astro
-description: Install and configure shadcn/ui for Astro
+description: 安装和配置 shadcn/ui 以用于 Astro
 ---
 
 <Callout className="bg-blue-50 border-blue-600 dark:border-blue-900 dark:bg-blue-950 mb-6 [&_code]:bg-blue-100 dark:[&_code]:bg-blue-900">
-  **Note:** The following guide is for Tailwind v4. If you are using Tailwind
-  v3, use `shadcn@2.3.0`.
+  **注意：** 以下指南适用于 Tailwind v4。如果您使用的是 Tailwind v3，请使用 `shadcn@2.3.0`。
 </Callout>
 
 <Steps>
 
-### Create project
+### 创建项目
 
-Start by creating a new Astro project:
+首先创建一个新的 Astro 项目：
 
 ```bash
-npx create-astro@latest astro-app  --template with-tailwindcss --install --add react --git
+npx create-astro@latest astro-app --template with-tailwindcss --install --add react --git
 ```
 
-### Edit tsconfig.json file
+### 编辑 tsconfig.json 文件
 
-Add the following code to the `tsconfig.json` file to resolve paths:
+在 `tsconfig.json` 文件中添加以下代码以解析路径：
 
 ```ts title="tsconfig.json" {4-9} showLineNumbers
 {
@@ -37,30 +36,30 @@ Add the following code to the `tsconfig.json` file to resolve paths:
 }
 ```
 
-### Run the CLI
+### 运行 CLI
 
-Run the `shadcn` init command to setup your project:
+运行 `shadcn` 初始化命令以设置您的项目：
 
 ```bash
 npx shadcn@latest init
 ```
 
-### Add Components
+### 添加组件
 
-You can now start adding components to your project.
+您现在可以开始向您的项目中添加组件。
 
 ```bash
 npx shadcn@latest add button
 ```
 
-The command above will add the `Button` component to your project. You can then import it like this:
+上述命令将会将 `Button` 组件添加到您的项目中。您可以像这样导入它：
 
 ```astro title="src/pages/index.astro" {2,16} showLineNumbers
 ---
 import { Button } from "@/components/ui/button"
 ---
 
-<html lang="en">
+<html lang="zh">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -71,7 +70,7 @@ import { Button } from "@/components/ui/button"
 
 	<body>
 		<div class="grid place-items-center h-screen content-center">
-			<Button>Button</Button>
+			<Button>按钮</Button>
 		</div>
 	</body>
 </html>

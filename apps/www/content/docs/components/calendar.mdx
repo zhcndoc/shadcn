@@ -1,6 +1,6 @@
 ---
-title: Calendar
-description: A date field component that allows users to enter and edit date.
+title: 日历
+description: 一个日期字段组件，允许用户输入和编辑日期。
 component: true
 links:
   doc: https://react-day-picker.js.org
@@ -8,21 +8,21 @@ links:
 
 <ComponentPreview
   name="calendar-demo"
-  title="Calendar"
-  description="A calendar showing the current date."
+  title="日历"
+  description="显示当前日期的日历."
 />
 
-## About
+## 关于
 
-The `Calendar` component is built on top of [React DayPicker](https://react-day-picker.js.org).
+`Calendar` 组件构建于 [React DayPicker](https://react-day-picker.js.org) 之上。
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -36,21 +36,21 @@ npx shadcn@latest add calendar
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install react-day-picker@8.10.1 date-fns
 ```
 
-<Step>Add the `Button` component to your project.</Step>
+<Step>将 `Button` 组件添加到您的项目中。</Step>
 
-The `Calendar` component uses the `Button` component. Make sure you have it installed in your project.
+`Calendar` 组件使用 `Button` 组件。确保您已在项目中安装。
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
 
 <ComponentSource name="calendar" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
 </Steps>
 
@@ -58,7 +58,7 @@ The `Calendar` component uses the `Button` component. Make sure you have it inst
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx
 import { Calendar } from "@/components/ui/calendar"
@@ -77,23 +77,23 @@ return (
 )
 ```
 
-See the [React DayPicker](https://react-day-picker.js.org) documentation for more information.
+有关更多信息，请参见 [React DayPicker](https://react-day-picker.js.org) 文档。
 
-## Date Picker
+## 日期选择器
 
-You can use the `<Calendar>` component to build a date picker. See the [Date Picker](/docs/components/date-picker) page for more information.
+您可以使用 `<Calendar>` 组件构建日期选择器。有关更多信息，请参见 [日期选择器](/docs/components/date-picker) 页面。
 
-## Examples
+## 示例
 
-### Form
+### 表单
 
 <ComponentPreview name="calendar-form" />
 
-## Changelog
+## 更新日志
 
-### 11-03-2024 day_outside color
+### 2024-03-11 day_outside 颜色
 
-- Changed the color of the `day_outside` class to the following to improve contrast:
+- 更改了 `day_outside` 类的颜色，以改善对比度：
 
   ```tsx showLineNumbers title="calendar.tsx"
   "day_outside:

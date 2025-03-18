@@ -1,6 +1,6 @@
 ---
-title: Aspect Ratio
-description: Displays content within a desired ratio.
+title: 纵横比
+description: 在所需的比例内显示内容。
 component: true
 links:
   doc: https://www.radix-ui.com/docs/primitives/components/aspect-ratio
@@ -9,17 +9,17 @@ links:
 
 <ComponentPreview
   name="aspect-ratio-demo"
-  title="Aspect Ratio"
-  description="A component that displays an image with a 16:9 aspect ratio."
+  title="纵横比"
+  description="一个以16:9纵横比显示图像的组件."
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -33,17 +33,17 @@ npx shadcn@latest add aspect-ratio
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-aspect-ratio
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
 
 <ComponentSource name="aspect-ratio" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
 </Steps>
 
@@ -51,7 +51,7 @@ npm install @radix-ui/react-aspect-ratio
 
 </CodeTabs>
 
-## Usage
+## 使用
 
 ```tsx
 import Image from "next/image"
@@ -62,7 +62,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio"
 ```tsx
 <div className="w-[450px]">
   <AspectRatio ratio={16 / 9}>
-    <Image src="..." alt="Image" className="rounded-md object-cover" />
+    <Image src="..." alt="图片" className="rounded-md object-cover" />
   </AspectRatio>
 </div>
 ```

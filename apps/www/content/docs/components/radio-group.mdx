@@ -1,6 +1,6 @@
 ---
-title: Radio Group
-description: A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.
+title: 单选组
+description: 一组可选按钮——称为单选按钮——一次只能选择其中一个按钮。
 component: true
 links:
   doc: https://www.radix-ui.com/docs/primitives/components/radio-group
@@ -9,16 +9,16 @@ links:
 
 <ComponentPreview
   name="radio-group-demo"
-  description="A radio group with 3 items."
+  description="一个包含 3 项的单选组。"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -32,17 +32,17 @@ npx shadcn@latest add radio-group
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-radio-group
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="radio-group" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目设置。</Step>
 
 </Steps>
 
@@ -50,7 +50,7 @@ npm install @radix-ui/react-radio-group
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx
 import { Label } from "@/components/ui/label"
@@ -61,17 +61,17 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 <RadioGroup defaultValue="option-one">
   <div className="flex items-center space-x-2">
     <RadioGroupItem value="option-one" id="option-one" />
-    <Label htmlFor="option-one">Option One</Label>
+    <Label htmlFor="option-one">选项一</Label>
   </div>
   <div className="flex items-center space-x-2">
     <RadioGroupItem value="option-two" id="option-two" />
-    <Label htmlFor="option-two">Option Two</Label>
+    <Label htmlFor="option-two">选项二</Label>
   </div>
 </RadioGroup>
 ```
 
-## Examples
+## 示例
 
-### Form
+### 表单
 
 <ComponentPreview name="radio-group-form" />
