@@ -291,7 +291,25 @@ function AccordionItem({
 
 ## 更新日志
 
-### 2025年3月12日 - 新的暗模式颜色
+### 2025 年 3 月 19 日 - 弃用 `tailwindcss-animate`
+
+我们已弃用 `tailwindcss-animate`，推荐使用 `tw-animate-css`。
+
+新项目将默认安装 `tw-animate-css`。
+
+对于现有项目，请按照以下步骤进行迁移。
+
+1. 从依赖项中移除 `tailwindcss-animate`。
+2. 从您的 globals.css 文件中移除 `@plugin 'tailwindcss-animate'`。
+3. 将 `tw-animate-css` 安装为开发依赖。
+4. 在您的 globals.css 文件中添加 `@import "tw-animate-css"`。
+
+```diff showLineNumbers
+- @plugin 'tailwindcss-animate';
++ @import "tw-animate-css";
+```
+
+### 2025 年 3 月 12 日 - 新的暗模式颜色
 
 我们对暗模式颜色进行了重新审视，并将其更新为更具可访问性。
 

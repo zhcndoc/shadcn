@@ -16,7 +16,7 @@ description: 手动将依赖添加到您的项目中。
 将以下依赖添加到您的项目中：
 
 ```bash
-npm install tailwindcss-animate class-variance-authority clsx tailwind-merge lucide-react
+npm install class-variance-authority clsx tailwind-merge lucide-react tw-animate-css
 ```
 
 ### 配置路径别名
@@ -42,8 +42,7 @@ npm install tailwindcss-animate class-variance-authority clsx tailwind-merge luc
 
 ```css showLineNumbers title="src/styles/globals.css"
 @import "tailwindcss";
-
-@plugin 'tailwindcss-animate';
+@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
