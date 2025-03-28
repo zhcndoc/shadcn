@@ -21,7 +21,18 @@ description: 注册表项目的规范。
       "path": "registry/new-york/hello-world/use-hello-world.ts",
       "type": "registry:hook"
     }
-  ]
+  ],
+  "cssVars": {
+    "theme": {
+      "font-heading": "Poppins, sans-serif"
+    },
+    "light": {
+      "brand": "20 14.3% 4.1%"
+    },
+    "dark": {
+      "brand": "20 14.3% 4.1%"
+    }
+  }
 }
 ```
 
@@ -41,7 +52,7 @@ description: 注册表项目的规范。
 
 ### name
 
-`name` 属性用于指定您的注册表项目的名称。
+项目的名称。这用于在注册表中标识该项目。它应该在您的注册表中是唯一的。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -71,7 +82,7 @@ description: 注册表项目的规范。
 
 ### type
 
-`type` 属性用于指定您注册表项目的类型。
+`type` 属性用于指定您的注册表项目的类型。这用于确定在项目解决时项目的类型和目标路径。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -81,15 +92,17 @@ description: 注册表项目的规范。
 
 支持以下类型：
 
-| 类型                   | 描述                                          |
-| ---------------------- | --------------------------------------------- |
-| `registry:block`       | 用于具有多个文件的复杂组件。                  |
-| `registry:component`   | 用于简单组件。                               |
-| `registry:lib`         | 用于库和工具。                               |
-| `registry:hook`        | 用于 hooks。                                 |
-| `registry:ui`          | 用于 UI 组件和单文件原语                     |
-| `registry:page`        | 用于页面或基于文件的路由。                   |
-| `registry:file`        | 用于杂项文件。                               |
+| 类型                  | 描述                                            |
+| --------------------- | ----------------------------------------------- |
+| `registry:block`      | 用于具有多个文件的复杂组件。                   |
+| `registry:component`  | 用于简单组件。                                 |
+| `registry:lib`        | 用于库和实用程序。                              |
+| `registry:hook`       | 用于钩子。                                     |
+| `registry:ui`         | 用于 UI 组件和单文件原语                       |
+| `registry:page`       | 用于页面或基于文件的路由。                     |
+| `registry:file`       | 用于杂项文件。                                 |
+| `registry:style`      | 用于注册表样式，例如 `new-york`                |
+| `registry:theme`      | 用于主题。                                     |
 
 ### author
 
@@ -105,7 +118,7 @@ description: 注册表项目的规范。
 
 ### dependencies
 
-`dependencies` 属性用于指定您注册表项目的依赖项。这是针对 `npm` 包。
+`dependencies` 属性用于指定您注册表项目的依赖项。这对于 `npm` 包。
 
 使用 `@version` 指定您注册表项目的版本。
 
@@ -122,7 +135,7 @@ description: 注册表项目的规范。
 
 ### registryDependencies
 
-用于注册表依赖项。可以是名称或 URL。
+用于注册表依赖项。可以是名称或 URL。使用项目的名称引用 shadcn/ui 组件，使用 URL 引用其他注册表。
 
 - 对于 `shadcn/ui` 注册表项目，例如 `button`、`input`、`select` 等，使用名称，例如 `['button', 'input', 'select']`。
 - 对于自定义注册表项目，使用注册表项目的 URL，例如 `['https://example.com/r/hello-world.json']`。
@@ -181,13 +194,15 @@ description: 注册表项目的规范。
 
 #### target
 
-`target` 属性用于指示文件应放置在项目中的位置。此属性是可选的，且仅对 `registry:page` 和 `registry:file` 类型必需。
+`target` 属性用于指示文件应放置在项目中的位置。此属性是可选的，仅对 `registry:page` 和 `registry:file` 类型必需。
 
 默认情况下，`shadcn` CLI 将读取项目的 `components.json` 文件以确定目标路径。对于某些文件，例如路由或配置，您可以手动指定目标路径。
 
 使用 `~` 来引用项目的根目录，例如 `~/foo.config.js`。
 
 ### tailwind
+
+**已弃用：** 对于 Tailwind v4 项目，请使用 `cssVars.theme`。
 
 `tailwind` 属性用于 tailwind 配置，例如 `theme`、`plugins` 和 `content`。
 
@@ -225,6 +240,9 @@ description: 注册表项目的规范。
 ```json title="registry-item.json" showLineNumbers
 {
   "cssVars": {
+    "theme": {
+      "font-heading": "Poppins, sans-serif"
+    },
     "light": {
       "brand": "20 14.3% 4.1%",
       "radius": "0.5rem"
@@ -235,11 +253,6 @@ description: 注册表项目的规范。
   }
 }
 ```
-
-<Callout>
-  **注意：** 添加颜色时，请确保也将其添加到
-  `tailwind.config.theme.extend.colors` 属性中。
-</Callout>
 
 ### docs
 

@@ -49,6 +49,46 @@ description: 关于运行注册表的常见问题解答。
 
 ### 如何添加新的 Tailwind 颜色？
 
+<Tabs defaultValue="v4">
+
+<TabsList>
+  <TabsTrigger value="v4">Tailwind CSS v4</TabsTrigger>
+  <TabsTrigger value="v3">Tailwind CSS v3</TabsTrigger>
+</TabsList>
+
+<TabsContent value="v4">
+
+要添加新颜色，您需要将其添加到 `cssVars` 下的 `light` 和 `dark` 键中。
+
+```json showLineNumbers {10-18}
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hello-world",
+  "title": "Hello World",
+  "type": "registry:block",
+  "description": "一个复杂的你好，世界组件",
+  "files": [
+    // ...
+  ],
+  "cssVars": {
+    "light": {
+      "brand-background": "20 14.3% 4.1%",
+      "brand-accent": "20 14.3% 4.1%"
+    },
+    "dark": {
+      "brand-background": "20 14.3% 4.1%",
+      "brand-accent": "20 14.3% 4.1%"
+    }
+  }
+}
+```
+
+CLI 会更新项目的 CSS 文件。更新后，这些新颜色将可以作为实用类使用：`bg-brand` 和 `text-brand-accent`。
+
+</TabsContent>
+
+<TabsContent value="v3">
+
 要添加新颜色，您需要将其添加到 `cssVars` 和 `tailwind.config.theme.extend.colors` 中。
 
 ```json showLineNumbers {10-19} {24-29}
@@ -90,9 +130,47 @@ description: 关于运行注册表的常见问题解答。
 
 CLI 将更新项目的 CSS 文件和 tailwind.config.js 文件。更新后，这些新颜色将可以作为实用类使用：`bg-brand` 和 `text-brand-accent`。
 
-### 如何添加 Tailwind 动画？
+</TabsContent>
+</Tabs>
 
-要添加新的动画，您需要将其添加到 `tailwind.config.theme.extend.animation` 和 `tailwind.config.theme.extend.keyframes` 中。
+### 如何添加或重写 Tailwind 主题变量？
+
+<Tabs defaultValue="v4">
+
+<TabsList>
+  <TabsTrigger value="v4">Tailwind CSS v4</TabsTrigger>
+  <TabsTrigger value="v3">Tailwind CSS v3</TabsTrigger>
+</TabsList>
+
+<TabsContent value="v4">
+
+要添加或重写主题变量，您需要将其添加到 `cssVars.theme` 下的键中。
+
+```json showLineNumbers {10-15}
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hello-world",
+  "title": "Hello World",
+  "type": "registry:block",
+  "description": "一个复杂的你好，世界组件",
+  "files": [
+    // ...
+  ],
+  "cssVars": {
+    "theme": {
+      "text-base": "3rem",
+      "ease-in-out": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "font-heading": "Poppins, sans-serif"
+    }
+  }
+}
+```
+
+</TabsContent>
+
+<TabsContent value="v3">
+
+要重写主题变量，您需要将其添加到 `tailwind.config.theme.extend` 下的键中。
 
 ```json showLineNumbers {14-22}
 {
@@ -108,14 +186,8 @@ CLI 将更新项目的 CSS 文件和 tailwind.config.js 文件。更新后，这
     "config": {
       "theme": {
         "extend": {
-          "keyframes": {
-            "wiggle": {
-              "0%, 100%": { "transform": "rotate(-3deg)" },
-              "50%": { "transform": "rotate(3deg)" }
-            }
-          },
-          "animation": {
-            "wiggle": "wiggle 1s ease-in-out infinite"
+          "text": {
+            "base": "3rem"
           }
         }
       }
@@ -123,3 +195,6 @@ CLI 将更新项目的 CSS 文件和 tailwind.config.js 文件。更新后，这
   }
 }
 ```
+
+</TabsContent>
+</Tabs>
