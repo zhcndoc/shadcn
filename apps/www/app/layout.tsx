@@ -111,7 +111,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </div>
             <TailwindIndicator />
             <ThemeSwitcher />
-            <Analytics />
+            {/* <Analytics /> */}
             <NewYorkToaster />
             <DefaultToaster />
             <NewYorkSonner />
