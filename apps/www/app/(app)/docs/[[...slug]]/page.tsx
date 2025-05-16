@@ -95,7 +95,7 @@ export default async function DocPage({ params }: DocPageProps) {
       <div className="mx-auto w-full min-w-0 max-w-2xl">
         <div className="mb-4 flex items-center space-x-1 text-sm leading-none text-muted-foreground">
           <Link href="/docs" className="truncate">
-            Docs
+            文档
           </Link>
           <ChevronRight className="h-3.5 w-3.5" />
           <div className="text-foreground">{doc.title}</div>
@@ -119,7 +119,7 @@ export default async function DocPage({ params }: DocPageProps) {
                 rel="noreferrer"
                 className={cn(badgeVariants({ variant: "secondary" }), "gap-1")}
               >
-                Docs
+                文档
                 <ExternalLink className="h-3 w-3" />
               </Link>
             )}
@@ -130,7 +130,7 @@ export default async function DocPage({ params }: DocPageProps) {
                 rel="noreferrer"
                 className={cn(badgeVariants({ variant: "secondary" }), "gap-1")}
               >
-                API Reference
+                API 参考
                 <ExternalLink className="h-3 w-3" />
               </Link>
             )}
@@ -145,7 +145,7 @@ export default async function DocPage({ params }: DocPageProps) {
         <div className="sticky top-20 -mt-6 h-[calc(100vh-3.5rem)] pt-4">
           <div className="no-scrollbar h-full overflow-auto pb-10">
             {doc.toc && <DashboardTableOfContents toc={toc} />}
-            <OpenInV0Cta className="mt-6 max-w-[80%]" />
+            {/* <OpenInV0Cta className="mt-6 max-w-[80%]" /> */}
           </div>
         </div>
       </div>

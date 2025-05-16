@@ -1,9 +1,9 @@
 export const siteConfig = {
-  name: "shadcn/ui",
-  url: "https://ui.shadcn.com",
-  ogImage: "https://ui.shadcn.com/og.jpg",
+  name: "Shadcn UI 中文文档",
+  url: "https://shadcn.zhcndoc.com",
+  ogImage: "https://shadcn.zhcndoc.com/og.jpg",
   description:
-    "A set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks. Open Source. Open Code.",
+    "一套设计精美、易于使用的组件与代码分发平台，兼容你喜爱的各类框架，开源开放，代码共享。",
   links: {
     twitter: "https://twitter.com/shadcn",
     github: "https://github.com/shadcn-ui/ui",

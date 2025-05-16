@@ -6,25 +6,19 @@ export function SiteFooter() {
       <div className="container-wrapper">
         <div className="container py-4">
           <div className="text-balance text-center text-sm leading-loose text-muted-foreground md:text-left">
-            Built by{" "}
             <a
-              href={siteConfig.links.twitter}
+              href="https://www.zhcndoc.com/"
               target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
             >
-              shadcn
+              简中文档
             </a>
-            . The source code is available on{" "}
+            ｜
             <a
-              href={siteConfig.links.github}
+              href="https://beian.miit.gov.cn/"
               target="_blank"
-              rel="noreferrer"
-              className="font-medium underline underline-offset-4"
             >
-              GitHub
+              沪ICP备2024070610号-3
             </a>
-            .
           </div>
         </div>
       </div>

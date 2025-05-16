@@ -28,7 +28,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Docs
+          文档
         </Link>
         <Link
           href="/docs/components"
@@ -40,7 +40,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Components
+          组件
         </Link>
         <Link
           href="/blocks"
@@ -51,7 +51,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Blocks
+          区块
         </Link>
         <Link
           href="/charts"
@@ -63,7 +63,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Charts
+          图表
         </Link>
         <Link
           href="/themes"
@@ -74,7 +74,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Themes
+          主题
         </Link>
         <Link
           href="/colors"
@@ -85,7 +85,7 @@ export function MainNav() {
               : "text-foreground/80"
           )}
         >
-          Colors
+          颜色
         </Link>
       </nav>
     </div>

@@ -47,9 +47,9 @@ export function MobileNav() {
               d="M3.75 9h16.5m-16.5 6.75h16.5"
             />
           </svg>
-          <span className="sr-only">Toggle Menu</span>
+          <span className="sr-only">切换菜单</span>
           <span className="flex h-8 flex-1 items-center justify-between rounded-md border bg-muted/50 px-2 text-sm font-normal text-muted-foreground shadow-none">
-            Search documentation...
+            搜索文档...
           </span>
         </Button>
       </DrawerTrigger>

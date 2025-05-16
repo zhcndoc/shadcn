@@ -10,8 +10,8 @@ import {
 } from "@/components/page-header"
 import { Button } from "@/registry/new-york/ui/button"
 
-const title = "Color Library"
-const description = "Tailwind CSS colors in HSL, RGB, HEX and OKLCH formats."
+const title = "颜色库"
+const description = "Tailwind CSS 颜色的 HSL、RGB、HEX 和 OKLCH 格式。"
 
 export const metadata: Metadata = {
   title,
@@ -50,10 +50,10 @@ export default function ColorsLayout({
         <PageHeaderDescription>{description}</PageHeaderDescription>
         <PageActions>
           <Button asChild size="sm">
-            <a href="#colors">Browse Colors</a>
+            <a href="#colors">浏览颜色</a>
           </Button>
           <Button asChild variant="ghost" size="sm">
-            <Link href="/docs/theming">Documentation</Link>
+            <Link href="/docs/theming">文档</Link>
           </Button>
         </PageActions>
       </PageHeader>

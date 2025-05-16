@@ -1,0 +1,5 @@
+{
+  "app_dir": "apps/www",
+  "build_command": "pnpm --filter=www build",
+  "start_command": "pnpm --filter=www start"
+}

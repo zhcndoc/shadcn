@@ -75,8 +75,9 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="zh-CN" suppressHydrationWarning>
         <head>
+          <script async src="https://www.zhcndoc.com/js/common.js" />
           <script
             dangerouslySetInnerHTML={{
               __html: `

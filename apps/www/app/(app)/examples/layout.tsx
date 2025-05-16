@@ -47,18 +47,16 @@ export default function ExamplesLayout({
     <>
       <PageHeader>
         <Announcement />
-        <PageHeaderHeading>Build your component library</PageHeaderHeading>
+        <PageHeaderHeading>构建你的组件库</PageHeaderHeading>
         <PageHeaderDescription>
-          A set of beautifully-designed, accessible components and a code
-          distribution platform. Works with your favorite frameworks. Open
-          Source. Open Code.
+          一套设计精美、易于使用的组件与代码分发平台，兼容你喜爱的各类框架，开源开放，代码共享。
         </PageHeaderDescription>
         <PageActions>
           <Button asChild size="sm">
-            <Link href="/docs">Get Started</Link>
+            <Link href="/docs">开始使用</Link>
           </Button>
           <Button asChild size="sm" variant="ghost">
-            <Link href="/blocks">Browse Blocks</Link>
+            <Link href="/blocks">浏览区块</Link>
           </Button>
         </PageActions>
       </PageHeader>

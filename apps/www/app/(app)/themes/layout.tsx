@@ -10,9 +10,9 @@ import {
 import { Customizer } from "@/components/theme-customizer"
 import { Button } from "@/registry/new-york/ui/button"
 
-const title = "Add colors. Make it yours."
+const title = "添加颜色，让它成为你的。"
 const description =
-  "Hand-picked themes that you can copy and paste into your apps."
+  "精心挑选的主题，你可以复制并粘贴到您的应用中。"
 
 export const metadata: Metadata = {
   title,
@@ -50,7 +50,7 @@ export default function ThemesLayout({
         <PageHeaderHeading>{title}</PageHeaderHeading>
         <PageHeaderDescription>{description}</PageHeaderDescription>
         <div className="mt-2 rounded-full bg-blue-600 px-3 py-1 text-xs text-white">
-          New Theme Editor coming soon
+          新的主题编辑器即将推出
         </div>
       </PageHeader>
       <div id="themes" className="border-grid scroll-mt-24 border-b">
