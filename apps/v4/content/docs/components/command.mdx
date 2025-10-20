@@ -1,6 +1,6 @@
 ---
-title: Command
-description: Fast, composable, unstyled command menu for React.
+title: 命令菜单 Command
+description: 适用于 React 的快速、可组合、无样式命令菜单。
 component: true
 links:
   doc: https://cmdk.paco.me
@@ -10,20 +10,20 @@ links:
   name="command-demo"
   align="start"
   className="[&_.preview>div]:max-w-[450px]"
-  description="A command menu"
+  description="一个命令菜单"
 />
 
-## About
+## 关于
 
-The `<Command />` component uses the [`cmdk`](https://cmdk.paco.me) component by [pacocoursey](https://twitter.com/pacocoursey).
+`<Command />` 组件使用了由 [pacocoursey](https://twitter.com/pacocoursey) 创建的 [`cmdk`](https://cmdk.paco.me) 组件。
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -37,17 +37,17 @@ npx shadcn@latest add command
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖项：</Step>
 
 ```bash
 npm install cmdk
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>复制并粘贴以下代码到您的项目中。</Step>
 
 <ComponentSource name="command" title="components/ui/command.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目配置。</Step>
 
 </Steps>
 
@@ -55,7 +55,7 @@ npm install cmdk
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import {
@@ -73,34 +73,34 @@ import {
 
 ```tsx showLineNumbers
 <Command>
-  <CommandInput placeholder="Type a command or search..." />
+  <CommandInput placeholder="输入命令或搜索..." />
   <CommandList>
-    <CommandEmpty>No results found.</CommandEmpty>
-    <CommandGroup heading="Suggestions">
-      <CommandItem>Calendar</CommandItem>
-      <CommandItem>Search Emoji</CommandItem>
-      <CommandItem>Calculator</CommandItem>
+    <CommandEmpty>未找到结果。</CommandEmpty>
+    <CommandGroup heading="建议">
+      <CommandItem>日历</CommandItem>
+      <CommandItem>搜索 Emoji</CommandItem>
+      <CommandItem>计算器</CommandItem>
     </CommandGroup>
     <CommandSeparator />
-    <CommandGroup heading="Settings">
-      <CommandItem>Profile</CommandItem>
-      <CommandItem>Billing</CommandItem>
-      <CommandItem>Settings</CommandItem>
+    <CommandGroup heading="设置">
+      <CommandItem>个人资料</CommandItem>
+      <CommandItem>账单</CommandItem>
+      <CommandItem>设置</CommandItem>
     </CommandGroup>
   </CommandList>
 </Command>
 ```
 
-## Examples
+## 示例
 
-### Dialog
+### 对话框
 
 <ComponentPreview
   name="command-dialog"
-  description="A command menu in a dialog"
+  description="对话框中的命令菜单"
 />
 
-To show the command menu in a dialog, use the `<CommandDialog />` component.
+要在对话框中展示命令菜单，使用 `<CommandDialog />` 组件。
 
 ```tsx showLineNumbers title="components/example-command-menu.tsx"
 export function CommandMenu() {
@@ -119,13 +119,13 @@ export function CommandMenu() {
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder="Type a command or search..." />
+      <CommandInput placeholder="输入命令或搜索..." />
       <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        <CommandGroup heading="Suggestions">
-          <CommandItem>Calendar</CommandItem>
-          <CommandItem>Search Emoji</CommandItem>
-          <CommandItem>Calculator</CommandItem>
+        <CommandEmpty>未找到结果。</CommandEmpty>
+        <CommandGroup heading="建议">
+          <CommandItem>日历</CommandItem>
+          <CommandItem>搜索 Emoji</CommandItem>
+          <CommandItem>计算器</CommandItem>
         </CommandGroup>
       </CommandList>
     </CommandDialog>
@@ -133,6 +133,6 @@ export function CommandMenu() {
 }
 ```
 
-### Combobox
+### 下拉框
 
-You can use the `<Command />` component as a combobox. See the [Combobox](/docs/components/combobox) page for more information.
+您可以将 `<Command />` 组件用作下拉选择框。更多信息请参见[下拉框](/docs/components/combobox) 页面。

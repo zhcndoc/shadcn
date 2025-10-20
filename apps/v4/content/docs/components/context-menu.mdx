@@ -1,24 +1,24 @@
 ---
-title: Context Menu
-description: Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+title: 上下文菜单 Context Menu
+description: 向用户显示菜单 — 例如一组操作或功能 — 由按钮触发。
 component: true
 links:
-  doc: https://www.radix-ui.com/docs/primitives/components/context-menu
-  api: https://www.radix-ui.com/docs/primitives/components/context-menu#api-reference
+  doc: https://radix.zhcndoc.com/docs/primitives/components/context-menu
+  api: https://radix.zhcndoc.com/docs/primitives/components/context-menu#api-reference
 ---
 
 <ComponentPreview
   name="context-menu-demo"
-  description="A context menu with sub menu items."
+  description="带有子菜单项的上下文菜单。"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行工具</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -32,17 +32,17 @@ npx shadcn@latest add context-menu
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-context-menu
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制粘贴到您的项目中。</Step>
 
 <ComponentSource name="context-menu" title="components/ui/context-menu.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>根据您的项目设置更新导入路径。</Step>
 
 </Steps>
 
@@ -50,7 +50,7 @@ npm install @radix-ui/react-context-menu
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import {
@@ -63,12 +63,12 @@ import {
 
 ```tsx showLineNumbers
 <ContextMenu>
-  <ContextMenuTrigger>Right click</ContextMenuTrigger>
+  <ContextMenuTrigger>右键点击</ContextMenuTrigger>
   <ContextMenuContent>
-    <ContextMenuItem>Profile</ContextMenuItem>
-    <ContextMenuItem>Billing</ContextMenuItem>
-    <ContextMenuItem>Team</ContextMenuItem>
-    <ContextMenuItem>Subscription</ContextMenuItem>
+    <ContextMenuItem>个人资料</ContextMenuItem>
+    <ContextMenuItem>账单</ContextMenuItem>
+    <ContextMenuItem>团队</ContextMenuItem>
+    <ContextMenuItem>订阅</ContextMenuItem>
   </ContextMenuContent>
 </ContextMenu>
 ```

@@ -1,21 +1,21 @@
 ---
-title: Menubar
-description: A visually persistent menu common in desktop applications that provides quick access to a consistent set of commands.
+title: 菜单栏 Menubar
+description: 一种在桌面应用程序中常见的视觉持续菜单，提供对一组一致命令的快速访问。
 component: true
 links:
-  doc: https://www.radix-ui.com/docs/primitives/components/menubar
-  api: https://www.radix-ui.com/docs/primitives/components/menubar#api-reference
+  doc: https://radix.zhcndoc.com/docs/primitives/components/menubar
+  api: https://radix.zhcndoc.com/docs/primitives/components/menubar#api-reference
 ---
 
-<ComponentPreview name="menubar-demo" description="A menubar component." />
+<ComponentPreview name="menubar-demo" description="一个菜单栏组件。" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -29,17 +29,17 @@ npx shadcn@latest add menubar
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-menubar
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="menubar" title="components/ui/menubar.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目设置。</Step>
 
 </Steps>
 
@@ -47,7 +47,7 @@ npm install @radix-ui/react-menubar
 
 </CodeTabs>
 
-## Usage
+## 使用
 
 ```tsx showLineNumbers
 import {
@@ -64,16 +64,16 @@ import {
 ```tsx showLineNumbers
 <Menubar>
   <MenubarMenu>
-    <MenubarTrigger>File</MenubarTrigger>
+    <MenubarTrigger>文件</MenubarTrigger>
     <MenubarContent>
       <MenubarItem>
-        New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+        新建标签页 <MenubarShortcut>⌘T</MenubarShortcut>
       </MenubarItem>
-      <MenubarItem>New Window</MenubarItem>
+      <MenubarItem>新建窗口</MenubarItem>
       <MenubarSeparator />
-      <MenubarItem>Share</MenubarItem>
+      <MenubarItem>分享</MenubarItem>
       <MenubarSeparator />
-      <MenubarItem>Print</MenubarItem>
+      <MenubarItem>打印</MenubarItem>
     </MenubarContent>
   </MenubarMenu>
 </Menubar>

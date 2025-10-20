@@ -1,23 +1,20 @@
 ---
 title: TanStack Form
-description: Build forms in React using TanStack Form and Zod.
+description: 使用 TanStack Form 和 Zod 在 React 中构建表单。
 links:
   doc: https://tanstack.com/form
 ---
 
 import { InfoIcon } from "lucide-react"
 
-This guide explores how to build forms using TanStack Form. You'll learn to create forms with the `<Field />` component, implement schema validation with Zod, handle errors, and ensure accessibility.
+本指南将探索如何使用 TanStack Form 构建表单。您将学习如何使用 `<Field />` 组件创建表单，使用 Zod 实现模式验证，处理错误，以及确保无障碍性。
 
-## Demo
+## 演示
 
-We'll start by building the following form. It has a simple text input and a textarea. On submit, we'll validate the form data and display any errors.
+我们将从构建以下表单开始。它包含一个简单的文本输入框和一个多行文本框。在提交时，我们将验证表单数据并显示任何错误。
 
 <Callout icon={<InfoIcon />}>
-  **Note:** For the purpose of this demo, we have intentionally disabled browser
-  validation to show how schema validation and form errors work in TanStack
-  Form. It is recommended to add basic browser validation in your production
-  code.
+  **注意：**为了演示目的，我们故意禁用了浏览器验证，以展示 TanStack Form 中模式验证和表单错误的工作原理。建议在生产代码中添加基础的浏览器验证。
 </Callout>
 
 <ComponentPreview
@@ -26,19 +23,19 @@ We'll start by building the following form. It has a simple text input and a tex
   chromeLessOnMobile
 />
 
-## Approach
+## 方法
 
-This form leverages TanStack Form for powerful, headless form handling. We'll build our form using the `<Field />` component, which gives you **complete flexibility over the markup and styling**.
+此表单利用 TanStack Form 进行强大且无头的表单处理。我们将使用 `<Field />` 组件构建表单，这为您提供了**对标记和样式的完全控制**。
 
-- Uses TanStack Form's `useForm` hook for form state management.
-- `form.Field` component with render prop pattern for controlled inputs.
-- `<Field />` components for building accessible forms.
-- Client-side validation using Zod.
-- Real-time validation feedback.
+- 使用 TanStack Form 的 `useForm` 钩子进行表单状态管理。
+- 使用 `form.Field` 组件及渲染属性模式实现受控输入。
+- 使用 `<Field />` 组件构建无障碍表单。
+- 使用 Zod 进行客户端验证。
+- 实时验证反馈。
 
-## Anatomy
+## 结构解析
 
-Here's a basic example of a form using TanStack Form with the `<Field />` component.
+下面是一个使用 TanStack Form 和 `<Field />` 组件的基本表单示例。
 
 ```tsx showLineNumbers {15-31}
 <form
@@ -79,16 +76,14 @@ Here's a basic example of a form using TanStack Form with the `<Field />` compon
 </form>
 ```
 
-## Form
+## 表单
 
-### Create a schema
+### 创建模式
 
-We'll start by defining the shape of our form using a Zod schema.
+我们将先使用 Zod 模式定义表单的结构。
 
 <Callout icon={<InfoIcon />}>
-  **Note:** This example uses `zod v3` for schema validation. TanStack Form
-  integrates seamlessly with Zod and other Standard Schema validation libraries
-  through its validators API.
+  **注意：**本示例使用 `zod v3` 进行模式验证。TanStack Form 能够通过其验证器 API 与 Zod 及其他标准模式验证库无缝集成。
 </Callout>
 
 ```tsx showLineNumbers title="form.tsx"
@@ -106,9 +101,9 @@ const formSchema = z.object({
 })
 ```
 
-### Setup the form
+### 设置表单
 
-Use the `useForm` hook from TanStack Form to create your form instance with Zod validation.
+使用 TanStack Form 的 `useForm` 钩子创建带有 Zod 验证的表单实例。
 
 ```tsx showLineNumbers title="form.tsx" {10-21}
 import { useForm } from "@tanstack/react-form"
@@ -146,28 +141,28 @@ export function BugReportForm() {
 }
 ```
 
-We are using `onSubmit` to validate the form data here. TanStack Form supports other validation modes, which you can read about in the [documentation](https://tanstack.com/form/latest/docs/framework/react/guides/dynamic-validation).
+这里我们使用 `onSubmit` 来验证表单数据。TanStack Form 支持其他验证模式，您可以在[文档](https://tanstack.com/form/latest/docs/framework/react/guides/dynamic-validation)中了解详情。
 
-### Build the form
+### 构建表单
 
-We can now build the form using the `form.Field` component from TanStack Form and the `<Field />` component.
+现在可以使用 TanStack Form 的 `form.Field` 组件和 `<Field />` 组件构建表单。
 
 <ComponentSource
   src="/registry/new-york-v4/examples/form-tanstack-demo.tsx"
   title="form.tsx"
 />
 
-### Done
+### 完成
 
-That's it. You now have a fully accessible form with client-side validation.
+到这里，您就拥有了一个具备客户端验证的完整无障碍表单。
 
-When you submit the form, the `onSubmit` function will be called with the validated form data. If the form data is invalid, TanStack Form will display the errors next to each field.
+当提交表单时，`onSubmit` 函数将使用验证后的表单数据被调用。如果表单数据无效，TanStack Form 会在每个字段旁边显示错误信息。
 
-## Validation
+## 验证
 
-### Client-side Validation
+### 客户端验证
 
-TanStack Form validates your form data using the Zod schema. Validation happens in real-time as the user types.
+TanStack Form 使用 Zod 模式验证表单数据。验证随用户输入实时进行。
 
 ```tsx showLineNumbers title="form.tsx" {13-15}
 import { useForm } from "@tanstack/react-form"
@@ -194,15 +189,15 @@ export function BugReportForm() {
 }
 ```
 
-### Validation Modes
+### 验证模式
 
-TanStack Form supports different validation strategies through the `validators` option:
+TanStack Form 通过 `validators` 选项支持不同的验证策略：
 
-| Mode         | Description                          |
-| ------------ | ------------------------------------ |
-| `"onChange"` | Validation triggers on every change. |
-| `"onBlur"`   | Validation triggers on blur.         |
-| `"onSubmit"` | Validation triggers on submit.       |
+| 模式          | 描述                             |
+| ------------- | -------------------------------- |
+| `"onChange"`  | 每次更改时触发验证               |
+| `"onBlur"`    | 失焦时触发验证                   |
+| `"onSubmit"`  | 提交时触发验证                   |
 
 ```tsx showLineNumbers title="form.tsx" {6-9}
 const form = useForm({
@@ -218,12 +213,12 @@ const form = useForm({
 })
 ```
 
-## Displaying Errors
+## 显示错误
 
-Display errors next to the field using `<FieldError />`. For styling and accessibility:
+使用 `<FieldError />` 在字段旁显示错误。为样式和无障碍支持：
 
-- Add the `data-invalid` prop to the `<Field />` component.
-- Add the `aria-invalid` prop to the form control such as `<Input />`, `<SelectTrigger />`, `<Checkbox />`, etc.
+- 给 `<Field />` 组件添加 `data-invalid` 属性。
+- 给表单控件（如 `<Input />`、`<SelectTrigger />`、`<Checkbox />` 等）添加 `aria-invalid` 属性。
 
 ```tsx showLineNumbers title="form.tsx" {4,18}
 <form.Field
@@ -250,12 +245,12 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
 />
 ```
 
-## Working with Different Field Types
+## 处理不同类型的字段
 
-### Input
+### 输入框（Input）
 
-- For input fields, use `field.state.value` and `field.handleChange` on the `<Input />` component.
-- To show errors, add the `aria-invalid` prop to the `<Input />` component and the `data-invalid` prop to the `<Field />` component.
+- 输入框使用 `<Input />` 组件的 `field.state.value` 和 `field.handleChange`。
+- 显示错误时，在 `<Input />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
   name="form-tanstack-input"
@@ -292,10 +287,10 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
 />
 ```
 
-### Textarea
+### 多行文本框（Textarea）
 
-- For textarea fields, use `field.state.value` and `field.handleChange` on the `<Textarea />` component.
-- To show errors, add the `aria-invalid` prop to the `<Textarea />` component and the `data-invalid` prop to the `<Field />` component.
+- 多行文本使用 `<Textarea />` 组件的 `field.state.value` 和 `field.handleChange`。
+- 显示错误时，在 `<Textarea />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
   name="form-tanstack-textarea"
@@ -334,10 +329,10 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
 />
 ```
 
-### Select
+### 选择框（Select）
 
-- For select components, use `field.state.value` and `field.handleChange` on the `<Select />` component.
-- To show errors, add the `aria-invalid` prop to the `<SelectTrigger />` component and the `data-invalid` prop to the `<Field />` component.
+- 选择框在 `<Select />` 组件上使用 `field.state.value` 和 `field.handleChange`。
+- 显示错误时，在 `<SelectTrigger />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
   name="form-tanstack-select"
@@ -384,12 +379,12 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
 />
 ```
 
-### Checkbox
+### 复选框（Checkbox）
 
-- For checkbox, use `field.state.value` and `field.handleChange` on the `<Checkbox />` component.
-- To show errors, add the `aria-invalid` prop to the `<Checkbox />` component and the `data-invalid` prop to the `<Field />` component.
-- For checkbox arrays, use `mode="array"` on the `<form.Field />` component and TanStack Form's array helpers.
-- Remember to add `data-slot="checkbox-group"` to the `<FieldGroup />` component for proper styling and spacing.
+- 复选框使用 `<Checkbox />` 组件的 `field.state.value` 和 `field.handleChange`。
+- 显示错误时，在 `<Checkbox />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
+- 对于复选框数组，在 `<form.Field />` 组件上使用 `mode="array"`，并使用 TanStack Form 的数组辅助功能。
+- 别忘了给 `<FieldGroup />` 组件添加 `data-slot="checkbox-group"` 以实现正确的样式和间距。
 
 <ComponentPreview
   name="form-tanstack-checkbox"
@@ -448,10 +443,10 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
 />
 ```
 
-### Radio Group
+### 单选组（Radio Group）
 
-- For radio groups, use `field.state.value` and `field.handleChange` on the `<RadioGroup />` component.
-- To show errors, add the `aria-invalid` prop to the `<RadioGroupItem />` component and the `data-invalid` prop to the `<Field />` component.
+- 单选组在 `<RadioGroup />` 组件上使用 `field.state.value` 和 `field.handleChange`。
+- 显示错误时，在 `<RadioGroupItem />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
   name="form-tanstack-radiogroup"
@@ -501,10 +496,10 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
 />
 ```
 
-### Switch
+### 开关（Switch）
 
-- For switches, use `field.state.value` and `field.handleChange` on the `<Switch />` component.
-- To show errors, add the `aria-invalid` prop to the `<Switch />` component and the `data-invalid` prop to the `<Field />` component.
+- 开关在 `<Switch />` 组件上使用 `field.state.value` 和 `field.handleChange`。
+- 显示错误时，在 `<Switch />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
   name="form-tanstack-switch"
@@ -541,9 +536,9 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
 />
 ```
 
-### Complex Forms
+### 复杂表单
 
-Here is an example of a more complex form with multiple fields and validation.
+下面是一个包含多个字段和验证的更复杂表单示例。
 
 <ComponentPreview
   name="form-tanstack-complex"
@@ -551,9 +546,9 @@ Here is an example of a more complex form with multiple fields and validation.
   chromeLessOnMobile
 />
 
-## Resetting the Form
+## 重置表单
 
-Use `form.reset()` to reset the form to its default values.
+使用 `form.reset()` 重置表单到默认值。
 
 ```tsx showLineNumbers
 <Button type="button" variant="outline" onClick={() => form.reset()}>
@@ -561,9 +556,9 @@ Use `form.reset()` to reset the form to its default values.
 </Button>
 ```
 
-## Array Fields
+## 数组字段
 
-TanStack Form provides powerful array field management with `mode="array"`. This allows you to dynamically add, remove, and update array items with full validation support.
+TanStack Form 提供使用 `mode="array"` 的强大数组字段管理功能。您可以动态添加、移除及更新数组项，并支持完整的验证。
 
 <ComponentPreview
   name="form-tanstack-array"
@@ -571,11 +566,11 @@ TanStack Form provides powerful array field management with `mode="array"`. This
   chromeLessOnMobile
 />
 
-This example demonstrates managing multiple email addresses with array fields. Users can add up to 5 email addresses, remove individual addresses, and each address is validated independently.
+该示例演示了如何使用数组字段管理多个电子邮件地址。用户最多可添加 5 个邮箱地址，且可删除单个地址，每个地址独立验证。
 
-### Array Field Structure
+### 数组字段结构
 
-Use `mode="array"` on the parent field to enable array field management.
+在父字段上使用 `mode="array"` 启用数组字段管理。
 
 ```tsx showLineNumbers title="form.tsx" {3,12-14}
 <form.Field
@@ -590,7 +585,7 @@ Use `mode="array"` on the parent field to enable array field management.
         </FieldDescription>
         <FieldGroup>
           {field.state.value.map((_, index) => (
-            // Nested field for each array item
+            // 嵌套字段对应数组中的每个项目
           ))}
         </FieldGroup>
       </FieldSet>
@@ -599,9 +594,9 @@ Use `mode="array"` on the parent field to enable array field management.
 />
 ```
 
-### Nested Fields
+### 嵌套字段
 
-Access individual array items using bracket notation: `fieldName[index].propertyName`. This example uses `InputGroup` to display the remove button inline with the input.
+使用括号语法访问单个数组项：`fieldName[index].propertyName`。此示例使用 `InputGroup` 实现删除按钮与输入框的同排显示。
 
 ```tsx showLineNumbers title="form.tsx"
 <form.Field
@@ -647,9 +642,9 @@ Access individual array items using bracket notation: `fieldName[index].property
 />
 ```
 
-### Adding Items
+### 添加项目
 
-Use `field.pushValue(item)` to add items to an array field. You can disable the button when the array reaches its maximum length.
+使用 `field.pushValue(item)` 向数组字段添加项目。可在数组达到最大长度时禁用按钮。
 
 ```tsx showLineNumbers title="form.tsx"
 <Button
@@ -663,9 +658,9 @@ Use `field.pushValue(item)` to add items to an array field. You can disable the 
 </Button>
 ```
 
-### Removing Items
+### 移除项目
 
-Use `field.removeValue(index)` to remove items from an array field. You can conditionally show the remove button only when there's more than one item.
+使用 `field.removeValue(index)` 从数组字段中移除项目。可在项目数多于一项时有条件显示删除按钮。
 
 ```tsx showLineNumbers title="form.tsx"
 {
@@ -680,9 +675,9 @@ Use `field.removeValue(index)` to remove items from an array field. You can cond
 }
 ```
 
-### Array Validation
+### 数组验证
 
-Validate array fields using Zod's array methods.
+使用 Zod 的数组方法验证数组字段。
 
 ```tsx showLineNumbers title="form.tsx"
 const formSchema = z.object({

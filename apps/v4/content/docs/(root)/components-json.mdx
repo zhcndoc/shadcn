@@ -1,28 +1,27 @@
 ---
 title: components.json
-description: Configuration for your project.
+description: 您项目的配置文件。
 ---
 
-The `components.json` file holds configuration for your project.
+`components.json` 文件包含您项目的配置信息。
 
-We use it to understand how your project is set up and how to generate components customized for your project.
+我们使用它来了解您的项目如何设置，以及如何为您的项目生成定制组件。
 
-<Callout className="mt-6" title="Note: The `components.json` file is optional">
-  It is **only required if you're using the CLI** to add components to your
-  project. If you're using the copy and paste method, you don't need this file.
+<Callout className="mt-6" title="注意：`components.json` 文件是可选的">
+  仅当您使用 CLI 向项目添加组件时，才需要此文件。如果您使用复制粘贴方式，则不需要此文件。
 </Callout>
 
-You can create a `components.json` file in your project by running the following command:
+您可以通过运行以下命令在项目中创建一个 `components.json` 文件：
 
 ```bash
 npx shadcn@latest init
 ```
 
-See the <Link href="/docs/cli">CLI section</Link> for more information.
+更多信息请参见 <Link href="/docs/cli">CLI 章节</Link>。
 
 ## $schema
 
-You can see the JSON Schema for `components.json` [here](https://ui.shadcn.com/schema.json).
+您可以在[这里](https://ui.shadcn.com/schema.json)查看 `components.json` 的 JSON Schema。
 
 ```json title="components.json"
 {
@@ -32,7 +31,7 @@ You can see the JSON Schema for `components.json` [here](https://ui.shadcn.com/s
 
 ## style
 
-The style for your components. **This cannot be changed after initialization.**
+您组件的样式。**初始化后不可更改。**
 
 ```json title="components.json"
 {
@@ -40,17 +39,17 @@ The style for your components. **This cannot be changed after initialization.**
 }
 ```
 
-The `default` style has been deprecated. Use the `new-york` style instead.
+`default` 样式已被弃用，请改用 `new-york` 样式。
 
 ## tailwind
 
-Configuration to help the CLI understand how Tailwind CSS is set up in your project.
+用于帮助 CLI 理解您项目中 Tailwind CSS 如何配置的设置。
 
-See the <Link href="/docs/installation">installation section</Link> for how to set up Tailwind CSS.
+有关 Tailwind CSS 的安装方法，请参见 <Link href="/docs/installation">安装章节</Link>。
 
 ### tailwind.config
 
-Path to where your `tailwind.config.js` file is located. **For Tailwind CSS v4, leave this blank.**
+`tailwind.config.js` 文件所在路径。**对于 Tailwind CSS v4 版本，请留空。**
 
 ```json title="components.json"
 {
@@ -62,7 +61,7 @@ Path to where your `tailwind.config.js` file is located. **For Tailwind CSS v4, 
 
 ### tailwind.css
 
-Path to the CSS file that imports Tailwind CSS into your project.
+引入 Tailwind CSS 的 CSS 文件路径。
 
 ```json title="components.json"
 {
@@ -74,7 +73,7 @@ Path to the CSS file that imports Tailwind CSS into your project.
 
 ### tailwind.baseColor
 
-This is used to generate the default color palette for your components. **This cannot be changed after initialization.**
+用于生成组件默认颜色调色板。**初始化后不可更改。**
 
 ```json title="components.json"
 {
@@ -86,9 +85,9 @@ This is used to generate the default color palette for your components. **This c
 
 ### tailwind.cssVariables
 
-You can choose between using CSS variables or Tailwind CSS utility classes for theming.
+可选择使用 CSS 变量或 Tailwind CSS 实用类进行主题定制。
 
-To use utility classes for theming set `tailwind.cssVariables` to `false`. For CSS variables, set `tailwind.cssVariables` to `true`.
+若想使用实用类主题，将 `tailwind.cssVariables` 设为 `false`；使用 CSS 变量则设为 `true`。
 
 ```json title="components.json"
 {
@@ -98,13 +97,13 @@ To use utility classes for theming set `tailwind.cssVariables` to `false`. For C
 }
 ```
 
-For more information, see the <Link href="/docs/theming">theming docs</Link>.
+更多详情请参见 <Link href="/docs/theming">主题文档</Link>。
 
-**This cannot be changed after initialization.** To switch between CSS variables and utility classes, you'll have to delete and re-install your components.
+**初始化后不可更改。** 若要在 CSS 变量和实用类之间切换，需删除并重新安装您的组件。
 
 ### tailwind.prefix
 
-The prefix to use for your Tailwind CSS utility classes. Components will be added with this prefix.
+Tailwind CSS 实用类前缀。组件会使用该前缀添加类名。
 
 ```json title="components.json"
 {
@@ -116,9 +115,9 @@ The prefix to use for your Tailwind CSS utility classes. Components will be adde
 
 ## rsc
 
-Whether or not to enable support for React Server Components.
+是否启用 React 服务器组件支持。
 
-The CLI automatically adds a `use client` directive to client components when set to `true`.
+设置为 `true` 时，CLI 会自动向客户端组件添加 `use client` 指令。
 
 ```json title="components.json"
 {
@@ -128,9 +127,9 @@ The CLI automatically adds a `use client` directive to client components when se
 
 ## tsx
 
-Choose between TypeScript or JavaScript components.
+选择使用 TypeScript 还是 JavaScript 组件。
 
-Setting this option to `false` allows components to be added as JavaScript with the `.jsx` file extension.
+将此选项设为 `false`，组件将以 JavaScript `.jsx` 文件格式添加。
 
 ```json title="components.json"
 {
@@ -140,18 +139,17 @@ Setting this option to `false` allows components to be added as JavaScript with 
 
 ## aliases
 
-The CLI uses these values and the `paths` config from your `tsconfig.json` or `jsconfig.json` file to place generated components in the correct location.
+CLI 使用此配置和您 `tsconfig.json` 或 `jsconfig.json` 中的 `paths` 配置，将生成的组件放置到正确位置。
 
-Path aliases have to be set up in your `tsconfig.json` or `jsconfig.json` file.
+路径别名需在您的 `tsconfig.json` 或 `jsconfig.json` 中设置。
 
 <Callout className="mt-6">
-  **Important:** If you're using the `src` directory, make sure it is included
-  under `paths` in your `tsconfig.json` or `jsconfig.json` file.
+  **重要提示：** 如果您使用 `src` 目录，确保它已包含在您的 `tsconfig.json` 或 `jsconfig.json` 文件的 `paths` 设置中。
 </Callout>
 
 ### aliases.utils
 
-Import alias for your utility functions.
+工具函数的导入别名。
 
 ```json title="components.json"
 {
@@ -163,7 +161,7 @@ Import alias for your utility functions.
 
 ### aliases.components
 
-Import alias for your components.
+组件的导入别名。
 
 ```json title="components.json"
 {
@@ -175,9 +173,9 @@ Import alias for your components.
 
 ### aliases.ui
 
-Import alias for `ui` components.
+`ui` 组件的导入别名。
 
-The CLI will use the `aliases.ui` value to determine where to place your `ui` components. Use this config if you want to customize the installation directory for your `ui` components.
+CLI 会根据 `aliases.ui` 的配置决定将 `ui` 组件安装到哪个目录。若需自定义 `ui` 组件的安装目录，请使用此配置。
 
 ```json title="components.json"
 {
@@ -189,7 +187,7 @@ The CLI will use the `aliases.ui` value to determine where to place your `ui` co
 
 ### aliases.lib
 
-Import alias for `lib` functions such as `format-date` or `generate-id`.
+`lib` 函数（如 `format-date` 或 `generate-id`）的导入别名。
 
 ```json title="components.json"
 {
@@ -201,7 +199,7 @@ Import alias for `lib` functions such as `format-date` or `generate-id`.
 
 ### aliases.hooks
 
-Import alias for `hooks` such as `use-media-query` or `use-toast`.
+`hooks`（如 `use-media-query` 或 `use-toast`）的导入别名。
 
 ```json title="components.json"
 {
@@ -213,13 +211,13 @@ Import alias for `hooks` such as `use-media-query` or `use-toast`.
 
 ## registries
 
-Configure multiple resource registries for your project. This allows you to install components, libraries, utilities, and other resources from various sources including private registries.
+为项目配置多个资源注册表。这样可以从不同来源安装组件、库、工具和其它资源，包括私有注册表。
 
-See the <Link href="/docs/registry/namespace">Namespaced Registries</Link> documentation for detailed information.
+详细信息请参见 <Link href="/docs/registry/namespace">命名空间注册表</Link> 文档。
 
-### Basic Configuration
+### 基本配置
 
-Configure registries with URL templates:
+使用 URL 模板配置注册表：
 
 ```json title="components.json"
 {
@@ -231,11 +229,11 @@ Configure registries with URL templates:
 }
 ```
 
-The `{name}` placeholder is replaced with the resource name when installing.
+安装时，`{name}` 会替换为资源名称。
 
-### Advanced Configuration with Authentication
+### 带认证的高级配置
 
-For private registries that require authentication:
+对于需要鉴权的私有注册表：
 
 ```json title="components.json"
 {
@@ -254,24 +252,24 @@ For private registries that require authentication:
 }
 ```
 
-Environment variables in the format `${VAR_NAME}` are automatically expanded from your environment.
+环境变量格式为 `${VAR_NAME}`，会自动从环境中展开。
 
-### Using Namespaced Registries
+### 使用命名空间注册表
 
-Once configured, install resources using the namespace syntax:
+配置完成后，使用命名空间语法安装资源：
 
 ```bash
-# Install from a configured registry
+# 从配置的注册表安装
 npx shadcn@latest add @v0/dashboard
 
-# Install from private registry
+# 从私有注册表安装
 npx shadcn@latest add @private/button
 
-# Install multiple resources
+# 安装多个资源
 npx shadcn@latest add @acme/header @internal/auth-utils
 ```
 
-### Example: Multiple Registry Setup
+### 示例：多注册表配置
 
 ```json title="components.json"
 {
@@ -294,10 +292,10 @@ npx shadcn@latest add @acme/header @internal/auth-utils
 }
 ```
 
-This configuration allows you to:
+此配置允许您：
 
-- Install public components from shadcn/ui
-- Access private company UI components with authentication
-- Use team-specific resources with versioning
+- 从 shadcn/ui 安装公开组件
+- 带认证访问公司私有 UI 组件
+- 使用团队特定资源并支持版本管理
 
-For more information about authentication, see the <Link href="/docs/registry/authentication">Authentication</Link> documentation.
+有关鉴权的更多信息，请参见 <Link href="/docs/registry/authentication">鉴权</Link> 文档。

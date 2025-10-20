@@ -1,24 +1,24 @@
 ---
-title: Scroll Area
-description: Augments native scroll functionality for custom, cross-browser styling.
+title: 滚动区域 Scroll Area
+description: 增强原生滚动功能，实现自定义的跨浏览器样式。
 component: true
 links:
-  doc: https://www.radix-ui.com/docs/primitives/components/scroll-area
-  api: https://www.radix-ui.com/docs/primitives/components/scroll-area#api-reference
+  doc: https://radix.zhcndoc.com/docs/primitives/components/scroll-area
+  api: https://radix.zhcndoc.com/docs/primitives/components/scroll-area#api-reference
 ---
 
 <ComponentPreview
   name="scroll-area-demo"
-  description="A scroll area component."
+  description="一个滚动区域组件。"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -32,17 +32,17 @@ npx shadcn@latest add scroll-area
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-scroll-area
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制粘贴到你的项目中。</Step>
 
 <ComponentSource name="scroll-area" title="components/ui/scroll-area.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目设置。</Step>
 
 </Steps>
 
@@ -50,7 +50,7 @@ npm install @radix-ui/react-scroll-area
 
 </CodeTabs>
 
-## Usage
+## 使用方法
 
 ```tsx showLineNumbers
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -58,17 +58,12 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 
 ```tsx showLineNumbers
 <ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
-  Jokester began sneaking into the castle in the middle of the night and leaving
-  jokes all over the place: under the king's pillow, in his soup, even in the
-  royal toilet. The king was furious, but he couldn't seem to stop Jokester. And
-  then, one day, the people of the kingdom discovered that the jokes left by
-  Jokester were so funny that they couldn't help but laugh. And once they
-  started laughing, they couldn't stop.
+  Jokester 开始在深夜溜进城堡，到处留下笑话：国王的枕头下、汤里，甚至是皇室的厕所里。国王勃然大怒，但似乎无法阻止 Jokester。然后有一天，王国的人民发现 Jokester 留下的笑话实在太好笑了，他们忍不住开怀大笑。一旦他们开始笑，就停不下来了。
 </ScrollArea>
 ```
 
-## Examples
+## 示例
 
-### Horizontal Scrolling
+### 横向滚动
 
 <ComponentPreview name="scroll-area-horizontal-demo" />

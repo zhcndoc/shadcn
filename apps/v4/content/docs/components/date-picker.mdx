@@ -1,22 +1,22 @@
 ---
-title: Date Picker
-description: A date picker component with range and presets.
+title: 日期选择器 Date Picker
+description: 带有范围和预设选项的日期选择器组件。
 component: true
 ---
 
 <ComponentPreview
   name="calendar-22"
-  title="Date of Birth Picker"
-  description="A calendar with date of birth picker."
+  title="出生日期选择器"
+  description="带有出生日期选择功能的日历。"
 />
 
-## Installation
+## 安装
 
-The Date Picker is built using a composition of the `<Popover />` and the `<Calendar />` components.
+日期选择器是通过组合 `<Popover />` 和 `<Calendar />` 组件构建的。
 
-See installation instructions for the [Popover](/docs/components/popover#installation) and the [Calendar](/docs/components/calendar#installation) components.
+请参阅 [Popover](/docs/components/popover#installation) 和 [Calendar](/docs/components/calendar#installation) 组件的安装说明。
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers title="components/example-date-picker.tsx"
 "use client"
@@ -46,7 +46,7 @@ export function DatePickerDemo() {
           className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
         >
           <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {date ? format(date, "PPP") : <span>请选择日期</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
@@ -57,40 +57,40 @@ export function DatePickerDemo() {
 }
 ```
 
-See the [React DayPicker](https://react-day-picker.js.org) documentation for more information.
+更多信息请参阅 [React DayPicker](https://react-day-picker.js.org) 文档。
 
-## Examples
+## 示例
 
-### Date of Birth Picker
+### 出生日期选择器
 
 <ComponentPreview
   name="calendar-22"
-  title="Date of Birth Picker"
-  description="A calendar with date of birth picker."
+  title="出生日期选择器"
+  description="带有出生日期选择功能的日历。"
 />
 
-### Picker with Input
+### 带输入框的选择器
 
 <ComponentPreview
   name="calendar-28"
-  title="Picker with Input"
-  description="A calendar with input and picker."
+  title="带输入框的选择器"
+  description="带输入框和选择器的日历。"
 />
 
-### Date and Time Picker
+### 日期和时间选择器
 
 <ComponentPreview
   name="calendar-24"
-  title="Date and Time Picker"
-  description="A calendar with date and time picker."
+  title="日期和时间选择器"
+  description="带有日期和时间选择功能的日历。"
 />
 
-### Natural Language Picker
+### 自然语言选择器
 
-This component uses the `chrono-node` library to parse natural language dates.
+该组件使用 `chrono-node` 库解析自然语言日期。
 
 <ComponentPreview
   name="calendar-29"
-  title="Natural Language Picker"
-  description="A calendar with natural language picker."
+  title="自然语言选择器"
+  description="带有自然语言选择功能的日历。"
 />

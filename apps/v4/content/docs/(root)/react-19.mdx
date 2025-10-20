@@ -1,32 +1,28 @@
 ---
 title: Next.js 15 + React 19
-description: Using shadcn/ui with Next.js 15 and React 19.
+description: 在 Next.js 15 和 React 19 中使用 shadcn/ui。
 ---
 
 <Callout className="mb-6 border-blue-600 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 [&_code]:bg-blue-100 dark:[&_code]:bg-blue-900">
-  **Update:** We have added full support for React 19 and Tailwind v4 in the
-  `canary` release. See the docs for [Tailwind v4](/docs/tailwind-v4) for more
-  information.
+  **更新：** 我们在 `canary` 版本中已添加对 React 19 和 Tailwind v4 的全面支持。详情请参见 
+  [Tailwind v4](/docs/tailwind-v4) 文档。
 </Callout>
 
 <Callout>
-  **The following guide applies to any framework that supports React 19**. I
-  titled this page "Next.js 15 + React 19" to help people upgrading to Next.js
-  15 find it. We are working with package maintainers to help upgrade to React
-  19.
+  **以下指南适用于所有支持 React 19 的框架。** 我将此页面命名为 “Next.js 15 + React 19”，是为了方便升级到 Next.js 15 的用户查找。我们正在与包维护者合作，帮助他们升级到 React 19。
 </Callout>
 
-## TL;DR
+## 精简总结（TL;DR）
 
-If you're using `npm`, you can install shadcn/ui dependencies with a flag. The `shadcn` CLI will prompt you to select a flag when you run it. No flags required for pnpm, bun, or yarn.
+如果你使用 `npm`，可以通过添加标志来安装 shadcn/ui 的依赖。在运行 `shadcn` CLI 时，会提示你选择一个标志。使用 pnpm、bun 或 yarn 则无需添加标志。
 
-See [Upgrade Status](#upgrade-status) for the status of React 19 support for each package.
+有关每个包对 React 19 支持的状态，请参阅 [升级状态](#upgrade-status)。
 
-## What's happening?
+## 发生了什么？
 
-React 19 is now [rc](https://www.npmjs.com/package/react?activeTab=versions) and is [tested and supported in the latest Next.js 15 release](https://nextjs.org/blog/next-15#react-19).
+React 19 现已为 [rc 版本](https://www.npmjs.com/package/react?activeTab=versions) ，并且已在最新版 Next.js 15 中[测试并支持](https://nextjs.org/blog/next-15#react-19)。
 
-To support React 19, package maintainers will need to test and update their packages to include React 19 as a peer dependency. This is [already](https://github.com/radix-ui/primitives/pull/2952) [in](https://github.com/pacocoursey/cmdk/pull/318) [progress](https://github.com/emilkowalski/vaul/pull/498).
+为了支持 React 19，包维护者需要测试并更新他们的包，将 React 19 作为 peer dependency 添加进来。这项工作已经在[进行中](https://github.com/radix-ui/primitives/pull/2952)、[进行中](https://github.com/pacocoursey/cmdk/pull/318) 和[进行中](https://github.com/emilkowalski/vaul/pull/498)。
 
 ```diff /^19.0/
 "peerDependencies": {
@@ -38,11 +34,10 @@ To support React 19, package maintainers will need to test and update their pack
 ```
 
 <Callout>
-  You can check if a package lists React 19 as a peer dependency by running
-  `npm info <package> peerDependencies`.
+  你可以通过运行 `npm info <package> peerDependencies` 来检查包是否已将 React 19 列为 peer dependency。
 </Callout>
 
-In the meantime, if you are installing a package that **does not** list React 19 as a peer dependency, you will see an error message like this:
+与此同时，如果你安装的包 **未** 将 React 19 列为 peer dependency，会看到类似如下的错误信息：
 
 ```bash
 npm error code ERESOLVE
@@ -55,14 +50,14 @@ npm error   react@"19.0.0-rc-69d4b800-20241021" from the root project
 ```
 
 <Callout>
-  **Note:** This is npm only. PNPM and Bun will only show a silent warning.
+  **注意：** 这仅在 npm 中出现。PNPM 和 Bun 只会显示静默警告。
 </Callout>
 
-## How to fix this
+## 如何解决
 
-### Solution 1: `--force` or `--legacy-peer-deps`
+### 方案一：`--force` 或 `--legacy-peer-deps`
 
-You can force install a package with the `--force` or the `--legacy-peer-deps` flag.
+你可以使用 `--force` 或 `--legacy-peer-deps` 标志强制安装包：
 
 ```bash
 npm i <package> --force
@@ -70,45 +65,42 @@ npm i <package> --force
 npm i <package> --legacy-peer-deps
 ```
 
-This will install the package and ignore the peer dependency warnings.
+这将安装包并忽略 peer dependency 警告。
 
 <Accordion type="multiple">
   <AccordionItem value="flags">
     <AccordionTrigger className="font-medium">
-      What do the `--force` and `--legacy-peer-deps` flag do?
+      `--force` 和 `--legacy-peer-deps` 标志的作用是什么？
     </AccordionTrigger>
     <AccordionContent className="[&_ul]:mt-0">
 
-      - `--force`: Ignores and overrides any dependency conflicts, forcing the
-        installation of packages.
-      - `--legacy-peer-deps`: Skips strict peer dependency checks, allowing
-        installation of packages with unmet peer dependencies to avoid errors.
+      - `--force`：忽略并覆盖所有依赖冲突，强制安装包。
+      - `--legacy-peer-deps`：跳过严格的 peer dependency 检查，允许安装未满足 peer dependencies 的包，以避免错误。
 
     </AccordionContent>
 
   </AccordionItem>
 </Accordion>
 
-### Solution 2: Use React 18
+### 方案二：使用 React 18
 
-You can downgrade `react` and `react-dom` to version 18, which is compatible with the package you are installing and upgrade when the dependency is updated.
+你可以将 `react` 和 `react-dom` 降级到版本 18，这样就与所安装的包兼容，等依赖更新后再升级。
 
 ```bash
 npm i react@18 react-dom@18
 ```
 
-Whichever solution you choose, make sure you test your app thoroughly to ensure
-there are no regressions.
+无论选择哪种方案，请务必充分测试你的应用，确保不会出现回归问题。
 
-## Using shadcn/ui on Next.js 15
+## 在 Next.js 15 上使用 shadcn/ui
 
-### Using pnpm, bun, or yarn
+### 使用 pnpm、bun 或 yarn
 
-Follow the instructions in the [installation guide](/docs/installation/next) to install shadcn/ui. No flags are needed.
+请按照[安装指南](/docs/installation/next)中的步骤安装 shadcn/ui，无需任何标志。
 
-### Using npm
+### 使用 npm
 
-When you run `npx shadcn@latest init -d`, you will be prompted to select an option to resolve the peer dependency issues.
+当你运行 `npx shadcn@latest init -d` 时，会提示你选择一种方式以解决 peer dependency 问题：
 
 ```bash
 It looks like you are using React 19.
@@ -119,47 +111,47 @@ Some packages may fail to install due to peer dependency issues (see https://ui.
     Use --legacy-peer-deps
 ```
 
-You can then run the command with the flag you choose.
+接着，你可以使用选择的标志运行该命令。
 
-## Adding components
+## 添加组件
 
-The process for adding components is the same as above. Select a flag to resolve the peer dependency issues.
+添加组件的流程与上述相同。请选择一个标志来解决 peer dependency 问题。
 
-**Remember to always test your app after installing new dependencies.**
+**请记得每次安装新依赖后，务必测试你的应用。**
 
-## Upgrade Status
+## 升级状态
 
-To make it easy for you track the progress of the upgrade, I've created a table below with React 19 support status for the shadcn/ui dependencies.
+为了方便你跟踪升级进度，我制作了下面的表格，列出了 shadcn/ui 依赖包对 React 19 的支持状态。
 
-- ✅ - Works with React 19 using npm, pnpm, and bun.
-- 🚧 - Works with React 19 using pnpm and bun. Requires flag for npm. PR is in progress.
+- ✅ - 使用 npm、pnpm 和 bun 均支持 React 19。
+- 🚧 - 使用 pnpm 和 bun 支持 React 19。npm 需要添加标志。相关 PR 正在进行中。
 
-| Package                                                                            | Status | Note                                                        |
-| ---------------------------------------------------------------------------------- | ------ | ----------------------------------------------------------- |
-| [radix-ui](https://www.npmjs.com/package/@radix-ui/react-icons)                    | ✅     |                                                             |
-| [lucide-react](https://www.npmjs.com/package/lucide-react)                         | ✅     |                                                             |
-| [class-variance-authority](https://www.npmjs.com/package/class-variance-authority) | ✅     | Does not list React 19 as a peer dependency.                |
-| [tailwindcss-animate](https://www.npmjs.com/package/tailwindcss-animate)           | ✅     | Does not list React 19 as a peer dependency.                |
-| [embla-carousel-react](https://www.npmjs.com/package/embla-carousel-react)         | ✅     |                                                             |
-| [recharts](https://www.npmjs.com/package/recharts)                                 | ✅     | See note [below](#recharts)                                 |
-| [react-hook-form](https://www.npmjs.com/package/react-hook-form)                   | ✅     |                                                             |
-| [react-resizable-panels](https://www.npmjs.com/package/react-resizable-panels)     | ✅     |                                                             |
-| [sonner](https://www.npmjs.com/package/sonner)                                     | ✅     |                                                             |
-| [react-day-picker](https://www.npmjs.com/package/react-day-picker)                 | ✅     | Works with flag for npm. Work to upgrade to v9 in progress. |
-| [input-otp](https://www.npmjs.com/package/input-otp)                               | ✅     |                                                             |
-| [vaul](https://www.npmjs.com/package/vaul)                                         | ✅     |                                                             |
-| [@radix-ui/react-icons](https://www.npmjs.com/package/@radix-ui/react-icons)       | 🚧     | See [PR #194](https://github.com/radix-ui/icons/pull/194)   |
-| [cmdk](https://www.npmjs.com/package/cmdk)                                         | ✅     |                                                             |
+| 包名                                                                              | 状态   | 备注                                                         |
+| --------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------ |
+| [radix-ui](https://www.npmjs.com/package/@radix-ui/react-icons)                    | ✅     |                                                              |
+| [lucide-react](https://www.npmjs.com/package/lucide-react)                         | ✅     |                                                              |
+| [class-variance-authority](https://www.npmjs.com/package/class-variance-authority) | ✅     | 未将 React 19 列为 peer dependency。                          |
+| [tailwindcss-animate](https://www.npmjs.com/package/tailwindcss-animate)           | ✅     | 未将 React 19 列为 peer dependency。                          |
+| [embla-carousel-react](https://www.npmjs.com/package/embla-carousel-react)         | ✅     |                                                              |
+| [recharts](https://www.npmjs.com/package/recharts)                                 | ✅     | 见下文[说明](#recharts)                                     |
+| [react-hook-form](https://www.npmjs.com/package/react-hook-form)                   | ✅     |                                                              |
+| [react-resizable-panels](https://www.npmjs.com/package/react-resizable-panels)     | ✅     |                                                              |
+| [sonner](https://www.npmjs.com/package/sonner)                                     | ✅     |                                                              |
+| [react-day-picker](https://www.npmjs.com/package/react-day-picker)                 | ✅     | npm 需要添加标志支持。升级到 v9 的工作正在进行中。            |
+| [input-otp](https://www.npmjs.com/package/input-otp)                               | ✅     |                                                              |
+| [vaul](https://www.npmjs.com/package/vaul)                                         | ✅     |                                                              |
+| [@radix-ui/react-icons](https://www.npmjs.com/package/@radix-ui/react-icons)       | 🚧     | 见[PR #194](https://github.com/radix-ui/icons/pull/194)       |
+| [cmdk](https://www.npmjs.com/package/cmdk)                                         | ✅     |                                                              |
 
-If you have any questions, please [open an issue](https://github.com/shadcn/ui/issues) on GitHub.
+如果你有任何问题，请在 GitHub 上[提交 issue](https://github.com/shadcn/ui/issues)。
 
 ## Recharts
 
-To use recharts with React 19, you will need to override the `react-is` dependency.
+要在 React 19 中使用 recharts，你需要重写 `react-is` 依赖。
 
 <Steps>
 
-<Step>Add the following to your `package.json`</Step>
+<Step>在你的 `package.json` 中添加如下内容：</Step>
 
 ```json title="package.json"
 "overrides": {
@@ -167,8 +159,8 @@ To use recharts with React 19, you will need to override the `react-is` dependen
 }
 ```
 
-Note: the `react-is` version needs to match the version of React 19 you are using. The above is an example.
+注意：`react-is` 的版本需要与你使用的 React 19 版本相匹配，上述为示例。
 
-<Step>Run `npm install --legacy-peer-deps`</Step>
+<Step>运行 `npm install --legacy-peer-deps`</Step>
 
 </Steps>

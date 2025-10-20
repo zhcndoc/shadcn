@@ -1,22 +1,21 @@
 ---
-title: Open in v0
-description: Integrate your registry with Open in v0.
+title: 在 v0 中打开
+description: 将您的注册表与 v0 中的“打开”功能集成。
 ---
 
-If your registry is hosted and publicly accessible via a URL, you can open a registry item in v0 by using the `https://v0.dev/chat/api/open?url=[URL]` endpoint.
+如果您的注册表托管且可以通过 URL 公开访问，您可以通过使用 `https://v0.dev/chat/api/open?url=[URL]` 端点，在 v0 中打开注册表项目。
 
-eg. [https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json](https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json)
+例如：[https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json](https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json)
 
 <Callout className="mt-6">
-  **Important:** `Open in v0` does not support `cssVars`, `css`, `envVars`,
-  namespaced registries, or advanced authentication methods.
+  **重要提示：** “在 v0 中打开”不支持 `cssVars`、`css`、`envVars`、命名空间注册表或高级身份验证方法。
 </Callout>
 
-## Button
+## 按钮
 
-See [Build your Open in v0 button](https://v0.dev/chat/button) for more information on how to build your own `Open in v0` button.
+有关如何构建您自己的“在 v0 中打开”按钮的更多信息，请参见 [构建您的 v0 打开按钮](https://v0.dev/chat/button)。
 
-Here's a simple example of how to add a `Open in v0` button to your site.
+下面是一个如何向您网站添加“在 v0 中打开”按钮的简单示例。
 
 ```jsx showLineNumbers
 import { Button } from "@/components/ui/button"
@@ -59,29 +58,29 @@ export function OpenInV0Button({ url }: { url: string }) {
 <OpenInV0Button url="https://example.com/r/hello-world.json" />
 ```
 
-## Authentication
+## 身份验证
 
-Open in v0 only supports query parameter authentication. It does not support namespaced registries or advanced authentication methods like Bearer tokens or API keys in headers.
+“在 v0 中打开”仅支持通过查询参数进行身份验证。不支持命名空间注册表或诸如 Bearer 令牌或头部 API 密钥等高级身份验证方法。
 
-### Using Query Parameter Authentication
+### 使用查询参数认证
 
-To add authentication to your registry for Open in v0, use a `token` query parameter:
+要为您的注册表添加“在 v0 中打开”的身份验证，请使用 `token` 查询参数：
 
 ```
 https://registry.company.com/r/hello-world.json?token=your_secure_token_here
 ```
 
-When implementing this on your registry server:
+在注册表服务器上实现时：
 
-1. Check for the `token` query parameter
-2. Validate the token against your authentication system
-3. Return a `401 Unauthorized` response if the token is invalid or missing
-4. Both the shadcn CLI and Open in v0 will handle the 401 response and display an appropriate message to users
+1. 检查 `token` 查询参数
+2. 根据您的身份验证系统验证该令牌
+3. 如果令牌无效或缺失，返回 `401 Unauthorized` 响应
+4. shadcn CLI 和“在 v0 中打开”都会处理 401 响应并向用户显示相应消息
 
-### Example Implementation
+### 示例实现
 
 ```typescript
-// Next.js API route example
+// Next.js API 路由示例
 export async function GET(request: NextRequest) {
   const token = request.nextUrl.searchParams.get("token")
 
@@ -95,12 +94,11 @@ export async function GET(request: NextRequest) {
     )
   }
 
-  // Return the registry item
+  // 返回注册表项目
   return NextResponse.json(registryItem)
 }
 ```
 
 <Callout className="mt-6">
-  **Security Note:** Make sure to encrypt and expire tokens. Never expose
-  production tokens in documentation or examples.
+  **安全提示：** 请确保加密并设置令牌过期时间。切勿在文档或示例中暴露生产令牌。
 </Callout>

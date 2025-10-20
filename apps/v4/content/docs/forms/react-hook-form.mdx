@@ -1,23 +1,20 @@
 ---
 title: React Hook Form
-description: Build forms in React using React Hook Form and Zod.
+description: 使用 React Hook Form 和 Zod 构建 React 表单。
 links:
   doc: https://react-hook-form.com
 ---
 
 import { InfoIcon } from "lucide-react"
 
-In this guide, we will take a look at building forms with React Hook Form. We'll cover building forms with the `<Field />` component, adding schema validation using Zod, error handling, accessibility, and more.
+在本指南中，我们将了解如何使用 React Hook Form 构建表单。内容包括使用 `<Field />` 组件构建表单、使用 Zod 添加模式验证、错误处理、无障碍支持等。
 
-## Demo
+## 演示
 
-We are going to build the following form. It has a simple text input and a textarea. On submit, we'll validate the form data and display any errors.
+我们将构建如下表单。它包含一个简单的文本输入框和一个多行文本框。提交时，我们将验证表单数据并显示任何错误。
 
 <Callout icon={<InfoIcon />}>
-  **Note:** For the purpose of this demo, we have intentionally disabled browser
-  validation to show how schema validation and form errors work in React Hook
-  Form. It is recommended to add basic browser validation in your production
-  code.
+  **注意：** 为了演示目的，我们故意禁用了浏览器自带的验证，以展示在 React Hook Form 中模式验证和表单错误的工作原理。建议在生产代码中添加基本的浏览器验证。
 </Callout>
 
 <ComponentPreview
@@ -26,18 +23,18 @@ We are going to build the following form. It has a simple text input and a texta
   chromeLessOnMobile
 />
 
-## Approach
+## 方法
 
-This form leverages React Hook Form for performant, flexible form handling. We'll build our form using the `<Field />` component, which gives you **complete flexibility over the markup and styling**.
+该表单利用 React Hook Form 实现高性能且灵活的表单处理。我们将使用 `<Field />` 组件构建表单，该组件赋予您对标记和样式的**完全灵活性**。
 
-- Uses React Hook Form's `useForm` hook for form state management.
-- `<Controller />` component for controlled inputs.
-- `<Field />` components for building accessible forms.
-- Client-side validation using Zod with `zodResolver`.
+- 使用 React Hook Form 的 `useForm` 钩子管理表单状态。
+- 使用 `<Controller />` 组件管理受控输入。
+- 使用 `<Field />` 组件构建无障碍表单。
+- 使用 Zod 和 `zodResolver` 进行客户端验证。
 
-## Anatomy
+## 结构
 
-Here's a basic example of a form using the `<Controller />` component from React Hook Form and the `<Field />` component.
+下面是一个使用 React Hook Form 的 `<Controller />` 组件和 `<Field />` 组件构建表单的基本示例。
 
 ```tsx showLineNumbers {5-18}
 <Controller
@@ -45,16 +42,16 @@ Here's a basic example of a form using the `<Controller />` component from React
   control={form.control}
   render={({ field, fieldState }) => (
     <Field data-invalid={fieldState.invalid}>
-      <FieldLabel htmlFor={field.name}>Bug Title</FieldLabel>
+      <FieldLabel htmlFor={field.name}>错误标题</FieldLabel>
       <Input
         {...field}
         id={field.name}
         aria-invalid={fieldState.invalid}
-        placeholder="Login button not working on mobile"
+        placeholder="登录按钮在移动端无法使用"
         autoComplete="off"
       />
       <FieldDescription>
-        Provide a concise title for your bug report.
+        请为您的错误报告提供简明的标题。
       </FieldDescription>
       {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
     </Field>
@@ -62,16 +59,14 @@ Here's a basic example of a form using the `<Controller />` component from React
 />
 ```
 
-## Form
+## 表单
 
-### Create a form schema
+### 创建表单模式
 
-We'll start by defining the shape of our form using a Zod schema
+首先，我们使用 Zod 模式定义表单结构。
 
 <Callout icon={<InfoIcon />}>
-  **Note:** This example uses `zod v3` for schema validation, but you can
-  replace it with any other Standard Schema validation library supported by
-  React Hook Form.
+  **注意：** 本示例使用 `zod v3` 进行模式验证，但您可以使用 React Hook Form 支持的任何其他标准模式验证库替代。
 </Callout>
 
 ```tsx showLineNumbers title="form.tsx"
@@ -80,18 +75,18 @@ import * as z from "zod"
 const formSchema = z.object({
   title: z
     .string()
-    .min(5, "Bug title must be at least 5 characters.")
-    .max(32, "Bug title must be at most 32 characters."),
+    .min(5, "错误标题至少需要5个字符。")
+    .max(32, "错误标题最多32个字符。"),
   description: z
     .string()
-    .min(20, "Description must be at least 20 characters.")
-    .max(100, "Description must be at most 100 characters."),
+    .min(20, "描述至少需要20个字符。")
+    .max(100, "描述最多100个字符。"),
 })
 ```
 
-### Setup the form
+### 设置表单
 
-Next, we'll use the `useForm` hook from React Hook Form to create our form instance. We'll also add the Zod resolver to validate the form data.
+接下来，我们将使用 React Hook Form 中的 `useForm` 钩子创建表单实例，并添加 Zod 解析器用于数据验证。
 
 ```tsx showLineNumbers title="form.tsx" {17-23}
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -101,12 +96,12 @@ import * as z from "zod"
 const formSchema = z.object({
   title: z
     .string()
-    .min(5, "Bug title must be at least 5 characters.")
-    .max(32, "Bug title must be at most 32 characters."),
+    .min(5, "错误标题至少需要5个字符。")
+    .max(32, "错误标题最多32个字符。"),
   description: z
     .string()
-    .min(20, "Description must be at least 20 characters.")
-    .max(100, "Description must be at most 100 characters."),
+    .min(20, "描述至少需要20个字符。")
+    .max(100, "描述最多100个字符。"),
 })
 
 export function BugReportForm() {
@@ -119,40 +114,40 @@ export function BugReportForm() {
   })
 
   function onSubmit(data: z.infer<typeof formSchema>) {
-    // Do something with the form values.
+    // 对表单数值进行处理
     console.log(data)
   }
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)}>
       {/* ... */}
-      {/* Build the form here */}
+      {/* 在此处构建表单 */}
       {/* ... */}
     </form>
   )
 }
 ```
 
-### Build the form
+### 构建表单
 
-We can now build the form using the `<Controller />` component from React Hook Form and the `<Field />` component.
+现在我们可以使用 React Hook Form 的 `<Controller />` 组件和 `<Field />` 组件构建表单。
 
 <ComponentSource
   src="/registry/new-york-v4/examples/form-rhf-demo.tsx"
   title="form.tsx"
 />
 
-### Done
+### 完成
 
-That's it. You now have a fully accessible form with client-side validation.
+就是这样。现在您拥有了一个带有客户端验证的完备无障碍表单。
 
-When you submit the form, the `onSubmit` function will be called with the validated form data. If the form data is invalid, React Hook Form will display the errors next to each field.
+提交表单时，`onSubmit` 函数将接收验证后的表单数据。如果数据无效，React Hook Form 会在各字段旁边显示错误信息。
 
-## Validation
+## 验证
 
-### Client-side Validation
+### 客户端验证
 
-React Hook Form validates your form data using the Zod schema. Define a schema and pass it to the `resolver` option of the `useForm` hook.
+React Hook Form 使用 Zod 模式验证您的表单数据。定义一个模式并传递给 `useForm` 钩子的 `resolver` 选项。
 
 ```tsx showLineNumbers title="example-form.tsx" {5-8,12}
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -175,9 +170,9 @@ export function ExampleForm() {
 }
 ```
 
-### Validation Modes
+### 验证模式
 
-React Hook Form supports different validation modes.
+React Hook Form 支持多种验证模式。
 
 ```tsx showLineNumbers title="form.tsx" {3}
 const form = useForm<z.infer<typeof formSchema>>({
@@ -186,20 +181,20 @@ const form = useForm<z.infer<typeof formSchema>>({
 })
 ```
 
-| Mode          | Description                                              |
-| ------------- | -------------------------------------------------------- |
-| `"onChange"`  | Validation triggers on every change.                     |
-| `"onBlur"`    | Validation triggers on blur.                             |
-| `"onSubmit"`  | Validation triggers on submit (default).                 |
-| `"onTouched"` | Validation triggers on first blur, then on every change. |
-| `"all"`       | Validation triggers on blur and change.                  |
+| 模式           | 描述                                                     |
+| -------------- | -------------------------------------------------------- |
+| `"onChange"`   | 每次更改时触发验证。                                    |
+| `"onBlur"`     | 在失焦时触发验证。                                       |
+| `"onSubmit"`   | 在提交时触发验证（默认）。                               |
+| `"onTouched"`  | 首次失焦时触发验证，之后每次更改时都触发。               |
+| `"all"`        | 在失焦和更改时均触发验证。                               |
 
-## Displaying Errors
+## 显示错误
 
-Display errors next to the field using `<FieldError />`. For styling and accessibility:
+在字段旁使用 `<FieldError />` 显示错误。为样式和无障碍支持：
 
-- Add the `data-invalid` prop to the `<Field />` component.
-- Add the `aria-invalid` prop to the form control such as `<Input />`, `<SelectTrigger />`, `<Checkbox />`, etc.
+- 在 `<Field />` 组件上添加 `data-invalid` 属性。
+- 在表单控件如 `<Input />`、`<SelectTrigger />`、`<Checkbox />` 等添加 `aria-invalid` 属性。
 
 ```tsx showLineNumbers title="form.tsx" {5,11,13}
 <Controller
@@ -207,7 +202,7 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
   control={form.control}
   render={({ field, fieldState }) => (
     <Field data-invalid={fieldState.invalid}>
-      <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+      <FieldLabel htmlFor={field.name}>邮箱</FieldLabel>
       <Input
         {...field}
         id={field.name}
@@ -220,12 +215,12 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
 />
 ```
 
-## Working with Different Field Types
+## 处理不同类型的字段
 
-### Input
+### 输入框（Input）
 
-- For input fields, spread the `field` object onto the `<Input />` component.
-- To show errors, add the `aria-invalid` prop to the `<Input />` component and the `data-invalid` prop to the `<Field />` component.
+- 对于输入字段，将 `field` 对象展开应用到 `<Input />` 组件。
+- 显示错误时，向 `<Input />` 组件添加 `aria-invalid` 属性，向 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
   name="form-rhf-input"
@@ -233,7 +228,7 @@ Display errors next to the field using `<FieldError />`. For styling and accessi
   chromeLessOnMobile
 />
 
-For simple text inputs, spread the `field` object onto the input.
+对于简单文本输入，将 `field` 对象展开应用于输入框。
 
 ```tsx showLineNumbers title="form.tsx" {5,7,8}
 <Controller
@@ -241,7 +236,7 @@ For simple text inputs, spread the `field` object onto the input.
   control={form.control}
   render={({ field, fieldState }) => (
     <Field data-invalid={fieldState.invalid}>
-      <FieldLabel htmlFor={field.name}>Name</FieldLabel>
+      <FieldLabel htmlFor={field.name}>姓名</FieldLabel>
       <Input {...field} id={field.name} aria-invalid={fieldState.invalid} />
       {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
     </Field>
@@ -249,10 +244,10 @@ For simple text inputs, spread the `field` object onto the input.
 />
 ```
 
-### Textarea
+### 多行文本框（Textarea）
 
-- For textarea fields, spread the `field` object onto the `<Textarea />` component.
-- To show errors, add the `aria-invalid` prop to the `<Textarea />` component and the `data-invalid` prop to the `<Field />` component.
+- 对于多行文本，将 `field` 对象展开应用到 `<Textarea />` 组件。
+- 显示错误时，向 `<Textarea />` 组件添加 `aria-invalid` 属性，向 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
   name="form-rhf-textarea"
@@ -260,7 +255,7 @@ For simple text inputs, spread the `field` object onto the input.
   chromeLessOnMobile
 />
 
-For textarea fields, spread the `field` object onto the textarea.
+对于多行文本，将 `field` 对象展开应用到多行文本框。
 
 ```tsx showLineNumbers title="form.tsx" {5,10,18}
 <Controller
@@ -268,17 +263,16 @@ For textarea fields, spread the `field` object onto the textarea.
   control={form.control}
   render={({ field, fieldState }) => (
     <Field data-invalid={fieldState.invalid}>
-      <FieldLabel htmlFor="form-rhf-textarea-about">More about you</FieldLabel>
+      <FieldLabel htmlFor="form-rhf-textarea-about">更多信息</FieldLabel>
       <Textarea
         {...field}
         id="form-rhf-textarea-about"
         aria-invalid={fieldState.invalid}
-        placeholder="I'm a software engineer..."
+        placeholder="我是一名软件工程师..."
         className="min-h-[120px]"
       />
       <FieldDescription>
-        Tell us more about yourself. This will be used to help us personalize
-        your experience.
+        告诉我们更多关于您的信息，这将帮助我们个性化您的体验。
       </FieldDescription>
       {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
     </Field>
@@ -286,10 +280,10 @@ For textarea fields, spread the `field` object onto the textarea.
 />
 ```
 
-### Select
+### 下拉选择（Select）
 
-- For select components, use `field.value` and `field.onChange` on the `<Select />` component.
-- To show errors, add the `aria-invalid` prop to the `<SelectTrigger />` component and the `data-invalid` prop to the `<Field />` component.
+- 对于选择组件，在 `<Select />` 组件上使用 `field.value` 和 `field.onChange`。
+- 显示错误时，在 `<SelectTrigger />` 组件上添加 `aria-invalid`，在 `<Field />` 组件上添加 `data-invalid`。
 
 <ComponentPreview
   name="form-rhf-select"
@@ -305,10 +299,10 @@ For textarea fields, spread the `field` object onto the textarea.
     <Field orientation="responsive" data-invalid={fieldState.invalid}>
       <FieldContent>
         <FieldLabel htmlFor="form-rhf-select-language">
-          Spoken Language
+          使用语言
         </FieldLabel>
         <FieldDescription>
-          For best results, select the language you speak.
+          为获得最佳效果，请选择您所使用的语言。
         </FieldDescription>
         {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
       </FieldContent>
@@ -322,11 +316,11 @@ For textarea fields, spread the `field` object onto the textarea.
           aria-invalid={fieldState.invalid}
           className="min-w-[120px]"
         >
-          <SelectValue placeholder="Select" />
+          <SelectValue placeholder="请选择" />
         </SelectTrigger>
         <SelectContent position="item-aligned">
-          <SelectItem value="auto">Auto</SelectItem>
-          <SelectItem value="en">English</SelectItem>
+          <SelectItem value="auto">自动</SelectItem>
+          <SelectItem value="en">英语</SelectItem>
         </SelectContent>
       </Select>
     </Field>
@@ -334,11 +328,11 @@ For textarea fields, spread the `field` object onto the textarea.
 />
 ```
 
-### Checkbox
+### 复选框（Checkbox）
 
-- For checkbox arrays, use `field.value` and `field.onChange` with array manipulation.
-- To show errors, add the `aria-invalid` prop to the `<Checkbox />` component and the `data-invalid` prop to the `<Field />` component.
-- Remember to add `data-slot="checkbox-group"` to the `<FieldGroup />` component for proper styling and spacing.
+- 对于复选框数组，使用 `field.value` 和 `field.onChange`，并操作数组。
+- 显示错误时，向 `<Checkbox />` 组件添加 `aria-invalid`，向 `<Field />` 组件添加 `data-invalid`。
+- 记得在 `<FieldGroup />` 组件上添加 `data-slot="checkbox-group"` 以获得正确的样式和间距。
 
 <ComponentPreview
   name="form-rhf-checkbox"
@@ -352,9 +346,9 @@ For textarea fields, spread the `field` object onto the textarea.
   control={form.control}
   render={({ field, fieldState }) => (
     <FieldSet>
-      <FieldLegend variant="label">Tasks</FieldLegend>
+      <FieldLegend variant="label">任务</FieldLegend>
       <FieldDescription>
-        Get notified when tasks you&apos;ve created have updates.
+        当您创建的任务有更新时，将通知您。
       </FieldDescription>
       <FieldGroup data-slot="checkbox-group">
         {tasks.map((task) => (
@@ -390,10 +384,10 @@ For textarea fields, spread the `field` object onto the textarea.
 />
 ```
 
-### Radio Group
+### 单选组（Radio Group）
 
-- For radio groups, use `field.value` and `field.onChange` on the `<RadioGroup />` component.
-- To show errors, add the `aria-invalid` prop to the `<RadioGroupItem />` component and the `data-invalid` prop to the `<Field />` component.
+- 对于单选组，在 `<RadioGroup />` 组件上使用 `field.value` 和 `field.onChange`。
+- 显示错误时，向 `<RadioGroupItem />` 组件添加 `aria-invalid`，向 `<Field />` 组件添加 `data-invalid`。
 
 <ComponentPreview
   name="form-rhf-radiogroup"
@@ -407,9 +401,9 @@ For textarea fields, spread the `field` object onto the textarea.
   control={form.control}
   render={({ field, fieldState }) => (
     <FieldSet>
-      <FieldLegend>Plan</FieldLegend>
+      <FieldLegend>计划</FieldLegend>
       <FieldDescription>
-        You can upgrade or downgrade your plan at any time.
+        您可以随时升级或降级您的计划。
       </FieldDescription>
       <RadioGroup
         name={field.name}
@@ -438,10 +432,10 @@ For textarea fields, spread the `field` object onto the textarea.
 />
 ```
 
-### Switch
+### 开关（Switch）
 
-- For switches, use `field.value` and `field.onChange` on the `<Switch />` component.
-- To show errors, add the `aria-invalid` prop to the `<Switch />` component and the `data-invalid` prop to the `<Field />` component.
+- 对于开关，在 `<Switch />` 组件上使用 `field.value` 和 `field.onChange`。
+- 显示错误时，向 `<Switch />` 组件添加 `aria-invalid`，向 `<Field />` 组件添加 `data-invalid`。
 
 <ComponentPreview
   name="form-rhf-switch"
@@ -457,10 +451,10 @@ For textarea fields, spread the `field` object onto the textarea.
     <Field orientation="horizontal" data-invalid={fieldState.invalid}>
       <FieldContent>
         <FieldLabel htmlFor="form-rhf-switch-twoFactor">
-          Multi-factor authentication
+          多因素认证
         </FieldLabel>
         <FieldDescription>
-          Enable multi-factor authentication to secure your account.
+          启用多因素认证以保护您的账户安全。
         </FieldDescription>
         {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
       </FieldContent>
@@ -476,9 +470,9 @@ For textarea fields, spread the `field` object onto the textarea.
 />
 ```
 
-### Complex Forms
+### 复杂表单
 
-Here is an example of a more complex form with multiple fields and validation.
+这是一个包含多个字段和验证的复杂表单示例。
 
 <ComponentPreview
   name="form-rhf-complex"
@@ -486,19 +480,19 @@ Here is an example of a more complex form with multiple fields and validation.
   chromeLessOnMobile
 />
 
-## Resetting the Form
+## 重置表单
 
-Use `form.reset()` to reset the form to its default values.
+使用 `form.reset()` 重置表单到默认值。
 
 ```tsx showLineNumbers
 <Button type="button" variant="outline" onClick={() => form.reset()}>
-  Reset
+  重置
 </Button>
 ```
 
-## Array Fields
+## 数组字段
 
-React Hook Form provides a `useFieldArray` hook for managing dynamic array fields. This is useful when you need to add or remove fields dynamically.
+React Hook Form 提供了 `useFieldArray` 钩子来管理动态数组字段，适用于需要动态添加或删除字段的场景。
 
 <ComponentPreview
   name="form-rhf-array"
@@ -506,16 +500,16 @@ React Hook Form provides a `useFieldArray` hook for managing dynamic array field
   chromeLessOnMobile
 />
 
-### Using useFieldArray
+### 使用 useFieldArray
 
-Use the `useFieldArray` hook to manage array fields. It provides `fields`, `append`, and `remove` methods.
+使用 `useFieldArray` 来管理数组字段，它会返回 `fields`、`append` 和 `remove` 方法。
 
 ```tsx showLineNumbers title="form.tsx" {8-11}
 import { useFieldArray, useForm } from "react-hook-form"
 
 export function ExampleForm() {
   const form = useForm({
-    // ... form config
+    // ... 表单配置
   })
 
   const { fields, append, remove } = useFieldArray({
@@ -525,23 +519,23 @@ export function ExampleForm() {
 }
 ```
 
-### Array Field Structure
+### 数组字段结构
 
-Wrap your array fields in a `<FieldSet />` with a `<FieldLegend />` and `<FieldDescription />`.
+将数组字段包裹在 `<FieldSet />` 中，包含 `<FieldLegend />` 和 `<FieldDescription />`。
 
 ```tsx showLineNumbers title="form.tsx"
 <FieldSet className="gap-4">
-  <FieldLegend variant="label">Email Addresses</FieldLegend>
+  <FieldLegend variant="label">邮箱地址</FieldLegend>
   <FieldDescription>
-    Add up to 5 email addresses where we can contact you.
+    添加最多5个我们可以联系您的邮箱地址。
   </FieldDescription>
-  <FieldGroup className="gap-4">{/* Array items go here */}</FieldGroup>
+  <FieldGroup className="gap-4">{/* 数组项放置处 */}</FieldGroup>
 </FieldSet>
 ```
 
-### Controller Pattern for Array Items
+### 数组项的 Controller 方式
 
-Map over the `fields` array and use `<Controller />` for each item. **Make sure to use `field.id` as the key**.
+遍历 `fields` 数组并对每项使用 `<Controller />`。**务必使用 `field.id` 作为 key。**
 
 ```tsx showLineNumbers title="form.tsx"
 {
@@ -562,7 +556,7 @@ Map over the `fields` array and use `<Controller />` for each item. **Make sure 
                 type="email"
                 autoComplete="email"
               />
-              {/* Remove button */}
+              {/* 删除按钮 */}
             </InputGroup>
             {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
           </FieldContent>
@@ -573,9 +567,9 @@ Map over the `fields` array and use `<Controller />` for each item. **Make sure 
 }
 ```
 
-### Adding Items
+### 添加项
 
-Use the `append` method to add new items to the array.
+使用 `append` 方法向数组添加新项。
 
 ```tsx showLineNumbers title="form.tsx"
 <Button
@@ -585,13 +579,13 @@ Use the `append` method to add new items to the array.
   onClick={() => append({ address: "" })}
   disabled={fields.length >= 5}
 >
-  Add Email Address
+  添加邮箱地址
 </Button>
 ```
 
-### Removing Items
+### 移除项
 
-Use the `remove` method to remove items from the array. Add the remove button conditionally.
+使用 `remove` 方法删除数组项，条件渲染删除按钮。
 
 ```tsx showLineNumbers title="form.tsx"
 {
@@ -602,7 +596,7 @@ Use the `remove` method to remove items from the array. Add the remove button co
         variant="ghost"
         size="icon-xs"
         onClick={() => remove(index)}
-        aria-label={`Remove email ${index + 1}`}
+        aria-label={`移除邮箱 ${index + 1}`}
       >
         <XIcon />
       </InputGroupButton>
@@ -611,19 +605,19 @@ Use the `remove` method to remove items from the array. Add the remove button co
 }
 ```
 
-### Array Validation
+### 数组验证
 
-Use Zod's `array` method to validate array fields.
+使用 Zod 的 `array` 方法来验证数组字段。
 
 ```tsx showLineNumbers title="form.tsx"
 const formSchema = z.object({
   emails: z
     .array(
       z.object({
-        address: z.string().email("Enter a valid email address."),
+        address: z.string().email("请输入有效的邮箱地址。"),
       })
     )
-    .min(1, "Add at least one email address.")
-    .max(5, "You can add up to 5 email addresses."),
+    .min(1, "请至少添加一个邮箱地址。")
+    .max(5, "最多可添加5个邮箱地址。"),
 })
 ```

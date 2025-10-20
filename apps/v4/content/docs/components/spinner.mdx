@@ -1,18 +1,18 @@
 ---
-title: Spinner
-description: An indicator that can be used to show a loading state.
+title: 加载指示器 Spinner
+description: 一个可以用来显示加载状态的指示器。
 component: true
 ---
 
 <ComponentPreview name="spinner-demo" className="[&_.preview]:p-6" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -26,11 +26,11 @@ npx shadcn@latest add spinner
 
 <Steps>
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="spinner" title="components/ui/spinner.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目结构。</Step>
 
 </Steps>
 
@@ -38,7 +38,7 @@ npx shadcn@latest add spinner
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx
 import { Spinner } from "@/components/ui/spinner"
@@ -48,9 +48,9 @@ import { Spinner } from "@/components/ui/spinner"
 <Spinner />
 ```
 
-## Customization
+## 自定义
 
-You can replace the default spinner icon with any other icon by editing the `Spinner` component.
+你可以通过编辑 `Spinner` 组件，将默认的加载图标替换为任何其他图标。
 
 <ComponentPreview name="spinner-custom" />
 
@@ -63,7 +63,7 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
   return (
     <LoaderIcon
       role="status"
-      aria-label="Loading"
+      aria-label="载入中"
       className={cn("size-4 animate-spin", className)}
       {...props}
     />
@@ -73,57 +73,57 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
 export { Spinner }
 ```
 
-## Examples
+## 示例
 
-### Size
+### 大小
 
-Use the `size-*` utility class to change the size of the spinner.
+使用 `size-*` 工具类来改变加载指示器的大小。
 
 <ComponentPreview name="spinner-size" />
 
-### Color
+### 颜色
 
-Use the `text-` utility class to change the color of the spinner.
+使用 `text-` 工具类来改变加载指示器的颜色。
 
 <ComponentPreview name="spinner-color" />
 
-### Button
+### 按钮
 
-Add a spinner to a button to indicate a loading state. The `<Button />` will handle the spacing between the spinner and the text.
+在按钮中添加加载指示器，以表示加载状态。`<Button />` 会自动处理加载指示器与文本之间的间距。
 
 <ComponentPreview name="spinner-button" />
 
-### Badge
+### 标记
 
-You can also use a spinner inside a badge.
+你也可以在标记（badge）内使用加载指示器。
 
 <ComponentPreview name="spinner-badge" />
 
-### Input Group
+### 输入组
 
-Input Group can have spinners inside `<InputGroupAddon>`.
+在 `<InputGroupAddon>` 内可以放置加载指示器。
 
 <ComponentPreview name="spinner-input-group" />
 
-### Empty
+### 空状态
 
 <ComponentPreview name="spinner-empty" />
 
-### Item
+### 列表项
 
-Use the spinner inside `<ItemMedia>` to indicate a loading state.
+在 `<ItemMedia>` 中使用加载指示器以表示加载状态。
 
 <ComponentPreview name="spinner-item" />
 
-## API Reference
+## API 参考
 
 ### Spinner
 
-Use the `Spinner` component to display a spinner.
+使用 `Spinner` 组件来显示加载指示器。
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `className` | `string` | ``      |
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------ |
+| `className` | `string` | ``     |
 
 ```tsx
 <Spinner />

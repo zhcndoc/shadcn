@@ -1,24 +1,24 @@
 ---
-title: Drawer
-description: A drawer component for React.
+title: 抽屉 Drawer
+description: React 的抽屉组件。
 component: true
 links:
   doc: https://vaul.emilkowal.ski/getting-started
 ---
 
-<ComponentPreview name="drawer-demo" description="A drawer component." />
+<ComponentPreview name="drawer-demo" description="抽屉组件。" />
 
-## About
+## 关于
 
-Drawer is built on top of [Vaul](https://github.com/emilkowalski/vaul) by [emilkowalski\_](https://twitter.com/emilkowalski_).
+抽屉组件基于 [Vaul](https://github.com/emilkowalski/vaul) 由 [emilkowalski\_](https://twitter.com/emilkowalski_) 构建。
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -32,17 +32,17 @@ npx shadcn@latest add drawer
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install vaul
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制粘贴到你的项目中。</Step>
 
 <ComponentSource name="drawer" title="components/ui/drawer.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目结构。</Step>
 
 </Steps>
 
@@ -50,7 +50,7 @@ npm install vaul
 
 </CodeTabs>
 
-## Usage
+## 使用
 
 ```tsx showLineNumbers
 import {
@@ -67,26 +67,26 @@ import {
 
 ```tsx showLineNumbers
 <Drawer>
-  <DrawerTrigger>Open</DrawerTrigger>
+  <DrawerTrigger>打开</DrawerTrigger>
   <DrawerContent>
     <DrawerHeader>
-      <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-      <DrawerDescription>This action cannot be undone.</DrawerDescription>
+      <DrawerTitle>你确定吗？</DrawerTitle>
+      <DrawerDescription>此操作无法撤销。</DrawerDescription>
     </DrawerHeader>
     <DrawerFooter>
-      <Button>Submit</Button>
+      <Button>提交</Button>
       <DrawerClose>
-        <Button variant="outline">Cancel</Button>
+        <Button variant="outline">取消</Button>
       </DrawerClose>
     </DrawerFooter>
   </DrawerContent>
 </Drawer>
 ```
 
-## Examples
+## 示例
 
-### Responsive Dialog
+### 响应式对话框
 
-You can combine the `Dialog` and `Drawer` components to create a responsive dialog. This renders a `Dialog` component on desktop and a `Drawer` on mobile.
+你可以将 `Dialog` 和 `Drawer` 组件结合使用，创建响应式对话框。在桌面端渲染 `Dialog` 组件，在移动端渲染 `Drawer` 组件。
 
 <ComponentPreview name="drawer-dialog" />

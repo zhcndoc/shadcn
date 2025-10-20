@@ -1,25 +1,25 @@
 ---
-title: Dialog
-description: A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
+title: 对话框 Dialog
+description: 一个覆盖在主窗口或另一个对话框窗口上的窗口，使其下方内容不可交互。
 featured: true
 component: true
 links:
-  doc: https://www.radix-ui.com/docs/primitives/components/dialog
-  api: https://www.radix-ui.com/docs/primitives/components/dialog#api-reference
+  doc: https://radix.zhcndoc.com/docs/primitives/components/dialog
+  api: https://radix.zhcndoc.com/docs/primitives/components/dialog#api-reference
 ---
 
 <ComponentPreview
   name="dialog-demo"
-  description="A dialog for editing profile details."
+  description="用于编辑个人资料详情的对话框。"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -33,17 +33,17 @@ npx shadcn@latest add dialog
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-dialog
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制粘贴到你的项目中。</Step>
 
 <ComponentSource name="dialog" title="components/ui/dialog.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目设置。</Step>
 
 </Steps>
 
@@ -51,7 +51,7 @@ npm install @radix-ui/react-dialog
 
 </CodeTabs>
 
-## Usage
+## 使用
 
 ```tsx showLineNumbers
 import {
@@ -66,54 +66,51 @@ import {
 
 ```tsx showLineNumbers
 <Dialog>
-  <DialogTrigger>Open</DialogTrigger>
+  <DialogTrigger>打开</DialogTrigger>
   <DialogContent>
     <DialogHeader>
-      <DialogTitle>Are you absolutely sure?</DialogTitle>
+      <DialogTitle>你确定要这样做吗？</DialogTitle>
       <DialogDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
+        此操作无法撤销。这将永久删除你的账户，并从我们的服务器中移除你的数据。
       </DialogDescription>
     </DialogHeader>
   </DialogContent>
 </Dialog>
 ```
 
-## Examples
+## 示例
 
-### Custom close button
+### 自定义关闭按钮
 
 <ComponentPreview name="dialog-close-button" />
 
-## Notes
+## 说明
 
-To use the `Dialog` component from within a `Context Menu` or `Dropdown Menu`, you must encase the `Context Menu` or
-`Dropdown Menu` component in the `Dialog` component.
+若要在 `Context Menu`（上下文菜单）或 `Dropdown Menu`（下拉菜单）内使用 `Dialog` 组件，必须将 `Context Menu` 或 `Dropdown Menu` 组件包裹在 `Dialog` 组件内。
 
 ```tsx showLineNumbers title="components/example-dialog-context-menu.tsx" {1, 26}
 <Dialog>
   <ContextMenu>
-    <ContextMenuTrigger>Right click</ContextMenuTrigger>
+    <ContextMenuTrigger>右键点击</ContextMenuTrigger>
     <ContextMenuContent>
-      <ContextMenuItem>Open</ContextMenuItem>
-      <ContextMenuItem>Download</ContextMenuItem>
+      <ContextMenuItem>打开</ContextMenuItem>
+      <ContextMenuItem>下载</ContextMenuItem>
       <DialogTrigger asChild>
         <ContextMenuItem>
-          <span>Delete</span>
+          <span>删除</span>
         </ContextMenuItem>
       </DialogTrigger>
     </ContextMenuContent>
   </ContextMenu>
   <DialogContent>
     <DialogHeader>
-      <DialogTitle>Are you absolutely sure?</DialogTitle>
+      <DialogTitle>你确定要这样做吗？</DialogTitle>
       <DialogDescription>
-        This action cannot be undone. Are you sure you want to permanently
-        delete this file from our servers?
+        此操作无法撤销。你确定要永久删除此文件吗？
       </DialogDescription>
     </DialogHeader>
     <DialogFooter>
-      <Button type="submit">Confirm</Button>
+      <Button type="submit">确认</Button>
     </DialogFooter>
   </DialogContent>
 </Dialog>

@@ -1,13 +1,13 @@
 ---
-title: FAQ
-description: Frequently asked questions about running a registry.
+title: 常见问题解答
+description: 关于运行注册中心的常见问题解答。
 ---
 
-## Frequently asked questions
+## 常见问题解答
 
-### What does a complex component look like?
+### 复杂组件是什么样子的？
 
-Here's an example of a complex component that installs a page, two components, a hook, a format-date utils and a config file.
+以下是一个复杂组件的示例，它安装了一个页面、两个组件、一个 Hook、一个格式化日期的工具和一个配置文件。
 
 ```json showLineNumbers
 {
@@ -47,9 +47,9 @@ Here's an example of a complex component that installs a page, two components, a
 }
 ```
 
-### How do I add a new Tailwind color?
+### 如何添加新的 Tailwind 颜色？
 
-To add a new color you need to add it to `cssVars` under `light` and `dark` keys.
+要添加新颜色，您需要将其添加到 `cssVars` 下的 `light` 和 `dark` 键中。
 
 ```json showLineNumbers {10-18}
 {
@@ -74,11 +74,11 @@ To add a new color you need to add it to `cssVars` under `light` and `dark` keys
 }
 ```
 
-The CLI will update the project CSS file. Once updated, the new colors will be available to be used as utility classes: `bg-brand` and `text-brand-accent`.
+CLI 会更新项目的 CSS 文件。更新完成后，新的颜色将可作为实用类使用：`bg-brand` 和 `text-brand-accent`。
 
-### How do I add or override a Tailwind theme variable?
+### 如何添加或覆盖 Tailwind 主题变量？
 
-To add or override a theme variable you add it to `cssVars.theme` under the key you want to add or override.
+添加或覆盖主题变量需将其添加到 `cssVars.theme` 下对应的键中。
 
 ```json showLineNumbers {10-15}
 {

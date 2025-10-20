@@ -1,47 +1,47 @@
 ---
 title: Gatsby
-description: Install and configure Gatsby.
+description: 安装并配置 Gatsby。
 ---
 
 <Callout className="mb-6 border-blue-600 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 [&_code]:bg-blue-100 dark:[&_code]:bg-blue-900">
-  **Update:** We have added full support for React 19 and Tailwind v4 in the
-  `canary` release. See the docs for [Tailwind v4](/docs/tailwind-v4) for more
-  information.
+  **更新：** 我们已在
+  `canary` 版本中添加了对 React 19 和 Tailwind v4 的完整支持。
+  更多信息请参见 [Tailwind v4](/docs/tailwind-v4) 文档。
 </Callout>
 
 <Steps>
 
-### Create project
+### 创建项目
 
-Start by creating a new Gatsby project using `create-gatsby`:
+首先使用 `create-gatsby` 创建一个新的 Gatsby 项目：
 
 ```bash
 npm init gatsby
 ```
 
-### Configure your Gatsby project to use TypeScript and Tailwind CSS
+### 配置你的 Gatsby 项目以使用 TypeScript 和 Tailwind CSS
 
-You will be asked a few questions to configure your project:
+你会被问到几个问题来配置你的项目：
 
 ```txt showLineNumbers
-✔ What would you like to call your site?
+✔ 你想给你的网站取什么名字？
 · your-app-name
-✔ What would you like to name the folder where your site will be created?
+✔ 你想把网站创建在哪个文件夹？
 · your-app-name
-✔ Will you be using JavaScript or TypeScript?
+✔ 你会使用 JavaScript 还是 TypeScript？
 · TypeScript
-✔ Will you be using a CMS?
-· Choose whatever you want
-✔ Would you like to install a styling system?
+✔ 你会使用 CMS 吗？
+· 随你选择
+✔ 你想安装样式系统吗？
 · Tailwind CSS
-✔ Would you like to install additional features with other plugins?
-· Choose whatever you want
-✔ Shall we do this? (Y/n) · Yes
+✔ 你想用其他插件安装额外功能吗？
+· 随你选择
+✔ 我们现在开始吗？(Y/n) · 是
 ```
 
-### Edit tsconfig.json file
+### 编辑 tsconfig.json 文件
 
-Add the following code to the `tsconfig.json` file to resolve paths:
+在 `tsconfig.json` 文件中添加以下代码以解析路径：
 
 ```ts {4-9} showLineNumbers
 {
@@ -58,9 +58,9 @@ Add the following code to the `tsconfig.json` file to resolve paths:
 }
 ```
 
-### Create gatsby-node.ts file
+### 创建 gatsby-node.ts 文件
 
-Create a `gatsby-node.ts` file at the root of your project if it doesn’t already exist, and add the code below to the `gatsby-node` file so your app can resolve paths:
+如果你的项目根目录还没有 `gatsby-node.ts` 文件，请创建它，并添加以下代码以便你的应用可以解析路径：
 
 ```ts
 import * as path from "path"
@@ -77,39 +77,39 @@ export const onCreateWebpackConfig = ({ actions }) => {
 }
 ```
 
-### Run the CLI
+### 运行 CLI
 
-Run the `shadcn` init command to setup your project:
+运行 `shadcn` 初始化命令来设置你的项目：
 
 ```bash
 npx shadcn@latest init
 ```
 
-### Configure components.json
+### 配置 components.json
 
-You will be asked a few questions to configure `components.json`:
+系统会问你几个问题来配置 `components.json` 文件：
 
 ```txt showLineNumbers
-Would you like to use TypeScript (recommended)? no / yes
-Which style would you like to use? › Default
-Which color would you like to use as base color? › Slate
-Where is your global CSS file? › › ./src/styles/globals.css
-Do you want to use CSS variables for colors? › no / yes
-Where is your tailwind.config.js located? › tailwind.config.js
-Configure the import alias for components: › @/components
-Configure the import alias for utils: › @/lib/utils
-Are you using React Server Components? › no
+你想使用 TypeScript 吗（推荐）？ no / yes
+你想用哪种样式？ › 默认
+你想用哪种颜色作为基础色？ › Slate
+你的全局 CSS 文件在哪里？ › › ./src/styles/globals.css
+你想用 CSS 变量来控制颜色吗？ › no / yes
+你的 tailwind.config.js 文件在哪里？ › tailwind.config.js
+配置组件的导入别名：› @/components
+配置工具的导入别名：› @/lib/utils
+你使用 React 服务端组件吗？ › no
 ```
 
-### That's it
+### 完成
 
-You can now start adding components to your project.
+现在你可以开始向你的项目添加组件了。
 
 ```bash
 npx shadcn@latest add button
 ```
 
-The command above will add the `Button` component to your project. You can then import it like this:
+上面的命令会向你的项目添加 `Button` 组件。然后你可以这样导入它：
 
 ```tsx {1,6} showLineNumbers
 import { Button } from "@/components/ui/button"
@@ -117,7 +117,7 @@ import { Button } from "@/components/ui/button"
 export default function Home() {
   return (
     <div>
-      <Button>Click me</Button>
+      <Button>点击我</Button>
     </div>
   )
 }

@@ -1,19 +1,19 @@
 ---
-title: Examples
-description: "Examples of registry items: styles, components, css vars, etc."
+title: 示例
+description: "注册表项示例：样式、组件、CSS 变量等。"
 ---
 
 ## registry:style
 
-### Custom style that extends shadcn/ui
+### 扩展 shadcn/ui 的自定义样式
 
-The following registry item is a custom style that extends shadcn/ui. On `npx shadcn init`, it will:
+以下注册表项是一个扩展 shadcn/ui 的自定义样式。在执行 `npx shadcn init` 时，它将：
 
-- Install `@tabler/icons-react` as a dependency.
-- Add the `login-01` block and `calendar` component to the project.
-- Add the `editor` from a remote registry.
-- Set the `font-sans` variable to `Inter, sans-serif`.
-- Install a `brand` color in light and dark mode.
+- 安装 `@tabler/icons-react` 作为依赖项。
+- 添加 `login-01` 块和 `calendar` 组件到项目中。
+- 从远程注册表添加 `editor`。
+- 将 `font-sans` 变量设置为 `Inter, sans-serif`。
+- 安装浅色和深色模式下的 `brand` 颜色。
 
 ```json title="example-style.json" showLineNumbers
 {
@@ -40,18 +40,18 @@ The following registry item is a custom style that extends shadcn/ui. On `npx sh
 }
 ```
 
-### Custom style from scratch
+### 从头开始的自定义样式
 
-The following registry item is a custom style that doesn't extend shadcn/ui. See the `extends: none` field.
+以下注册表项是不扩展 shadcn/ui 的自定义样式。参见 `extends: none` 字段。
 
-It can be used to create a new style from scratch i.e custom components, css vars, dependencies, etc.
+它可用于从头创建新样式，例如自定义组件、CSS 变量、依赖项等。
 
-On `npx shadcn add`, the following will:
+执行 `npx shadcn add` 时，以下操作将会发生：
 
-- Install `tailwind-merge` and `clsx` as dependencies.
-- Add the `utils` registry item from the shadcn/ui registry.
-- Add the `button`, `input`, `label`, and `select` components from a remote registry.
-- Install new css vars: `main`, `bg`, `border`, `text`, `ring`.
+- 安装 `tailwind-merge` 和 `clsx` 作为依赖项。
+- 从 shadcn/ui 注册表添加 `utils` 注册表项。
+- 从远程注册表添加 `button`、`input`、`label` 和 `select` 组件。
+- 安装新的 CSS 变量：`main`、`bg`、`border`、`text`、`ring`。
 
 ```json title="example-style.json" showLineNumbers
 {
@@ -69,21 +69,21 @@ On `npx shadcn add`, the following will:
   ],
   "cssVars": {
     "theme": {
-      "font-sans": "Inter, sans-serif",
-    }
+      "font-sans": "Inter, sans-serif"
+    },
     "light": {
       "main": "#88aaee",
       "bg": "#dfe5f2",
       "border": "#000",
       "text": "#000",
-      "ring": "#000",
+      "ring": "#000"
     },
     "dark": {
       "main": "#88aaee",
       "bg": "#272933",
       "border": "#000",
       "text": "#e6e6e6",
-      "ring": "#fff",
+      "ring": "#fff"
     }
   }
 }
@@ -91,7 +91,7 @@ On `npx shadcn add`, the following will:
 
 ## registry:theme
 
-### Custom theme
+### 自定义主题
 
 ```json title="example-theme.json" showLineNumbers
 {
@@ -123,9 +123,9 @@ On `npx shadcn add`, the following will:
 }
 ```
 
-### Custom colors
+### 自定义颜色
 
-The following style will init using shadcn/ui defaults and then add a custom `brand` color.
+以下样式将使用 shadcn/ui 默认值初始化，然后添加自定义的 `brand` 颜色。
 
 ```json title="example-style.json" showLineNumbers
 {
@@ -145,16 +145,16 @@ The following style will init using shadcn/ui defaults and then add a custom `br
 
 ## registry:block
 
-### Custom block
+### 自定义块
 
-This blocks installs the `login-01` block from the shadcn/ui registry.
+此块从 shadcn/ui 注册表安装 `login-01` 块。
 
 ```json title="login-01.json" showLineNumbers
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "login-01",
   "type": "registry:block",
-  "description": "A simple login form.",
+  "description": "一个简单的登录表单。",
   "registryDependencies": ["button", "card", "input", "label"],
   "files": [
     {
@@ -172,14 +172,14 @@ This blocks installs the `login-01` block from the shadcn/ui registry.
 }
 ```
 
-### Install a block and override primitives
+### 安装块并覆盖基础组件
 
-You can install a block fromt the shadcn/ui registry and override the primitives using your custom ones.
+你可以从 shadcn/ui 注册表安装一个块，并用自定义的基础组件覆盖其原始基础组件。
 
-On `npx shadcn add`, the following will:
+执行 `npx shadcn add` 时，以下操作将发生：
 
-- Add the `login-01` block from the shadcn/ui registry.
-- Override the `button`, `input`, and `label` primitives with the ones from the remote registry.
+- 从 shadcn/ui 注册表添加 `login-01` 块。
+- 用远程注册表中的 `button`、`input` 和 `label` 基础组件进行覆盖。
 
 ```json title="example-style.json" showLineNumbers
 {
@@ -195,11 +195,11 @@ On `npx shadcn add`, the following will:
 }
 ```
 
-## CSS Variables
+## CSS 变量
 
-### Custom Theme Variables
+### 自定义主题变量
 
-Add custom theme variables to the `theme` object.
+将自定义主题变量添加到 `theme` 对象中。
 
 ```json title="example-theme.json" showLineNumbers
 {
@@ -215,7 +215,7 @@ Add custom theme variables to the `theme` object.
 }
 ```
 
-### Override Tailwind CSS variables
+### 覆盖 Tailwind CSS 变量
 
 ```json title="example-theme.json" showLineNumbers
 {
@@ -235,9 +235,9 @@ Add custom theme variables to the `theme` object.
 }
 ```
 
-## Add custom CSS
+## 添加自定义 CSS
 
-### Base styles
+### 基础样式
 
 ```json title="example-base.json" showLineNumbers
 {
@@ -257,7 +257,7 @@ Add custom theme variables to the `theme` object.
 }
 ```
 
-### Components
+### 组件
 
 ```json title="example-card.json" showLineNumbers
 {
@@ -277,9 +277,9 @@ Add custom theme variables to the `theme` object.
 }
 ```
 
-## Add custom utilities
+## 添加自定义工具类
 
-### Simple utility
+### 简单工具类
 
 ```json title="example-component.json" showLineNumbers
 {
@@ -294,7 +294,7 @@ Add custom theme variables to the `theme` object.
 }
 ```
 
-### Complex utility
+### 复杂工具类
 
 ```json title="example-utility.json" showLineNumbers
 {
@@ -313,7 +313,7 @@ Add custom theme variables to the `theme` object.
 }
 ```
 
-### Functional utilities
+### 函数式工具类
 
 ```json title="example-functional.json" showLineNumbers
 {
@@ -328,11 +328,11 @@ Add custom theme variables to the `theme` object.
 }
 ```
 
-## Add CSS imports
+## 添加 CSS 导入
 
-Use `@import` to add CSS imports to your registry item. The imports will be placed at the top of the CSS file.
+使用 `@import` 向注册表项中添加 CSS 导入。导入内容将置于 CSS 文件顶部。
 
-### Basic import
+### 基本导入
 
 ```json title="example-import.json" showLineNumbers
 {
@@ -346,7 +346,7 @@ Use `@import` to add CSS imports to your registry item. The imports will be plac
 }
 ```
 
-### Import with url() syntax
+### 使用 url() 语法导入
 
 ```json title="example-url-import.json" showLineNumbers
 {
@@ -360,7 +360,7 @@ Use `@import` to add CSS imports to your registry item. The imports will be plac
 }
 ```
 
-### Import with media queries
+### 带媒体查询的导入
 
 ```json title="example-media-import.json" showLineNumbers
 {
@@ -374,13 +374,13 @@ Use `@import` to add CSS imports to your registry item. The imports will be plac
 }
 ```
 
-## Add custom plugins
+## 添加自定义插件
 
-Use `@plugin` to add Tailwind plugins to your registry item. Plugins will be automatically placed after imports and before other content.
+使用 `@plugin` 向注册表项中添加 Tailwind 插件。插件会自动放置在导入之后，其他内容之前。
 
-**Important:** When using plugins from npm packages, you must also add them to the `dependencies` array.
+**重要：** 使用 npm 包中的插件时，必须将它们添加到 `dependencies` 数组中。
 
-### Basic plugin usage
+### 基本插件用法
 
 ```json title="example-plugin.json" showLineNumbers
 {
@@ -394,9 +394,9 @@ Use `@plugin` to add Tailwind plugins to your registry item. Plugins will be aut
 }
 ```
 
-### Plugin with npm dependency
+### 带 npm 依赖的插件
 
-When using plugins from npm packages like `@tailwindcss/typography`, include them in the dependencies.
+使用像 `@tailwindcss/typography` 这样的 npm 包插件时，请将它们包含在依赖项中。
 
 ```json title="example-typography.json" showLineNumbers
 {
@@ -415,7 +415,7 @@ When using plugins from npm packages like `@tailwindcss/typography`, include the
 }
 ```
 
-### Scoped and file-based plugins
+### 范围插件和基于文件的插件
 
 ```json title="example-scoped-plugin.json" showLineNumbers
 {
@@ -430,9 +430,9 @@ When using plugins from npm packages like `@tailwindcss/typography`, include the
 }
 ```
 
-### Multiple plugins with automatic ordering
+### 多个插件及自动排序
 
-When you add multiple plugins, they are automatically grouped together and deduplicated.
+当添加多个插件时，它们会自动分组且去重。
 
 ```json title="example-multiple-plugins.json" showLineNumbers
 {
@@ -452,9 +452,9 @@ When you add multiple plugins, they are automatically grouped together and dedup
 }
 ```
 
-## Combined imports and plugins
+## 组合导入和插件
 
-When using both `@import` and `@plugin` directives, imports are placed first, followed by plugins, then other CSS content.
+使用 `@import` 和 `@plugin` 指令时，导入排在最前，其次是插件，然后是其他 CSS 内容。
 
 ```json title="example-combined.json" showLineNumbers
 {
@@ -479,9 +479,9 @@ When using both `@import` and `@plugin` directives, imports are placed first, fo
 }
 ```
 
-## Add custom animations
+## 添加自定义动画
 
-Note: you need to define both `@keyframes` in css and `theme` in cssVars to use animations.
+注意：你需要在 CSS 中定义 `@keyframes`，并在 `cssVars` 中的 `theme` 定义动画，才能使用动画。
 
 ```json title="example-component.json" showLineNumbers
 {
@@ -506,9 +506,9 @@ Note: you need to define both `@keyframes` in css and `theme` in cssVars to use 
 }
 ```
 
-## Add environment variables
+## 添加环境变量
 
-You can add environment variables using the `envVars` field.
+你可以使用 `envVars` 字段添加环境变量。
 
 ```json title="example-item.json" showLineNumbers {5-9}
 {»
@@ -523,21 +523,21 @@ You can add environment variables using the `envVars` field.
 }
 ```
 
-Environment variables are added to the `.env.local` or `.env` file. Existing variables are not overwritten.
+环境变量会添加到 `.env.local` 或 `.env` 文件中。已有变量不会被覆盖。
 
 <Callout>
 
-**IMPORTANT:** Use `envVars` to add development or example variables. Do NOT use it to add production variables.
+**重要：** 请使用 `envVars` 添加开发或示例变量。不要使用此字段添加生产环境变量。
 
 </Callout>
 
-## Universal Items
+## 通用项
 
-As of `2.9.0`, you can create universal items that can be installed without framework detection or components.json.
+从 `2.9.0` 开始，你可以创建无需框架检测或 components.json 即可安装的通用项。
 
-To make an item universal i.e framework agnostic, all the files in the item must have an explicit target.
+要使某项成为通用项（即框架无关），该项中的所有文件都必须有明确的 `target`。
 
-Here's an example of a registry item that installs custom Cursor rules for _python_:
+下面是一个安装用于 _python_ 的自定义 Cursor 规则的注册表项示例：
 
 ```json title=".cursor/rules/custom-python.mdc" showLineNumbers {9}
 {
@@ -555,7 +555,7 @@ Here's an example of a registry item that installs custom Cursor rules for _pyth
 }
 ```
 
-Here's another example for installation custom ESLint config:
+另一个安装自定义 ESLint 配置的示例：
 
 ```json title=".eslintrc.json" showLineNumbers {9}
 {
@@ -573,7 +573,7 @@ Here's another example for installation custom ESLint config:
 }
 ```
 
-You can also have a universal item that installs multiple files:
+你还可以创建一个安装多个文件的通用项：
 
 ```json title="my-custom-starter-template.json" showLineNumbers {9}
 {

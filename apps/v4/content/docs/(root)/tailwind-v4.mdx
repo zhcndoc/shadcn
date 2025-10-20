@@ -1,28 +1,28 @@
 ---
 title: Tailwind v4
-description: How to use shadcn/ui with Tailwind v4 and React 19.
+description: 如何在 Tailwind v4 和 React 19 中使用 shadcn/ui。
 ---
 
-It’s here! Tailwind v4 and React 19. Ready for you to try out. You can start using it today.
+它来了！Tailwind v4 和 React 19。已经准备好供你体验，你今天就可以开始使用。
 
-## What's New
+## 新功能
 
-- The CLI can now initialize projects with Tailwind v4.
-- Full support for the new `@theme` directive and `@theme inline` option.
-- All components are updated for Tailwind v4 and React 19.
-- We’ve removed the forwardRefs and adjusted the types.
-- Every primitive now has a `data-slot` attribute for styling.
-- We've fixed and cleaned up the style of the components.
-- We're deprecating the `toast` component in favor of `sonner`.
-- Buttons now use the default cursor.
-- We're deprecating the `default` style. New projects will use `new-york`.
-- HSL colors are now converted to OKLCH.
+- CLI 现在可以初始化带有 Tailwind v4 的项目。
+- 完全支持新的 `@theme` 指令和 `@theme inline` 选项。
+- 所有组件均已更新，支持 Tailwind v4 和 React 19。
+- 我们移除了 forwardRefs 并调整了类型定义。
+- 每个原始组件现在都有 `data-slot` 属性用于样式定制。
+- 我们修复并优化了组件的样式。
+- 我们废弃了 `toast` 组件，推荐使用 `sonner`。
+- 按钮默认使用默认光标。
+- 我们废弃了 `default` 样式，新项目将使用 `new-york` 样式。
+- HSL 颜色现在转换为 OKLCH。
 
-**Note: this is non-breaking. Your existing apps with Tailwind v3 and React 18 will still work. When you add new components, they'll still be in v3 and React 18 until you upgrade. Only new projects start with Tailwind v4 and React 19.**
+**注意：此次更新不破坏兼容性。你的现有 Tailwind v3 和 React 18 应用依然可用。添加新组件时，它们仍然会是基于 v3 和 React 18，除非升级。只有新项目才会从 Tailwind v4 和 React 19 开始。**
 
-## Try It Out
+## 立即体验
 
-You can test Tailwind v4 + React 19 today using the `canary` release of the CLI. See the framework specific guides below for how to get started.
+你可以使用 CLI 的 `canary` 版本来测试 Tailwind v4 + React 19。以下是针对各框架的快速上手指南。
 
 <div className="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-6">
   <LinkedCard href="/docs/installation/next">
@@ -129,29 +129,26 @@ You can test Tailwind v4 + React 19 today using the `canary` release of the CLI.
   </LinkedCard>
 </div>
 
-## Upgrade Your Project
+## 升级项目
 
 <Callout className="mt-6 mb-6 border-blue-600 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 [&_code]:bg-blue-100 dark:[&_code]:bg-blue-900">
-  **Important:** Before upgrading, please read the [Tailwind v4 Compatibility
-  Docs](https://tailwindcss.com/docs/compatibility) and make sure your project
-  is ready for the upgrade. Tailwind v4 uses bleeding-edge browser features and
-  is designed for modern browsers.
+  **重要提示：** 在升级之前，请务必阅读 [Tailwind v4 兼容性文档](https://tailwindcss.zhcndoc.com/docs/compatibility)，确保你的项目准备好升级。Tailwind v4 采用最新的浏览器特性，适用于现代浏览器。
 </Callout>
 
-One of the major advantages of using `shadcn/ui` is that the code you end up with is exactly what you'd write yourself. There are no hidden abstractions.
+使用 `shadcn/ui` 的主要优势之一是，你得到的代码正是你自己会编写的代码，没有隐藏的抽象。
 
-This means when a dependency has a new release, you can just follow the official upgrade paths.
+这意味着，当依赖库有新版本时，你可以直接跟进官方的升级路径。
 
-Here's how to upgrade your existing projects (full docs are on the way):
+以下是升级现有项目的步骤（完整文档正在完善中）：
 
-### 1. Follow the Tailwind v4 Upgrade Guide
+### 1. 按照 Tailwind v4 升级指南操作
 
-- Upgrade to Tailwind v4 by following the official upgrade guide: https://tailwindcss.com/docs/upgrade-guide
-- Use the `@tailwindcss/upgrade@next` codemod to remove deprecated utility classes and update tailwind config.
+- 通过官方升级指南升级到 Tailwind v4：https://tailwindcss.zhcndoc.com/docs/upgrade-guide
+- 使用 `@tailwindcss/upgrade@next` codemod 移除已废弃的工具类并更新 tailwind 配置。
 
-### 2. Update your CSS variables
+### 2. 更新你的 CSS 变量
 
-The codemod will migrate your CSS variables as references under the `@theme` directive.
+codemod 会将你的 CSS 变量迁移为 `@theme` 指令下的引用。
 
 ```css showLineNumbers
 @layer base {
@@ -167,37 +164,37 @@ The codemod will migrate your CSS variables as references under the `@theme` dir
 }
 ```
 
-This works. But to make it easier to work with colors and other variables, we'll need to move the `hsl` wrappers and use `@theme inline`.
+上述写法可用，但为了便于在实用类和 CSS 外使用颜色等变量，我们需要把 `hsl` 包裹移动到变量定义层，并使用 `@theme inline`。
 
-Here's how you do it:
+具体做法如下：
 
-1. Move `:root` and `.dark` out of the `@layer` base.
-2. Wrap the color values in `hsl()`
-3. Add the `inline` option to `@theme` i.e `@theme inline`
-4. Remove the `hsl()` wrappers from `@theme`
+1. 将 `:root` 和 `.dark` 移出 `@layer base`。
+2. 将色值用 `hsl()` 包裹。
+3. 给 `@theme` 加上 `inline` 选项，即 `@theme inline`。
+4. 移除 `@theme` 内的 `hsl()` 包裹。
 
 ```css showLineNumbers
 :root {
-  --background: hsl(0 0% 100%); // <-- Wrap in hsl
+  --background: hsl(0 0% 100%); /* <-- 用 hsl 包裹 */
   --foreground: hsl(0 0% 3.9%);
 }
 
 .dark {
-  --background: hsl(0 0% 3.9%); // <-- Wrap in hsl
+  --background: hsl(0 0% 3.9%); /* <-- 用 hsl 包裹 */
   --foreground: hsl(0 0% 98%);
 }
 
 @theme inline {
-  --color-background: var(--background); // <-- Remove hsl
+  --color-background: var(--background); /* <-- 移除 hsl */
   --color-foreground: var(--foreground);
 }
 ```
 
-This change makes it much simpler to access your theme variables in both utility classes and outside of CSS for eg. using color values in JavaScript.
+此更改使在实用类和 CSS 外（如 JS 中）访问主题变量更加简单。
 
-### 3. Update colors for charts
+### 3. 更新图表颜色
 
-Now that the theme colors come with `hsl()`, you can remove the wrapper in your `chartConfig`:
+由于主题色现在已被 `hsl()` 包裹，图表配置中的颜色可以去掉 `hsl` 包裹：
 
 ```diff
 const chartConfig = {
@@ -214,35 +211,35 @@ const chartConfig = {
 } satisfies ChartConfig
 ```
 
-### 4. Use new `size-*` utility
+### 4. 使用新的 `size-*` 工具类
 
-The new `size-*` utility (added in Tailwind v3.4), is now fully supported by `tailwind-merge`. You can replace `w-* h-*` with the new `size-*` utility:
+Tailwind v3.4 新引入的 `size-*` 工具类现已被 `tailwind-merge` 完全支持。你可以用 `size-*` 替换 `w-* h-*`：
 
 ```diff
 - w-4 h-4
 + size-4
 ```
 
-### 5. Update your dependencies
+### 5. 更新依赖项
 
 ```bash
 pnpm up "@radix-ui/*" cmdk lucide-react recharts tailwind-merge clsx --latest
 ```
 
-### 6. Remove forwardRef
+### 6. 移除 forwardRef
 
-You can use the `remove-forward-ref` codemod to migrate your `forwardRef` to props or manually update the primitives.
+你可以用 `remove-forward-ref` codemod 将 `forwardRef` 替换为普通 props 或手动更新原始组件。
 
-For the codemod, see https://github.com/reactjs/react-codemod#remove-forward-ref.
+codemod 详见：https://github.com/reactjs/react-codemod#remove-forward-ref 。
 
-If you want to do it manually, here's how to do it step by step:
+如果你想手动操作，步骤如下：
 
-1. Replace `React.forwardRef<...>` with `React.ComponentProps<...>`
-2. Remove `ref={ref}` from the component.
-3. Add a `data-slot` attribute. This will come in handy for styling with Tailwind.
-4. You can optionally convert to a named function and remove the `displayName`.
+1. 用 `React.ComponentProps<...>` 替换 `React.forwardRef<...>`。
+2. 移除组件中的 `ref={ref}`。
+3. 添加 `data-slot` 属性，便于 Tailwind 样式。
+4. 可选：转换为具名函数，同时移除 `displayName`。
 
-#### Before
+#### 之前
 
 ```tsx showLineNumbers
 const AccordionItem = React.forwardRef<
@@ -258,7 +255,7 @@ const AccordionItem = React.forwardRef<
 AccordionItem.displayName = "AccordionItem"
 ```
 
-#### After
+#### 之后
 
 ```tsx showLineNumbers
 function AccordionItem({
@@ -275,59 +272,59 @@ function AccordionItem({
 }
 ```
 
-## Changelog
+## 更新日志
 
-### March 19, 2025 - Deprecate `tailwindcss-animate`
+### 2025年3月19日 - 废弃 `tailwindcss-animate`
 
-We've deprecated `tailwindcss-animate` in favor of `tw-animate-css`.
+我们废弃了 `tailwindcss-animate`，推荐使用 `tw-animate-css`。
 
-New project will have `tw-animate-css` installed by default.
+新项目将默认安装 `tw-animate-css`。
 
-For existing projects, follow the steps below to migrate.
+旧项目请按以下步骤迁移：
 
-1. Remove `tailwindcss-animate` from your dependencies.
-2. Remove the `@plugin 'tailwindcss-animate'` from your globals.css file.
-3. Install `tw-animate-css` as a dev dependency.
-4. Add the `@import "tw-animate-css"` to your globals.css file.
+1. 从依赖中移除 `tailwindcss-animate`。
+2. 从 globals.css 中删除 `@plugin 'tailwindcss-animate'`。
+3. 安装 `tw-animate-css` 作为开发依赖。
+4. 在 globals.css 中新增 `@import "tw-animate-css"`。
 
 ```diff showLineNumbers
 - @plugin 'tailwindcss-animate';
 + @import "tw-animate-css";
 ```
 
-### March 12, 2025 - New Dark Mode Colors
+### 2025年3月12日 - 新版暗黑模式颜色
 
-We've revisted the dark mode colors and updated them to be more accessible.
+我们重新设计了暗黑模式颜色，使其更具可访问性。
 
-If you're running an existing Tailwind v4 project (**not an upgraded one**[^1]), you can update your components to use the new dark mode colors by re-adding your components using the CLI[^2].
+如果你运行的是现有的 Tailwind v4 项目（**非升级项目**[^1]），可以通过 CLI 重新添加组件以使用新的暗黑颜色[^2]。
 
 <Steps>
 
-<Step>Commit any changes</Step>
+<Step>提交所有改动</Step>
 
-**The CLI will overwrite your existing components.** We recommend committing any changes you've made to your components before running the CLI.
+**CLI 会覆盖你的现有组件。** 我们建议在运行 CLI 之前提交所有已经修改的组件代码。
 
 ```bash
 git add .
 git commit -m "..."
 ```
 
-<Step>Update components</Step>
+<Step>更新组件</Step>
 
 ```bash
 npx shadcn@latest add --all --overwrite
 ```
 
-<Step>Update colors</Step>
+<Step>更新颜色</Step>
 
-Update the dark mode colors in your `globals.css` file to new OKLCH colors. See the [Base Colors](/docs/theming#base-colors) reference for a list of colors.
+将你 `globals.css` 中的暗黑模式颜色更新为新的 OKLCH 颜色，详见 [基础颜色](/docs/theming#base-colors) 文档。
 
-<Step>Review changes</Step>
+<Step>审查更改</Step>
 
-Review and re-apply any changes you made to your components.
+审查并重新应用你对组件所做的任何改动。
 
 </Steps>
 
-[^1]: Upgraded projects are not affected by this change. You can continue using the old dark mode colors.
+[^1]: 升级项目不受此影响，依然可以使用旧版暗黑模式颜色。
 
-[^2]: Updating your components will overwrite your existing components.
+[^2]: 更新组件会覆盖现有组件。

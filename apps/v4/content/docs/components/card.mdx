@@ -1,18 +1,18 @@
 ---
-title: Card
-description: Displays a card with header, content, and footer.
+title: 卡片 Card
+description: 显示带有头部、内容和底部的卡片。
 component: true
 ---
 
-<ComponentPreview name="card-demo" description="A card with a form" />
+<ComponentPreview name="card-demo" description="带有表单的卡片" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -26,11 +26,11 @@ npx shadcn@latest add card
 
 <Steps>
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制粘贴到你的项目中。</Step>
 
 <ComponentSource name="card" title="components/ui/card.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目设置。</Step>
 
 </Steps>
 
@@ -38,7 +38,7 @@ npx shadcn@latest add card
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import {
@@ -55,15 +55,15 @@ import {
 ```tsx showLineNumbers
 <Card>
   <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card Description</CardDescription>
-    <CardAction>Card Action</CardAction>
+    <CardTitle>卡片标题</CardTitle>
+    <CardDescription>卡片描述</CardDescription>
+    <CardAction>卡片操作</CardAction>
   </CardHeader>
   <CardContent>
-    <p>Card Content</p>
+    <p>卡片内容</p>
   </CardContent>
   <CardFooter>
-    <p>Card Footer</p>
+    <p>卡片底部</p>
   </CardFooter>
 </Card>
 ```

@@ -1,22 +1,22 @@
 ---
-title: Breadcrumb
-description: Displays the path to the current resource using a hierarchy of links.
+title: 面包屑 Breadcrumb
+description: 使用层级链接显示当前资源的路径。
 component: true
 ---
 
 <ComponentPreview
   name="breadcrumb-demo"
   className="[&_.preview]:p-2"
-  description="A breadcrumb with a collapsible dropdown."
+  description="带有可折叠下拉菜单的面包屑导航。"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -30,11 +30,11 @@ npx shadcn@latest add breadcrumb
 
 <Steps>
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>复制以下代码并粘贴到你的项目中。</Step>
 
 <ComponentSource name="breadcrumb" title="components/ui/breadcrumb.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目配置。</Step>
 
 </Steps>
 
@@ -42,7 +42,7 @@ npx shadcn@latest add breadcrumb
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import {
@@ -59,29 +59,29 @@ import {
 <Breadcrumb>
   <BreadcrumbList>
     <BreadcrumbItem>
-      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+      <BreadcrumbLink href="/">首页</BreadcrumbLink>
     </BreadcrumbItem>
     <BreadcrumbSeparator />
     <BreadcrumbItem>
-      <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+      <BreadcrumbLink href="/components">组件</BreadcrumbLink>
     </BreadcrumbItem>
     <BreadcrumbSeparator />
     <BreadcrumbItem>
-      <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
+      <BreadcrumbPage>面包屑导航</BreadcrumbPage>
     </BreadcrumbItem>
   </BreadcrumbList>
 </Breadcrumb>
 ```
 
-## Examples
+## 示例
 
-### Custom separator
+### 自定义分隔符
 
-Use a custom component as `children` for `<BreadcrumbSeparator />` to create a custom separator.
+为 `<BreadcrumbSeparator />` 传入自定义组件作为 `children`，即可创建自定义分隔符。
 
 <ComponentPreview
   name="breadcrumb-separator"
-  description="A breadcrumb with a custom separator"
+  description="具有自定义分隔符的面包屑导航"
 />
 
 ```tsx showLineNumbers {1,10-12}
@@ -92,13 +92,13 @@ import { SlashIcon } from "lucide-react"
 <Breadcrumb>
   <BreadcrumbList>
     <BreadcrumbItem>
-      <BreadcrumbLink href="/">Home</BreadcrumbLink>
+      <BreadcrumbLink href="/">首页</BreadcrumbLink>
     </BreadcrumbItem>
     <BreadcrumbSeparator>
       <SlashIcon />
     </BreadcrumbSeparator>
     <BreadcrumbItem>
-      <BreadcrumbLink href="/components">Components</BreadcrumbLink>
+      <BreadcrumbLink href="/components">组件</BreadcrumbLink>
     </BreadcrumbItem>
   </BreadcrumbList>
 </Breadcrumb>
@@ -106,14 +106,14 @@ import { SlashIcon } from "lucide-react"
 
 ---
 
-### Dropdown
+### 下拉菜单
 
-You can compose `<BreadcrumbItem />` with a `<DropdownMenu />` to create a dropdown in the breadcrumb.
+你可以将 `<BreadcrumbItem />` 与 `<DropdownMenu />` 组合使用，创建面包屑中的下拉菜单。
 
 <ComponentPreview
   name="breadcrumb-dropdown"
   className="[&_.preview]:p-2"
-  description="A breadcrumb with a dropdown."
+  description="带有下拉菜单的面包屑导航。"
 />
 
 ```tsx showLineNumbers {1-6,11-21}
@@ -129,11 +129,11 @@ import {
 <BreadcrumbItem>
   <DropdownMenu>
     <DropdownMenuTrigger>
-      Components
+      组件
     </DropdownMenuTrigger>
     <DropdownMenuContent align="start">
-      <DropdownMenuItem>Documentation</DropdownMenuItem>
-      <DropdownMenuItem>Themes</DropdownMenuItem>
+      <DropdownMenuItem>文档</DropdownMenuItem>
+      <DropdownMenuItem>主题</DropdownMenuItem>
       <DropdownMenuItem>GitHub</DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
@@ -142,14 +142,14 @@ import {
 
 ---
 
-### Collapsed
+### 折叠显示
 
-We provide a `<BreadcrumbEllipsis />` component to show a collapsed state when the breadcrumb is too long.
+我们提供了 `<BreadcrumbEllipsis />` 组件，用于当面包屑太长时显示折叠状态。
 
 <ComponentPreview
   name="breadcrumb-ellipsis"
   className="[&_.preview]:p-2"
-  description="A breadcrumb showing a collapsed state."
+  description="展示折叠状态的面包屑导航。"
 />
 
 ```tsx showLineNumbers {1,9}
@@ -170,13 +170,13 @@ import { BreadcrumbEllipsis } from "@/components/ui/breadcrumb"
 
 ---
 
-### Link component
+### 自定义链接组件
 
-To use a custom link component from your routing library, you can use the `asChild` prop on `<BreadcrumbLink />`.
+要使用你路由库中的自定义链接组件，可以在 `<BreadcrumbLink />` 上使用 `asChild` 属性。
 
 <ComponentPreview
   name="breadcrumb-link"
-  description="A breadcrumb with a custom Link component"
+  description="使用自定义 Link 组件的面包屑导航"
 />
 
 ```tsx showLineNumbers {1,8-10}
@@ -188,7 +188,7 @@ import Link from "next/link"
   <BreadcrumbList>
     <BreadcrumbItem>
       <BreadcrumbLink asChild>
-        <Link href="/">Home</Link>
+        <Link href="/">首页</Link>
       </BreadcrumbLink>
     </BreadcrumbItem>
     {/* ... */}
@@ -198,14 +198,14 @@ import Link from "next/link"
 
 ---
 
-### Responsive
+### 响应式
 
-Here's an example of a responsive breadcrumb that composes `<BreadcrumbItem />` with `<BreadcrumbEllipsis />`, `<DropdownMenu />`, and `<Drawer />`.
+下面是一个响应式的面包屑导航示例，它将 `<BreadcrumbItem />` 与 `<BreadcrumbEllipsis />`、`<DropdownMenu />` 和 `<Drawer />` 组合使用。
 
-It displays a dropdown on desktop and a drawer on mobile.
+该示例在桌面端显示下拉菜单，在移动端显示抽屉菜单。
 
 <ComponentPreview
   name="breadcrumb-responsive"
   className="[&_.preview]:p-2"
-  description="A responsive breadcrumb. It displays a dropdown on desktop and a drawer on mobile."
+  description="一个响应式的面包屑导航。桌面端显示下拉菜单，移动端显示抽屉菜单。"
 />

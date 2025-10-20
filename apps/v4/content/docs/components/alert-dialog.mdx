@@ -1,26 +1,26 @@
 ---
-title: Alert Dialog
-description: A modal dialog that interrupts the user with important content and expects a response.
+title: 警告对话框 Alert Dialog
+description: 一个模态对话框，用于向用户展示重要内容并期望用户响应。
 featured: true
 component: true
 links:
-  doc: https://www.radix-ui.com/docs/primitives/components/alert-dialog
-  api: https://www.radix-ui.com/docs/primitives/components/alert-dialog#api-reference
+  doc: https://radix.zhcndoc.com/docs/primitives/components/alert-dialog
+  api: https://radix.zhcndoc.com/docs/primitives/components/alert-dialog#api-reference
 ---
 
 <ComponentPreview
   name="alert-dialog-demo"
-  title="An alert dialog with cancel and continue buttons."
-  description="An alert dialog with cancel and continue buttons."
+  title="带有取消和继续按钮的警告对话框。"
+  description="带有取消和继续按钮的警告对话框。"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -34,17 +34,17 @@ npx shadcn@latest add alert-dialog
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖包：</Step>
 
 ```bash
 npm install @radix-ui/react-alert-dialog
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
 
 <ComponentSource name="alert-dialog" title="components/ui/alert-dialog.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
 </Steps>
 
@@ -52,7 +52,7 @@ npm install @radix-ui/react-alert-dialog
 
 </CodeTabs>
 
-## Usage
+## 使用方法
 
 ```tsx showLineNumbers
 import {
@@ -70,18 +70,17 @@ import {
 
 ```tsx showLineNumbers
 <AlertDialog>
-  <AlertDialogTrigger>Open</AlertDialogTrigger>
+  <AlertDialogTrigger>打开</AlertDialogTrigger>
   <AlertDialogContent>
     <AlertDialogHeader>
-      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogTitle>您确定吗？</AlertDialogTitle>
       <AlertDialogDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
+        此操作不可撤销。此操作将永久删除您的账户并从我们的服务器中移除您的数据。
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>
-      <AlertDialogCancel>Cancel</AlertDialogCancel>
-      <AlertDialogAction>Continue</AlertDialogAction>
+      <AlertDialogCancel>取消</AlertDialogCancel>
+      <AlertDialogAction>继续</AlertDialogAction>
     </AlertDialogFooter>
   </AlertDialogContent>
 </AlertDialog>

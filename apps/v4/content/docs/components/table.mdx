@@ -1,18 +1,18 @@
 ---
-title: Table
-description: A responsive table component.
+title: 表格 Table
+description: 一个响应式表格组件。
 component: true
 ---
 
-<ComponentPreview name="table-demo" description="A table component." />
+<ComponentPreview name="table-demo" description="一个表格组件。" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -26,11 +26,11 @@ npx shadcn@latest add table
 
 <Steps>
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="table" title="components/ui/table.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目结构。</Step>
 
 </Steps>
 
@@ -38,7 +38,7 @@ npx shadcn@latest add table
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import {
@@ -54,30 +54,30 @@ import {
 
 ```tsx showLineNumbers
 <Table>
-  <TableCaption>A list of your recent invoices.</TableCaption>
+  <TableCaption>你最近发票的列表。</TableCaption>
   <TableHeader>
     <TableRow>
-      <TableHead className="w-[100px]">Invoice</TableHead>
-      <TableHead>Status</TableHead>
-      <TableHead>Method</TableHead>
-      <TableHead className="text-right">Amount</TableHead>
+      <TableHead className="w-[100px]">发票</TableHead>
+      <TableHead>状态</TableHead>
+      <TableHead>付款方式</TableHead>
+      <TableHead className="text-right">金额</TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
     <TableRow>
       <TableCell className="font-medium">INV001</TableCell>
-      <TableCell>Paid</TableCell>
-      <TableCell>Credit Card</TableCell>
+      <TableCell>已支付</TableCell>
+      <TableCell>信用卡</TableCell>
       <TableCell className="text-right">$250.00</TableCell>
     </TableRow>
   </TableBody>
 </Table>
 ```
 
-## Data Table
+## 数据表格
 
-You can use the `<Table />` component to build more complex data tables. Combine it with [@tanstack/react-table](https://tanstack.com/table/v8) to create tables with sorting, filtering and pagination.
+你可以使用 `<Table />` 组件构建更复杂的数据表格。将其与 [@tanstack/react-table](https://tanstack.com/table/v8) 结合使用，创建支持排序、筛选和分页的表格。
 
-See the [Data Table](/docs/components/data-table) documentation for more information.
+更多信息请参考[数据表格](/docs/components/data-table)文档。
 
-You can also see an example of a data table in the [Tasks](/examples/tasks) demo.
+你也可以在[任务](/examples/tasks)演示中看到数据表格的示例。

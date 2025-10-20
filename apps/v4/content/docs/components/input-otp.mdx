@@ -1,30 +1,30 @@
 ---
-title: Input OTP
-description: Accessible one-time password component with copy paste functionality.
+title: 一次性密码 OTP
+description: 带有复制粘贴功能的无障碍一次性密码组件。
 component: true
 links:
   doc: https://input-otp.rodz.dev
 ---
 
-<ComponentPreview name="input-otp-demo" description="An 6 digits input OTP." />
+<ComponentPreview name="input-otp-demo" description="一个6位数字输入的 OTP。" />
 
-## About
+## 关于
 
-Input OTP is built on top of [input-otp](https://github.com/guilhermerodz/input-otp) by [@guilherme_rodz](https://twitter.com/guilherme_rodz).
+Input OTP 基于 [@guilherme_rodz](https://twitter.com/guilherme_rodz) 的 [input-otp](https://github.com/guilhermerodz/input-otp) 构建。
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
 <Steps>
 
-<Step>Run the following command:</Step>
+<Step>运行以下命令：</Step>
 
 ```bash
 npx shadcn@latest add input-otp
@@ -38,17 +38,17 @@ npx shadcn@latest add input-otp
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install input-otp
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制粘贴到您的项目中。</Step>
 
 <ComponentSource name="input-otp" title="components/ui/input-otp.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
 </Steps>
 
@@ -56,7 +56,7 @@ npm install input-otp
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import {
@@ -83,15 +83,15 @@ import {
 </InputOTP>
 ```
 
-## Examples
+## 示例
 
-### Pattern
+### pattern（模式）
 
-Use the `pattern` prop to define a custom pattern for the OTP input.
+使用 `pattern` 属性定义 OTP 输入的自定义模式。
 
 <ComponentPreview
   name="input-otp-pattern"
-  description="An input OTP with alphanumeric pattern."
+  description="一个带有字母数字模式的 OTP 输入框。"
 />
 
 ```tsx showLineNumbers {1,7}
@@ -110,13 +110,13 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
 </InputOTP>
 ```
 
-### Separator
+### 分隔符
 
-You can use the `<InputOTPSeparator />` component to add a separator between the input groups.
+你可以使用 `<InputOTPSeparator />` 组件在输入分组之间添加分隔符。
 
 <ComponentPreview
   name="input-otp-separator"
-  description="An input OTP with custom separator."
+  description="一个带自定义分隔符的 OTP 输入框。"
 />
 
 ```tsx showLineNumbers {4,15}
@@ -142,36 +142,35 @@ import {
 </InputOTP>
 ```
 
-### Controlled
+### 受控组件
 
-You can use the `value` and `onChange` props to control the input value.
+你可以使用 `value` 和 `onChange` 属性来控制输入值。
 
 <ComponentPreview name="input-otp-controlled" />
 
-### Form
+### 表单
 
 <ComponentPreview name="input-otp-form" />
 
-## Changelog
+## 更新日志
 
-### 2024-03-19 Composition
+### 2024-03-19 组合方式（Composition）
 
-We've made some updates and replaced the render props pattern with composition. Here's how to update your code if you prefer the composition pattern.
+我们做了一些更新，用组合替换了 render props 模式。如果你想用组合方式，下面是如何更新你的代码。
 
 <Callout className="mt-6">
-  **Note:** You are not required to update your code if you are using the
-  `render` prop. It is still supported.
+  **注意：** 如果你正在使用 `render` 属性，无需强制更新代码。这种用法仍然被支持。
 </Callout>
 
 <Steps>
 
-<Step>Update to the latest version of `input-otp`.</Step>
+<Step>更新到最新版的 `input-otp`。</Step>
 
 ```bash
 npm install input-otp@latest
 ```
 
-<Step>Update `input-otp.tsx`</Step>
+<Step>更新 `input-otp.tsx`</Step>
 
 ```diff showLineNumbers title="input-otp.tsx" {2,8-11}
 - import { OTPInput, SlotProps } from "input-otp"
@@ -187,7 +186,7 @@ npm install input-otp@latest
 +   const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index]
 ```
 
-<Step>Then replace the `render` prop in your code.</Step>
+<Step>然后替换你的代码中的 `render` 属性。</Step>
 
 ```diff showLineNumbers {2-12}
 <InputOTP maxLength={6}>
@@ -207,9 +206,9 @@ npm install input-otp@latest
 
 </Steps>
 
-### 2024-03-19 Disabled
+### 2024-03-19 禁用状态
 
-To add a disabled state to the input, update `<InputOTP />` as follows:
+如需为输入添加禁用状态，按如下方式更新 `<InputOTP />`：
 
 ```tsx showLineNumbers title="input-otp.tsx" {4,7-11}
 const InputOTP = React.forwardRef<

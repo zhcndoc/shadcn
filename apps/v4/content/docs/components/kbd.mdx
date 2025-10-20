@@ -1,18 +1,18 @@
 ---
-title: Kbd
-description: Used to display textual user input from keyboard.
+title: 快捷键 Kbd
+description: 用于显示来自键盘的文本用户输入。
 component: true
 ---
 
 <ComponentPreview name="kbd-demo" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -26,11 +26,11 @@ npx shadcn@latest add kbd
 
 <Steps>
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="kbd" title="components/ui/kbd.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目配置。</Step>
 
 </Steps>
 
@@ -38,7 +38,7 @@ npx shadcn@latest add kbd
 
 </CodeTabs>
 
-## Usage
+## 使用
 
 ```tsx
 import { Kbd } from "@/components/ui/kbd"
@@ -48,41 +48,41 @@ import { Kbd } from "@/components/ui/kbd"
 <Kbd>Ctrl</Kbd>
 ```
 
-## Examples
+## 示例
 
-### Group
+### 分组
 
-Use the `KbdGroup` component to group keyboard keys together.
+使用 `KbdGroup` 组件将键盘按键组合在一起。
 
 <ComponentPreview name="kbd-group" />
 
-### Button
+### 按钮
 
-Use the `Kbd` component inside a `Button` component to display a keyboard key inside a button.
+在 `Button` 组件内使用 `Kbd` 组件以在按钮内部显示键盘按键。
 
 <ComponentPreview name="kbd-button" />
 
-### Tooltip
+### 提示
 
-You can use the `Kbd` component inside a `Tooltip` component to display a tooltip with a keyboard key.
+你可以在 `Tooltip` 组件内使用 `Kbd` 组件，以显示带有键盘按键的提示。
 
 <ComponentPreview name="kbd-tooltip" />
 
-### Input Group
+### 输入组
 
-You can use the `Kbd` component inside a `InputGroupAddon` component to display a keyboard key inside an input group.
+你可以在 `InputGroupAddon` 组件内使用 `Kbd` 组件，以在输入组中显示键盘按键。
 
 <ComponentPreview name="kbd-input-group" />
 
-## API Reference
+## API 参考
 
 ### Kbd
 
-Use the `Kbd` component to display a keyboard key.
+使用 `Kbd` 组件显示键盘按键。
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `className` | `string` | ``      |
+| 属性         | 类型       | 默认值 |
+| ------------ | ---------- | ------ |
+| `className`  | `string`   | ``     |
 
 ```tsx
 <Kbd>Ctrl</Kbd>
@@ -90,11 +90,11 @@ Use the `Kbd` component to display a keyboard key.
 
 ### KbdGroup
 
-Use the `KbdGroup` component to group `Kbd` components together.
+使用 `KbdGroup` 组件将多个 `Kbd` 组件组合在一起。
 
-| Prop        | Type     | Default |
-| ----------- | -------- | ------- |
-| `className` | `string` | ``      |
+| 属性         | 类型       | 默认值 |
+| ------------ | ---------- | ------ |
+| `className`  | `string`   | ``     |
 
 ```tsx
 <KbdGroup>

@@ -1,33 +1,27 @@
 ---
 title: Monorepo
-description: Using shadcn/ui components and CLI in a monorepo.
+description: 在 monorepo 中使用 shadcn/ui 组件和 CLI。
 ---
 
-Until now, using shadcn/ui in a monorepo was a bit of a pain. You could add
-components using the CLI, but you had to manage where the components
-were installed and manually fix import paths.
+直到现在，在 monorepo 中使用 shadcn/ui 还是有点麻烦。你可以使用 CLI 添加组件，但你必须管理组件安装的位置，并手动修正导入路径。
 
-With the new monorepo support in the CLI, we've made it a lot easier to use
-shadcn/ui in a monorepo.
+通过 CLI 中新增的 monorepo 支持，我们让在 monorepo 中使用 shadcn/ui 变得轻松许多。
 
-The CLI now understands the monorepo structure and will install the components,
-dependencies and registry dependencies to the correct paths and handle imports
-for you.
+CLI 现在能够理解 monorepo 结构，会将组件、依赖和注册依赖安装到正确的路径，并帮你处理导入。
 
-## Getting started
+## 快速开始
 
 <Steps>
 
-### Create a new monorepo project
+### 创建一个新的 monorepo 项目
 
-To create a new monorepo project, run the `init` command. You will be prompted
-to select the type of project you are creating.
+要创建一个新的 monorepo 项目，运行 `init` 命令。你将被提示选择你要创建的项目类型。
 
 ```bash
 npx shadcn@canary init
 ```
 
-Select the `Next.js (Monorepo)` option.
+选择 `Next.js (Monorepo)` 选项。
 
 ```bash
 ? Would you like to start a new project?
@@ -35,16 +29,15 @@ Select the `Next.js (Monorepo)` option.
 ❯   Next.js (Monorepo)
 ```
 
-This will create a new monorepo project with two workspaces: `web` and `ui`,
-and [Turborepo](https://turbo.build/repo/docs) as the build system.
+这将创建一个包含两个工作区 `web` 和 `ui` 的 monorepo 项目，并使用 [Turborepo](https://turbo.build/repo/docs) 作为构建系统。
 
-Everything is set up for you, so you can start adding components to your project.
+一切都已为你设置好，所以你可以开始向项目添加组件了。
 
-Note: The monorepo uses React 19 and Tailwind CSS v4.
+注意：该 monorepo 使用 React 19 和 Tailwind CSS v4。
 
-### Add components to your project
+### 向项目添加组件
 
-To add components to your project, run the `add` command **in the path of your app**.
+要向项目添加组件，请在你的应用路径下运行 `add` 命令。
 
 ```bash
 cd apps/web
@@ -54,22 +47,21 @@ cd apps/web
 npx shadcn@canary add [COMPONENT]
 ```
 
-The CLI will figure out what type of component you are adding and install the
-correct files to the correct path.
+CLI 会自动判断你添加的组件类型，并将正确的文件安装到正确的路径。
 
-For example, if you run `npx shadcn@canary add button`, the CLI will install the button component under `packages/ui` and update the import path for components in `apps/web`.
+例如，如果你运行 `npx shadcn@canary add button`，CLI 会将按钮组件安装到 `packages/ui` 下，并更新 `apps/web` 中组件的导入路径。
 
-If you run `npx shadcn@canary add login-01`, the CLI will install the `button`, `label`, `input` and `card` components under `packages/ui` and the `login-form` component under `apps/web/components`.
+如果你运行 `npx shadcn@canary add login-01`，CLI 会将 `button`、`label`、`input` 和 `card` 组件安装到 `packages/ui` 中，而 `login-form` 组件则安装到 `apps/web/components`。
 
-### Importing components
+### 导入组件
 
-You can import components from the `@workspace/ui` package as follows:
+你可以从 `@workspace/ui` 包中导入组件，写法如下：
 
 ```tsx
 import { Button } from "@workspace/ui/components/button"
 ```
 
-You can also import hooks and utilities from the `@workspace/ui` package.
+你也可以从 `@workspace/ui` 包中导入 hooks 和工具函数。
 
 ```tsx
 import { useTheme } from "@workspace/ui/hooks/use-theme"
@@ -78,13 +70,13 @@ import { cn } from "@workspace/ui/lib/utils"
 
 </Steps>
 
-## File Structure
+## 文件结构
 
-When you create a new monorepo project, the CLI will create the following file structure:
+当你创建一个新的 monorepo 项目时，CLI 会创建如下文件结构：
 
 ```txt
 apps
-└── web         # Your app goes here.
+└── web         # 你的应用代码放这里。
     ├── app
     │   └── page.tsx
     ├── components
@@ -92,7 +84,7 @@ apps
     ├── components.json
     └── package.json
 packages
-└── ui          # Your components and dependencies are installed here.
+└── ui          # 你的组件和依赖安装于此。
     ├── src
     │   ├── components
     │   │   └── button.tsx
@@ -107,11 +99,11 @@ package.json
 turbo.json
 ```
 
-## Requirements
+## 需求
 
-1. Every workspace must have a `components.json` file. A `package.json` file tells npm how to install the dependencies. A `components.json` file tells the CLI how and where to install components.
+1. 每个工作区必须有一个 `components.json` 文件。`package.json` 文件告诉 npm 如何安装依赖，`components.json` 文件则告诉 CLI 如何及在哪里安装组件。
 
-2. The `components.json` file must properly define aliases for the workspace. This tells the CLI how to import components, hooks, utilities, etc.
+2. `components.json` 文件必须正确定义该工作区的别名。这告诉 CLI 如何导入组件、hooks、工具等。
 
 ```json showLineNumbers title="apps/web/components.json"
 {
@@ -159,8 +151,8 @@ turbo.json
 }
 ```
 
-3. Ensure you have the same `style`, `iconLibrary` and `baseColor` in both `components.json` files.
+3. 确保两个 `components.json` 文件中的 `style`、`iconLibrary` 和 `baseColor` 保持一致。
 
-4. **For Tailwind CSS v4, leave the `tailwind` config empty in the `components.json` file.**
+4. **对于 Tailwind CSS v4，`components.json` 中的 `tailwind` 配置需留空。**
 
-By following these requirements, the CLI will be able to install ui components, blocks, libs and hooks to the correct paths and handle imports for you.
+遵守以上要求，CLI 就能将 ui 组件、区块、库和 hooks 安装到正确的路径，并帮你管理导入。

@@ -1,18 +1,18 @@
 ---
-title: Textarea
-description: Displays a form textarea or a component that looks like a textarea.
+title: 文本区域 Textarea
+description: 显示一个表单文本区域或一个看起来像文本区域的组件。
 component: true
 ---
 
-<ComponentPreview name="textarea-demo" description="A textarea" />
+<ComponentPreview name="textarea-demo" description="一个文本区域" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -26,11 +26,11 @@ npx shadcn@latest add textarea
 
 <Steps>
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制粘贴到你的项目中。</Step>
 
 <ComponentSource name="textarea" title="components/ui/textarea.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目结构。</Step>
 
 </Steps>
 
@@ -38,7 +38,7 @@ npx shadcn@latest add textarea
 
 </CodeTabs>
 
-## Usage
+## 使用方法
 
 ```tsx
 import { Textarea } from "@/components/ui/textarea"
@@ -48,34 +48,34 @@ import { Textarea } from "@/components/ui/textarea"
 <Textarea />
 ```
 
-## Examples
+## 示例
 
-### Default
+### 默认
 
-<ComponentPreview name="textarea-demo" description="A textarea" />
+<ComponentPreview name="textarea-demo" description="一个文本区域" />
 
-### Disabled
+### 禁用
 
-<ComponentPreview name="textarea-disabled" description="A disabled textarea" />
+<ComponentPreview name="textarea-disabled" description="一个禁用的文本区域" />
 
-### With Label
+### 带标签
 
 <ComponentPreview
   name="textarea-with-label"
   className="[&_div.grid]:w-full"
-  description="A textarea with a label"
+  description="带标签的文本区域"
 />
 
-### With Text
+### 带文本
 
 <ComponentPreview
   name="textarea-with-text"
-  description="A textarea with text"
+  description="带文本的文本区域"
 />
 
-### With Button
+### 带按钮
 
 <ComponentPreview
   name="textarea-with-button"
-  description="A textarea with a button"
+  description="带按钮的文本区域"
 />

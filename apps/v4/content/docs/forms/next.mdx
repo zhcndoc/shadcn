@@ -1,15 +1,15 @@
 ---
 title: Next.js
-description: Build forms in React using useActionState and Server Actions.
+description: 使用 useActionState 和服务器操作在 React 中构建表单。
 ---
 
 import { InfoIcon } from "lucide-react"
 
-In this guide, we will take a look at building forms with Next.js using `useActionState` and Server Actions. We'll cover building forms, validation, pending states, accessibility, and more.
+在本指南中，我们将介绍如何使用 Next.js 中的 `useActionState` 和服务器操作来构建表单。内容涵盖表单构建、验证、挂起状态、无障碍访问等。
 
-## Demo
+## 演示
 
-We are going to build the following form with a simple text input and a textarea. On submit, we'll use a server action to validate the form data and update the form state.
+我们将构建如下的表单，包含一个简单的文本输入框和一个文本区域。提交时，我们将使用服务器操作来验证表单数据并更新表单状态。
 
 <ComponentPreview
   name="form-next-demo"
@@ -17,61 +17,58 @@ We are going to build the following form with a simple text input and a textarea
 />
 
 <Callout icon={<InfoIcon />}>
-  **Note:** The examples on this page intentionally disable browser validation
-  to show how schema validation and form errors work in server actions.
+  **注意：** 本页示例故意禁用了浏览器验证，以展示服务器操作中架构验证和表单错误的工作方式。
 </Callout>
 
-## Approach
+## 方法
 
-This form leverages Next.js and React's built-in capabilities for form handling. We'll build our form using the `<Field />` component, which gives you **complete flexibility over the markup and styling**.
+该表单利用了 Next.js 和 React 内置的表单处理能力。我们将使用 `<Field />` 组件构建表单，它为你提供了**完全的标记和样式自由**。
 
-- Uses Next.js `<Form />` component for navigation and progressive enhancement.
-- `<Field />` components for building accessible forms.
-- `useActionState` for managing form state and errors.
-- Handles loading states with pending prop.
-- Server Actions for handling form submissions.
-- Server-side validation using Zod.
+- 使用 Next.js 的 `<Form />` 组件实现导航和渐进式增强。
+- 使用 `<Field />` 组件构建无障碍表单。
+- 使用 `useActionState` 管理表单状态和错误。
+- 通过 pending 属性处理加载状态。
+- 使用服务器操作处理表单提交。
+- 使用 Zod 进行服务器端验证。
 
-## Anatomy
+## 结构
 
-Here's a basic example of a form using the `<Field />` component.
+下面是一个使用 `<Field />` 组件的基本表单示例。
 
 ```tsx showLineNumbers
 <Form action={formAction}>
   <FieldGroup>
     <Field data-invalid={!!formState.errors?.title?.length}>
-      <FieldLabel htmlFor="title">Bug Title</FieldLabel>
+      <FieldLabel htmlFor="title">错误标题</FieldLabel>
       <Input
         id="title"
         name="title"
         defaultValue={formState.values.title}
         disabled={pending}
         aria-invalid={!!formState.errors?.title?.length}
-        placeholder="Login button not working on mobile"
+        placeholder="登录按钮在手机上无法使用"
         autoComplete="off"
       />
       <FieldDescription>
-        Provide a concise title for your bug report.
+        请简洁描述你的错误报告标题。
       </FieldDescription>
       {formState.errors?.title && (
         <FieldError>{formState.errors.title[0]}</FieldError>
       )}
     </Field>
   </FieldGroup>
-  <Button type="submit">Submit</Button>
+  <Button type="submit">提交</Button>
 </Form>
 ```
 
-## Usage
+## 用法
 
-### Create a form schema
+### 创建表单架构
 
-We'll start by defining the shape of our form using a Zod schema in a `schema.ts` file.
+首先我们使用 Zod 在 `schema.ts` 文件中定义表单的数据结构。
 
 <Callout icon={<InfoIcon />}>
-  **Note:** This example uses `zod v3` for schema validation, but you can
-  replace it with any other schema validation library. Make sure your schema
-  library conforms to the Standard Schema specification.
+  **注意：** 本示例使用的是 `zod v3` 进行架构验证，但你可以替换为其他任何符合标准架构规范的验证库。
 </Callout>
 
 ```tsx showLineNumbers title="schema.ts"
@@ -80,18 +77,18 @@ import { z } from "zod"
 export const formSchema = z.object({
   title: z
     .string()
-    .min(5, "Bug title must be at least 5 characters.")
-    .max(32, "Bug title must be at most 32 characters."),
+    .min(5, "错误标题至少需要5个字符。")
+    .max(32, "错误标题最多32个字符。"),
   description: z
     .string()
-    .min(20, "Description must be at least 20 characters.")
-    .max(100, "Description must be at most 100 characters."),
+    .min(20, "描述至少需要20个字符。")
+    .max(100, "描述最多100个字符。"),
 })
 ```
 
-### Define the form state type
+### 定义表单状态类型
 
-Next, we'll create a type for our form state that includes values, errors, and success status. This will be used to type the form state on the client and server.
+接下来，我们定义一个表单状态类型，包含值、错误和成功状态。这将在客户端和服务器端用于表单状态的类型定义。
 
 ```tsx showLineNumbers title="schema.ts"
 import { z } from "zod"
@@ -103,39 +100,39 @@ export type FormState = {
 }
 ```
 
-**Important:** We define the schema and the `FormState` type in a separate file so we can import them into both the client and server components.
+**重要提示：** 我们将架构和 `FormState` 类型定义在单独文件，方便在客户端和服务器组件中导入使用。
 
-### Create the Server Action
+### 创建服务器操作
 
-A server action is a function that runs on the server and can be called from the client. We'll use it to validate the form data and update the form state.
+服务器操作是运行在服务器上并可以被客户端调用的函数。我们将它用于验证表单数据并更新表单状态。
 
 <ComponentSource
   src="/registry/new-york-v4/examples/form-next-demo-action.ts"
   title="actions.ts"
 />
 
-**Note:** We're returning `values` for error cases. This is because we want to keep the user submitted values in the form state. For success cases, we're returning empty values to reset the form.
+**注意：** 对于错误情况，我们返回 `values`，目的是保持用户提交的值在表单状态中。对于成功情况则返回空的值以重置表单。
 
-### Build the form
+### 构建表单
 
-We can now build the form using the `<Field />` component. We'll use the `useActionState` hook to manage the form state, server action, and pending state.
+现在我们可以使用 `<Field />` 组件构建表单。使用 `useActionState` 钩子管理表单状态、服务器操作及挂起状态。
 
 <ComponentSource
   src="/registry/new-york-v4/examples/form-next-demo.tsx"
   title="form.tsx"
 />
 
-### Done
+### 完成
 
-That's it. You now have a fully accessible form with client and server-side validation.
+就是这样。你现在拥有了一个全无障碍且具备客户端和服务器端验证的完整表单。
 
-When you submit the form, the `formAction` function will be called on the server. The server action will validate the form data and update the form state.
+提交表单时，服务器上的 `formAction` 函数将被调用。服务器操作会验证表单数据并更新表单状态。
 
-If the form data is invalid, the server action will return the errors to the client. If the form data is valid, the server action will return the success status and update the form state.
+如果数据无效，服务器操作将返回错误给客户端；如果有效，服务器操作则返回成功状态并更新表单。
 
-## Pending States
+## 挂起状态
 
-Use the `pending` prop from `useActionState` to show loading indicators and disable form inputs.
+使用 `useActionState` 返回的 `pending` 属性来显示加载指示器并禁用表单输入。
 
 ```tsx showLineNumbers {11,26-34}
 "use client"
@@ -160,12 +157,12 @@ export function BugReportForm() {
     <Form action={formAction}>
       <FieldGroup>
         <Field data-disabled={pending}>
-          <FieldLabel htmlFor="name">Name</FieldLabel>
+          <FieldLabel htmlFor="name">姓名</FieldLabel>
           <Input id="name" name="name" disabled={pending} />
         </Field>
         <Field>
           <Button type="submit" disabled={pending}>
-            {pending && <Spinner />} Submit
+            {pending && <Spinner />} 提交
           </Button>
         </Field>
       </FieldGroup>
@@ -174,34 +171,34 @@ export function BugReportForm() {
 }
 ```
 
-## Disabled States
+## 禁用状态
 
-### Submit Button
+### 提交按钮
 
-To disable the submit button, use the `pending` prop on the button's `disabled` prop.
+要禁用提交按钮，请将 `pending` 传给按钮的 `disabled` 属性。
 
 ```tsx showLineNumbers
 <Button type="submit" disabled={pending}>
-  {pending && <Spinner />} Submit
+  {pending && <Spinner />} 提交
 </Button>
 ```
 
-### Field
+### 字段
 
-To apply a disabled state and styling to a `<Field />` component, use the `data-disabled` prop on the `<Field />` component.
+要为 `<Field />` 组件应用禁用状态及样式，请使用 `<Field />` 组件的 `data-disabled` 属性。
 
 ```tsx showLineNumbers
 <Field data-disabled={pending}>
-  <FieldLabel htmlFor="name">Name</FieldLabel>
+  <FieldLabel htmlFor="name">姓名</FieldLabel>
   <Input id="name" name="name" disabled={pending} />
 </Field>
 ```
 
-## Validation
+## 验证
 
-### Server-side Validation
+### 服务器端验证
 
-Use `safeParse()` on your schema in your server action to validate the form data.
+在服务器操作中使用架构的 `safeParse()` 方法验证表单数据。
 
 ```tsx showLineNumbers title="actions.ts" {12-20}
 "use server"
@@ -232,11 +229,11 @@ export async function bugReportFormAction(
 }
 ```
 
-### Business Logic Validation
+### 业务逻辑验证
 
-You can add additional custom validation logic in your server action.
+你可以在服务器操作中添加额外的自定义验证逻辑。
 
-Make sure to return the values on validation errors. This is to ensure that the form state maintains the user's input.
+在验证出错时，一定要返回 values，以确保表单状态保留用户输入的数据。
 
 ```tsx showLineNumbers title="actions.ts" {22-35}
 "use server"
@@ -260,7 +257,7 @@ export async function bugReportFormAction(
     }
   }
 
-  // Check if email already exists in database.
+  // 检查邮箱是否已存在数据库中。
   const existingUser = await db.user.findUnique({
     where: { email: result.data.email },
   })
@@ -270,7 +267,7 @@ export async function bugReportFormAction(
       values,
       success: false,
       errors: {
-        email: ["This email is already registered"],
+        email: ["该邮箱已被注册"],
       },
     }
   }
@@ -282,13 +279,13 @@ export async function bugReportFormAction(
 }
 ```
 
-## Displaying Errors
+## 错误显示
 
-Display errors next to the field using `<FieldError />`. Make sure to add the `data-invalid` prop to the `<Field />` component and `aria-invalid` prop to the input.
+使用 `<FieldError />` 在对应字段旁显示错误。确保对 `<Field />` 组件添加 `data-invalid` 属性，并对输入框添加 `aria-invalid` 属性。
 
 ```tsx showLineNumbers
 <Field data-invalid={!!formState.errors?.email?.length}>
-  <FieldLabel htmlFor="email">Email</FieldLabel>
+  <FieldLabel htmlFor="email">邮箱</FieldLabel>
   <Input
     id="email"
     name="email"
@@ -301,13 +298,13 @@ Display errors next to the field using `<FieldError />`. Make sure to add the `d
 </Field>
 ```
 
-## Resetting the Form
+## 重置表单
 
-When you submit a form with a server action, React will automatically reset the form state to the initial values.
+使用服务器操作提交表单时，React 会自动重置表单状态为初始值。
 
-### Reset on Success
+### 成功时重置
 
-To reset the form on success, you can omit the `values` from the server action and React will automatically reset the form state to the initial values. This is standard React behavior.
+成功时可省略服务器操作返回的 `values`，React 将自动将表单重置为初始状态。这是 React 的标准行为。
 
 ```tsx showLineNumbers title="actions.ts" {22-26}
 export async function demoFormAction(
@@ -319,7 +316,7 @@ export async function demoFormAction(
     description: formData.get("description") as string,
   }
 
-  // Validation.
+  // 验证。
   if (!result.success) {
     return {
       values,
@@ -328,10 +325,10 @@ export async function demoFormAction(
     }
   }
 
-  // Business logic.
+  // 业务逻辑。
   callYourDatabaseOrAPI(values)
 
-  // Omit the values on success to reset the form state.
+  // 成功时省略 values, 以重置表单状态。
   return {
     errors: null,
     success: true,
@@ -339,9 +336,9 @@ export async function demoFormAction(
 }
 ```
 
-### Preserve on Validation Errors
+### 验证错误时保留输入
 
-To prevent the form from being reset on failure, you can return the values in the server action. This is to ensure that the form state maintains the user's input.
+为防止验证失败时重置表单，可以在服务器操作中返回 values，确保保留用户输入。
 
 ```tsx showLineNumbers title="actions.ts" {12-17}
 export async function demoFormAction(
@@ -353,10 +350,10 @@ export async function demoFormAction(
     description: formData.get("description") as string,
   }
 
-  // Validation.
+  // 验证。
   if (!result.success) {
     return {
-      // Return the values on validation errors.
+      // 验证错误时返回 values。
       values,
       success: false,
       errors: result.error.flatten().fieldErrors,
@@ -365,9 +362,9 @@ export async function demoFormAction(
 }
 ```
 
-## Complex Forms
+## 复杂表单
 
-Here is an example of a more complex form with multiple fields and validation.
+以下示例展示了更复杂的包含多个字段和验证的表单。
 
 <ComponentPreview
   name="form-next-complex"
@@ -375,21 +372,21 @@ Here is an example of a more complex form with multiple fields and validation.
   hideCode
 />
 
-### Schema
+### 架构
 
 <ComponentSource
   src="/registry/new-york-v4/examples/form-next-complex-schema.ts"
   title="schema.ts"
 />
 
-### Form
+### 表单
 
 <ComponentSource
   src="/registry/new-york-v4/examples/form-next-complex.tsx"
   title="form.tsx"
 />
 
-### Server Action
+### 服务器操作
 
 <ComponentSource
   src="/registry/new-york-v4/examples/form-next-complex-action.ts"

@@ -1,25 +1,25 @@
 ---
-title: Dropdown Menu
-description: Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+title: 下拉菜单 Dropdown Menu
+description: 向用户展示菜单——例如一组动作或功能——通过按钮触发。
 featured: true
 component: true
 links:
-  doc: https://www.radix-ui.com/docs/primitives/components/dropdown-menu
-  api: https://www.radix-ui.com/docs/primitives/components/dropdown-menu#api-reference
+  doc: https://radix.zhcndoc.com/docs/primitives/components/dropdown-menu
+  api: https://radix.zhcndoc.com/docs/primitives/components/dropdown-menu#api-reference
 ---
 
 <ComponentPreview
   name="dropdown-menu-demo"
-  description="A dropdown menu with icons, shortcuts and sub menu items."
+  description="带图标、快捷键和子菜单项的下拉菜单。"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行工具</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -33,17 +33,17 @@ npx shadcn@latest add dropdown-menu
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-dropdown-menu
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
 
 <ComponentSource name="dropdown-menu" title="components/ui/dropdown-menu.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目结构。</Step>
 
 </Steps>
 
@@ -51,7 +51,7 @@ npm install @radix-ui/react-dropdown-menu
 
 </CodeTabs>
 
-## Usage
+## 使用方法
 
 ```tsx showLineNumbers
 import {
@@ -66,44 +66,44 @@ import {
 
 ```tsx showLineNumbers
 <DropdownMenu>
-  <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+  <DropdownMenuTrigger>打开</DropdownMenuTrigger>
   <DropdownMenuContent>
-    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+    <DropdownMenuLabel>我的账户</DropdownMenuLabel>
     <DropdownMenuSeparator />
-    <DropdownMenuItem>Profile</DropdownMenuItem>
-    <DropdownMenuItem>Billing</DropdownMenuItem>
-    <DropdownMenuItem>Team</DropdownMenuItem>
-    <DropdownMenuItem>Subscription</DropdownMenuItem>
+    <DropdownMenuItem>个人资料</DropdownMenuItem>
+    <DropdownMenuItem>账单</DropdownMenuItem>
+    <DropdownMenuItem>团队</DropdownMenuItem>
+    <DropdownMenuItem>订阅</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
 ```
 
-## Examples
+## 示例
 
-### Checkboxes
+### 复选框
 
 <ComponentPreview
   name="dropdown-menu-checkboxes"
-  description="A dropdown menu with checkboxes."
+  description="带复选框的下拉菜单。"
 />
 
-### Radio Group
+### 单选组
 
 <ComponentPreview
   name="dropdown-menu-radio-group"
-  description="A dropdown menu with radio items."
+  description="带单选项的下拉菜单。"
 />
 
-### Dialog
+### 对话框
 
-This example shows how to open a dialog from a dropdown menu.
+此示例展示如何从下拉菜单打开一个对话框。
 
-Use `modal={false}` on the `DropdownMenu` component.
+在 `DropdownMenu` 组件中使用 `modal={false}`。
 
 ```tsx showLineNumbers
 <DropdownMenu modal={false}>
   <DropdownMenuTrigger asChild>
-    <Button variant="outline">Actions</Button>
+    <Button variant="outline">操作</Button>
   </DropdownMenuTrigger>
 </DropdownMenu>
 ```

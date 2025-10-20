@@ -1,60 +1,60 @@
 ---
 title: Remix
-description: Install and configure shadcn/ui for Remix.
+description: 为 Remix 安装和配置 shadcn/ui。
 ---
 
 <Callout>
 
-**Note:** This guide is for Remix. For React Router, see the [React Router](/docs/installation/react-router) guide.
+**注意：** 本指南针对 Remix。React Router 的相关内容，请参阅 [React Router](/docs/installation/react-router) 指南。
 
 </Callout>
 
 <Steps>
 
-### Create project
+### 创建项目
 
-Start by creating a new Remix project using `create-remix`:
+首先使用 `create-remix` 创建一个新的 Remix 项目：
 
 ```bash
 npx create-remix@latest my-app
 ```
 
-### Run the CLI
+### 运行 CLI
 
-Run the `shadcn` init command to setup your project:
+运行 `shadcn` 初始化命令来设置你的项目：
 
 ```bash
 npx shadcn@latest init
 ```
 
-### Configure components.json
+### 配置 components.json
 
-You will be asked a few questions to configure `components.json`:
+系统将询问你一些问题来配置 `components.json`：
 
 ```bash
 Which color would you like to use as base color? › Neutral
 ```
 
-### App structure
+### 应用结构
 
 <Callout>
 
-**Note**: This app structure is only a suggestion. You can place the files wherever you want.
+**注意**：此应用结构仅作为建议。你可以将文件放置在任何你想放的位置。
 
 </Callout>
 
-- Place the UI components in the `app/components/ui` folder.
-- Your own components can be placed in the `app/components` folder.
-- The `app/lib` folder contains all the utility functions. We have a `utils.ts` where we define the `cn` helper.
-- The `app/tailwind.css` file contains the global CSS.
+- 将 UI 组件放置在 `app/components/ui` 文件夹中。
+- 你自己的组件可以放在 `app/components` 文件夹内。
+- `app/lib` 文件夹包含所有的工具函数。我们在 `utils.ts` 中定义了 `cn` 辅助函数。
+- `app/tailwind.css` 文件包含全局 CSS。
 
-### Install Tailwind CSS
+### 安装 Tailwind CSS
 
 ```bash
 npm install -D tailwindcss@latest autoprefixer@latest
 ```
 
-Then we create a `postcss.config.js` file:
+然后创建 `postcss.config.js` 文件：
 
 ```js title="postcss.config.js" showLineNumbers
 export default {
@@ -65,7 +65,7 @@ export default {
 }
 ```
 
-And finally we add the following to our `remix.config.js` file:
+最后，在 `remix.config.js` 文件中添加以下内容：
 
 ```js title="remix.config.js" {4-5} showLineNumbers
 /** @type {import('@remix-run/dev').AppConfig} */
@@ -77,9 +77,9 @@ export default {
 };
 ```
 
-### Add `tailwind.css` to your app
+### 将 `tailwind.css` 添加到你的应用
 
-In your `app/root.tsx` file, import the `tailwind.css` file:
+在你的 `app/root.tsx` 文件中，导入 `tailwind.css` 文件：
 
 ```js {1, 4} showLineNumbers title="app/root.tsx"
 import styles from "./tailwind.css?url"
@@ -90,15 +90,15 @@ export const links: LinksFunction = () => [
 ]
 ```
 
-### That's it
+### 就这些了
 
-You can now start adding components to your project.
+现在你可以开始往你的项目中添加组件了。
 
 ```bash
 npx shadcn@latest add button
 ```
 
-The command above will add the `Button` component to your project. You can then import it like this:
+上面的命令会将 `Button` 组件添加到你的项目中。然后你可以这样导入它：
 
 ```tsx {1,6} showLineNumbers title="app/routes/index.tsx"
 import { Button } from "~/components/ui/button"

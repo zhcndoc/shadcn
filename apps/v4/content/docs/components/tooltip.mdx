@@ -1,21 +1,21 @@
 ---
-title: Tooltip
-description: A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.
+title: 提示 Tooltip
+description: 当元素获得键盘焦点或鼠标悬停时，显示与该元素相关信息的弹出框。
 component: true
 links:
-  doc: https://www.radix-ui.com/docs/primitives/components/tooltip
-  api: https://www.radix-ui.com/docs/primitives/components/tooltip#api-reference
+  doc: https://radix.zhcndoc.com/docs/primitives/components/tooltip
+  api: https://radix.zhcndoc.com/docs/primitives/components/tooltip#api-reference
 ---
 
-<ComponentPreview name="tooltip-demo" description="A tooltip component." />
+<ComponentPreview name="tooltip-demo" description="一个提示工具组件。" />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -29,17 +29,17 @@ npx shadcn@latest add tooltip
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-tooltip
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制粘贴到您的项目中。</Step>
 
 <ComponentSource name="tooltip" title="components/ui/tooltip.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配您的项目设置。</Step>
 
 </Steps>
 
@@ -47,7 +47,7 @@ npm install @radix-ui/react-tooltip
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import {
@@ -59,19 +59,19 @@ import {
 
 ```tsx showLineNumbers
 <Tooltip>
-  <TooltipTrigger>Hover</TooltipTrigger>
+  <TooltipTrigger>悬停</TooltipTrigger>
   <TooltipContent>
-    <p>Add to library</p>
+    <p>添加到库</p>
   </TooltipContent>
 </Tooltip>
 ```
 
 ---
 
-## Changelog
+## 更新日志
 
-### 2025-09-22 Update tooltip colors
+### 2025-09-22 更新提示工具颜色
 
-We've updated the tooltip colors to use the foreground color for the background and the background color for the foreground.
+我们更新了提示工具的颜色，使用前景色作为背景色，背景色作为前景色。
 
-Replace `bg-primary text-primary-foreground` with `bg-foreground text-background` for both `<TooltipContent />` and `<TooltipArrow />`.
+请将 `<TooltipContent />` 和 `<TooltipArrow />` 中的 `bg-primary text-primary-foreground` 替换为 `bg-foreground text-background`。

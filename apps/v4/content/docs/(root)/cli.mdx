@@ -1,19 +1,19 @@
 ---
 title: shadcn
-description: Use the shadcn CLI to add components to your project.
+description: 使用 shadcn CLI 将组件添加到您的项目中。
 ---
 
 ## init
 
-Use the `init` command to initialize configuration and dependencies for a new project.
+使用 `init` 命令为新项目初始化配置和依赖项。
 
-The `init` command installs dependencies, adds the `cn` util and configures CSS variables for the project.
+`init` 命令会安装依赖项，添加 `cn` 工具，并配置项目的 CSS 变量。
 
 ```bash
 npx shadcn@latest init
 ```
 
-**Options**
+**选项**
 
 ```bash
 Usage: shadcn init [options] [components...]
@@ -21,34 +21,34 @@ Usage: shadcn init [options] [components...]
 initialize your project and install dependencies
 
 Arguments:
-  components         name, url or local path to component
+  components         组件的名称、URL 或本地路径
 
 Options:
-  -t, --template <template>      the template to use. (next, next-monorepo)
-  -b, --base-color <base-color>  the base color to use. (neutral, gray, zinc, stone, slate)
-  -y, --yes                      skip confirmation prompt. (default: true)
-  -f, --force                    force overwrite of existing configuration. (default: false)
-  -c, --cwd <cwd>                the working directory. defaults to the current directory.
-  -s, --silent                   mute output. (default: false)
-  --src-dir                      use the src directory when creating a new project. (default: false)
-  --no-src-dir                   do not use the src directory when creating a new project.
-  --css-variables                use css variables for theming. (default: true)
-  --no-css-variables             do not use css variables for theming.
-  --no-base-style                do not install the base shadcn style
-  -h, --help                     display help for command
+  -t, --template <template>      使用的模板。（next，next-monorepo）
+  -b, --base-color <base-color>  基础颜色。（neutral，gray，zinc，stone，slate）
+  -y, --yes                      跳过确认提示。（默认值：true）
+  -f, --force                    强制覆盖已有配置。（默认值：false）
+  -c, --cwd <cwd>                工作目录，默认当前目录。
+  -s, --silent                   静默输出。（默认值：false）
+  --src-dir                      创建新项目时使用 src 目录。（默认值：false）
+  --no-src-dir                   创建新项目时不使用 src 目录。
+  --css-variables                使用 CSS 变量进行主题设置。（默认值：true）
+  --no-css-variables             不使用 CSS 变量进行主题设置。
+  --no-base-style                不安装 shadcn 基础样式
+  -h, --help                     显示命令帮助信息
 ```
 
 ---
 
 ## add
 
-Use the `add` command to add components and dependencies to your project.
+使用 `add` 命令向项目中添加组件和依赖项。
 
 ```bash
 npx shadcn@latest add [component]
 ```
 
-**Options**
+**选项**
 
 ```bash
 Usage: shadcn add [options] [components...]
@@ -56,45 +56,45 @@ Usage: shadcn add [options] [components...]
 add a component to your project
 
 Arguments:
-  components         name, url or local path to component
+  components         组件的名称、URL 或本地路径
 
 Options:
-  -y, --yes           skip confirmation prompt. (default: false)
-  -o, --overwrite     overwrite existing files. (default: false)
-  -c, --cwd <cwd>     the working directory. defaults to the current directory.
-  -a, --all           add all available components (default: false)
-  -p, --path <path>   the path to add the component to.
-  -s, --silent        mute output. (default: false)
-  --src-dir           use the src directory when creating a new project. (default: false)
-  --no-src-dir        do not use the src directory when creating a new project.
-  --css-variables     use css variables for theming. (default: true)
-  --no-css-variables  do not use css variables for theming.
-  -h, --help          display help for command
+  -y, --yes           跳过确认提示。（默认值：false）
+  -o, --overwrite     覆盖已有文件。（默认值：false）
+  -c, --cwd <cwd>     工作目录，默认当前目录。
+  -a, --all           添加所有可用组件。（默认值：false）
+  -p, --path <path>   添加组件的路径。
+  -s, --silent        静默输出。（默认值：false）
+  --src-dir           创建项目时使用 src 目录。（默认值：false）
+  --no-src-dir        创建项目时不使用 src 目录。
+  --css-variables     使用 CSS 变量进行主题设置。（默认值：true）
+  --no-css-variables  不使用 CSS 变量进行主题设置。
+  -h, --help          显示命令帮助信息
 ```
 
 ---
 
 ## view
 
-Use the `view` command to view items from the registry before installing them.
+使用 `view` 命令在安装前查看注册表中的项目。
 
 ```bash
 npx shadcn@latest view [item]
 ```
 
-You can view multiple items at once:
+您可以同时查看多个项目：
 
 ```bash
 npx shadcn@latest view button card dialog
 ```
 
-Or view items from namespaced registries:
+也可以查看命名空间注册表中的项目：
 
 ```bash
 npx shadcn@latest view @acme/auth @v0/dashboard
 ```
 
-**Options**
+**选项**
 
 ```bash
 Usage: shadcn view [options] <items...>
@@ -102,42 +102,42 @@ Usage: shadcn view [options] <items...>
 view items from the registry
 
 Arguments:
-  items            the item names or URLs to view
+  items            要查看的项目名称或 URL
 
 Options:
-  -c, --cwd <cwd>  the working directory. defaults to the current directory.
-  -h, --help       display help for command
+  -c, --cwd <cwd>  工作目录，默认当前目录。
+  -h, --help       显示命令帮助信息
 ```
 
 ---
 
 ## search
 
-Use the `search` command to search for items from registries.
+使用 `search` 命令从注册表中搜索项目。
 
 ```bash
 npx shadcn@latest search [registry]
 ```
 
-You can search with a query:
+您可以带查询词进行搜索：
 
 ```bash
 npx shadcn@latest search @shadcn -q "button"
 ```
 
-Or search multiple registries at once:
+或者同时搜索多个注册表：
 
 ```bash
 npx shadcn@latest search @shadcn @v0 @acme
 ```
 
-The `list` command is an alias for `search`:
+`list` 命令是 `search` 的别名：
 
 ```bash
 npx shadcn@latest list @acme
 ```
 
-**Options**
+**选项**
 
 ```bash
 Usage: shadcn search|list [options] <registries...>
@@ -145,28 +145,27 @@ Usage: shadcn search|list [options] <registries...>
 search items from registries
 
 Arguments:
-  registries             the registry names or urls to search items from. Names
-                         must be prefixed with @.
+  registries             要搜索的注册表名称或 URL，名称必须以 @ 开头。
 
 Options:
-  -c, --cwd <cwd>        the working directory. defaults to the current directory.
-  -q, --query <query>    query string
-  -l, --limit <number>   maximum number of items to display per registry (default: "100")
-  -o, --offset <number>  number of items to skip (default: "0")
-  -h, --help             display help for command
+  -c, --cwd <cwd>        工作目录，默认当前目录。
+  -q, --query <query>    查询字符串
+  -l, --limit <number>   每个注册表显示的最大项目数量（默认值："100"）
+  -o, --offset <number>  跳过的项目数（默认值："0"）
+  -h, --help             显示命令帮助信息
 ```
 
 ---
 
 ## list
 
-Use the `list` command to list all items from a registry.
+使用 `list` 命令列出注册表中的所有项目。
 
 ```bash
 npx shadcn@latest list @acme
 ```
 
-**Options**
+**选项**
 
 ```bash
 Usage: shadcn list [options] <registries...>
@@ -174,11 +173,10 @@ Usage: shadcn list [options] <registries...>
 list items from registries
 
 Arguments:
-  registries             the registry names or urls to list items from. Names
-    must be prefixed with @.
+  registries             要列出的注册表名称或 URL，名称必须以 @ 开头。
 ```
 
-**Options**
+**选项**
 
 ```bash
 Usage: shadcn list [options] <registries...>
@@ -186,23 +184,22 @@ Usage: shadcn list [options] <registries...>
 list items from registries
 
 Arguments:
-  registries             the registry names or urls to list items from. Names
-    must be prefixed with @.
+  registries             要列出的注册表名称或 URL，名称必须以 @ 开头。
 ```
 
 ---
 
 ## build
 
-Use the `build` command to generate the registry JSON files.
+使用 `build` 命令生成注册表 JSON 文件。
 
 ```bash
 npx shadcn@latest build
 ```
 
-This command reads the `registry.json` file and generates the registry JSON files in the `public/r` directory.
+此命令读取 `registry.json` 文件，并在 `public/r` 目录下生成注册表 JSON 文件。
 
-**Options**
+**选项**
 
 ```bash
 Usage: shadcn build [options] [registry]
@@ -210,15 +207,15 @@ Usage: shadcn build [options] [registry]
 build components for a shadcn registry
 
 Arguments:
-  registry             path to registry.json file (default: "./registry.json")
+  registry             registry.json 文件路径（默认值："./registry.json"）
 
 Options:
-  -o, --output <path>  destination directory for json files (default: "./public/r")
-  -c, --cwd <cwd>      the working directory. defaults to the current directory.
-  -h, --help           display help for command
+  -o, --output <path>  JSON 文件的输出目录（默认值："./public/r"）
+  -c, --cwd <cwd>      工作目录，默认当前目录。
+  -h, --help           显示命令帮助信息
 ```
 
-To customize the output directory, use the `--output` option.
+如果要自定义输出目录，请使用 `--output` 选项。
 
 ```bash
 npx shadcn@latest build --output ./public/registry

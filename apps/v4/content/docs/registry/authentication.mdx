@@ -1,23 +1,23 @@
 ---
-title: Authentication
-description: Secure your registry with authentication for private and personalized components.
+title: 认证
+description: 通过认证保护您的注册表，实现私有和个性化组件的安全访问。
 ---
 
-Authentication lets you run private registries, control who can access your components, and give different teams or users different content. This guide shows common authentication patterns and how to set them up.
+认证让您可以运行私有注册表，控制谁可以访问您的组件，并为不同的团队或用户提供不同的内容。本指南展示了常见的认证模式及其设置方法。
 
-Authentication enables these use cases:
+认证支持以下用例：
 
-- **Private Components**: Keep your business logic and internal components secure
-- **Team-Specific Resources**: Give different teams different components
-- **Access Control**: Limit who can see sensitive or experimental components
-- **Usage Analytics**: See who's using which components in your organization
-- **Licensing**: Control who gets premium or licensed components
+- **私有组件**：保护您的业务逻辑和内部组件的安全
+- **团队专属资源**：为不同团队分配不同组件
+- **访问控制**：限制谁可以查看敏感或试验性组件
+- **使用分析**：查看组织中是谁在使用哪些组件
+- **授权许可**：控制谁能获得高级或授权组件
 
-## Common Authentication Patterns
+## 常见认证模式
 
-### Token-Based Authentication
+### 基于 Token 的认证
 
-The most common approach uses Bearer tokens or API keys:
+最常用的方法是使用 Bearer token 或 API 密钥：
 
 ```json title="components.json"
 {
@@ -32,15 +32,15 @@ The most common approach uses Bearer tokens or API keys:
 }
 ```
 
-Set your token in environment variables:
+在环境变量中设置您的 token：
 
 ```bash title=".env.local"
 REGISTRY_TOKEN=your_secret_token_here
 ```
 
-### API Key Authentication
+### API 密钥认证
 
-Some registries use API keys in headers:
+有些注册表使用请求头中的 API 密钥：
 
 ```json title="components.json"
 {
@@ -56,9 +56,9 @@ Some registries use API keys in headers:
 }
 ```
 
-### Query Parameter Authentication
+### 查询参数认证
 
-For simpler setups, use query parameters:
+对于简单的设置，也可以使用查询参数：
 
 ```json title="components.json"
 {
@@ -73,13 +73,13 @@ For simpler setups, use query parameters:
 }
 ```
 
-This creates: `https://registry.company.com/button.json?token=your_token`
+这将形成如下 URL：`https://registry.company.com/button.json?token=your_token`
 
-## Server-Side Implementation
+## 服务器端实现
 
-Here's how to add authentication to your registry server:
+下面介绍如何为您的注册表服务器添加认证：
 
-### Next.js API Route Example
+### Next.js API 路由示例
 
 ```typescript title="app/api/registry/[name]/route.ts"
 import { NextRequest, NextResponse } from "next/server"
@@ -88,42 +88,42 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { name: string } }
 ) {
-  // Get token from Authorization header.
+  // 从 Authorization 请求头中获取 token。
   const authHeader = request.headers.get("authorization")
   const token = authHeader?.replace("Bearer ", "")
 
-  // Or from query parameters.
+  // 或从查询参数中获取。
   const queryToken = request.nextUrl.searchParams.get("token")
 
-  // Check if token is valid.
+  // 验证 token 是否有效。
   if (!isValidToken(token || queryToken)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
-  // Check if token can access this component.
+  // 检查 token 是否有权访问该组件。
   if (!hasAccessToComponent(token, params.name)) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 })
   }
 
-  // Return the component.
+  // 返回组件数据。
   const component = await getComponent(params.name)
   return NextResponse.json(component)
 }
 
 function isValidToken(token: string | null) {
-  // Add your token validation logic here.
-  // Check against database, JWT validation, etc.
+  // 添加您的 token 验证逻辑。
+  // 比如数据库查询、JWT 验证等。
   return token === process.env.VALID_TOKEN
 }
 
 function hasAccessToComponent(token: string, componentName: string) {
-  // Add role-based access control here.
-  // Check if token can access specific component.
-  return true // Your logic here.
+  // 添加基于角色的访问控制逻辑。
+  // 验证 token 是否能访问指定组件。
+  return true // 这里替换为您的逻辑。
 }
 ```
 
-### Express.js Example
+### Express.js 示例
 
 ```javascript title="server.js"
 app.get("/registry/:name.json", (req, res) => {
@@ -142,44 +142,44 @@ app.get("/registry/:name.json", (req, res) => {
 })
 ```
 
-## Advanced Authentication Patterns
+## 高级认证模式
 
-### Team-Based Access
+### 基于团队的访问控制
 
-Give different teams different components:
+为不同团队分配不同组件：
 
 ```typescript title="api/registry/route.ts"
 async function GET(request: NextRequest) {
   const token = extractToken(request)
   const team = await getTeamFromToken(token)
 
-  // Get components for this team.
+  // 获取该团队可访问的组件。
   const components = await getComponentsForTeam(team)
   return NextResponse.json(components)
 }
 ```
 
-### User-Personalized Registries
+### 用户个性化注册表
 
-Give users components based on their preferences:
+根据用户偏好为其提供组件：
 
 ```typescript
 async function GET(request: NextRequest) {
   const user = await authenticateUser(request)
 
-  // Get user's style and framework preferences.
+  // 获取用户的风格及框架偏好。
   const preferences = await getUserPreferences(user.id)
 
-  // Get personalized component version.
+  // 获取个性化组件版本。
   const component = await getPersonalizedComponent(params.name, preferences)
 
   return NextResponse.json(component)
 }
 ```
 
-### Temporary Access Tokens
+### 临时访问 Token
 
-Use expiring tokens for better security:
+使用带过期时间的 token 以增强安全性：
 
 ```typescript
 interface TemporaryToken {
@@ -198,9 +198,9 @@ async function validateTemporaryToken(token: string) {
 }
 ```
 
-## Multi-Registry Authentication
+## 多注册表认证
 
-With [namespaced registries](/docs/registry/namespace), you can set up multiple registries with different authentication:
+借助 [命名空间注册表](/docs/registry/namespace)，您可以设置多个具有不同认证的注册表：
 
 ```json title="components.json"
 {
@@ -222,24 +222,24 @@ With [namespaced registries](/docs/registry/namespace), you can set up multiple 
 }
 ```
 
-This lets you:
+这样可以实现：
 
-- Mix public and private registries
-- Use different authentication per registry
-- Organize components by access level
+- 混合使用公共和私有注册表
+- 针对不同注册表使用不同的认证方式
+- 按访问权限组织组件
 
-## Security Best Practices
+## 安全最佳实践
 
-### Use Environment Variables
+### 使用环境变量
 
-Never commit tokens to version control. Always use environment variables:
+切勿将 tokens 提交至版本控制。始终使用环境变量：
 
 ```bash title=".env.local"
 REGISTRY_TOKEN=your_secret_token_here
 API_KEY=your_api_key_here
 ```
 
-Then reference them in `components.json`:
+然后在 `components.json` 中引用它们：
 
 ```json
 {
@@ -254,9 +254,9 @@ Then reference them in `components.json`:
 }
 ```
 
-### Use HTTPS
+### 使用 HTTPS
 
-Always use HTTPS URLs for registries to protect your tokens in transit:
+始终使用 HTTPS URL 以保护传输中的 token：
 
 ```json
 {
@@ -265,38 +265,38 @@ Always use HTTPS URLs for registries to protect your tokens in transit:
 }
 ```
 
-### Add Rate Limiting
+### 添加限流
 
-Protect your registry from abuse:
+保护您的注册表免受滥用：
 
 ```typescript
 import rateLimit from "express-rate-limit"
 
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000, // 15 分钟
+  max: 100, // 每个 IP 在窗口期内最多 100 次请求
 })
 
 app.use("/registry", limiter)
 ```
 
-### Rotate Tokens
+### 轮换 Token
 
-Change access tokens regularly:
+定期更换访问 token：
 
 ```typescript
-// Create new token with expiration.
+// 生成带过期时间的新 token。
 function generateToken() {
   const token = crypto.randomBytes(32).toString("hex")
-  const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days.
+  const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 天。
 
   return { token, expiresAt }
 }
 ```
 
-### Log Access
+### 记录访问日志
 
-Track registry access for security and analytics:
+跟踪注册表访问以便安全和分析：
 
 ```typescript
 async function logAccess(request: Request, component: string, userId: string) {
@@ -310,59 +310,59 @@ async function logAccess(request: Request, component: string, userId: string) {
 }
 ```
 
-## Testing Authentication
+## 测试认证
 
-Test your authenticated registry locally:
+本地测试您的认证注册表：
 
 ```bash
-# Test with curl.
+# 使用 curl 测试。
 curl -H "Authorization: Bearer your_token" \
   https://registry.company.com/button.json
 
-# Test with the CLI.
+# 使用 CLI 测试。
 REGISTRY_TOKEN=your_token npx shadcn@latest add @private/button
 ```
 
-## Error Handling
+## 错误处理
 
-The shadcn CLI handles authentication errors gracefully:
+shadcn CLI 会优雅地处理认证错误：
 
-- **401 Unauthorized**: Token is invalid or missing
-- **403 Forbidden**: Token lacks permission for this resource
-- **429 Too Many Requests**: Rate limit exceeded
+- **401 Unauthorized**：Token 无效或缺失
+- **403 Forbidden**：Token 无访问权限
+- **429 Too Many Requests**：请求频率超限
 
-### Custom Error Messages
+### 自定义错误消息
 
-Your registry server can return custom error messages in the response body, and the CLI will display them to users:
+您的注册表服务器可以在响应体中返回自定义错误消息，CLI 会展示给用户：
 
 ```typescript
-// Registry server returns custom error
+// 注册表服务器返回自定义错误
 return NextResponse.json(
   {
     error: "Unauthorized",
     message:
-      "Your subscription has expired. Please renew at company.com/billing",
+      "您的订阅已过期。请访问 company.com/billing 续订",
   },
   { status: 403 }
 )
 ```
 
-The user will see:
+用户将看到：
 
 ```txt
-Your subscription has expired. Please renew at company.com/billing
+您的订阅已过期。请访问 company.com/billing 续订
 ```
 
-This helps provide context-specific guidance:
+这有助于提供针对性提示：
 
 ```typescript
-// Different error messages for different scenarios
+// 针对不同场景的不同错误消息
 if (!token) {
   return NextResponse.json(
     {
       error: "Unauthorized",
       message:
-        "Authentication required. Set REGISTRY_TOKEN in your .env.local file",
+        "需要认证。请在您的 .env.local 文件中设置 REGISTRY_TOKEN",
     },
     { status: 401 }
   )
@@ -372,7 +372,7 @@ if (isExpiredToken(token)) {
   return NextResponse.json(
     {
       error: "Unauthorized",
-      message: "Token expired. Request a new token at company.com/tokens",
+      message: "Token 已过期。请访问 company.com/tokens 申请新 token",
     },
     { status: 401 }
   )
@@ -382,18 +382,18 @@ if (!hasTeamAccess(token, component)) {
   return NextResponse.json(
     {
       error: "Forbidden",
-      message: `Component '${component}' is restricted to the Design team`,
+      message: `组件 '${component}' 仅限设计团队访问`,
     },
     { status: 403 }
   )
 }
 ```
 
-## Next Steps
+## 后续步骤
 
-To set up authentication with multiple registries and advanced patterns, see the [Namespaced Registries](/docs/registry/namespace) documentation. It covers:
+要设置多注册表及高级认证模式，请参阅 [命名空间注册表](/docs/registry/namespace) 文档。内容包括：
 
-- Setting up multiple authenticated registries
-- Using different authentication per namespace
-- Cross-registry dependency resolution
-- Advanced authentication patterns
+- 多个认证注册表的设置
+- 不同命名空间的认证方式
+- 跨注册表依赖解析
+- 高级认证模式

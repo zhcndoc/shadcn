@@ -1,35 +1,35 @@
 ---
-title: Blocks
-description: Contribute components to the blocks library.
+title: 区块 Blocks
+description: 向块库贡献组件。
 ---
 
-We are inviting the community to contribute to the [blocks library](/blocks). Share your components and blocks with other developers and help build a library of high-quality, reusable components.
+我们诚邀社区成员为 [块库](/blocks) 贡献组件。与其他开发者分享您的组件和块，帮助构建一个高质量、可复用组件的库。
 
-We'd love to see all types of blocks: applications, marketing, products, and more.
+我们期待看到各种类型的块：应用程序、营销、产品等。
 
-## Setup your workspace
+## 设置您的工作区
 
 <Steps>
 
-### Fork the repository
+### Fork 仓库
 
 ```bash
 git clone https://github.com/shadcn-ui/ui.git
 ```
 
-### Create a new branch
+### 新建一个分支
 
 ```bash
 git checkout -b username/my-new-block
 ```
 
-### Install dependencies
+### 安装依赖
 
 ```bash
 pnpm install
 ```
 
-### Start the dev server
+### 启动开发服务器
 
 ```bash
 pnpm www:dev
@@ -37,15 +37,15 @@ pnpm www:dev
 
 </Steps>
 
-## Add a block
+## 添加一个块
 
-A block can be a single component (eg. a variation of a ui component) or a complex component (eg. a dashboard) with multiple components, hooks, and utils.
+一个块可以是一个单独的组件（例如一个 UI 组件的变体），也可以是一个复杂组件（例如一个仪表盘），包含多个组件、hooks 和工具函数。
 
 <Steps>
 
-### Create a new block
+### 创建一个新块
 
-Create a new folder in the `apps/www/registry/new-york/blocks` directory. Make sure the folder is named in kebab-case and under `new-york`.
+在 `apps/www/registry/new-york/blocks` 目录下创建一个新文件夹。确保文件夹名采用 kebab-case 格式，且在 `new-york` 目录下。
 
 ```txt
 apps
@@ -58,13 +58,13 @@ apps
 
 <Callout className="mt-6">
 
-**Note:** The build script will take care of building the block for the `default` style.
+**注意：** 构建脚本会负责为 `default` 样式构建该块。
 
 </Callout>
 
-### Add your block files
+### 添加块文件
 
-Add your files to the block folder. Here is an example of a block with a page, components, hooks, and utils.
+将您的文件添加到块文件夹中。下面是一个包含页面、组件、hooks 和工具函数的块示例。
 
 ```txt
 dashboard-01
@@ -80,21 +80,21 @@ dashboard-01
 
 <Callout className="mt-6">
 
-**Note:** You can start with one file and add more files later.
+**注意：** 您可以从一个文件开始，后续再添加更多文件。
 
 </Callout>
 
 </Steps>
 
-## Add your block to the registry
+## 将您的块添加到注册表
 
 <Steps>
 
-### Add your block definition to `registry-blocks.tsx`
+### 在 `registry-blocks.tsx` 中添加块定义
 
-To add your block to the registry, you need to add your block definition to `registry-blocks.ts`.
+要将您的块添加到注册表，需要将块定义加入到 `registry-blocks.ts` 中。
 
-This follows the registry schema at [https://ui.shadcn.com/schema/registry-item.json](https://ui.shadcn.com/schema/registry-item.json).
+该定义遵循注册表的模式，参考[https://ui.shadcn.com/schema/registry-item.json](https://ui.shadcn.com/schema/registry-item.json)。
 
 ```tsx title="apps/www/registry/registry-blocks.tsx" showLineNumbers
 export const blocks = [
@@ -103,7 +103,7 @@ export const blocks = [
     name: "dashboard-01",
     author: "shadcn (https://ui.shadcn.com)",
     title: "Dashboard",
-    description: "A simple dashboard with a hello world component.",
+    description: "一个带有 Hello World 组件的简单仪表盘。",
     type: "registry:block",
     registryDependencies: ["input", "button", "card"],
     dependencies: ["zod"],
@@ -135,9 +135,9 @@ export const blocks = [
 ]
 ```
 
-Make sure you add a name, description, type, registryDependencies, dependencies, files, and categories. We'll go over each of these in more detail in the schema docs (coming soon).
+确保您填写了 name、description、type、registryDependencies、dependencies、files 和 categories。我们将在模式文档（即将发布）中详细介绍这些字段。
 
-### Run the build script
+### 运行构建脚本
 
 ```bash
 pnpm registry:build
@@ -145,50 +145,50 @@ pnpm registry:build
 
 <Callout className="mt-6">
 
-**Note:** you do not need to run this script for every change. You only need to run it when you update the block definition.
+**注意：** 不需要每次更改都运行该脚本，仅在更新块定义时运行它即可。
 
 </Callout>
 
-### View your block
+### 查看您的块
 
-Once the build script is finished, you can view your block at `http://localhost:3333/blocks/[CATEGORY]` or a full screen preview at `http://localhost:3333/view/styles/new-york/dashboard-01`.
+构建脚本完成后，您可以在 `http://localhost:3333/blocks/[CATEGORY]` 查看您的块，或者在 `http://localhost:3333/view/styles/new-york/dashboard-01` 进行全屏预览。
 
 <Image
   src="/images/block-preview-light.png"
   width="1432"
   height="960"
-  alt="Block preview"
+  alt="块预览"
   className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
 />
 <Image
   src="/images/block-preview-dark.png"
   width="1432"
   height="960"
-  alt="Block preview"
+  alt="块预览"
   className="mt-6 hidden w-full overflow-hidden rounded-lg border shadow-sm dark:block"
 />
 
-### Build your block
+### 构建您的块
 
-You can now build your block by editing the files in the block folder and viewing the changes in the browser.
+您现在可以通过编辑块文件夹中的文件来构建您的块，并在浏览器中查看更改。
 
-If you add more files, make sure to add them to the `files` array in the block definition.
+如果添加了更多文件，请确保在块定义中的 `files` 数组中添加它们。
 
 </Steps>
 
-## Publish your block
+## 发布您的块
 
-Once you're ready to publish your block, you can submit a pull request to the main repository.
+准备好发布您的块后，您可以提交一个 pull request 到主仓库。
 
 <Steps>
 
-### Run the build script
+### 运行构建脚本
 
 ```bash
 pnpm registry:build
 ```
 
-### Capture a screenshot
+### 捕获截图
 
 ```bash
 pnpm registry:capture
@@ -196,25 +196,25 @@ pnpm registry:capture
 
 <Callout className="mt-6">
 
-**Note:** If you've run the capture script before, you might need to delete the existing screenshots (both light and dark) at `apps/www/public/r/styles/new-york` and run the script again.
+**注意：** 如果之前运行过捕获截图的脚本，可能需要删除 `apps/www/public/r/styles/new-york` 目录下已有的截图（包含明暗模式），然后重新运行脚本。
 
 </Callout>
 
-### Submit a pull request
+### 提交 Pull Request
 
-Commit your changes and submit a pull request to the main repository.
+提交您的更改并创建一个 Pull Request 到主仓库。
 
-Your block will be reviewed and merged. Once merged it will be published to the website and available to be installed via the CLI.
+您的块将被审核合并。合并后，将发布到网站，并通过 CLI 可供安装。
 
 </Steps>
 
-## Categories
+## 分类
 
-The `categories` property is used to organize your block in the registry.
+`categories` 属性用于在注册表中组织您的块。
 
-### Add a category
+### 添加分类
 
-If you need to add a new category, you can do so by adding it to the `registryCategories` array in `apps/www/registry/registry-categories.ts`.
+如果需要添加新分类，可以在 `apps/www/registry/registry-categories.ts` 中的 `registryCategories` 数组添加。
 
 ```tsx title="apps/www/registry/registry-categories.ts" showLineNumbers
 export const registryCategories = [
@@ -227,12 +227,12 @@ export const registryCategories = [
 ]
 ```
 
-## Guidelines
+## 指南
 
-Here are some guidelines to follow when contributing to the blocks library.
+以下是向块库贡献时的部分规范：
 
-- The following properties are required for the block definition: `name`, `description`, `type`, `files`, and `categories`.
-- Make sure to list all registry dependencies in `registryDependencies`. A registry dependency is the name of the component in the registry eg. `input`, `button`, `card`, etc.
-- Make sure to list all dependencies in `dependencies`. A dependency is the name of the package in the registry eg. `zod`, `sonner`, etc.
-- If your block has a page (optional), it should be the first entry in the `files` array and it should have a `target` property. This helps the CLI place the page in the correct location for file-based routing.
-- **Imports should always use the `@/registry` path.** eg. `import { Input } from "@/registry/new-york/input"`
+- 块定义必须包含的属性有：`name`、`description`、`type`、`files` 和 `categories`。
+- 确保在 `registryDependencies` 中列出所有注册表依赖。注册表依赖是注册表中组件的名称，如 `input`、`button`、`card` 等。
+- 确保在 `dependencies` 中列出所有包依赖。包依赖是注册表中包的名称，如 `zod`、`sonner` 等。
+- 如果您的块包含页面（可选），应将其作为 `files` 数组中的第一个条目，并包含 `target` 属性。这有助于 CLI 将页面放置在文件路由的正确位置。
+- **导入语句应始终使用 `@/registry` 路径。** 例如：`import { Input } from "@/registry/new-york/input"`

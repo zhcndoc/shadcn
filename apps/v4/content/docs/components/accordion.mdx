@@ -1,26 +1,26 @@
 ---
-title: Accordion
-description: A vertically stacked set of interactive headings that each reveal a section of content.
+title: 手风琴 Accordion
+description: 一组垂直堆叠的交互式标题，每个标题可展开显示一个内容区域。
 component: true
 links:
-  doc: https://www.radix-ui.com/docs/primitives/components/accordion
-  api: https://www.radix-ui.com/docs/primitives/components/accordion#api-reference
+  doc: https://radix.zhcndoc.com/docs/primitives/components/accordion
+  api: https://radix.zhcndoc.com/docs/primitives/components/accordion#api-reference
 ---
 
 <ComponentPreview
   name="accordion-demo"
   className="[&_.preview>[data-orientation=vertical]]:sm:max-w-[80%] **:[.preview]:min-h-[400px]"
-  description="An accordion with three items"
+  description="一个包含三项的手风琴"
   align="start"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 
 <TabsContent value="cli">
@@ -35,17 +35,17 @@ npx shadcn@latest add accordion
 
 <Steps>
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖：</Step>
 
 ```bash
 npm install @radix-ui/react-accordion
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制粘贴到你的项目中。</Step>
 
 <ComponentSource name="accordion" title="components/ui/accordion.tsx" />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>更新导入路径以匹配你的项目配置。</Step>
 
 </Steps>
 
@@ -53,7 +53,7 @@ npm install @radix-ui/react-accordion
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import {
@@ -67,9 +67,9 @@ import {
 ```tsx showLineNumbers
 <Accordion type="single" collapsible>
   <AccordionItem value="item-1">
-    <AccordionTrigger>Is it accessible?</AccordionTrigger>
+    <AccordionTrigger>是否支持无障碍功能？</AccordionTrigger>
     <AccordionContent>
-      Yes. It adheres to the WAI-ARIA design pattern.
+      是的。它遵循 WAI-ARIA 设计模式。
     </AccordionContent>
   </AccordionItem>
 </Accordion>
