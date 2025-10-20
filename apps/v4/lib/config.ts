@@ -1,9 +1,9 @@
 export const siteConfig = {
-  name: "shadcn/ui",
-  url: "https://ui.shadcn.com",
-  ogImage: "https://ui.shadcn.com/og.jpg",
+  name: "shadcn/ui 中文文档",
+  url: "https://shadcn.zhcndoc.com/",
+  ogImage: "https://shadcn.zhcndoc.com//og.jpg",
   description:
-    "A set of beautifully designed components that you can customize, extend, and build on. Start here then make it your own. Open Source. Open Code.",
+    "一套精美设计的组件，您可以对其进行自定义、扩展和构建。从这里开始，然后使其成为您自己的。开源，开放代码。",
   links: {
     twitter: "https://twitter.com/shadcn",
     github: "https://github.com/shadcn-ui/ui",
@@ -11,27 +11,27 @@ export const siteConfig = {
   navItems: [
     {
       href: "/docs/installation",
-      label: "Docs",
+      label: "文档",
     },
     {
       href: "/docs/components",
-      label: "Components",
+      label: "组件",
     },
     {
       href: "/blocks",
-      label: "Blocks",
+      label: "区块",
     },
     {
       href: "/charts/area",
-      label: "Charts",
+      label: "图表",
     },
     {
       href: "/themes",
-      label: "Themes",
+      label: "主题",
     },
     {
       href: "/colors",
-      label: "Colors",
+      label: "颜色",
     },
   ],
 }

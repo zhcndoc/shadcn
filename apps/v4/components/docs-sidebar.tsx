@@ -18,25 +18,25 @@ import {
 } from "@/registry/new-york-v4/ui/sidebar"
 
 const TOP_LEVEL_SECTIONS = [
-  { name: "Get Started", href: "/docs" },
+  { name: "开始使用", href: "/docs" },
   {
-    name: "Components",
+    name: "组件",
     href: "/docs/components",
   },
   {
-    name: "Registry",
+    name: "注册表",
     href: "/docs/registry",
   },
   {
-    name: "MCP Server",
+    name: "MCP 服务器",
     href: "/docs/mcp",
   },
   {
-    name: "Forms",
+    name: "表单",
     href: "/docs/forms",
   },
   {
-    name: "Changelog",
+    name: "更新日志",
     href: "/docs/changelog",
   },
 ]
@@ -59,7 +59,7 @@ export function DocsSidebar({
         <div className="h-(--top-spacing) shrink-0" />
         <SidebarGroup>
           <SidebarGroupLabel className="text-muted-foreground font-medium">
-            Sections
+            介绍
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>

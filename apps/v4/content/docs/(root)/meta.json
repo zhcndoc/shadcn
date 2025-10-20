@@ -1,11 +1,11 @@
 {
-  "title": "Get Started",
+  "title": "开始使用",
   "pages": [
     "index",
-    "[Installation](/docs/installation)",
+    "[安装](/docs/installation)",
     "components-json",
     "theming",
-    "[Dark Mode](/docs/dark-mode)",
+    "[深色模式](/docs/dark-mode)",
     "[CLI](/docs/cli)",
     "monorepo",
     "typography",
@@ -14,7 +14,7 @@
     "blocks",
     "figma",
     "changelog",
-    "[llms.txt](/llms.txt)",
+    "[大语言模型](/llms.txt)",
     "legacy"
   ]
 }

@@ -16,9 +16,9 @@ import { Button } from "@/registry/new-york-v4/ui/button"
 
 import { RootComponents } from "./components"
 
-const title = "The Foundation for your Design System"
+const title = "设计系统的基础"
 const description =
-  "A set of beautifully designed components that you can customize, extend, and build on. Start here then make it your own. Open Source. Open Code."
+  "一套精美设计的组件，您可以对其进行自定义、扩展和构建。从这里开始，然后使其成为您自己的。开源，开放代码。"
 
 export const dynamic = "force-static"
 export const revalidate = false
@@ -56,10 +56,10 @@ export default function IndexPage() {
         <PageHeaderDescription>{description}</PageHeaderDescription>
         <PageActions>
           <Button asChild size="sm">
-            <Link href="/docs/installation">Get Started</Link>
+            <Link href="/docs/installation">开始使用</Link>
           </Button>
           <Button asChild size="sm" variant="ghost">
-            <Link href="/docs/components">View Components</Link>
+            <Link href="/docs/components">查看组件</Link>
           </Button>
         </PageActions>
       </PageHeader>

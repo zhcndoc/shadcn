@@ -8,7 +8,7 @@ export function Announcement() {
     <Badge asChild variant="secondary" className="rounded-full">
       <Link href="/docs/changelog">
         <span className="flex size-2 rounded-full bg-blue-500" title="New" />
-        New Components: Field, Input Group, Item and more <ArrowRightIcon />
+        新组件：字段、输入组、项目等 <ArrowRightIcon />
       </Link>
     </Badge>
   )
