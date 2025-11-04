@@ -18,7 +18,7 @@ CLI 现在能够理解 monorepo 结构，会将组件、依赖和注册依赖安
 要创建一个新的 monorepo 项目，运行 `init` 命令。你将被提示选择你要创建的项目类型。
 
 ```bash
-npx shadcn@canary init
+npx shadcn@latest init
 ```
 
 选择 `Next.js (Monorepo)` 选项。
@@ -44,14 +44,14 @@ cd apps/web
 ```
 
 ```bash
-npx shadcn@canary add [COMPONENT]
+npx shadcn@latest add [COMPONENT]
 ```
 
 CLI 会自动判断你添加的组件类型，并将正确的文件安装到正确的路径。
 
-例如，如果你运行 `npx shadcn@canary add button`，CLI 会将按钮组件安装到 `packages/ui` 下，并更新 `apps/web` 中组件的导入路径。
+例如，如果你运行 `npx shadcn@latest add button`，CLI 会将按钮组件安装到 `packages/ui` 下，并更新 `apps/web` 中组件的导入路径。
 
-如果你运行 `npx shadcn@canary add login-01`，CLI 会将 `button`、`label`、`input` 和 `card` 组件安装到 `packages/ui` 中，而 `login-form` 组件则安装到 `apps/web/components`。
+如果你运行 `npx shadcn@latest add login-01`，CLI 会将 `button`、`label`、`input` 和 `card` 组件安装到 `packages/ui` 中，而 `login-form` 组件则安装到 `apps/web/components`。
 
 ### 导入组件
 

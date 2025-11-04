@@ -9,20 +9,24 @@ description: 如何在 JavaScript 中使用 shadcn/ui
 
 如果想禁用 TypeScript，可以在 `components.json` 文件中使用 `tsx` 标志。
 
-```json {10} title="components.json" showLineNumbers
+```json {4} title="components.json" showLineNumbers
 {
-  "style": "default",
+  "style": "new-york",
+  "rsc": false,
+  "tsx": false,
   "tailwind": {
-    "config": "tailwind.config.js",
+    "config": "",
     "css": "src/app/globals.css",
     "baseColor": "zinc",
     "cssVariables": true
   },
-  "rsc": false,
-  "tsx": false,
+  "iconLibrary": "lucide",
   "aliases": {
-    "utils": "~/lib/utils",
-    "components": "~/components"
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
   }
 }
 ```

@@ -1,5 +1,5 @@
 ---
-title: 索引
+title: 添加注册表
 description: 开源注册表索引
 ---
 
@@ -11,16 +11,9 @@ description: 开源注册表索引
 
 ## 添加注册表
 
-你可以通过提交 PR 来向索引中添加注册表，只需将其添加到 [registries.json](https://github.com/shadcn-ui/ui/blob/main/apps/v4/public/r/registries.json) 文件中。
+你可以通过填写 [注册表目录问题模板](https://github.com/shadcn-ui/ui/issues/new?template=registry_directory.yml) 来提交 issue，将注册表添加到索引中。
 
-下面是向索引中添加注册表的示例：
-
-```json title="registries.json" showLineNumbers
-{
-  "@acme": "https://registry.acme.com/r/{name}.json",
-  "@example": "https://example.com/r/{name}"
-}
-```
+提交 issue 后，团队会对其进行验证和审核。
 
 ### 要求
 
@@ -61,19 +54,6 @@ description: 开源注册表索引
         }
       ]
     }
-    }
   ]
 }
 ```
-
-### 验证
-
-在 `shadcn/ui` 项目的根目录，你可以运行以下命令来验证 `registries.json` 文件。
-
-```bash
-pnpm validate:registries
-```
-
-该命令会验证 `registries.json` 文件并输出任何错误。
-
-提交 PR 后，它将由团队进行验证和审核。

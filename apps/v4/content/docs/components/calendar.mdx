@@ -104,8 +104,8 @@ return (
 
 <ComponentPreview
   name="calendar-hijri"
-  title="Persian / Hijri / Jalali Calendar"
-  description="A Persian calendar."
+  title="波斯历 / 希吉拉历 / 贾拉利历"
+  description="一个波斯历日历。"
 />
 
 ## 选定日期（带时区）
@@ -141,7 +141,7 @@ export function CalendarWithTimezone() {
 ### 范围日历
 
 <ComponentPreview
-  name="calendar-02"
+  name="calendar-05"
   title="范围日历"
   description="显示当前日期及范围选择的日历。"
   className="**:[.preview]:h-auto lg:**:[.preview]:h-[450px]"
@@ -181,9 +181,36 @@ export function CalendarWithTimezone() {
   description="带有自然语言选择的日历。"
 />
 
-### 表单
+### 自定义单元格大小
 
-<ComponentPreview name="calendar-form" />
+<ComponentPreview
+  name="calendar-18"
+  title="自定义单元格大小"
+  description="一个具有响应式自定义单元格大小的日历。"
+  className="**:[.preview]:h-[560px]"
+/>
+
+您可以使用 `--cell-size` CSS 变量自定义日历单元格的大小。也可以通过使用特定断点的值实现响应式：
+
+```tsx showLineNumbers
+<Calendar
+  mode="single"
+  selected={date}
+  onSelect={setDate}
+  className="rounded-lg border [--cell-size:--spacing(11)] md:[--cell-size:--spacing(12)]"
+/>
+```
+
+或者使用固定值：
+
+```tsx showLineNumbers
+<Calendar
+  mode="single"
+  selected={date}
+  onSelect={setDate}
+  className="rounded-lg border [--cell-size:2.75rem] md:[--cell-size:3rem]"
+/>
+```
 
 ## 升级指南
 
@@ -317,7 +344,10 @@ function Calendar({
           defaultClassNames.week_number
         ),
         day: cn(
-          "group/day relative aspect-square h-full w-full select-none p-0 text-center [&:first-child[data-selected=true]_button]:rounded-l-md [&:last-child[data-selected=true]_button]:rounded-r-md",
+          "relative w-full h-full p-0 text-center [&:last-child[data-selected=true]_button]:rounded-r-md group/day aspect-square select-none",
+          props.showWeekNumber
+            ? "[&:nth-child(2)[data-selected=true]_button]:rounded-l-md"
+            : "[&:first-child[data-selected=true]_button]:rounded-l-md",
           defaultClassNames.day
         ),
         range_start: cn(
@@ -445,3 +475,25 @@ npx shadcn@latest add calendar-02
 ```
 
 此命令会安装最新版的日历组件块。
+
+## 更新日志
+
+### 2025-10-26 修复带有周数时的日期圆角问题
+
+我们修复了一个问题：当显示周数时，选中日期的左侧圆角没有正确应用。修复后，当启用 `showWeekNumber` 时，由于周数列存在，第一个日期（第二个子元素）将正确获得左侧圆角。
+
+要应用此修复，请编辑 `components/ui/calendar.tsx` 并更新 `classNames` 中的 `day` 样式：
+
+```tsx showLineNumbers title="components/ui/calendar.tsx" {5-7}
+classNames={{
+  // ... 其他 classNames
+  day: cn(
+    "relative w-full h-full p-0 text-center [&:last-child[data-selected=true]_button]:rounded-r-md group/day aspect-square select-none",
+    props.showWeekNumber
+      ? "[&:nth-child(2)[data-selected=true]_button]:rounded-l-md"
+      : "[&:first-child[data-selected=true]_button]:rounded-l-md",
+    defaultClassNames.day
+  ),
+  // ... 其他 classNames
+}}
+```

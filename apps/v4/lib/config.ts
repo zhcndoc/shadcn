@@ -26,6 +26,10 @@ export const siteConfig = {
       label: "图表",
     },
     {
+      href: "/docs/directory",
+      label: "Directory",
+    },
+    {
       href: "/themes",
       label: "主题",
     },

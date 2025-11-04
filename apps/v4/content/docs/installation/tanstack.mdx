@@ -7,109 +7,18 @@ description: 安装并配置 shadcn/ui 以用于 TanStack Start。
 
 ### 创建项目
 
-首先，按照 TanStack Start 网站上的[从零开始构建项目](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch)指南创建一个新的 TanStack Start 项目。
-
-**暂时不要添加 Tailwind。我们将在下一步安装 Tailwind v4。**
-
-### 添加 Tailwind
-
-安装 `tailwindcss` 及其依赖。
+运行以下命令以创建一个包含 shadcn/ui 的 TanStack Start 新项目：
 
 ```bash
-npm install tailwindcss @tailwindcss/postcss postcss
+npm create @tanstack/start@latest --tailwind --add-ons shadcn
 ```
 
-### 创建 postcss.config.ts
-
-在项目根目录下创建一个 `postcss.config.ts` 文件。
-
-```ts title="postcss.config.ts" showLineNumbers
-export default {
-  plugins: {
-    "@tailwindcss/postcss": {},
-  },
-}
-```
-
-### 创建 `app/styles/app.css`
-
-在 `app/styles` 目录下创建一个 `app.css` 文件，并导入 `tailwindcss`
-
-```css title="app/styles/app.css"
-@import "tailwindcss" source("../");
-```
-
-### 导入 `app.css`
-
-```tsx title="app/routes/__root.tsx" showLineNumbers {5,21-26} showLineNumbers
-import type { ReactNode } from "react"
-import { createRootRoute, Outlet } from "@tanstack/react-router"
-import { Meta, Scripts } from "@tanstack/start"
-
-import appCss from "@/styles/app.css?url"
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "TanStack Start Starter",
-      },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
-  }),
-  component: RootComponent,
-})
-```
-
-### 编辑 tsconfig.json 文件
-
-向 `tsconfig.json` 文件添加以下代码以解析路径。
-
-```ts title="tsconfig.json" showLineNumbers {9-12}
-{
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "moduleResolution": "Bundler",
-    "module": "ESNext",
-    "target": "ES2022",
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./app/*"]
-    }
-  }
-}
-```
-
-### 运行 CLI
-
-运行 `shadcn` 初始化命令以设置你的项目：
-
-```bash
-npx shadcn@canary init
-```
-
-这会在项目根目录创建一个 `components.json` 文件，并在 `app/styles/app.css` 中配置 CSS 变量。
-
-### 就这样
+### 添加组件
 
 现在你可以开始向项目添加组件了。
 
 ```bash
-npx shadcn@canary add button
+npx shadcn@latest add button
 ```
 
 上面的命令会将 `Button` 组件添加到你的项目中。然后可以这样导入它：
@@ -117,10 +26,7 @@ npx shadcn@canary add button
 ```tsx title="app/routes/index.tsx" showLineNumbers {1,6}
 import { Button } from "@/components/ui/button"
 
-function Home() {
-  const router = useRouter()
-  const state = Route.useLoaderData()
-
+function App() {
   return (
     <div>
       <Button>点击我</Button>
@@ -130,3 +36,9 @@ function Home() {
 ```
 
 </Steps>
+
+如果你想添加所有 `shadcn/ui` 组件，可以运行以下命令：
+
+```bash
+npx shadcn@latest add --all
+```

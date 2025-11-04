@@ -3,13 +3,8 @@ title: Next.js 15 + React 19
 description: 在 Next.js 15 和 React 19 中使用 shadcn/ui。
 ---
 
-<Callout className="mb-6 border-blue-600 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 [&_code]:bg-blue-100 dark:[&_code]:bg-blue-900">
-  **更新：** 我们在 `canary` 版本中已添加对 React 19 和 Tailwind v4 的全面支持。详情请参见 
-  [Tailwind v4](/docs/tailwind-v4) 文档。
-</Callout>
-
-<Callout>
-  **以下指南适用于所有支持 React 19 的框架。** 我将此页面命名为 “Next.js 15 + React 19”，是为了方便升级到 Next.js 15 的用户查找。我们正在与包维护者合作，帮助他们升级到 React 19。
+<Callout className="">
+  **更新：** 我们在 `latest` 版本中已添加对 React 19 和 Tailwind v4 的全面支持。**本指南可能已过时，请谨慎使用。**
 </Callout>
 
 ## 精简总结（TL;DR）
@@ -20,7 +15,7 @@ description: 在 Next.js 15 和 React 19 中使用 shadcn/ui。
 
 ## 发生了什么？
 
-React 19 现已为 [rc 版本](https://www.npmjs.com/package/react?activeTab=versions) ，并且已在最新版 Next.js 15 中[测试并支持](https://nextjs.org/blog/next-15#react-19)。
+React 19 现已为 [候选版本](https://www.npmjs.com/package/react?activeTab=versions)，并且已在最新版 Next.js 15 中[测试并支持](https://nextjs.org/blog/next-15#react-19)。
 
 为了支持 React 19，包维护者需要测试并更新他们的包，将 React 19 作为 peer dependency 添加进来。这项工作已经在[进行中](https://github.com/radix-ui/primitives/pull/2952)、[进行中](https://github.com/pacocoursey/cmdk/pull/318) 和[进行中](https://github.com/emilkowalski/vaul/pull/498)。
 
@@ -126,22 +121,22 @@ Some packages may fail to install due to peer dependency issues (see https://ui.
 - ✅ - 使用 npm、pnpm 和 bun 均支持 React 19。
 - 🚧 - 使用 pnpm 和 bun 支持 React 19。npm 需要添加标志。相关 PR 正在进行中。
 
-| 包名                                                                              | 状态   | 备注                                                         |
-| --------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------ |
-| [radix-ui](https://www.npmjs.com/package/@radix-ui/react-icons)                    | ✅     |                                                              |
-| [lucide-react](https://www.npmjs.com/package/lucide-react)                         | ✅     |                                                              |
+| 包                                                                              | 状态   | 备注                                                         |
+| ----------------------------------------------------------------------------- | ------ | ------------------------------------------------------------ |
+| [radix-ui](https://www.npmjs.com/package/@radix-ui/react-icons)                | ✅     |                                                              |
+| [lucide-react](https://www.npmjs.com/package/lucide-react)                     | ✅     |                                                              |
 | [class-variance-authority](https://www.npmjs.com/package/class-variance-authority) | ✅     | 未将 React 19 列为 peer dependency。                          |
-| [tailwindcss-animate](https://www.npmjs.com/package/tailwindcss-animate)           | ✅     | 未将 React 19 列为 peer dependency。                          |
-| [embla-carousel-react](https://www.npmjs.com/package/embla-carousel-react)         | ✅     |                                                              |
-| [recharts](https://www.npmjs.com/package/recharts)                                 | ✅     | 见下文[说明](#recharts)                                     |
-| [react-hook-form](https://www.npmjs.com/package/react-hook-form)                   | ✅     |                                                              |
-| [react-resizable-panels](https://www.npmjs.com/package/react-resizable-panels)     | ✅     |                                                              |
-| [sonner](https://www.npmjs.com/package/sonner)                                     | ✅     |                                                              |
-| [react-day-picker](https://www.npmjs.com/package/react-day-picker)                 | ✅     | npm 需要添加标志支持。升级到 v9 的工作正在进行中。            |
-| [input-otp](https://www.npmjs.com/package/input-otp)                               | ✅     |                                                              |
-| [vaul](https://www.npmjs.com/package/vaul)                                         | ✅     |                                                              |
-| [@radix-ui/react-icons](https://www.npmjs.com/package/@radix-ui/react-icons)       | 🚧     | 见[PR #194](https://github.com/radix-ui/icons/pull/194)       |
-| [cmdk](https://www.npmjs.com/package/cmdk)                                         | ✅     |                                                              |
+| [tailwindcss-animate](https://www.npmjs.com/package/tailwindcss-animate)       | ✅     | 未将 React 19 列为 peer dependency。                          |
+| [embla-carousel-react](https://www.npmjs.com/package/embla-carousel-react)     | ✅     |                                                              |
+| [recharts](https://www.npmjs.com/package/recharts)                             | ✅     | 见下文[说明](#recharts)                                     |
+| [react-hook-form](https://www.npmjs.com/package/react-hook-form)               | ✅     |                                                              |
+| [react-resizable-panels](https://www.npmjs.com/package/react-resizable-panels) | ✅     |                                                              |
+| [sonner](https://www.npmjs.com/package/sonner)                                 | ✅     |                                                              |
+| [react-day-picker](https://www.npmjs.com/package/react-day-picker)             | ✅     | npm 需要添加标志支持。升级到 v9 的工作正在进行中。            |
+| [input-otp](https://www.npmjs.com/package/input-otp)                           | ✅     |                                                              |
+| [vaul](https://www.npmjs.com/package/vaul)                                     | ✅     |                                                              |
+| [@radix-ui/react-icons](https://www.npmjs.com/package/@radix-ui/react-icons)   | 🚧     | 见[PR #194](https://github.com/radix-ui/icons/pull/194)       |
+| [cmdk](https://www.npmjs.com/package/cmdk)                                     | ✅     |                                                              |
 
 如果你有任何问题，请在 GitHub 上[提交 issue](https://github.com/shadcn/ui/issues)。
 
