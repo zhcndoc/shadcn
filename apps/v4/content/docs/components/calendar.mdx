@@ -104,9 +104,37 @@ return (
 
 <ComponentPreview
   name="calendar-hijri"
-  title="波斯 / 希吉拉历 / 贾拉利历"
-  description="一个波斯历日历。"
+  title="Persian / Hijri / Jalali Calendar"
+  description="A Persian calendar."
 />
+
+## 选定日期（带时区）
+
+日历组件接受一个 `timeZone` 属性，以确保日期在用户的本地时区中显示和选择。
+
+```tsx showLineNumbers
+export function CalendarWithTimezone() {
+  const [date, setDate] = React.useState<Date | undefined>(undefined)
+  const [timeZone, setTimeZone] = React.useState<string | undefined>(undefined)
+
+  React.useEffect(() => {
+    setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
+  }, [])
+
+  return (
+    <Calendar
+      mode="single"
+      selected={date}
+      onSelect={setDate}
+      timeZone={timeZone}
+    />
+  )
+}
+```
+
+**注意：** 如果您注意到所选日期偏移（例如，选择 20 日突出显示 19 日），请确保 `timeZone` 属性设置为用户的本地时区。
+
+**为什么是客户端？** 时区是通过在 `useEffect` 中使用 `Intl.DateTimeFormat().resolvedOptions().timeZone` 来检测的，以确保与服务器端渲染的兼容性。在渲染期间检测时区会导致水合不匹配，因为服务器和客户端可能处于不同的时区。
 
 ## 示例
 

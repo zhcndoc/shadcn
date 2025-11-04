@@ -1,5 +1,5 @@
 {
-  "app_dir": "apps/www",
-  "build_command": "NODE_OPTIONS='--max-old-space-size=8192' pnpm --filter=www build",
-  "start_command": "pnpm --filter=www start"
+  "app_dir": "apps/v4",
+  "build_command": "pnpm --filter=v4 build",
+  "start_command": "pnpm --filter=v4 start"
 }

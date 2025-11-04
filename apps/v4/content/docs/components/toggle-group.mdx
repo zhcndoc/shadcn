@@ -7,10 +7,7 @@ links:
   api: https://radix.zhcndoc.com/docs/primitives/components/toggle-group#api-reference
 ---
 
-<ComponentPreview
-  name="toggle-group-demo"
-  description="一个包含三个选项的切换组。"
-/>
+<ComponentPreview name="toggle-group-spacing" />
 
 ## 安装
 
@@ -66,13 +63,6 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 ## 示例
 
-### 默认
-
-<ComponentPreview
-  name="toggle-group-demo"
-  description="一个包含三个选项的切换组。"
-/>
-
 ### 描边
 
 <ComponentPreview
@@ -105,5 +95,44 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 <ComponentPreview
   name="toggle-group-disabled"
-  description="一个禁用状态的切换组。"
+  description="一个禁用的切换组。"
 />
+
+### 间距
+
+使用 `spacing={2}` 在切换组项之间添加间距。
+
+<ComponentPreview
+  name="toggle-group-spacing"
+  description="A toggle group with spacing."
+/>
+
+## API 参考
+
+### 切换组
+
+包装切换组项的主要组件。
+
+| Prop        | Type                        | Default     |
+| ----------- | --------------------------- | ----------- |
+| `type`      | `"single" \| "multiple"`    | `"single"`  |
+| `variant`   | `"default" \| "outline"`    | `"default"` |
+| `size`      | `"default" \| "sm" \| "lg"` | `"default"` |
+| `spacing`   | `number`                    | `0`         |
+| `className` | `string`                    |             |
+
+```tsx
+<ToggleGroup type="single" variant="outline" size="sm">
+  <ToggleGroupItem value="a">A</ToggleGroupItem>
+  <ToggleGroupItem value="b">B</ToggleGroupItem>
+</ToggleGroup>
+```
+
+### 切换组项
+
+切换组中的单个切换项。请记得为每个项添加 `aria-label` 以提高可访问性。
+
+| Prop        | Type     | Default  |
+| ----------- | -------- | -------- |
+| `value`     | `string` | Required |
+| `className` | `string` |          |
