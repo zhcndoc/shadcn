@@ -31,7 +31,7 @@ component: true
 ```tsx showLineNumbers /ChartContainer/ /ChartTooltipContent/
 import { Bar, BarChart } from "recharts"
 
-import { ChartContainer, ChartTooltipContent } from "@/components/ui/charts"
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart"
 
 export function MyChart() {
   return (
@@ -193,7 +193,7 @@ const chartConfig = {
 
 <Callout className="mt-4 bg-amber-50 border-amber-200 dark:bg-amber-950/50 dark:border-amber-950">
 
-**重要：** 记得为 `ChartContainer` 组件设置一个 `min-h-[值]`，这是实现图表响应式所必需的。
+**重要提示：**请记得在 `ChartContainer` 组件上设置 `min-h-[VALUE]`。这是让图表具备响应式所必需的。
 
 </Callout>
 
@@ -366,11 +366,11 @@ import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 
 ## 图表配置
 
-图表配置是定义图表标签、图标和颜色的地方。
+图表配置用于定义图表的标签、图标和颜色。
 
-它刻意与图表数据解耦。
+它有意与图表数据分离。
 
-这样您可以在多个图表间共享配置和颜色令牌。它也能独立工作，适用于数据或颜色令牌存储在远程或不同格式的场景。
+这样可以在多个图表之间共享配置和颜色标记。对于数据或颜色标记存储在远程或不同格式的情况，也可以独立工作。
 
 ```tsx showLineNumbers /ChartConfig/
 import { Monitor } from "lucide-react"
@@ -394,7 +394,7 @@ const chartConfig = {
 
 ## 主题定制
 
-Charts 支持内置主题。您可以使用 CSS 变量（推荐）或者任何格式的颜色值，如 hex、hsl 或 oklch。
+图表内置了主题支持。你可以使用 CSS 变量（推荐）或任何颜色格式的颜色值，如 hex、hsl 或 oklch。
 
 ### CSS 变量
 
