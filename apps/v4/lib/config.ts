@@ -27,15 +27,11 @@ export const siteConfig = {
     },
     {
       href: "/docs/directory",
-      label: "Directory",
+      label: "目录",
     },
     {
-      href: "/themes",
-      label: "主题",
-    },
-    {
-      href: "/colors",
-      label: "颜色",
+      href: "/create",
+      label: "创建",
     },
   ],
 }
