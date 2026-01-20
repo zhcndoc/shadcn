@@ -5,9 +5,17 @@ description: 发现 shadcn/ui 组件和区块的社区注册表。
 
 这些注册表内置于 CLI，无需额外配置。要添加组件，请运行：`npx shadcn add @<registry>/<component>`。
 
-<DirectoryList />
+<Callout
+  type="warning"
+  icon={<TriangleAlertIcon />}
+  className="gap-2! border-amber-200 bg-amber-50 p-2 font-semibold dark:border-amber-900 dark:bg-amber-950/80 *:[svg]:translate-y-1"
+>
+  社区注册表由第三方开发者维护，非官方策划。安装时务必审查代码，确保符合你的安全和质量标准。
+</Callout>
 
 没看到想要的注册表？了解如何[在此添加](/docs/registry/registry-index)。
+
+<DirectoryList />
 
 ## 文档
 

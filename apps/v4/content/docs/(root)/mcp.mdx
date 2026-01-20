@@ -29,6 +29,7 @@ shadcn MCP 服务器允许 AI 助手与注册表中的项目交互。您可以�
     <TabsTrigger value="cursor">Cursor</TabsTrigger>
     <TabsTrigger value="vscode">VS Code</TabsTrigger>
     <TabsTrigger value="codex">Codex</TabsTrigger>
+    <TabsTrigger value="opencode">OpenCode</TabsTrigger>
   </TabsList>
   <TabsContent value="claude" className="mt-4">
     **在您的项目中运行以下命令**：
@@ -95,6 +96,19 @@ shadcn MCP 服务器允许 AI 助手与注册表中的项目交互。您可以�
        - 使用 shadcn 注册表中的组件创建联系表单
 
   </TabsContent>
+
+  <TabsContent value="opencode" className="mt-4">
+    **在您的项目中运行以下命令**：
+       ```bash
+       npx shadcn@latest mcp init --client opencode
+       ```
+
+    **重启 OpenCode** 并尝试以下提示：
+       - 显示 shadcn 注册表中所有可用组件
+       - 将按钮、对话框和卡片组件添加到我的项目
+       - 使用 shadcn 注册表中的组件创建联系表单
+
+  </TabsContent>
 </Tabs>
 
 ---
@@ -153,7 +167,7 @@ shadcn MCP 服务器即开即用，支持所有 shadcn 兼容的注册表。
 
 添加配置后，重启 Claude Code 并运行 `/mcp`，您就可以在列表中看到 shadcn MCP 服务器。如果显示 `Connected`，说明配置成功。
 
-详情见[Claude Code MCP 文档](https://docs.anthropic.com/en/docs/claude-code/mcp)。
+详见[Claude Code MCP 文档](https://docs.anthropic.com/en/docs/claude-code/mcp)。
 
 ### Cursor
 
@@ -193,7 +207,7 @@ shadcn MCP 服务器即开即用，支持所有 shadcn 兼容的注册表。
 
 添加配置后，打开 `.vscode/mcp.json` 并点击 shadcn 服务器旁的 **启动**。
 
-详情见[VS Code MCP 文档](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)。
+详见[VS Code MCP 文档](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)。
 
 ### Codex
 

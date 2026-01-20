@@ -27,6 +27,7 @@ MCP 服务器通过请求您的注册表索引来工作。请确保您的注册�
     <TabsTrigger value="cursor">Cursor</TabsTrigger>
     <TabsTrigger value="vscode">VS Code</TabsTrigger>
     <TabsTrigger value="codex">Codex</TabsTrigger>
+    <TabsTrigger value="opencode">OpenCode</TabsTrigger>
   </TabsList>
   <TabsContent value="claude" className="mt-4">
     **在您的 `components.json` 文件中配置注册表**：
@@ -116,6 +117,28 @@ MCP 服务器通过请求您的注册表索引来工作。请确保您的注册�
     **重启 Codex**，然后尝试以下提示：
        - 显示 acme 注册表中的组件
        - 使用 acme 注册表中的条目创建一个登录页
+
+  </TabsContent>
+
+  <TabsContent value="opencode" className="mt-4">
+    **Configure your registry** in your `components.json` file:
+
+    ```json title="components.json" showLineNumbers
+    {
+      "registries": {
+        "@acme": "https://acme.com/r/{name}.json"
+      }
+    }
+    ```
+
+    **Run the following command** in your project:
+       ```bash
+       npx shadcn@latest mcp init --client opencode
+       ```
+
+    **Restart OpenCode** and try the following prompts:
+       - Show me the components in the acme registry
+       - Create a landing page using items from the acme registry
 
   </TabsContent>
 </Tabs>
