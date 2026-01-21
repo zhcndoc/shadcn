@@ -1,7 +1,9 @@
 ---
-title: 注册目录
+title: 注册表目录
 description: 发现 shadcn/ui 组件和区块的社区注册表。
 ---
+
+import { TriangleAlertIcon } from "lucide-react"
 
 这些注册表内置于 CLI，无需额外配置。要添加组件，请运行：`npx shadcn add @<registry>/<component>`。
 
@@ -10,22 +12,22 @@ description: 发现 shadcn/ui 组件和区块的社区注册表。
   icon={<TriangleAlertIcon />}
   className="gap-2! border-amber-200 bg-amber-50 p-2 font-semibold dark:border-amber-900 dark:bg-amber-950/80 *:[svg]:translate-y-1"
 >
-  社区注册表由第三方开发者维护，非官方策划。安装时务必审查代码，确保符合你的安全和质量标准。
+  社区注册表由第三方开发者维护，非官方策划。安装时务必检查代码，以确保符合您的安全和质量标准。
 </Callout>
 
-没看到想要的注册表？了解如何[在此添加](/docs/registry/registry-index)。
+没有看到注册表？了解如何[在此添加](/docs/registry/registry-index)。
 
 <DirectoryList />
 
 ## 文档
 
-你可以使用 `shadcn` CLI 来运行自己的代码注册表。运行你自己的注册表可以让你将自定义组件、hooks、页面、配置、规则及其他文件分发到任何项目。
+您可以使用 `shadcn` CLI 来运行您自己的代码注册表。运行自己的注册表使您能够将自定义组件、hooks、页面、配置、规则和其他文件分发到任何项目中。
 
 <div className="mt-6 grid gap-4 sm:grid-cols-2">
   <LinkedCard href="/docs/registry/getting-started" className="items-start text-sm md:p-6">
     <div className="font-medium">入门指南</div>
     <div className="text-muted-foreground">
-      搭建并构建你自己的注册表
+      设置并构建您自己的注册表
     </div>
   </LinkedCard>
 
@@ -35,10 +37,10 @@ description: 发现 shadcn/ui 组件和区块的社区注册表。
   >
     <div className="font-medium">认证</div>
     <div className="text-muted-foreground">
-      通过认证保护你的注册表安全
+      使用认证保护您的注册表
     </div>
   </LinkedCard>
-  
+
   <LinkedCard
     href="/docs/registry/namespace"
     className="items-start text-sm md:p-6"
@@ -48,34 +50,34 @@ description: 发现 shadcn/ui 组件和区块的社区注册表。
       使用命名空间配置注册表
     </div>
   </LinkedCard>
-  
+
   <LinkedCard
     href="/docs/registry/registry-index"
     className="items-start text-sm md:p-6"
   >
     <div className="font-medium">添加注册表</div>
     <div className="text-muted-foreground">
-      了解如何将注册表添加到目录
+      了解如何将注册表添加到目录中
     </div>
   </LinkedCard>
-  
+
   <LinkedCard
     href="/docs/registry/examples"
     className="items-start text-sm md:p-6"
   >
     <div className="font-medium">示例</div>
     <div className="text-muted-foreground">
-      注册表条目示例及配置
+      注册表项目示例和配置
     </div>
   </LinkedCard>
-  
+
   <LinkedCard
     href="/docs/registry/registry-json"
     className="items-start text-sm md:p-6"
   >
-    <div className="font-medium">架构</div>
+    <div className="font-medium">模式</div>
     <div className="text-muted-foreground">
-      registry.json 的架构规范
+      registry.json 的模式规范
     </div>
   </LinkedCard>
 </div>

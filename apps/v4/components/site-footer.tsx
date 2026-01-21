@@ -7,14 +7,14 @@ export function SiteFooter() {
         <div className="flex h-(--footer-height) items-center justify-between">
           <div className="text-muted-foreground w-full px-1 text-center text-xs leading-loose sm:text-sm">
             <a
-              href="https://www.zhcndoc.com/"
+              href="https://www.zhcndoc.com"
               target="_blank"
             >
               简中文档
             </a>
             ｜
             <a
-              href="https://beian.miit.gov.cn/"
+              href="https://beian.miit.gov.cn"
               target="_blank"
               rel="noopener noreferrer"
             >

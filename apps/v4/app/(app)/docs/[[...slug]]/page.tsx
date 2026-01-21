@@ -169,6 +169,7 @@ export default async function Page(props: {
           <div className="w-full flex-1 *:data-[slot=alert]:first:mt-0">
             <MDX components={mdxComponents} />
           </div>
+          <div className="wwads-cn wwads-horizontal w-full my-6" data-id="354" />
         </div>
         <div className="mx-auto hidden h-16 w-full max-w-2xl items-center gap-2 px-4 sm:flex md:px-0">
           {neighbours.previous && (
@@ -199,15 +200,18 @@ export default async function Page(props: {
       </div>
       <div className="sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[calc(100svh-var(--footer-height)+2rem)] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
         <div className="h-(--top-spacing) shrink-0" />
+        <div className="px-8">
+          <div className="wwads-cn wwads-vertical w-full my-6" data-id="354" />
+        </div>
         {doc.toc?.length ? (
           <div className="no-scrollbar overflow-y-auto px-8">
             <DocsTableOfContents toc={doc.toc} />
             <div className="h-12" />
           </div>
         ) : null}
-        <div className="flex flex-1 flex-col gap-12 px-6">
+        {/* <div className="flex flex-1 flex-col gap-12 px-6">
           <OpenInV0Cta />
-        </div>
+        </div> */}
       </div>
     </div>
   )
