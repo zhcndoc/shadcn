@@ -1,0 +1,140 @@
+---
+title: 上下文菜单
+description: 显示通过右键点击触发的操作菜单。
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/context-menu
+  api: https://www.radix-ui.com/docs/primitives/components/context-menu#api-reference
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="context-menu-demo"
+  description="带有子菜单项的上下文菜单。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add context-menu
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="context-menu"
+  title="components/ui/context-menu.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
+```
+
+```tsx showLineNumbers
+<ContextMenu>
+  <ContextMenuTrigger>在此处右键点击</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem>个人资料</ContextMenuItem>
+    <ContextMenuItem>账单</ContextMenuItem>
+    <ContextMenuItem>团队</ContextMenuItem>
+    <ContextMenuItem>订阅</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
+
+## 示例
+
+### 基础示例
+
+一个带有少量操作的简单上下文菜单。
+
+<ComponentPreview styleName="radix-nova" name="context-menu-basic" />
+
+### 子菜单
+
+使用 `ContextMenuSub` 嵌套二级操作。
+
+<ComponentPreview styleName="radix-nova" name="context-menu-submenu" />
+
+### 快捷键
+
+添加 `ContextMenuShortcut` 显示键盘提示。
+
+<ComponentPreview styleName="radix-nova" name="context-menu-shortcuts" />
+
+### 分组
+
+将相关操作分组并用分割线隔开。
+
+<ComponentPreview styleName="radix-nova" name="context-menu-groups" />
+
+### 图标
+
+结合图标和标签，快速浏览。
+
+<ComponentPreview styleName="radix-nova" name="context-menu-icons" />
+
+### 复选框
+
+使用 `ContextMenuCheckboxItem` 创建切换项。
+
+<ComponentPreview styleName="radix-nova" name="context-menu-checkboxes" />
+
+### 单选框
+
+使用 `ContextMenuRadioItem` 创建单选选项。
+
+<ComponentPreview styleName="radix-nova" name="context-menu-radio" />
+
+### 危险操作
+
+使用 `variant="destructive"` 样式标记菜单项为危险操作。
+
+<ComponentPreview styleName="radix-nova" name="context-menu-destructive" />
+
+### 侧边位置
+
+通过 side 和 align 属性控制子菜单的位置。
+
+<ComponentPreview styleName="radix-nova" name="context-menu-sides" />
+
+## API 参考
+
+更多信息请查看 [Radix UI](https://www.radix-ui.com/docs/primitives/components/context-menu#api-reference) 文档。

@@ -1,0 +1,97 @@
+---
+title: 滑块
+description: 用户从给定范围内选择一个值的输入控件。
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/slider
+  api: https://www.radix-ui.com/docs/primitives/components/slider#api-reference
+---
+
+<ComponentPreview styleName="radix-nova" name="slider-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add slider
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="slider"
+  title="components/ui/slider.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Slider } from "@/components/ui/slider"
+```
+
+```tsx
+<Slider defaultValue={[33]} max={100} step={1} />
+```
+
+## 示例
+
+### 范围
+
+使用包含两个值的数组以创建范围滑块。
+
+<ComponentPreview styleName="radix-nova" name="slider-range" />
+
+### 多个滑块头
+
+使用包含多个值的数组以创建多个滑块头。
+
+<ComponentPreview styleName="radix-nova" name="slider-multiple" />
+
+### 垂直方向
+
+使用 `orientation="vertical"` 来创建垂直滑块。
+
+<ComponentPreview styleName="radix-nova" name="slider-vertical" />
+
+### 受控
+
+<ComponentPreview styleName="radix-nova" name="slider-controlled" />
+
+### 禁用
+
+使用 `disabled` 属性来禁用滑块。
+
+<ComponentPreview styleName="radix-nova" name="slider-disabled" />
+
+## API 参考
+
+请参阅 [Radix UI Slider](https://www.radix-ui.com/docs/primitives/components/slider#api-reference) 文档。

@@ -1,0 +1,140 @@
+---
+title: 上下文菜单
+description: 显示通过右键触发的操作菜单。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/context-menu
+  api: https://base-ui.com/react/components/context-menu#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="context-menu-demo"
+  description="带有子菜单项的上下文菜单。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add context-menu
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="context-menu"
+  title="components/ui/context-menu.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
+```
+
+```tsx showLineNumbers
+<ContextMenu>
+  <ContextMenuTrigger>在这里右键点击</ContextMenuTrigger>
+  <ContextMenuContent>
+    <ContextMenuItem>个人资料</ContextMenuItem>
+    <ContextMenuItem>账单</ContextMenuItem>
+    <ContextMenuItem>团队</ContextMenuItem>
+    <ContextMenuItem>订阅</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
+
+## 示例
+
+### 基础
+
+一个带有几个操作的简单上下文菜单。
+
+<ComponentPreview styleName="base-nova" name="context-menu-basic" />
+
+### 子菜单
+
+使用 `ContextMenuSub` 嵌套二级操作。
+
+<ComponentPreview styleName="base-nova" name="context-menu-submenu" />
+
+### 快捷键
+
+添加 `ContextMenuShortcut` 显示键盘提示。
+
+<ComponentPreview styleName="base-nova" name="context-menu-shortcuts" />
+
+### 分组
+
+将相关操作分组并用分隔线区分。
+
+<ComponentPreview styleName="base-nova" name="context-menu-groups" />
+
+### 图标
+
+图标与标签结合，方便快速浏览。
+
+<ComponentPreview styleName="base-nova" name="context-menu-icons" />
+
+### 复选框
+
+使用 `ContextMenuCheckboxItem` 作为开关。
+
+<ComponentPreview styleName="base-nova" name="context-menu-checkboxes" />
+
+### 单选
+
+使用 `ContextMenuRadioItem` 作为互斥选项。
+
+<ComponentPreview styleName="base-nova" name="context-menu-radio" />
+
+### 危险操作
+
+使用 `variant="destructive"` 将菜单项样式设为危险类型。
+
+<ComponentPreview styleName="base-nova" name="context-menu-destructive" />
+
+### 位置
+
+通过 side 和 align 属性控制子菜单弹出位置。
+
+<ComponentPreview styleName="base-nova" name="context-menu-sides" />
+
+## API 参考
+
+更多信息请参见 [Base UI](https://base-ui.com/react/components/context-menu#api-reference) 文档。

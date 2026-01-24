@@ -1,0 +1,883 @@
+---
+title: 数据表格 Data Table
+description: 使用 TanStack Table 构建的强大表格和数据网格。
+base: base
+component: true
+links:
+  doc: https://tanstack.com/table/v8/docs/introduction
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="data-table-demo"
+  align="start"
+  previewClassName="items-start h-[28rem] px-4 md:px-8"
+/>
+
+## 介绍
+
+我创建的每个数据表格或数据网格都是独一无二的。它们的行为各异，具有特定的排序和筛选需求，并且使用不同的数据源。
+
+将所有这些变体合并成一个组件是不合理的。如果那样做，我们将失去 [headless UI](https://tanstack.com/table/v8/docs/introduction#what-is-headless-ui) 提供的灵活性。
+
+因此，与其提供一个 data-table 组件，我认为提供一个关于如何自己构建的指南会更有帮助。
+
+我们将从基础的 `<Table />` 组件开始，从零构建一个复杂的数据表格。
+
+<Callout className="mt-4">
+
+**提示：** 如果你发现自己在应用的多个地方使用同样的表格，你总是可以将其提取为一个可复用的组件。
+
+</Callout>
+
+## 目录
+
+本指南将向你展示如何使用 [TanStack Table](https://tanstack.com/table) 和 `<Table />` 组件来构建自定义数据表格。我们将涵盖以下主题：
+
+- [基础表格](#basic-table)
+- [行操作](#row-actions)
+- [分页](#pagination)
+- [排序](#sorting)
+- [筛选](#filtering)
+- [可见性](#visibility)
+- [行选择](#row-selection)
+- [可复用组件](#reusable-components)
+
+## 安装
+
+1. 将 `<Table />` 组件添加到你的项目：
+
+```bash
+npx shadcn@latest add table
+```
+
+2. 添加 `tanstack/react-table` 依赖：
+
+```bash
+npm install @tanstack/react-table
+```
+
+## 前提条件
+
+我们将构建一个表格，用于展示最近的支付记录。以下是我们的数据结构：
+
+```tsx showLineNumbers
+type Payment = {
+  id: string
+  amount: number
+  status: "pending" | "processing" | "success" | "failed"
+  email: string
+}
+
+export const payments: Payment[] = [
+  {
+    id: "728ed52f",
+    amount: 100,
+    status: "pending",
+    email: "m@example.com",
+  },
+  {
+    id: "489e1d42",
+    amount: 125,
+    status: "processing",
+    email: "example@gmail.com",
+  },
+  // ...
+]
+```
+
+## 项目结构
+
+首先创建以下文件结构：
+
+```txt
+app
+└── payments
+    ├── columns.tsx
+    ├── data-table.tsx
+    └── page.tsx
+```
+
+这里我使用 Next.js 举例，但这对任何其他 React 框架同样适用。
+
+- `columns.tsx`（客户端组件）包含我们的列定义。
+- `data-table.tsx`（客户端组件）包含我们的 `<DataTable />` 组件。
+- `page.tsx`（服务端组件）用于获取数据并渲染表格。
+
+## 基础表格
+
+让我们从构建一个基础表格开始。
+
+<Steps className="mb-0 pt-2">
+
+### 列定义
+
+首先，我们定义列。
+
+```tsx showLineNumbers title="app/payments/columns.tsx" {3,14-27}
+"use client"
+
+import { ColumnDef } from "@tanstack/react-table"
+
+// 此类型用于定义数据结构。
+// 如果需要，你也可以使用 Zod schema。
+export type Payment = {
+  id: string
+  amount: number
+  status: "pending" | "processing" | "success" | "failed"
+  email: string
+}
+
+export const columns: ColumnDef<Payment>[] = [
+  {
+    accessorKey: "status",
+    header: "状态",
+  },
+  {
+    accessorKey: "email",
+    header: "邮箱",
+  },
+  {
+    accessorKey: "amount",
+    header: "金额",
+  },
+]
+```
+
+<Callout className="mt-4">
+
+**注意：** 列定义决定了你的表格核心部分的样子。它们定义了显示的数据，以及数据的格式化、排序和筛选方式。
+
+</Callout>
+
+### `<DataTable />` 组件
+
+接下来，我们创建一个 `<DataTable />` 组件来渲染表格。
+
+```tsx showLineNumbers title="app/payments/data-table.tsx"
+"use client"
+
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+interface DataTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[]
+  data: TData[]
+}
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  })
+
+  return (
+    <div className="overflow-hidden rounded-md border">
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                )
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                无结果。
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
+  )
+}
+```
+
+<Callout>
+
+**提示**：如果你在多个地方使用 `<DataTable />`，可以将此组件提取到 `components/ui/data-table.tsx` 以实现复用。
+
+`<DataTable columns={columns} data={data} />`
+
+</Callout>
+
+### 渲染表格
+
+最后，在页面组件中渲染表格。
+
+```tsx showLineNumbers title="app/payments/page.tsx" {22}
+import { columns, Payment } from "./columns"
+import { DataTable } from "./data-table"
+
+async function getData(): Promise<Payment[]> {
+  // 在这里从你的 API 获取数据。
+  return [
+    {
+      id: "728ed52f",
+      amount: 100,
+      status: "pending",
+      email: "m@example.com",
+    },
+    // ...
+  ]
+}
+
+export default async function DemoPage() {
+  const data = await getData()
+
+  return (
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
+    </div>
+  )
+}
+```
+
+</Steps>
+
+## 单元格格式化
+
+让我们格式化金额单元格，显示美元金额，并将单元格内容右对齐。
+
+<Steps className="mb-0 pt-2">
+
+### 更新列定义
+
+更新金额列的 `header` 和 `cell` 定义：
+
+```tsx showLineNumbers title="app/payments/columns.tsx" {4-15}
+export const columns: ColumnDef<Payment>[] = [
+  {
+    accessorKey: "amount",
+    header: () => <div className="text-right">金额</div>,
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("amount"))
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount)
+
+      return <div className="text-right font-medium">{formatted}</div>
+    },
+  },
+]
+```
+
+你也可以用同样方式格式化其他单元格和表头。
+
+</Steps>
+
+## 行操作
+
+让我们给表格添加行操作。这里使用 `<Dropdown />` 组件实现。
+
+<Steps className="mb-0 pt-2">
+
+### 更新列定义
+
+在列定义中添加 `actions` 列，`actions` 的单元格返回一个 `<Dropdown />` 组件。
+
+```tsx showLineNumbers title="app/payments/columns.tsx" {4,6-14,18-45}
+"use client"
+
+import { ColumnDef } from "@tanstack/react-table"
+import { MoreHorizontal } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+export const columns: ColumnDef<Payment>[] = [
+  // ...
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const payment = row.original
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">打开菜单</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>操作</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(payment.id)}
+            >
+              复制支付ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>查看客户</DropdownMenuItem>
+            <DropdownMenuItem>查看支付详情</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )
+    },
+  },
+  // ...
+]
+```
+
+你可以在 `cell` 函数中通过 `row.original` 访问行数据。用它来处理行操作，例如使用 `id` 调用 API 进行删除。
+
+</Steps>
+
+## 分页
+
+接下来，给表格添加分页功能。
+
+<Steps className="mb-0 pt-2">
+
+### 更新 `<DataTable>`
+
+```tsx showLineNumbers title="app/payments/data-table.tsx" {5,17}
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  })
+
+  // ...
+}
+```
+
+这会自动将行拆分页，每页显示 10 条。详情见 [分页文档](https://tanstack.com/table/v8/docs/api/features/pagination)，了解如何定制页面大小和实现手动分页。
+
+### 添加分页控制
+
+我们可以通过 `<Button />` 组件和 `table.previousPage()`, `table.nextPage()` API 方法添加分页控制。
+
+```tsx showLineNumbers title="app/payments/data-table.tsx" {1,15,21-39}
+import { Button } from "@/components/ui/button"
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  })
+
+  return (
+    <div>
+      <div className="overflow-hidden rounded-md border">
+        <Table>
+          { // .... }
+        </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          上一页
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          下一页
+        </Button>
+      </div>
+    </div>
+  )
+}
+```
+
+更高级的分页组件，请参见 [可复用组件](#reusable-components) 部分。
+
+</Steps>
+
+## 排序
+
+让邮箱列支持排序功能。
+
+<Steps className="mb-0 pt-2">
+
+### 更新 `<DataTable>`
+
+```tsx showLineNumbers title="app/payments/data-table.tsx" showLineNumbers {3,6,10,18,25-28}
+"use client"
+
+import * as React from "react"
+import {
+  ColumnDef,
+  SortingState,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([])
+
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
+  })
+
+  return (
+    <div>
+      <div className="overflow-hidden rounded-md border">
+        <Table>{ ... }</Table>
+      </div>
+    </div>
+  )
+}
+```
+
+### 使表头单元格支持排序
+
+现在，我们可以更新 `email` 表头单元格，添加排序控制。
+
+```tsx showLineNumbers title="app/payments/columns.tsx" {4,9-19}
+"use client"
+
+import { ColumnDef } from "@tanstack/react-table"
+import { ArrowUpDown } from "lucide-react"
+
+export const columns: ColumnDef<Payment>[] = [
+  {
+    accessorKey: "email",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          邮箱
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+]
+```
+
+这样用户点击表头单元格时，表格会自动按升序或降序排序。
+
+</Steps>
+
+## 筛选
+
+给表格添加搜索输入框，用于按邮箱筛选。
+
+<Steps className="mb-0 pt-2">
+
+### 更新 `<DataTable>`
+
+```tsx showLineNumbers title="app/payments/data-table.tsx" {6,10,17,24-26,35-36,39,45-54}
+"use client"
+
+import * as React from "react"
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      sorting,
+      columnFilters,
+    },
+  })
+
+  return (
+    <div>
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="筛选邮箱..."
+          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("email")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+      </div>
+      <div className="overflow-hidden rounded-md border">
+        <Table>{ ... }</Table>
+      </div>
+    </div>
+  )
+}
+```
+
+现在 `email` 列可以通过输入框进行筛选。同时你也可以为其他列添加筛选。详情见 [筛选文档](https://tanstack.com/table/v8/docs/guide/filters)。
+
+</Steps>
+
+## 可见性
+
+使用 `@tanstack/react-table` 的可见性 API，非常简单地添加列可见性切换功能。
+
+<Steps className="mb-0 pt-2">
+
+### 更新 `<DataTable>`
+
+```tsx showLineNumbers title="app/payments/data-table.tsx" {8,18-23,33-34,45,49,64-91}
+"use client"
+
+import * as React from "react"
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({})
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+    },
+  })
+
+  return (
+    <div>
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="筛选邮箱..."
+          value={table.getColumn("email")?.getFilterValue() as string}
+          onChange={(event) =>
+            table.getColumn("email")?.setFilterValue(event.target.value)
+          }
+          className="max-w-sm"
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto">
+              列
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {table
+              .getAllColumns()
+              .filter(
+                (column) => column.getCanHide()
+              )
+              .map((column) => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                )
+              })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      <div className="overflow-hidden rounded-md border">
+        <Table>{ ... }</Table>
+      </div>
+    </div>
+  )
+}
+```
+
+这会添加一个下拉菜单，用于切换列的显示和隐藏。
+
+</Steps>
+
+## 行选择
+
+接下来给表格添加行选择功能。
+
+<Steps className="mb-0 pt-2">
+
+### 更新列定义
+
+```tsx showLineNumbers title="app/payments/columns.tsx" {6,9-27}
+"use client"
+
+import { ColumnDef } from "@tanstack/react-table"
+
+import { Badge } from "@/components/ui/badge"
+import { Checkbox } from "@/components/ui/checkbox"
+
+export const columns: ColumnDef<Payment>[] = [
+  {
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="全选"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="选择行"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+]
+```
+
+### 更新 `<DataTable>`
+
+```tsx showLineNumbers title="app/payments/data-table.tsx" {11,23,28}
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  )
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({})
+  const [rowSelection, setRowSelection] = React.useState({})
+
+  const table = useReactTable({
+    data,
+    columns,
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    onRowSelectionChange: setRowSelection,
+    state: {
+      sorting,
+      columnFilters,
+      columnVisibility,
+      rowSelection,
+    },
+  })
+
+  return (
+    <div>
+      <div className="overflow-hidden rounded-md border">
+        <Table />
+      </div>
+    </div>
+  )
+}
+```
+
+这会给每行和表头添加勾选框，用于选择行及全选。
+
+### 显示已选行数
+
+你可以使用 `table.getFilteredSelectedRowModel()` API 显示已选行数。
+
+```tsx
+<div className="text-muted-foreground flex-1 text-sm">
+  {table.getFilteredSelectedRowModel().rows.length} /{" "}
+  {table.getFilteredRowModel().rows.length} 行已选中。
+</div>
+```
+
+</Steps>
+
+## 可复用组件
+
+这里有一些构建数据表格时可使用的组件，摘自 [Tasks](/examples/tasks) 演示。
+
+### 列表头
+
+使任意列头支持排序和隐藏功能。
+
+<ComponentSource
+  src="/app/(app)/examples/tasks/components/data-table-column-header.tsx"
+  title="components/data-table-column-header.tsx"
+/>
+
+```tsx showLineNumbers {5}
+export const columns = [
+  {
+    accessorKey: "email",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="邮箱" />
+    ),
+  },
+]
+```
+
+### 分页组件
+
+为表格添加分页控件，包括页面大小和选中行数。
+
+<ComponentSource
+  src="/app/(app)/examples/tasks/components/data-table-pagination.tsx"
+  styleName="radix-nova"
+/>
+
+```tsx
+<DataTablePagination table={table} />
+```
+
+### 列切换
+
+一个用于切换列可见性的组件。
+
+<ComponentSource
+  src="/app/(app)/examples/tasks/components/data-table-view-options.tsx"
+  styleName="radix-nova"
+/>
+
+```tsx
+<DataTableViewOptions table={table} />
+```

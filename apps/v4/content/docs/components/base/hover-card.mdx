@@ -1,0 +1,124 @@
+---
+title: 悬停卡片
+description: 供有视力的用户预览链接背后内容。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/hover-card
+  api: https://base-ui.com/react/components/hover-card#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="hover-card-demo"
+  previewClassName="h-80"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add hover-card
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="hover-card"
+  title="components/ui/hover-card.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
+```
+
+```tsx showLineNumbers
+<HoverCard>
+  <HoverCardTrigger>悬停</HoverCardTrigger>
+  <HoverCardContent>
+    React 框架 — 由 @vercel 创建和维护。
+  </HoverCardContent>
+</HoverCard>
+```
+
+## 触发延迟
+
+在触发组件上使用 `delay` 和 `closeDelay` 来控制卡片何时打开和关闭。
+
+```tsx showLineNumbers
+<HoverCard>
+  <HoverCardTrigger delay={100} closeDelay={200}>
+    悬停
+  </HoverCardTrigger>
+  <HoverCardContent>内容</HoverCardContent>
+</HoverCard>
+```
+
+## 位置设置
+
+使用 `HoverCardContent` 上的 `side` 和 `align` 属性控制位置。
+
+```tsx showLineNumbers
+<HoverCard>
+  <HoverCardTrigger>悬停</HoverCardTrigger>
+  <HoverCardContent side="top" align="start">
+    内容
+  </HoverCardContent>
+</HoverCard>
+```
+
+## 示例
+
+### 基本示例
+
+<ComponentPreview
+  styleName="base-nova"
+  name="hover-card-demo"
+  previewClassName="h-80"
+/>
+
+### 多方位示例
+
+<ComponentPreview
+  styleName="base-nova"
+  name="hover-card-sides"
+  previewClassName="h-[22rem]"
+/>
+
+## API 参考
+
+更多信息请参见 [Base UI](https://base-ui.com/react/components/hover-card#api-reference) 文档。

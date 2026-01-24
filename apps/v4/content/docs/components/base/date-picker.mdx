@@ -1,0 +1,97 @@
+---
+title: 日期选择器
+description: 一个带有范围和预设的日期选择器组件。
+base: base
+component: true
+---
+
+<ComponentPreview styleName="base-nova" name="date-picker-demo" />
+
+## 安装
+
+日期选择器是通过组合 `<Popover />` 和 `<Calendar />` 组件构建的。
+
+请参阅 [Popover](/docs/components/base/popover#installation) 和 [Calendar](/docs/components/base/calendar#installation) 组件的安装说明。
+
+## 用法
+
+```tsx showLineNumbers title="components/example-date-picker.tsx"
+"use client"
+
+import * as React from "react"
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
+export function DatePickerDemo() {
+  const [date, setDate] = React.useState<Date>()
+
+  return (
+    <Popover>
+      <PopoverTrigger
+        render={
+          <Button
+            variant="outline"
+            data-empty={!date}
+            className="data-[empty=true]:text-muted-foreground justify-start text-left font-normal"
+          />
+        }
+      >
+        <CalendarIcon />
+        {date ? format(date, "PPP") : <span>选择日期</span>}
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar mode="single" selected={date} onSelect={setDate} />
+      </PopoverContent>
+    </Popover>
+  )
+}
+```
+
+更多信息请查看 [React DayPicker](https://react-day-picker.js.org) 文档。
+
+## 示例
+
+### 基础
+
+一个基础的日期选择器组件。
+
+<ComponentPreview styleName="base-nova" name="date-picker-basic" />
+
+### 范围选择器
+
+用于选择日期范围的日期选择器组件。
+
+<ComponentPreview styleName="base-nova" name="date-picker-range" />
+
+### 出生日期
+
+用于选择出生日期的日期选择器组件。该组件包含用于日期和月份选择的下拉标题布局。
+
+<ComponentPreview styleName="base-nova" name="date-picker-dob" />
+
+### 输入框
+
+带有输入框用于选择日期的日期选择器组件。
+
+<ComponentPreview styleName="base-nova" name="date-picker-input" />
+
+### 时间选择器
+
+带有时间输入框用于选择时间的日期选择器组件。
+
+<ComponentPreview styleName="base-nova" name="date-picker-time" />
+
+### 自然语言选择器
+
+该组件使用 `chrono-node` 库解析自然语言日期。
+
+<ComponentPreview styleName="base-nova" name="date-picker-natural-language" />

@@ -1,0 +1,81 @@
+---
+title: 滚动区域 Scroll Area
+description: 增强原生滚动功能，实现自定义的跨浏览器样式。
+base: radix
+component: true
+links:
+  doc: https://radix.zhcndoc.com/docs/primitives/components/scroll-area
+  api: https://radix.zhcndoc.com/docs/primitives/components/scroll-area#api-reference
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="scroll-area-demo"
+  previewClassName="h-96"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add scroll-area
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="scroll-area"
+  title="components/ui/scroll-area.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import { ScrollArea } from "@/components/ui/scroll-area"
+```
+
+```tsx showLineNumbers
+<ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+  这里是你的可滚动内容。
+</ScrollArea>
+```
+
+## 示例
+
+### 横向滚动
+
+使用带有 `orientation="horizontal"` 的 `ScrollBar` 来实现横向滚动。
+
+<ComponentPreview styleName="radix-nova" name="scroll-area-horizontal-demo" />
+
+## API 参考
+
+请参阅 [Radix UI 滚动区域](https://www.radix-ui.com/docs/primitives/components/scroll-area#api-reference) 文档。

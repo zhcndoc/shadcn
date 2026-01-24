@@ -1,0 +1,144 @@
+---
+title: 警告提示
+description: 显示一个提示框以吸引用户注意。
+base: base
+component: true
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-demo"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add alert
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制粘贴到您的项目中。</Step>
+
+<ComponentSource name="alert" title="components/ui/alert.tsx" />
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx showLineNumbers
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
+```
+
+```tsx showLineNumbers
+<Alert>
+  <InfoIcon />
+  <AlertTitle>注意！</AlertTitle>
+  <AlertDescription>
+    您可以使用 CLI 向应用添加组件和依赖。
+  </AlertDescription>
+  <AlertAction>
+    <Button variant="outline">启用</Button>
+  </AlertAction>
+</Alert>
+```
+
+## 示例
+
+### 基础
+
+带图标、标题和描述的基础警告提示。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-basic"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+### 危险
+
+使用 `variant="destructive"` 创建一个危险警告提示。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-destructive"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+### 操作
+
+使用 `AlertAction` 在警告提示中添加按钮或其它操作元素。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-action"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+### 自定义颜色
+
+您可以通过向 `Alert` 组件添加自定义类，例如 `bg-amber-50 dark:bg-amber-950`，来自定义警示颜色。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-colors"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+## API 参考
+
+### Alert
+
+`Alert` 组件用于显示引起用户注意的提示框。
+
+| 属性       | 类型                          | 默认值       |
+| ---------- | ----------------------------- | ------------ |
+| `variant`  | `"default" \| "destructive"`  | `"default"`  |
+
+### AlertTitle
+
+`AlertTitle` 组件用于显示警告提示的标题。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------ |
+| `className` | `string` | -      |
+
+### AlertDescription
+
+`AlertDescription` 组件用于显示警告提示的描述或内容。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------ |
+| `className` | `string` | -      |
+
+### AlertAction
+
+`AlertAction` 组件用于显示操作元素（如按钮），该元素绝对定位于警告提示的右上角。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------ |
+| `className` | `string` | -      |

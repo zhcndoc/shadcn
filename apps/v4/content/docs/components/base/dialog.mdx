@@ -1,0 +1,115 @@
+---
+title: 对话框
+description: 一个覆盖在主窗口或另一个对话框窗口上的窗口，使其下方内容变为不可交互状态。
+featured: true
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/dialog
+  api: https://base-ui.com/react/components/dialog#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="dialog-demo"
+  description="用于编辑个人资料详情的对话框。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add dialog
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="dialog"
+  title="components/ui/dialog.tsx"
+  styleName="base-nova"
+/>
+
+<Step>根据您的项目结构更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+```
+
+```tsx showLineNumbers
+<Dialog>
+  <DialogTrigger>打开</DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>您确定要继续吗？</DialogTitle>
+      <DialogDescription>
+        此操作不可撤销。此操作将永久删除您的账户并移除我们服务器上的数据。
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
+```
+
+## 示例
+
+### 自定义关闭按钮
+
+用您自己的按钮替换默认的关闭控件。
+
+<ComponentPreview styleName="base-nova" name="dialog-close-button" />
+
+### 隐藏关闭按钮
+
+使用 `showCloseButton={false}` 来隐藏关闭按钮。
+
+<ComponentPreview styleName="base-nova" name="dialog-no-close-button" />
+
+### 粘性底部栏
+
+在内容滚动时保持操作按钮可见。
+
+<ComponentPreview styleName="base-nova" name="dialog-sticky-footer" />
+
+### 可滚动内容
+
+长内容可以滚动，同时标题保持可见。
+
+<ComponentPreview styleName="base-nova" name="dialog-scrollable-content" />
+
+## API 参考
+
+更多信息请参阅 [Base UI](https://base-ui.com/react/components/dialog#api-reference) 文档。

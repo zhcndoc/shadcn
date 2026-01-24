@@ -1,0 +1,159 @@
+---
+title: 卡片
+description: 显示带有标题、内容和页脚的卡片。
+base: radix
+component: true
+---
+
+<ComponentPreview
+  name="card-demo"
+  styleName="radix-nova"
+  previewClassName="h-[30rem]"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add card
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="card"
+  title="components/ui/card.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+```
+
+```tsx showLineNumbers
+<Card>
+  <CardHeader>
+    <CardTitle>卡片标题</CardTitle>
+    <CardDescription>卡片描述</CardDescription>
+    <CardAction>卡片操作</CardAction>
+  </CardHeader>
+  <CardContent>
+    <p>卡片内容</p>
+  </CardContent>
+  <CardFooter>
+    <p>卡片页脚</p>
+  </CardFooter>
+</Card>
+```
+
+## 示例
+
+### 尺寸
+
+使用 `size="sm"` 属性将卡片尺寸设置为小。小尺寸变体使用更小的间距。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="card-small"
+  previewClassName="h-96"
+/>
+
+### 图片
+
+在卡片标题之前添加图片以创建带有图片的卡片。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="card-image"
+  previewClassName="h-[32rem]"
+/>
+
+## API 参考
+
+### Card
+
+`Card` 组件是卡片内容的根容器。
+
+| 属性        | 类型                  | 默认值      |
+| ----------- | --------------------- | ----------- |
+| `size`      | `"default" \| "sm"`   | `"default"` |
+| `className` | `string`              | -           |
+
+### CardHeader
+
+`CardHeader` 组件用于标题、描述和可选操作。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardTitle
+
+`CardTitle` 组件用于卡片标题。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardDescription
+
+`CardDescription` 组件用于标题下的辅助文字。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardAction
+
+`CardAction` 组件将内容放置在标题的右上角（例如按钮或徽章）。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardContent
+
+`CardContent` 组件用于卡片的主要内容区域。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardFooter
+
+`CardFooter` 组件用于卡片底部的操作和次要内容。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |

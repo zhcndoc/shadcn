@@ -1,0 +1,100 @@
+---
+title: 多行文本框
+description: 显示一个表单多行文本框或外观类似多行文本框的组件。
+base: base
+component: true
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="textarea-demo"
+  previewClassName="*:max-w-xs"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add textarea
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="textarea"
+  title="components/ui/textarea.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目结构。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Textarea } from "@/components/ui/textarea"
+```
+
+```tsx
+<Textarea />
+```
+
+## 示例
+
+### 字段
+
+使用 `Field`、`FieldLabel` 和 `FieldDescription` 创建带标签和描述的多行文本框。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="textarea-field"
+  previewClassName="*:max-w-xs"
+/>
+
+### 禁用
+
+使用 `disabled` 属性禁用多行文本框。要为禁用状态添加样式，请在 `Field` 组件上添加 `data-disabled` 属性。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="textarea-disabled"
+  previewClassName="*:max-w-xs"
+/>
+
+### 无效
+
+使用 `aria-invalid` 属性标记多行文本框为无效。要为无效状态添加样式，请在 `Field` 组件上添加 `data-invalid` 属性。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="textarea-invalid"
+  previewClassName="*:max-w-xs"
+/>
+
+### 按钮
+
+与 `Button` 搭配使用，创建带提交按钮的多行文本框。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="textarea-button"
+  previewClassName="*:max-w-xs"
+/>

@@ -1,0 +1,106 @@
+---
+title: 表格
+description: 一个响应式表格组件。
+base: radix
+component: true
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="table-demo"
+  previewClassName="h-[30rem]"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add table
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="table"
+  title="components/ui/table.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+```
+
+```tsx showLineNumbers
+<Table>
+  <TableCaption>你最近发票的列表。</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-[100px]">发票</TableHead>
+      <TableHead>状态</TableHead>
+      <TableHead>方式</TableHead>
+      <TableHead className="text-right">金额</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">INV001</TableCell>
+      <TableCell>已支付</TableCell>
+      <TableCell>信用卡</TableCell>
+      <TableCell className="text-right">$250.00</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+```
+
+## 示例
+
+### 底部
+
+使用 `<TableFooter />` 组件为表格添加底部。
+
+<ComponentPreview styleName="radix-nova" name="table-footer" />
+
+### 操作
+
+使用 `<DropdownMenu />` 组件展示每行操作的表格。
+
+<ComponentPreview styleName="radix-nova" name="table-actions" />
+
+## 数据表格
+
+你可以使用 `<Table />` 组件构建更复杂的数据表格。结合 [@tanstack/react-table](https://tanstack.com/table/v8) 来创建带有排序、筛选和分页功能的表格。
+
+更多信息请参见 [数据表格](/docs/components/data-table) 文档。
+
+你也可以在 [任务](/examples/tasks) 示例中查看数据表格的示例。

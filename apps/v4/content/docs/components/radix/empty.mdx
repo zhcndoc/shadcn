@@ -1,0 +1,223 @@
+---
+title: Empty
+description: 使用 Empty 组件来显示空状态。
+base: radix
+component: true
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="empty-demo"
+  previewClassName="h-96 p-0"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add empty
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="empty"
+  title="components/ui/empty.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
+```
+
+```tsx
+<Empty>
+  <EmptyHeader>
+    <EmptyMedia variant="icon">
+      <Icon />
+    </EmptyMedia>
+    <EmptyTitle>暂无数据</EmptyTitle>
+    <EmptyDescription>未找到数据</EmptyDescription>
+  </EmptyHeader>
+  <EmptyContent>
+    <Button>添加数据</Button>
+  </EmptyContent>
+</Empty>
+```
+
+## 示例
+
+### 边框样式
+
+使用 `border` 工具类创建一个带边框的空状态。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="empty-outline"
+  previewClassName="h-96 p-6 md:p-10"
+/>
+
+### 背景
+
+使用 `bg-*` 和 `bg-gradient-*` 工具类为空状态添加背景。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="empty-background"
+  previewClassName="h-96 p-0"
+/>
+
+### 头像
+
+使用 `EmptyMedia` 组件在空状态中显示头像。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="empty-avatar"
+  previewClassName="h-96 p-0"
+/>
+
+### 头像组
+
+使用 `EmptyMedia` 组件在空状态中显示头像组。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="empty-avatar-group"
+  previewClassName="h-96 p-0"
+/>
+
+### 输入组
+
+你可以在 `EmptyContent` 组件内添加 `InputGroup` 组件。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="empty-input-group"
+  previewClassName="h-96 p-0"
+/>
+
+## API 参考
+
+### Empty
+
+空状态的主要组件。包裹 `EmptyHeader` 和 `EmptyContent` 组件。
+
+| 属性         | 类型      | 默认值  |
+| ----------- | --------- | ------- |
+| `className` | `string`  |         |
+
+```tsx
+<Empty>
+  <EmptyHeader />
+  <EmptyContent />
+</Empty>
+```
+
+### EmptyHeader
+
+`EmptyHeader` 组件包裹空状态中的媒体、标题和描述。
+
+| 属性         | 类型      | 默认值  |
+| ----------- | --------- | ------- |
+| `className` | `string`  |         |
+
+```tsx
+<EmptyHeader>
+  <EmptyMedia />
+  <EmptyTitle />
+  <EmptyDescription />
+</EmptyHeader>
+```
+
+### EmptyMedia
+
+使用 `EmptyMedia` 组件展示空状态的媒体内容，如图标或图片。你也可以用它来显示其他组件，如头像。
+
+| 属性         | 类型                     | 默认值   |
+| ----------- | ------------------------ | -------- |
+| `variant`   | `"default" \| "icon"`    | `default` |
+| `className` | `string`                 |          |
+
+```tsx
+<EmptyMedia variant="icon">
+  <Icon />
+</EmptyMedia>
+```
+
+```tsx
+<EmptyMedia>
+  <Avatar>
+    <AvatarImage src="..." />
+    <AvatarFallback>CN</AvatarFallback>
+  </Avatar>
+</EmptyMedia>
+```
+
+### EmptyTitle
+
+使用 `EmptyTitle` 组件显示空状态的标题。
+
+| 属性         | 类型      | 默认值  |
+| ----------- | --------- | ------- |
+| `className` | `string`  |         |
+
+```tsx
+<EmptyTitle>暂无数据</EmptyTitle>
+```
+
+### EmptyDescription
+
+使用 `EmptyDescription` 组件显示空状态的描述信息。
+
+| 属性         | 类型      | 默认值  |
+| ----------- | --------- | ------- |
+| `className` | `string`  |         |
+
+```tsx
+<EmptyDescription>您还没有任何通知。</EmptyDescription>
+```
+
+### EmptyContent
+
+使用 `EmptyContent` 组件显示空状态的内容，如按钮、输入框或链接。
+
+| 属性         | 类型      | 默认值  |
+| ----------- | --------- | ------- |
+| `className` | `string`  |         |
+
+```tsx
+<EmptyContent>
+  <Button>添加项目</Button>
+</EmptyContent>
+```

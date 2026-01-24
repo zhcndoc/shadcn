@@ -11,17 +11,18 @@ description: 开源注册表索引
 
 ## 添加注册表
 
-1. 将你的注册表添加到 [`apps/v4/registry/directory.json`](https://github.com/shadcn-ui/ui/blob/main/apps/v4/registry/directory.json)
-2. 向 https://github.com/shadcn-ui/ui 创建一个拉取请求
+1. 将你的注册表添加到 [`apps/v4/registry/directory.json`](https://github.com/shadcn-ui/ui/blob/main/apps/v4/registry/directory.json)  
+2. 运行 `pnpm registry:build` 以更新 `registries.json` 文件。  
+3. 向 https://github.com/shadcn-ui/ui 创建一个拉取请求  
 
 提交请求后，团队会对其进行验证和审核。
 
 ### 要求
 
-1. 注册表必须是开源的且公开可访问。
-2. 注册表必须是符合 [registry schema specification](/docs/registry/registry-json) 的有效 JSON 文件。
-3. 注册表预计为扁平结构，不包含嵌套项，即 `/registry.json` 和 `/component-name.json` 文件应位于注册表根目录。
-4. 如果存在 `files` 数组，其内容不得包含 `content` 属性。
+1. 注册表必须是开源的且公开可访问。  
+2. 注册表必须是符合 [registry schema specification](/docs/registry/registry-json) 的有效 JSON 文件。  
+3. 注册表预计为扁平结构，不包含嵌套项，即 `/registry.json` 和 `/component-name.json` 文件应位于注册表根目录。  
+4. 如果存在 `files` 数组，其内容不得包含 `content` 属性。  
 
 这是一个有效注册表的示例：
 

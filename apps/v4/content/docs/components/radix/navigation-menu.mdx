@@ -1,0 +1,110 @@
+---
+title: 导航菜单 Navigation Menu
+description: 用于导航网站的一组链接。
+base: radix
+component: true
+links:
+  doc: https://radix.zhcndoc.com/docs/primitives/components/navigation-menu
+  api: https://radix.zhcndoc.com/docs/primitives/components/navigation-menu#api-reference
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="navigation-menu-demo"
+  previewClassName="h-96"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add navigation-menu
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="navigation-menu"
+  title="components/ui/navigation-menu.tsx"
+/>
+
+<Step>更新导入路径以匹配你的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+```
+
+```tsx showLineNumbers
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuTrigger>项目一</NavigationMenuTrigger>
+      <NavigationMenuContent>
+        <NavigationMenuLink>链接</NavigationMenuLink>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
+```
+
+## 链接组件
+
+使用 `asChild` 属性来组合自定义链接组件，例如 Next.js 的 `Link`。
+
+```tsx showLineNumbers
+import Link from "next/link"
+
+import {
+  NavigationMenuItem,
+  NavigationMenuLink,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
+
+export function NavigationMenuDemo() {
+  return (
+    <NavigationMenuItem>
+      <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+        <Link href="/docs">文档</Link>
+      </NavigationMenuLink>
+    </NavigationMenuItem>
+  )
+}
+```
+
+## API 参考
+
+有关更多信息，请参阅 [Radix UI 导航菜单](https://www.radix-ui.com/docs/primitives/components/navigation-menu#api-reference) 文档。

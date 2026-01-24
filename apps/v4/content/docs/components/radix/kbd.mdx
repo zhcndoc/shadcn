@@ -1,0 +1,109 @@
+---
+title: Kbd
+description: 用于显示键盘的文本用户输入。
+base: radix
+component: true
+---
+
+<ComponentPreview styleName="radix-nova" name="kbd-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add kbd
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="kbd"
+  title="components/ui/kbd.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>根据你的项目设置更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx
+import { Kbd } from "@/components/ui/kbd"
+```
+
+```tsx
+<Kbd>Ctrl</Kbd>
+```
+
+## 示例
+
+### 组合
+
+使用 `KbdGroup` 组件将键盘按键分组显示。
+
+<ComponentPreview styleName="radix-nova" name="kbd-group" />
+
+### 按钮
+
+在 `Button` 组件内使用 `Kbd` 组件，将键盘按键显示在按钮内。
+
+<ComponentPreview styleName="radix-nova" name="kbd-button" />
+
+### 提示
+
+可以在 `Tooltip` 组件内使用 `Kbd` 组件，显示带有键盘按键的提示。
+
+<ComponentPreview styleName="radix-nova" name="kbd-tooltip" />
+
+### 输入组
+
+可以在 `InputGroupAddon` 组件内使用 `Kbd` 组件，将键盘按键显示在输入组内。
+
+<ComponentPreview styleName="radix-nova" name="kbd-input-group" />
+
+## API 参考
+
+### Kbd
+
+使用 `Kbd` 组件显示键盘按键。
+
+| 属性        | 类型     | 默认值  |
+| ----------- | -------- | ------- |
+| `className` | `string` | ``      |
+
+```tsx
+<Kbd>Ctrl</Kbd>
+```
+
+### KbdGroup
+
+使用 `KbdGroup` 组件将多个 `Kbd` 组件分组。
+
+| 属性        | 类型     | 默认值  |
+| ----------- | -------- | ------- |
+| `className` | `string` | ``      |
+
+```tsx
+<KbdGroup>
+  <Kbd>Ctrl</Kbd>
+  <Kbd>B</Kbd>
+</KbdGroup>
+```

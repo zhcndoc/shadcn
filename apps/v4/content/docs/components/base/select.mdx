@@ -1,0 +1,122 @@
+---
+title: 选择框
+description: 显示一个选项列表供用户选择——由按钮触发。
+base: base
+component: true
+featured: true
+links:
+  doc: https://base-ui.com/react/components/select
+  api: https://base-ui.com/react/components/select#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="select-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add select
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖:</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="select"
+  title="components/ui/select.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目结构。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+```
+
+```tsx showLineNumbers
+<Select>
+  <SelectTrigger className="w-[180px]">
+    <SelectValue placeholder="主题" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="light">浅色</SelectItem>
+    <SelectItem value="dark">深色</SelectItem>
+    <SelectItem value="system">系统</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+## 示例
+
+### 让选项与触发器对齐
+
+在 `SelectContent` 中使用 `alignItemWithTrigger` 来控制选中的项是否与触发器对齐。当设置为 `true`（默认值）时，弹出框的位置使选中的项覆盖在触发器上方。当为 `false` 时，弹出框与触发器边缘对齐。
+
+<ComponentPreview styleName="base-nova" name="select-align-item" />
+
+### 分组
+
+使用 `SelectGroup`、`SelectLabel` 和 `SelectSeparator` 来组织选项。
+
+<ComponentPreview styleName="base-nova" name="select-groups" />
+
+### 可滚动
+
+一个包含大量选项且可滚动的选择框。
+
+<ComponentPreview styleName="base-nova" name="select-scrollable" />
+
+### 禁用状态
+
+<ComponentPreview styleName="base-nova" name="select-disabled" />
+
+### 无效状态
+
+给 `Field` 组件添加 `data-invalid` 属性，给 `SelectTrigger` 组件添加 `aria-invalid` 属性，以显示错误状态。
+
+```tsx showLineNumbers /data-invalid/ /aria-invalid/
+<Field data-invalid>
+  <FieldLabel>水果</FieldLabel>
+  <SelectTrigger aria-invalid>
+    <SelectValue />
+  </SelectTrigger>
+</Field>
+```
+
+<ComponentPreview styleName="base-nova" name="select-invalid" />
+
+## API 参考
+
+请查看[Base UI Select](https://base-ui.com/react/components/select#api-reference)文档。

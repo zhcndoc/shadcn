@@ -1,0 +1,261 @@
+---
+title: 组合框
+description: 带有建议列表的自动完成输入框。
+base: radix
+component: true
+links:
+  doc: https://base-ui.com/react/components/combobox
+  api: https://base-ui.com/react/components/combobox#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="combobox-demo"
+  description="一个包含框架列表的组合框。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add combobox
+```
+
+</TabsContent>
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="combobox"
+  title="components/ui/combobox.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox"
+```
+
+```tsx showLineNumbers
+const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"]
+
+export function ExampleCombobox() {
+  return (
+    <Combobox items={frameworks}>
+      <ComboboxInput placeholder="选择一个框架" />
+      <ComboboxContent>
+        <ComboboxEmpty>未找到项目。</ComboboxEmpty>
+        <ComboboxList>
+          {(item) => (
+            <ComboboxItem key={item} value={item}>
+              {item}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+```
+
+## 自定义项
+
+当您的项目是对象时，请使用 `itemToStringValue`。
+
+```tsx showLineNumbers
+import * as React from "react"
+
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox"
+
+type Framework = {
+  label: string
+  value: string
+}
+
+const frameworks: Framework[] = [
+  { label: "Next.js", value: "next" },
+  { label: "SvelteKit", value: "sveltekit" },
+  { label: "Nuxt", value: "nuxt" },
+]
+
+export function ExampleComboboxCustomItems() {
+  return (
+    <Combobox
+      items={frameworks}
+      itemToStringValue={(framework) => framework.label}
+    >
+      <ComboboxInput placeholder="选择一个框架" />
+      <ComboboxContent>
+        <ComboboxEmpty>未找到项目。</ComboboxEmpty>
+        <ComboboxList>
+          {(framework) => (
+            <ComboboxItem key={framework.value} value={framework}>
+              {framework.label}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+```
+
+## 多选
+
+使用 `multiple` 和标签实现多选行为。
+
+```tsx showLineNumbers
+import * as React from "react"
+
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+  ComboboxValue,
+} from "@/components/ui/combobox"
+
+const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"]
+
+export function ExampleComboboxMultiple() {
+  const [value, setValue] = React.useState<string[]>([])
+
+  return (
+    <Combobox
+      items={frameworks}
+      multiple
+      value={value}
+      onValueChange={setValue}
+    >
+      <ComboboxChips>
+        <ComboboxValue>
+          {value.map((item) => (
+            <ComboboxChip key={item}>{item}</ComboboxChip>
+          ))}
+        </ComboboxValue>
+        <ComboboxChipsInput placeholder="添加框架" />
+      </ComboboxChips>
+      <ComboboxContent>
+        <ComboboxEmpty>未找到项目。</ComboboxEmpty>
+        <ComboboxList>
+          {(item) => (
+            <ComboboxItem key={item} value={item}>
+              {item}
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+```
+
+## 例子
+
+### 基本
+
+一个包含框架列表的简单组合框。
+
+<ComponentPreview styleName="base-nova" name="combobox-basic" />
+
+### 多选
+
+使用 `multiple` 和 `ComboboxChips` 的多选组合框。
+
+<ComponentPreview styleName="base-nova" name="combobox-multiple" />
+
+### 清除按钮
+
+使用 `showClear` 属性显示清除按钮。
+
+<ComponentPreview styleName="base-nova" name="combobox-clear" />
+
+### 分组
+
+使用 `ComboboxGroup` 和 `ComboboxSeparator` 来分组项目。
+
+<ComponentPreview styleName="base-nova" name="combobox-groups" />
+
+### 自定义项目
+
+您可以在 `ComboboxItem` 内渲染自定义组件。
+
+<ComponentPreview styleName="base-nova" name="combobox-custom" />
+
+### 无效状态
+
+使用 `aria-invalid` 属性使组合框处于无效状态。
+
+<ComponentPreview styleName="base-nova" name="combobox-invalid" />
+
+### 禁用
+
+使用 `disabled` 属性禁用组合框。
+
+<ComponentPreview styleName="base-nova" name="combobox-disabled" />
+
+### 自动高亮
+
+使用 `autoHighlight` 属性在过滤时自动高亮第一个项目。
+
+<ComponentPreview styleName="base-nova" name="combobox-auto-highlight" />
+
+### 弹出式
+
+您可以通过 `render` 属性，使用按钮或其他组件触发组合框。将 `ComboboxInput` 移动到 `ComboboxContent` 内。
+
+<ComponentPreview styleName="base-nova" name="combobox-popup" />
+
+### 输入组
+
+您可以在 `ComboboxInput` 内使用 `InputGroupAddon` 组件为组合框添加附加内容。
+
+<ComponentPreview styleName="base-nova" name="combobox-input-group" />
+
+## API 参考
+
+更多信息请参见 [Base UI](https://base-ui.com/react/components/combobox#api-reference) 文档。

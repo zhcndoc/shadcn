@@ -1,0 +1,45 @@
+---
+title: 2024年8月 - npx shadcn init
+description: 完整的 CLI 重写，支持所有主流 React 框架。
+date: 2024-08-31
+---
+
+新的 CLI 现已发布。这是一次完全重写，带来了许多新功能和改进。你现在可以使用 `npx shadcn add` 来安装组件、主题、hooks、工具函数等。
+
+这是朝着分发你和你的大型语言模型（LLMs）都能访问和使用的代码迈出的重要一步。
+
+1. 首先，CLI 现在开箱即支持所有主流 React 框架。包括 Next.js、Remix、Vite 和 Laravel。当你初始化一个新应用时，我们会更新你已有的 Tailwind 文件，而不是覆盖它们。
+2. 组件现在自带它们的依赖。例如手风琴（accordion）组件，可以定义它的 Tailwind 关键帧动画。当你将它添加到项目中时，我们会相应地更新你的 tailwind.config.ts 文件。
+3. 你还可以通过 URL 安装远程组件。例如：`npx shadcn add https://acme.com/registry/navbar.json`。
+4. 我们也改进了 init 命令。它支持框架检测，甚至可以通过一条命令初始化一个全新的 Next.js 应用。`npx shadcn init`。
+5. 我们创建了一个新的 schema，供你发布自己的组件注册表使用。并且由于支持 URL，你甚至可以用它来分发私有组件。
+6. 还有更多更新，比如更好的错误处理和 monorepo 支持。
+
+你可以今天就试用新的 CLI。
+
+```bash
+npx shadcn init sidebar-01 login-01
+```
+
+### 更新你的项目
+
+要将现有项目升级到新 CLI，请更新你的 `components.json` 文件，包含你 **components**、**utils**、**ui**、**lib** 和 **hooks** 的导入别名。
+
+```json showLineNumbers {7-13} title="components.json"
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "tailwind": {
+    // ...
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils",
+    "ui": "@/components/ui",
+    "lib": "@/lib",
+    "hooks": "@/hooks"
+  }
+}
+```
+
+如果你使用的是不同的导入别名前缀，比如 `~`，请将 `@` 替换成你的前缀。

@@ -1,0 +1,87 @@
+---
+title: 分隔符 Separator
+description: 视觉上或语义上分隔内容。
+base: radix
+component: true
+links:
+  doc: https://radix.zhcndoc.com/docs/primitives/components/separator
+  api: https://radix.zhcndoc.com/docs/primitives/components/separator#api-reference
+---
+
+<ComponentPreview styleName="radix-nova" name="separator-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add separator
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="separator"
+  title="components/ui/separator.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import { Separator } from "@/components/ui/separator"
+```
+
+```tsx showLineNumbers
+<Separator />
+```
+
+## 示例
+
+### 垂直分隔符
+
+使用 `orientation="vertical"` 创建垂直分隔符。
+
+<ComponentPreview styleName="radix-nova" name="separator-vertical" />
+
+### 菜单
+
+菜单项之间带描述的垂直分隔符。
+
+<ComponentPreview styleName="radix-nova" name="separator-menu" />
+
+### 列表
+
+列表项之间的水平分隔符。
+
+<ComponentPreview styleName="radix-nova" name="separator-list" />
+
+## API 参考
+
+请参阅 [Radix UI 分隔符](https://www.radix-ui.com/docs/primitives/components/separator#api-reference) 文档。

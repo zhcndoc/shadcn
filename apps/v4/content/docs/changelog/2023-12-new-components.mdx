@@ -1,0 +1,68 @@
+---
+title: 2023年12月 - 新组件
+description: 轮播图、抽屉、分页、可调整大小、Sonner 和 CLI 更新。
+date: 2023-12-22
+---
+
+我们为 shadcn/ui 添加了新组件，并对 CLI 进行了大量改进。
+
+以下是新内容的快速概览：
+
+- [**轮播图**](#carousel) - 一个支持动画、滑动手势和键盘操作的轮播组件。
+- [**抽屉**](#drawer) - 一个在移动端表现极佳的抽屉组件。
+- [**分页**](#pagination) - 带有页面导航、上一页和下一页按钮的分页组件。
+- [**可调整大小**](#resizable) - 用于构建可调整大小面板组和布局的组件。
+- [**Sonner**](#sonner) - 你最后需要的吐司通知组件。
+- [**CLI 更新**](#cli-updates) - 支持自定义 **Tailwind 前缀** 和 `tailwind.config.ts`。
+
+### 轮播图
+
+我们添加了一个功能完善的轮播图组件，支持动画、滑动手势和键盘操作。基于 [Embla Carousel](https://www.embla-carousel.com) 构建。
+
+它支持无限循环、自动播放、垂直方向等功能。
+
+<ComponentPreview name="carousel-demo" />
+
+### 抽屉
+
+抽屉组件来了。基于 [Vaul](https://github.com/emilkowalski/vaul) 由 [emilkowalski](https://twitter.com/emilkowalski) 开发。
+
+试试在手机上打开下面的抽屉。效果非常棒！
+
+<ComponentPreview name="drawer-demo" />
+
+### 分页
+
+我们添加了一个分页组件，带有页面导航、上一页和下一页按钮。简单灵活，兼容你框架中的 `<Link />` 组件。
+
+<ComponentPreview name="pagination-demo" />
+
+### 可调整大小
+
+使用这个 `<Resizable />` 组件来构建可调整大小的面板组和布局。
+
+<ComponentPreview name="resizable-demo-with-handle" />
+
+`<Resizable />` 基于 [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels) 由 [bvaughn](https://github.com/bvaughn) 开发。支持鼠标、触摸和键盘操作。
+
+### Sonner
+
+又一个由 [emilkowalski](https://twitter.com/emilkowalski) 开发的组件。你最后需要的吐司通知组件。Sonner 现已在 shadcn/ui 中提供。
+
+<ComponentPreview name="sonner-demo" />
+
+### CLI 更新
+
+这是最受欢迎的功能之一。现在你可以配置自定义的 Tailwind 前缀，CLI 会在添加组件时自动为你的实用类添加前缀。
+
+这意味着你现在可以轻松将 shadcn/ui 组件添加到已有项目中，如 Docusaurus、Nextra 等。无冲突地作为你现有设计系统的插件。
+
+```tsx /tw-/
+<AlertDialog className="tw-grid tw-gap-4 tw-border tw-bg-background tw-shadow-lg" />
+```
+
+它兼容 `cn`、`cva` 以及 CSS 变量。
+
+CLI 现在还能检测到 `tailwind.config.ts` 并自动为你添加 TypeScript 版本的配置。
+
+就这些。节日快乐。

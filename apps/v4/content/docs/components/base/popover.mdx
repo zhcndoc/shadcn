@@ -1,0 +1,104 @@
+---
+title: 弹出框
+description: 通过按钮触发，在门户中显示丰富内容。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/popover
+  api: https://base-ui.com/react/components/popover#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="popover-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add popover
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="popover"
+  title="components/ui/popover.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+```
+
+```tsx showLineNumbers
+<Popover>
+  <PopoverTrigger render={<Button variant="outline" />}>
+    打开弹出框
+  </PopoverTrigger>
+  <PopoverContent>
+    <PopoverHeader>
+      <PopoverTitle>标题</PopoverTitle>
+      <PopoverDescription>这里是描述文本。</PopoverDescription>
+    </PopoverHeader>
+  </PopoverContent>
+</Popover>
+```
+
+## 示例
+
+### 基础
+
+一个带有标题栏、标题和描述的简单弹出框。
+
+<ComponentPreview styleName="base-nova" name="popover-basic" />
+
+### 对齐
+
+使用 `PopoverContent` 的 `align` 属性控制水平对齐方式。
+
+<ComponentPreview styleName="base-nova" name="popover-alignments" />
+
+### 带表单
+
+内部包含表单字段的弹出框。
+
+<ComponentPreview styleName="base-nova" name="popover-form" />
+
+## API 参考
+
+请参阅 [Base UI Popover](https://base-ui.com/react/components/popover#api-reference) 文档。

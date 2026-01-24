@@ -1,0 +1,97 @@
+---
+title: 滑块控件
+description: 用户从给定范围内选择一个数值的输入控件。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/slider
+  api: https://base-ui.com/react/components/slider#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="slider-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add slider
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖项：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将下面的代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="slider"
+  title="components/ui/slider.tsx"
+  styleName="base-nova"
+/>
+
+<Step>根据你的项目结构更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Slider } from "@/components/ui/slider"
+```
+
+```tsx
+<Slider defaultValue={[33]} max={100} step={1} />
+```
+
+## 示例
+
+### 范围选择
+
+使用包含两个数值的数组来创建范围滑块。
+
+<ComponentPreview styleName="base-nova" name="slider-range" />
+
+### 多个滑块
+
+使用包含多个数值的数组来创建多个滑块点。
+
+<ComponentPreview styleName="base-nova" name="slider-multiple" />
+
+### 垂直方向
+
+使用 `orientation="vertical"` 来创建垂直滑块。
+
+<ComponentPreview styleName="base-nova" name="slider-vertical" />
+
+### 受控组件
+
+<ComponentPreview styleName="base-nova" name="slider-controlled" />
+
+### 禁用状态
+
+使用 `disabled` 属性禁用滑块。
+
+<ComponentPreview styleName="base-nova" name="slider-disabled" />
+
+## API 参考
+
+请参阅 [Base UI 滑块控件](https://base-ui.com/react/components/slider#api-reference) 文档。

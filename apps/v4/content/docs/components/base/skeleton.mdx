@@ -1,0 +1,79 @@
+---
+title: 骨架屏 Skeleton
+description: 用于在内容加载时显示占位符。
+component: true
+---
+
+<ComponentPreview styleName="base-nova" name="skeleton-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add skeleton
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="skeleton"
+  title="components/ui/skeleton.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx
+import { Skeleton } from "@/components/ui/skeleton"
+```
+
+```tsx
+<Skeleton className="h-[20px] w-[100px] rounded-full" />
+```
+
+## 示例
+
+### 头像
+
+<ComponentPreview styleName="base-nova" name="skeleton-avatar" />
+
+### 卡片
+
+<ComponentPreview
+  styleName="base-nova"
+  name="skeleton-card"
+  previewClassName="h-80"
+/>
+
+### 文本
+
+<ComponentPreview styleName="base-nova" name="skeleton-text" />
+
+### 表单
+
+<ComponentPreview styleName="base-nova" name="skeleton-form" />
+
+### 表格
+
+<ComponentPreview styleName="base-nova" name="skeleton-table" />

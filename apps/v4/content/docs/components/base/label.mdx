@@ -1,0 +1,88 @@
+---
+title: 标签
+description: 渲染一个与控件关联的无障碍标签。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/label
+  api: https://base-ui.com/react/components/label#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="label-demo" />
+
+<Callout>
+  对于表单字段，请使用包含内置标签、描述和错误处理的 [Field](/docs/components/base/field) 组件。
+</Callout>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add label
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>复制并粘贴以下代码到您的项目中。</Step>
+
+<ComponentSource
+  name="label"
+  title="components/ui/label.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx
+import { Label } from "@/components/ui/label"
+```
+
+```tsx
+<Label htmlFor="email">您的电子邮件地址</Label>
+```
+
+## Field 中的标签
+
+对于表单字段，请使用包含内置 `FieldLabel`、`FieldDescription` 和 `FieldError` 组件的 [Field](/docs/components/base/field) 组件。
+
+```tsx
+<Field>
+  <FieldLabel htmlFor="email">您的电子邮件地址</FieldLabel>
+  <Input id="email" />
+</Field>
+```
+
+<ComponentPreview
+  styleName="base-nova"
+  name="field-demo"
+  previewClassName="h-[44rem]"
+/>
+
+## API 参考
+
+更多信息请参见 [Base UI Label](https://base-ui.com/react/components/label#api-reference) 文档。

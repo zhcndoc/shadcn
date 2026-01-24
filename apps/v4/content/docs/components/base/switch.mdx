@@ -1,0 +1,97 @@
+---
+title: 开关
+description: 允许用户在选中和未选中之间切换的控件。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/switch
+  api: https://base-ui.com/react/components/switch#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="switch-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add switch
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="switch"
+  title="components/ui/switch.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Switch } from "@/components/ui/switch"
+```
+
+```tsx
+<Switch />
+```
+
+## 示例
+
+### 描述
+
+<ComponentPreview styleName="base-nova" name="switch-description" />
+
+### 选择卡片
+
+卡片样式的选择，`FieldLabel` 包裹整个 `Field`，实现可点击的卡片模式。
+
+<ComponentPreview styleName="base-nova" name="switch-choice-card" />
+
+### 禁用
+
+向 `Switch` 组件添加 `disabled` 属性以禁用开关。向 `Field` 组件添加 `data-disabled` 属性以便样式化。
+
+<ComponentPreview styleName="base-nova" name="switch-disabled" />
+
+### 无效
+
+向 `Switch` 组件添加 `aria-invalid` 属性以指示无效状态。向 `Field` 组件添加 `data-invalid` 属性以便样式化。
+
+<ComponentPreview styleName="base-nova" name="switch-invalid" />
+
+### 大小
+
+使用 `size` 属性更改开关的大小。
+
+<ComponentPreview styleName="base-nova" name="switch-sizes" />
+
+## API 参考
+
+请参阅 [Base UI Switch](https://base-ui.com/react/components/switch#api-reference) 文档。

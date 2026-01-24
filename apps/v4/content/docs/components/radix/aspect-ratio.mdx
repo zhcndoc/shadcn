@@ -1,0 +1,96 @@
+---
+title: 宽高比
+description: 在指定比例范围内显示内容。
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/primitives/docs/components/aspect-ratio
+  api: https://www.radix-ui.com/primitives/docs/components/aspect-ratio#api-reference
+---
+
+<ComponentPreview name="aspect-ratio-demo" styleName="radix-nova" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add aspect-ratio
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="aspect-ratio"
+  title="components/ui/aspect-ratio.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+```
+
+```tsx showLineNumbers
+<AspectRatio ratio={16 / 9}>
+  <Image src="..." alt="Image" className="rounded-md object-cover" />
+</AspectRatio>
+```
+
+## 示例
+
+### 正方形
+
+使用 `ratio={1 / 1}` 属性的正方形宽高比组件。适合以正方形格式展示图片。
+
+<ComponentPreview name="aspect-ratio-square" styleName="radix-nova" />
+
+### 纵向
+
+使用 `ratio={9 / 16}` 属性的纵向宽高比组件。适合以纵向格式展示图片。
+
+<ComponentPreview
+  name="aspect-ratio-portrait"
+  styleName="radix-nova"
+  previewClassName="h-96"
+/>
+
+## API 参考
+
+### AspectRatio
+
+`AspectRatio` 组件用于在指定的宽高比范围内显示内容。
+
+| 属性         | 类型       | 默认   | 是否必填 |
+| ------------ | ---------- | ------ | -------- |
+| `ratio`      | `number`   | -      | 是       |
+| `className`  | `string`   | -      | 否       |
+
+更多信息，请参见 [Radix UI 文档](https://www.radix-ui.com/primitives/docs/components/aspect-ratio#api-reference)。

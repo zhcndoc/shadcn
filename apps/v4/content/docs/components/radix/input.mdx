@@ -1,0 +1,188 @@
+---
+title: 输入
+description: 用于表单和用户数据输入的文本输入组件，内置样式和无障碍功能。
+base: radix
+component: true
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-demo"
+  previewClassName="*:max-w-xs"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add input
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="input"
+  title="components/ui/input.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx
+import { Input } from "@/components/ui/input"
+```
+
+```tsx
+<Input />
+```
+
+## 示例
+
+### 基础
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-basic"
+  previewClassName="*:max-w-xs"
+/>
+
+### 字段
+
+使用 `Field`、`FieldLabel` 和 `FieldDescription` 创建带有标签和描述的输入框。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-field"
+  previewClassName="*:max-w-xs"
+/>
+
+### 字段组
+
+使用 `FieldGroup` 显示多个 `Field` 块并构建表单。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-fieldgroup"
+  previewClassName="*:max-w-xs"
+/>
+
+### 禁用
+
+使用 `disabled` 属性禁用输入框。要为禁用状态添加样式，请向 `Field` 组件添加 `data-disabled` 属性。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-disabled"
+  previewClassName="*:max-w-xs"
+/>
+
+### 无效
+
+使用 `aria-invalid` 属性标记输入为无效。要为无效状态添加样式，请向 `Field` 组件添加 `data-invalid` 属性。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-invalid"
+  previewClassName="*:max-w-xs"
+/>
+
+### 文件
+
+使用 `type="file"` 属性创建文件输入。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-file"
+  previewClassName="*:max-w-xs"
+/>
+
+### 行内
+
+使用带有 `orientation="horizontal"` 的 `Field` 创建行内输入。配合 `Button` 创建带按钮的搜索输入。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-inline"
+  previewClassName="*:max-w-xs"
+/>
+
+### 网格
+
+使用网格布局将多个输入并排放置。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-grid"
+  previewClassName="p-6"
+/>
+
+### 必填
+
+使用 `required` 属性表示必填输入。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-required"
+  previewClassName="*:max-w-xs"
+/>
+
+### 徽章
+
+在标签中使用 `Badge` 来突出显示推荐字段。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-badge"
+  previewClassName="*:max-w-xs"
+/>
+
+### 输入组
+
+要在输入框内部添加图标、文本或按钮，请使用 `InputGroup` 组件。更多示例请参见 [输入组](/docs/components/input-group) 组件。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-input-group"
+  previewClassName="*:max-w-xs"
+/>
+
+### 按钮组
+
+要为输入框添加按钮，请使用 `ButtonGroup` 组件。更多示例请参见 [按钮组](/docs/components/button-group) 组件。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-button-group"
+  previewClassName="*:max-w-xs"
+/>
+
+### 表单
+
+包含多个输入、选择框和按钮的完整表单示例。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-form"
+  previewClassName="h-[32rem]"
+/>

@@ -1,0 +1,278 @@
+---
+title: 项目
+description: 一个多功能组件，用于显示带有媒体、标题、描述和操作的内容。
+base: radix
+component: true
+---
+
+<ComponentPreview styleName="radix-nova" name="item-demo" />
+
+`Item` 组件是一个简单的 flex 容器，可以容纳几乎任何类型的内容。使用它来显示标题、描述和操作。将其与 `ItemGroup` 组件组合，创建一组项目列表。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add item
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="item"
+  title="components/ui/item.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
+```
+
+```tsx showLineNumbers
+<Item>
+  <ItemMedia variant="icon">
+    <Icon />
+  </ItemMedia>
+  <ItemContent>
+    <ItemTitle>标题</ItemTitle>
+    <ItemDescription>描述</ItemDescription>
+  </ItemContent>
+  <ItemActions>
+    <Button>操作</Button>
+  </ItemActions>
+</Item>
+```
+
+## Item 与 Field 的区别
+
+如果需要显示表单输入，如复选框、输入框、单选框或选择框，请使用 `Field`。
+
+如果只需要显示标题、描述和操作等内容，请使用 `Item`。
+
+## 变体
+
+使用 `variant` 属性来更改项目的视觉样式。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="item-variant"
+  previewClassName="h-96"
+/>
+
+## 大小
+
+使用 `size` 属性来更改项目的大小。可用大小有 `default`、`sm` 和 `xs`。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="item-size"
+  previewClassName="h-96"
+/>
+
+## 示例
+
+### 图标
+
+使用 `ItemMedia` 并设置 `variant="icon"` 来显示图标。
+
+<ComponentPreview styleName="radix-nova" name="item-icon" />
+
+### 头像
+
+你可以使用 `ItemMedia` 并设置 `variant="avatar"` 来显示头像。
+
+<ComponentPreview styleName="radix-nova" name="item-avatar" />
+
+### 图片
+
+使用 `ItemMedia` 并设置 `variant="image"` 来显示图片。
+
+<ComponentPreview styleName="radix-nova" name="item-image" />
+
+### 分组
+
+使用 `ItemGroup` 来将相关项目组合在一起。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="item-group"
+  previewClassName="h-96"
+/>
+
+### 头部
+
+使用 `ItemHeader` 来在项目内容上方添加头部。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="item-header"
+  previewClassName="h-96"
+/>
+
+### 链接
+
+使用 `asChild` 属性将项目渲染为链接。悬停和聚焦状态将应用到锚点元素。
+
+<ComponentPreview styleName="radix-nova" name="item-link" />
+
+```tsx showLineNumbers
+<Item asChild>
+  <a href="/dashboard">
+    <ItemMedia variant="icon">
+      <HomeIcon />
+    </ItemMedia>
+    <ItemContent>
+      <ItemTitle>仪表盘</ItemTitle>
+      <ItemDescription>账户和活动概览。</ItemDescription>
+    </ItemContent>
+  </a>
+</Item>
+```
+
+### 下拉菜单
+
+<ComponentPreview styleName="radix-nova" name="item-dropdown" />
+
+## API 参考
+
+### Item
+
+用于显示带有媒体、标题、描述和操作内容的主要组件。
+
+| 属性       | 类型                                    | 默认值       |
+| ---------- | ------------------------------------- | ------------ |
+| `variant`  | `"default" \| "outline" \| "muted"`   | `"default"`  |
+| `size`     | `"default" \| "sm" \| "xs"`            | `"default"`  |
+| `asChild`  | `boolean`                              | `false`      |
+
+### ItemGroup
+
+一个容器，用于将相关项目组合在一起，保持样式一致。
+
+```tsx
+<ItemGroup>
+  <Item />
+  <Item />
+</ItemGroup>
+```
+
+### ItemSeparator
+
+分组内项目之间的分隔线。
+
+```tsx
+<ItemGroup>
+  <Item />
+  <ItemSeparator />
+  <Item />
+</ItemGroup>
+```
+
+### ItemMedia
+
+使用 `ItemMedia` 来显示媒体内容，如图标、图片或头像。
+
+| 属性       | 类型                               | 默认值       |
+| ---------- | -------------------------------- | ------------ |
+| `variant`  | `"default" \| "icon" \| "image"` | `"default"`  |
+
+```tsx
+<ItemMedia variant="icon">
+  <Icon />
+</ItemMedia>
+```
+
+```tsx
+<ItemMedia variant="image">
+  <img src="..." alt="..." />
+</ItemMedia>
+```
+
+### ItemContent
+
+包裹项目的标题和描述。
+
+```tsx
+<ItemContent>
+  <ItemTitle>标题</ItemTitle>
+  <ItemDescription>描述</ItemDescription>
+</ItemContent>
+```
+
+### ItemTitle
+
+显示项目的标题。
+
+```tsx
+<ItemTitle>项目标题</ItemTitle>
+```
+
+### ItemDescription
+
+显示项目的描述。
+
+```tsx
+<ItemDescription>项目描述</ItemDescription>
+```
+
+### ItemActions
+
+操作按钮或其他交互元素的容器。
+
+```tsx
+<ItemActions>
+  <Button>操作</Button>
+</ItemActions>
+```
+
+### ItemHeader
+
+在项目内容上方显示头部。
+
+```tsx
+<Item>
+  <ItemHeader>头部</ItemHeader>
+  <ItemContent>...</ItemContent>
+</Item>
+```
+
+### ItemFooter
+
+在项目内容下方显示页脚。
+
+```tsx
+<Item>
+  <ItemContent>...</ItemContent>
+  <ItemFooter>页脚</ItemFooter>
+</Item>
+```

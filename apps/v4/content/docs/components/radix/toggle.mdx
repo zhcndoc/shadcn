@@ -1,0 +1,96 @@
+---
+title: 切换按钮 Toggle
+description: 一个可以开启或关闭的两态按钮。
+base: radix
+component: true
+links:
+  doc: https://radix.zhcndoc.com/docs/primitives/components/toggle
+  api: https://radix.zhcndoc.com/docs/primitives/components/toggle#api-reference
+---
+
+<ComponentPreview name="toggle-demo" description="一个切换组件。" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add toggle
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>复制并粘贴以下代码到你的项目中。</Step>
+
+<ComponentSource
+  name="toggle"
+  title="components/ui/toggle.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目结构。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方式
+
+```tsx
+import { Toggle } from "@/components/ui/toggle"
+```
+
+```tsx
+<Toggle>切换</Toggle>
+```
+
+## 示例
+
+### 默认
+
+<ComponentPreview name="toggle-demo" description="一个切换组件。" />
+
+### 描边风格
+
+使用 `variant="outline"` 来获得描边样式。
+
+<ComponentPreview styleName="radix-nova" name="toggle-outline" />
+
+### 带文本
+
+<ComponentPreview styleName="radix-nova" name="toggle-text" />
+
+### 大小
+
+使用 `size` 属性来改变切换按钮的大小。
+
+<ComponentPreview styleName="radix-nova" name="toggle-sizes" />
+
+### 禁用状态
+
+<ComponentPreview
+  name="toggle-disabled"
+  description="一个禁用的切换组件。"
+/>
+
+## API 参考
+
+请参阅 [Radix Toggle](https://www.radix-ui.com/docs/primitives/components/toggle#api-reference) 文档。

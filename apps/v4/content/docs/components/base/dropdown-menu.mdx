@@ -1,0 +1,165 @@
+---
+title: 下拉菜单
+description: 向用户显示一个菜单 — 例如一组操作或功能 — 由按钮触发。
+featured: true
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/dropdown-menu
+  api: https://base-ui.com/react/components/dropdown-menu#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="dropdown-menu-demo"
+  description="一个带图标、快捷键和子菜单项的下拉菜单。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add dropdown-menu
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖项：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="dropdown-menu"
+  title="components/ui/dropdown-menu.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx showLineNumbers
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+```
+
+```tsx showLineNumbers
+<DropdownMenu>
+  <DropdownMenuTrigger render={<Button variant="outline" />}>
+    打开
+  </DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuGroup>
+      <DropdownMenuLabel>我的账户</DropdownMenuLabel>
+      <DropdownMenuItem>个人资料</DropdownMenuItem>
+      <DropdownMenuItem>账单</DropdownMenuItem>
+      <DropdownMenuSeparator />
+    </DropdownMenuGroup>
+    <DropdownMenuGroup>
+      <DropdownMenuItem>团队</DropdownMenuItem>
+      <DropdownMenuItem>订阅</DropdownMenuItem>
+    </DropdownMenuGroup>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+## 示例
+
+### 基础
+
+一个带标签和分隔符的基础下拉菜单。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-basic" />
+
+### 子菜单
+
+使用 `DropdownMenuSub` 嵌套二级操作。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-submenu" />
+
+### 快捷键
+
+添加 `DropdownMenuShortcut` 来显示键盘提示。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-shortcuts" />
+
+### 图标
+
+将图标与标签结合，方便快速扫描。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-icons" />
+
+### 复选框
+
+使用 `DropdownMenuCheckboxItem` 进行切换。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-checkboxes" />
+
+### 复选框图标
+
+为复选框项添加图标。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-checkboxes-icons" />
+
+### 单选组
+
+使用 `DropdownMenuRadioGroup` 进行唯一选择。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-radio-group" />
+
+### 单选图标
+
+显示带图标的单选选项。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-radio-icons" />
+
+### 危险操作
+
+对不可逆操作使用 `variant="destructive"`。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-destructive" />
+
+### 头像
+
+一个由头像触发的账户切换下拉菜单。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-avatar" />
+
+### 复杂示例
+
+一个结合了分组、图标与子菜单的丰富示例。
+
+<ComponentPreview styleName="base-nova" name="dropdown-menu-complex" />
+
+## API 参考
+
+完整 API 参考请参阅 [Base UI 文档](https://base-ui.com/react/components/dropdown-menu)。

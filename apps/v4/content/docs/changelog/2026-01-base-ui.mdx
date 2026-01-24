@@ -1,0 +1,45 @@
+---
+title: 2026年1月 - Base UI 文档
+description: Base UI 组件的完整文档。
+date: 2026-01-20
+---
+
+我们已发布了 Base UI 组件的完整文档。
+
+<div className="bg-muted/50 mt-6 flex w-full items-center justify-center rounded-lg border py-32">
+  <svg width="17" height="24" viewBox="0 0 17 24" className="size-12">
+    <path
+      fill="currentColor"
+      d="M9.5001 7.01537C9.2245 6.99837 9 7.22385 9 7.49999V23C13.4183 23 17 19.4183 17 15C17 10.7497 13.6854 7.27351 9.5001 7.01537Z"
+    />
+    <path
+      fill="currentColor"
+      d="M8 9.8V12V23C3.58172 23 0 19.0601 0 14.2V12V1C4.41828 1 8 4.93989 8 9.8Z"
+    />
+  </svg>
+</div>
+
+今年12月我们推出了 `npx shadcn create`，新增了选择 Radix 或 Base UI 作为组件库的功能。今天，我们为所有 Base UI 组件发布了完整的文档。
+
+### 新特性
+
+- **完整的 Base UI 文档** —— 每个组件现在都有针对 Base UI 的专门文档，涵盖用法、属性和示例。
+- **重建示例** —— 所有组件示例都为 Radix 和 Base UI 重新构建。可切换查看两者在实现上的差异。
+- **并列对比** —— 文档方便地对比两个库中组件的工作方式。
+
+### 相同抽象，不同原语
+
+目标不变：无论选用哪个原语库，都提供一致的 API。组件外观和行为相同，唯独底层实现不同。
+
+```tsx
+// 无论使用 Radix 还是 Base UI，工作方式都相同。
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+```
+
+如果你正在启动新项目，运行 `npx shadcn create` 并选择你偏好的库，CLI 会完成剩余工作。
+
+<Button asChild size="sm">
+  <Link href="/create" className="mt-6 no-underline!">
+    试试 shadcn/create
+  </Link>
+</Button>

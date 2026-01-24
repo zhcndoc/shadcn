@@ -1,0 +1,129 @@
+---
+title: 分页 Pagination
+description: 带有页面导航、下一页和上一页链接的分页。
+base: base
+component: true
+---
+
+<ComponentPreview styleName="base-nova" name="pagination-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add pagination
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="pagination"
+  title="components/ui/pagination.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+```
+
+```tsx showLineNumbers
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href="#" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive>
+        2
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="#" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
+```
+
+## 示例
+
+### 简单
+
+一个只包含页码的简单分页。
+
+<ComponentPreview styleName="base-nova" name="pagination-simple" />
+
+### 仅图标
+
+只使用上一页和下一页按钮，不显示页码。这在带有“每页行数”选择器的数据表中非常有用。
+
+<ComponentPreview styleName="base-nova" name="pagination-icons-only" />
+
+## Next.js
+
+默认情况下，`<PaginationLink />` 组件会渲染一个 `<a />` 标签。
+
+若要使用 Next.js 的 `<Link />` 组件，请对 `pagination.tsx` 做下列修改。
+
+```diff showLineNumbers /typeof Link/ {1}
++ import Link from "next/link"
+
+- type PaginationLinkProps = ... & React.ComponentProps<"a">
++ type PaginationLinkProps = ... & React.ComponentProps<typeof Link>
+
+const PaginationLink = ({...props }: ) => (
+  <PaginationItem>
+-   <a>
++   <Link>
+      // ...
+-   </a>
++   </Link>
+  </PaginationItem>
+)
+
+```
+
+<Callout className="mt-6">
+
+**注意：** 我们正在对 CLI 进行更新，以便自动为你完成此操作。
+
+</Callout>

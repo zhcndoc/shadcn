@@ -1,0 +1,206 @@
+---
+title: 2025年8月 - shadcn CLI 3.0 与 MCP 服务器
+description: 命名空间注册表、高级认证、新命令及完全重写的注册表引擎。
+date: 2025-08-27
+---
+
+我们刚刚发布了 shadcn CLI 3.0，支持命名空间注册表、高级认证、新命令以及完全重写的注册表引擎。
+
+### 新特性
+
+- [命名空间注册表](#命名空间-注册表) - 使用 `@registry/name` 格式安装组件。
+- [私有注册表](#私有-注册表) - 通过高级认证保护你的注册表安全。
+- [搜索与发现](#搜索--发现) - 新命令可在安装前查找并预览代码。
+- [MCP 服务器](#mcp-服务器) - 支持所有注册表的 MCP 服务器。
+- [更快的所有操作](#更快的所有操作) - 完全重写的注册表解析。
+- [改进的错误处理](#改进的错误处理) - 为用户和大语言模型提供更优的错误信息。
+- [升级指南](#升级指南) - 现有用户的迁移说明。
+
+### 命名空间注册表
+
+3.0 最大的变化是支持命名空间注册表。现在你可以从不同注册表安装组件：社区注册表、公司私有注册表或者内部注册表，格式为 `@registry/name`。
+
+这让团队和项目间分发代码更加简便。
+
+在你的 `components.json` 中配置注册表：
+
+```json title="components.json"
+{
+  "registries": {
+    "@acme": "https://acme.com/r/{name}.json",
+    "@internal": {
+      "url": "https://registry.company.com/{name}",
+      "headers": {
+        "Authorization": "Bearer ${REGISTRY_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+然后用 `@registry/name` 格式安装组件：
+
+```bash
+npx shadcn add @acme/button @internal/auth-system
+```
+
+这是完全去中心化的。没有中央注册器。你可以随意创建命名空间，并按团队需求组织组件。
+
+```json title="components.json" showLineNumbers
+{
+  "registries": {
+    "@design": "https://registry.company.com/create/{name}.json",
+    "@engineering": "https://registry.company.com/eng/{name}.json",
+    "@marketing": "https://registry.company.com/marketing/{name}.json"
+  }
+}
+```
+
+组件甚至可以依赖不同注册表的资源。所有依赖会自动从正确来源解析和安装。
+
+```json title="registry-item.json" showLineNumbers
+{
+  "name": "dashboard",
+  "type": "registry:block",
+  "registryDependencies": [
+    "@shadcn/card", // 来自默认注册表
+    "@v0/chart", // 来自 v0 注册表
+    "@acme/data-table", // 来自 acme 注册表
+    "@lib/data-fetcher", // 工具库
+    "@ai/analytics-prompt" // AI 提示资源
+  ]
+}
+```
+
+### 私有注册表
+
+需要将组件保密？我们帮你实现。支持用令牌、API 密钥或自定义请求头进行认证：
+
+```json title="components.json"
+{
+  "registries": {
+    "@private": {
+      "url": "https://registry.company.com/{name}.json",
+      "headers": {
+        "Authorization": "Bearer ${REGISTRY_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+你的私有组件保持私密，非常适合拥有专有 UI 库的企业团队。
+
+我们支持所有主流认证方式：基础认证、Bearer 令牌、API Key 查询参数和自定义请求头。
+
+详见[认证文档](/docs/registry/authentication)。
+
+### 搜索与发现
+
+新增三个命令，方便你精准查找：
+
+1. 安装前预览注册表条目
+
+```bash
+npx shadcn view @acme/auth-system
+```
+
+2. 搜索注册表中的条目
+
+```bash
+npx shadcn search @tweakcn -q "dark"
+```
+
+3. 列出注册表中所有条目
+
+```bash
+npx shadcn list @acme
+```
+
+安装前即可预览组件。支持跨多个注册表搜索。提前查看代码及全部依赖。
+
+### MCP 服务器
+
+<Image
+  src="/images/mcp.jpeg"
+  width="1432"
+  height="1050"
+  alt="Lift Mode"
+  className="mt-6 w-full overflow-hidden rounded-lg border"
+/>
+
+今年四月，我们[首次推出](https://x.com/shadcn/status/1917597228513853603) MCP 服务器。此后，我们结合经验改进并打造了更优秀的 MCP 服务器。
+
+新特性有：
+
+- 支持所有注册表，零配置
+- 一条命令即可添加至你喜爱的 MCP 客户端
+- 优化底层工具
+- 更好地与 CLI 和注册表集成
+- 同一项目支持多个注册表
+
+将 MCP 服务器添加到你的项目：
+
+```bash
+npx shadcn@latest mcp init
+```
+
+详情请见[文档](/docs/mcp)。
+
+### 更快的所有操作
+
+我们从零重写了注册表解析引擎。它更快、更智能，能处理最复杂的依赖树。
+
+- 依赖解析速度提升至最高3倍
+- 更智能的文件去重与合并
+- 开箱即用的 monorepo 支持
+- 为注册表作者更新了 `build` 命令
+
+### 改进的错误处理
+
+注册表开发者现可提供自定义错误信息，帮助用户（及大语言模型）诊断问题。CLI 会显示有用且可操作的错误提示：
+
+```txt
+未知注册表 "@acme"。确保它在 components.json 中定义如下：
+{
+  "registries": {
+    "@acme": "[注册表的 URL]"
+  }
+}
+```
+
+缺少环境变量？CLI 会明确告诉你需要哪些：
+
+```txt
+注册表 "@private" 需要以下环境变量：
+  • REGISTRY_TOKEN
+
+请将所需环境变量添加到你的 .env 或 .env.local 文件中。
+```
+
+注册表作者可在响应中提供自定义错误信息，帮助用户和 AI 代理快速理解并修正问题。
+
+```txt
+错误：
+你无权访问 http://example.com/r/component 上的条目。
+
+信息：
+[未授权] 你的 API 密钥已过期。请在 https://example.com/api/renew-key 续期。
+```
+
+### 升级指南
+
+最棒的是：对用户无破坏性变更。你现有的 `components.json` 依然正常使用。所有已安装的组件功能不变。
+
+对于开发者，如果你直接使用程序接口，我们已弃用部分函数，推荐替代函数：
+
+- `fetchRegistry` → `getRegistry`
+- `resolveRegistryTree` → `resolveRegistryItems`
+- 模式从 `shadcn/registry` 包移至 `shadcn/schema` 包
+
+```diff
+- import { registryItemSchema } from "shadcn/registry"
++ import { registryItemSchema } from "shadcn/schema"
+```
+
+就这些。真的。其他全部照常工作。

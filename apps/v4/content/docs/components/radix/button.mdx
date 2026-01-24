@@ -1,0 +1,154 @@
+---
+title: 按钮
+description: 显示一个按钮或看起来像按钮的组件。
+featured: true
+base: radix
+component: true
+---
+
+<ComponentPreview styleName="radix-nova" name="button-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add button
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="button"
+  title="components/ui/button.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx
+import { Button } from "@/components/ui/button"
+```
+
+```tsx
+<Button variant="outline">按钮</Button>
+```
+
+## 鼠标指针
+
+Tailwind v4 已[切换](https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor)按钮组件的样式，从 `cursor: pointer` 变为 `cursor: default`。
+
+如果你想保持 `cursor: pointer` 的行为，请将以下代码添加到你的 CSS 文件中：
+
+```css showLineNumbers title="globals.css"
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+```
+
+## 示例
+
+### 大小
+
+使用 `size` 属性更改按钮大小。
+
+<ComponentPreview styleName="radix-nova" name="button-size" />
+
+### 默认
+
+<ComponentPreview styleName="radix-nova" name="button-default" />
+
+### 描边
+
+<ComponentPreview styleName="radix-nova" name="button-outline" />
+
+### 次要
+
+<ComponentPreview styleName="radix-nova" name="button-secondary" />
+
+### 幽灵样式
+
+<ComponentPreview styleName="radix-nova" name="button-ghost" />
+
+### 危险样式
+
+<ComponentPreview styleName="radix-nova" name="button-destructive" />
+
+### 链接样式
+
+<ComponentPreview styleName="radix-nova" name="button-link" />
+
+### 图标
+
+<ComponentPreview styleName="radix-nova" name="button-icon" />
+
+### 带图标
+
+记得给图标添加 `data-icon="inline-start"` 或 `data-icon="inline-end"` 属性，以确保间距正确。
+
+<ComponentPreview styleName="radix-nova" name="button-with-icon" />
+
+### 圆角
+
+使用 `rounded-full` 类使按钮变成圆形。
+
+<ComponentPreview styleName="radix-nova" name="button-rounded" />
+
+### 加载中动画
+
+在按钮内部渲染 `<Spinner />` 组件以显示加载状态。记得给 spinner 添加 `data-icon="inline-start"` 或 `data-icon="inline-end"` 属性，以保证间距正确。
+
+<ComponentPreview styleName="radix-nova" name="button-spinner" />
+
+### 按钮组
+
+要创建按钮组，请使用 `ButtonGroup` 组件。详见[按钮组](/docs/components/radix/button-group)文档。
+
+<ComponentPreview styleName="radix-nova" name="button-group-demo" />
+
+### 链接
+
+你可以给 `<Button />` 添加 `asChild` 属性，使其他组件看起来像按钮。下面是一个看起来像按钮的链接示例。
+
+<ComponentPreview styleName="radix-nova" name="button-aschild" />
+
+## API 参考
+
+### Button
+
+`Button` 组件是对 `button` 元素的封装，添加了多种样式和功能。
+
+| 属性        | 类型                                                                                | 默认值       |
+| --------- | ---------------------------------------------------------------------------------- | ----------- |
+| `variant` | `"default" \| "outline" \| "ghost" \| "destructive" \| "secondary" \| "link"`      | `"default"` |
+| `size`    | `"default" \| "xs" \| "sm" \| "lg" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg"` | `"default"` |
+| `asChild` | `boolean`                                                                          | `false`     |

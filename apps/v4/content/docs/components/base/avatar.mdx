@@ -1,0 +1,185 @@
+---
+title: 头像
+description: 一个带有回退内容的图像元素，用于表示用户。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/avatar
+  api: https://base-ui.com/react/components/avatar#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="avatar-demo"
+  previewClassName="h-72"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add avatar
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="avatar"
+  title="components/ui/avatar.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+```
+
+```tsx showLineNumbers
+<Avatar>
+  <AvatarImage src="https://github.com/shadcn.png" />
+  <AvatarFallback>CN</AvatarFallback>
+</Avatar>
+```
+
+## 示例
+
+### 基础
+
+一个带有图片和回退内容的基础头像组件。
+
+<ComponentPreview styleName="base-nova" name="avatar-basic" />
+
+### 徽章
+
+使用 `AvatarBadge` 组件给头像添加徽章。徽章默认位于头像的右下角。
+
+<ComponentPreview styleName="base-nova" name="avatar-badge" />
+
+使用 `className` 属性为徽章添加自定义样式，如颜色、尺寸等。
+
+```tsx showLineNumbers
+<Avatar>
+  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+  <AvatarFallback>CN</AvatarFallback>
+  <AvatarBadge className="bg-green-600 dark:bg-green-800" />
+</Avatar>
+```
+
+### 带图标的徽章
+
+你也可以在 `<AvatarBadge>` 内使用图标。
+
+<ComponentPreview styleName="base-nova" name="avatar-badge-icon" />
+
+### 头像组
+
+使用 `AvatarGroup` 组件展示头像组。
+
+<ComponentPreview styleName="base-nova" name="avatar-group" />
+
+### 头像组计数
+
+使用 `<AvatarGroupCount>` 来显示头像组的计数。
+
+<ComponentPreview styleName="base-nova" name="avatar-group-count" />
+
+### 带图标的头像组计数
+
+你也可以在 `<AvatarGroupCount>` 内使用图标。
+
+<ComponentPreview styleName="base-nova" name="avatar-group-count-icon" />
+
+### 尺寸
+
+使用 `size` 属性来改变头像大小。
+
+<ComponentPreview styleName="base-nova" name="avatar-size" />
+
+### 下拉菜单
+
+你可以将 `Avatar` 组件用作下拉菜单的触发器。
+
+<ComponentPreview styleName="base-nova" name="avatar-dropdown" />
+
+## API 参考
+
+### Avatar
+
+`Avatar` 组件是包装头像图像和回退内容的根组件。
+
+| 属性        | 类型                        | 默认值      |
+| ----------- | --------------------------- | ----------- |
+| `size`      | `"default" \| "sm" \| "lg"` | `"default"` |
+| `className` | `string`                    | -           |
+
+### AvatarImage
+
+`AvatarImage` 组件用于显示头像图像。它接受所有 Base UI 头像图像属性。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `src`       | `string` | -       |
+| `alt`       | `string` | -       |
+| `className` | `string` | -       |
+
+### AvatarFallback
+
+`AvatarFallback` 组件在图像加载失败时显示回退内容。它接受所有 Base UI 头像回退属性。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### AvatarBadge
+
+`AvatarBadge` 组件在头像上显示徽章指示器，通常位于右下角。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### AvatarGroup
+
+`AvatarGroup` 组件显示带有重叠样式的头像组。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### AvatarGroupCount
+
+`AvatarGroupCount` 组件在头像组中显示计数指示器，通常表示额外头像数量。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+更多有关 Base UI 头像属性的信息，请参阅 [Base UI 文档](https://base-ui.com/react/components/avatar#api-reference)。

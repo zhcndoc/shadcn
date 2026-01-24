@@ -1,0 +1,98 @@
+---
+title: Sheet
+description: 扩展了 Dialog 组件，用于显示补充屏幕主内容的内容。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/dialog
+  api: https://base-ui.com/react/components/dialog#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="sheet-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add sheet
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="sheet"
+  title="components/ui/sheet.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+```
+
+```tsx showLineNumbers
+<Sheet>
+  <SheetTrigger>打开</SheetTrigger>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>您确定吗？</SheetTitle>
+      <SheetDescription>此操作无法撤销。</SheetDescription>
+    </SheetHeader>
+  </SheetContent>
+</Sheet>
+```
+
+## 示例
+
+### 侧边
+
+在 `SheetContent` 上使用 `side` 属性设置 sheet 出现的屏幕边缘。可选值为 `top`、`right`、`bottom` 或 `left`。
+
+<ComponentPreview styleName="base-nova" name="sheet-side" />
+
+### 无关闭按钮
+
+在 `SheetContent` 上设置 `showCloseButton={false}` 可隐藏关闭按钮。
+
+<ComponentPreview styleName="base-nova" name="sheet-no-close-button" />
+
+## API 参考
+
+参见 [Base UI Dialog](https://base-ui.com/react/components/dialog#api-reference) 文档。

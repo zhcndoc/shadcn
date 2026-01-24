@@ -1,0 +1,101 @@
+---
+title: 切换组
+description: 一组可切换开关状态的两态按钮。
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/toggle-group
+  api: https://www.radix-ui.com/docs/primitives/components/toggle-group#api-reference
+---
+
+<ComponentPreview styleName="radix-nova" name="toggle-group-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add toggle-group
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖项：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="toggle-group"
+  title="components/ui/toggle-group.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+```
+
+```tsx
+<ToggleGroup type="single">
+  <ToggleGroupItem value="a">A</ToggleGroupItem>
+  <ToggleGroupItem value="b">B</ToggleGroupItem>
+  <ToggleGroupItem value="c">C</ToggleGroupItem>
+</ToggleGroup>
+```
+
+## 示例
+
+### 轮廓样式
+
+使用 `variant="outline"` 获取轮廓样式。
+
+<ComponentPreview styleName="radix-nova" name="toggle-group-outline" />
+
+### 大小
+
+使用 `size` 属性更改切换组的大小。
+
+<ComponentPreview styleName="radix-nova" name="toggle-group-sizes" />
+
+### 间距
+
+使用 `spacing` 为切换组项之间添加间距。
+
+<ComponentPreview styleName="radix-nova" name="toggle-group-spacing" />
+
+### 纵向排列
+
+使用 `orientation="vertical"` 创建垂直切换组。
+
+<ComponentPreview styleName="radix-nova" name="toggle-group-vertical" />
+
+### 禁用状态
+
+<ComponentPreview styleName="radix-nova" name="toggle-group-disabled" />
+
+## API 参考
+
+请参阅 [Radix 切换组](https://www.radix-ui.com/docs/primitives/components/toggle-group#api-reference) 文档。

@@ -1,0 +1,83 @@
+---
+title: 进度 Progress
+description: 显示一个指示器，展示任务的完成进度，通常以进度条的形式显示。
+component: true
+links:
+  doc: https://radix.zhcndoc.com/docs/primitives/components/progress
+  api: https://radix.zhcndoc.com/docs/primitives/components/progress#api-reference
+---
+
+<ComponentPreview
+  name="progress-demo"
+  description="一个进度条组件。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add progress
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="progress"
+  title="components/ui/progress.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>根据你的项目设置更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx showLineNumbers
+import { Progress } from "@/components/ui/progress"
+```
+
+```tsx showLineNumbers
+<Progress value={33} />
+```
+
+## 示例
+
+### 标签
+
+使用 `Field` 组件为进度条添加标签。
+
+<ComponentPreview styleName="radix-nova" name="progress-label" />
+
+### 受控
+
+一个可以通过滑块控制的进度条。
+
+<ComponentPreview styleName="radix-nova" name="progress-controlled" />
+
+## API 参考
+
+请参阅 [Radix UI Progress](https://www.radix-ui.com/docs/primitives/components/progress#api-reference) 文档。

@@ -1,0 +1,295 @@
+---
+title: 输入组
+description: 为输入框添加附加内容、按钮和辅助内容。
+base: base
+component: true
+---
+
+import { IconInfoCircle } from "@tabler/icons-react"
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-demo"
+  previewClassName="h-[26rem]"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add input-group
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="input-group"
+  title="components/ui/input-group.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+  InputGroupText,
+  InputGroupTextarea,
+} from "@/components/ui/input-group"
+```
+
+```tsx showLineNumbers
+<InputGroup>
+  <InputGroupInput placeholder="搜索..." />
+  <InputGroupAddon>
+    <SearchIcon />
+  </InputGroupAddon>
+</InputGroup>
+```
+
+## 对齐
+
+使用 `InputGroupAddon` 上的 `align` 属性来相对于输入框定位附加内容。
+
+<Callout>
+  为了正确管理焦点，`InputGroupAddon` 应始终位于 DOM 中的
+  `InputGroupInput` 或 `InputGroupTextarea` 之后。使用 `align` 属性进行
+  视觉位置调整。
+</Callout>
+
+### inline-start
+
+使用 `align="inline-start"` 将附加内容放置在输入框的起始位置。这是默认值。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-inline-start"
+  previewClassName="h-48"
+/>
+
+### inline-end
+
+使用 `align="inline-end"` 将附加内容放置在输入框的末尾。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-inline-end"
+  previewClassName="h-48"
+/>
+
+### block-start
+
+使用 `align="block-start"` 将附加内容放置在输入框上方。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-block-start"
+  previewClassName="h-96"
+/>
+
+### block-end
+
+使用 `align="block-end"` 将附加内容放置在输入框下方。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-block-end"
+  previewClassName="h-[26rem]"
+/>
+
+## 示例
+
+### 图标
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-icon"
+  previewClassName="h-80"
+/>
+
+### 文本
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-text"
+  previewClassName="h-80"
+/>
+
+### 按钮
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-button"
+  previewClassName="h-72"
+/>
+
+### 快捷键
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-kbd"
+  previewClassName="h-40"
+/>
+
+### 下拉菜单
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-dropdown"
+  previewClassName="h-56"
+/>
+
+### 加载动画
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-spinner"
+  previewClassName="h-80"
+/>
+
+### 多行文本框
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-textarea"
+  previewClassName="h-96"
+/>
+
+### 自定义输入框
+
+为您的自定义输入框添加 `data-slot="input-group-control"` 属性以实现自动焦点状态管理。
+
+以下是一个来自第三方库的可调整大小的自定义多行文本框示例。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="input-group-custom"
+  previewClassName="h-56"
+/>
+
+## API 参考
+
+### InputGroup
+
+包裹输入框和附加内容的主组件。
+
+| 属性         | 类型      | 默认值 |
+| ------------ | --------- | ------ |
+| `className`  | `string`  |        |
+
+```tsx
+<InputGroup>
+  <InputGroupInput />
+  <InputGroupAddon />
+</InputGroup>
+```
+
+### InputGroupAddon
+
+在输入框旁显示图标、文本、按钮或其他内容。
+
+<Callout icon={<IconInfoCircle />} title="焦点导航">
+  为了正确管理焦点导航，`InputGroupAddon` 组件应放置在输入框之后。使用 \
+  `align` 属性定位附加内容。
+</Callout>
+
+| 属性         | 类型                                                             | 默认值           |
+| ------------ | ---------------------------------------------------------------- | ---------------- |
+| `align`      | `"inline-start" \| "inline-end" \| "block-start" \| "block-end"` | `"inline-start"` |
+| `className`  | `string`                                                         |                  |
+
+```tsx
+<InputGroupAddon align="inline-end">
+  <SearchIcon />
+</InputGroupAddon>
+```
+
+**对于 `<InputGroupInput />`，使用 `inline-start` 或 `inline-end` 对齐方式。对于 `<InputGroupTextarea />`，使用 `block-start` 或 `block-end` 对齐方式。**
+
+`InputGroupAddon` 组件可以包含多个 `InputGroupButton` 组件和图标。
+
+```tsx
+<InputGroupAddon>
+  <InputGroupButton>按钮</InputGroupButton>
+  <InputGroupButton>按钮</InputGroupButton>
+</InputGroupAddon>
+```
+
+### InputGroupButton
+
+在输入组中显示按钮。
+
+| 属性         | 类型                                                                             | 默认值    |
+| ------------ | -------------------------------------------------------------------------------- | --------- |
+| `size`       | `"xs" \| "icon-xs" \| "sm" \| "icon-sm"`                                        | `"xs"`    |
+| `variant`    | `"default" \| "destructive" \| "outline" \| "secondary" \| "ghost" \| "link"`    | `"ghost"` |
+| `className`  | `string`                                                                         |           |
+
+```tsx
+<InputGroupButton>按钮</InputGroupButton>
+<InputGroupButton size="icon-xs" aria-label="复制">
+  <CopyIcon />
+</InputGroupButton>
+```
+
+### InputGroupInput
+
+构建输入组时替代 `<Input />`。该组件预置了输入组样式，并使用统一的 `data-slot="input-group-control"` 处理焦点状态。
+
+| 属性         | 类型      | 默认值 |
+| ------------ | --------- | ------ |
+| `className`  | `string`  |        |
+
+其他所有属性均会传递给底层的 `<Input />` 组件。
+
+```tsx
+<InputGroup>
+  <InputGroupInput placeholder="输入文本..." />
+  <InputGroupAddon>
+    <SearchIcon />
+  </InputGroupAddon>
+</InputGroup>
+```
+
+### InputGroupTextarea
+
+构建输入组时替代 `<Textarea />`。该组件预置了多行文本框组样式，并使用统一的 `data-slot="input-group-control"` 处理焦点状态。
+
+| 属性         | 类型      | 默认值 |
+| ------------ | --------- | ------ |
+| `className`  | `string`  |        |
+
+其他所有属性均会传递给底层的 `<Textarea />` 组件。
+
+```tsx
+<InputGroup>
+  <InputGroupTextarea placeholder="输入消息..." />
+  <InputGroupAddon align="block-end">
+    <InputGroupButton>发送</InputGroupButton>
+  </InputGroupAddon>
+</InputGroup>
+```

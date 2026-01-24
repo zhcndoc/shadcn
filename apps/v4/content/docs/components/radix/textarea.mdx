@@ -1,0 +1,100 @@
+---
+title: 文本域
+description: 显示表单文本域或类似文本域的组件。
+base: radix
+component: true
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="textarea-demo"
+  previewClassName="*:max-w-xs"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add textarea
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="textarea"
+  title="components/ui/textarea.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx
+import { Textarea } from "@/components/ui/textarea"
+```
+
+```tsx
+<Textarea />
+```
+
+## 示例
+
+### 字段
+
+使用 `Field`、`FieldLabel` 和 `FieldDescription` 创建带标签和描述的文本域。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="textarea-field"
+  previewClassName="*:max-w-xs"
+/>
+
+### 禁用
+
+使用 `disabled` 属性禁用文本域。要为禁用状态添加样式，请向 `Field` 组件添加 `data-disabled` 属性。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="textarea-disabled"
+  previewClassName="*:max-w-xs"
+/>
+
+### 无效
+
+使用 `aria-invalid` 属性将文本域标记为无效。要为无效状态添加样式，请向 `Field` 组件添加 `data-invalid` 属性。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="textarea-invalid"
+  previewClassName="*:max-w-xs"
+/>
+
+### 按钮
+
+配合 `Button` 使用，创建带提交按钮的文本域。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="textarea-button"
+  previewClassName="*:max-w-xs"
+/>

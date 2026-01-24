@@ -1,0 +1,81 @@
+---
+title: 进度
+description: 显示一个指示器，用于展示任务的完成进度，通常以进度条形式显示。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/progress
+  api: https://base-ui.com/react/components/progress#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="progress-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add progress
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="progress"
+  title="components/ui/progress.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import { Progress } from "@/components/ui/progress"
+```
+
+```tsx showLineNumbers
+<Progress value={33} />
+```
+
+## 示例
+
+### 标签
+
+使用 `ProgressLabel` 和 `ProgressValue` 添加标签和数值显示。
+
+<ComponentPreview styleName="base-nova" name="progress-label" />
+
+### 受控组件
+
+一个可以通过滑块控制的进度条。
+
+<ComponentPreview styleName="base-nova" name="progress-controlled" />
+
+## API 参考
+
+请查看 [Base UI Progress](https://base-ui.com/react/components/progress#api-reference) 文档。

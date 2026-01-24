@@ -1,0 +1,127 @@
+---
+title: 复选框
+description: 一个允许用户在选中和未选中状态之间切换的控件。
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/checkbox
+  api: https://www.radix-ui.com/docs/primitives/components/checkbox#api-reference
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="checkbox-demo"
+  previewClassName="h-80"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add checkbox
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="checkbox"
+  title="components/ui/checkbox.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox"
+```
+
+```tsx
+<Checkbox />
+```
+
+## 选中状态
+
+使用 `defaultChecked` 处理非受控复选框，或者使用 `checked` 和
+`onCheckedChange` 来控制状态。
+
+```tsx showLineNumbers
+import * as React from "react"
+
+export function Example() {
+  const [checked, setChecked] = React.useState(false)
+
+  return <Checkbox checked={checked} onCheckedChange={setChecked} />
+}
+```
+
+## 无效状态
+
+在复选框上设置 `aria-invalid`，并在字段包装组件上设置 `data-invalid`，
+以显示无效的样式。
+
+<ComponentPreview styleName="radix-nova" name="checkbox-invalid" />
+
+## 示例
+
+### 基础
+
+配合 `Field` 和 `FieldLabel` 使用复选框，以实现正确的布局和标签。
+
+<ComponentPreview styleName="radix-nova" name="checkbox-basic" />
+
+### 描述
+
+使用 `FieldContent` 和 `FieldDescription` 来显示辅助文字。
+
+<ComponentPreview styleName="radix-nova" name="checkbox-description" />
+
+### 禁用
+
+使用 `disabled` 属性来禁止交互，并在 `<Field>` 组件添加 `data-disabled` 属性，以应用禁用样式。
+
+<ComponentPreview styleName="radix-nova" name="checkbox-disabled" />
+
+### 组
+
+使用多个字段来创建复选框列表。
+
+<ComponentPreview styleName="radix-nova" name="checkbox-group" />
+
+### 表格
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="checkbox-table"
+  previewClassName="p-4 md:p-8"
+/>
+
+## API 参考
+
+更多信息请参考 [Radix UI](https://www.radix-ui.com/docs/primitives/components/checkbox#api-reference) 文档。

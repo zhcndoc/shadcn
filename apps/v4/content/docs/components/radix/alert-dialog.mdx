@@ -1,0 +1,158 @@
+---
+title: 警告对话框
+description: 一个模式对话框，会打断用户操作，显示重要内容并期待用户回应。
+featured: true
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/primitives/docs/components/alert-dialog
+  api: https://www.radix-ui.com/primitives/docs/components/alert-dialog#api-reference
+---
+
+<ComponentPreview
+  name="alert-dialog-demo"
+  styleName="radix-nova"
+  previewClassName="h-56"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add alert-dialog
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖包：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="alert-dialog"
+  title="components/ui/alert-dialog.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+```
+
+```tsx showLineNumbers
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="outline">显示对话框</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>您确定要继续吗？</AlertDialogTitle>
+      <AlertDialogDescription>
+        此操作无法撤销。这将永久删除您在我们服务器上的账户。
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>取消</AlertDialogCancel>
+      <AlertDialogAction>继续</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+## 示例
+
+### 基础示例
+
+一个基础警告对话框，包含标题、描述，以及取消和继续按钮。
+
+<ComponentPreview
+  name="alert-dialog-basic"
+  styleName="radix-nova"
+  previewClassName="h-56"
+/>
+
+### 小尺寸
+
+使用 `size="sm"` 属性使警告对话框更小。
+
+<ComponentPreview
+  name="alert-dialog-small"
+  styleName="radix-nova"
+  previewClassName="h-56"
+/>
+
+### 媒体元素
+
+使用 `AlertDialogMedia` 组件为警告对话框添加媒体元素，如图标或图片。
+
+<ComponentPreview
+  name="alert-dialog-media"
+  styleName="radix-nova"
+  previewClassName="h-56"
+/>
+
+### 小尺寸带媒体元素
+
+使用 `size="sm"` 属性使警告对话框更小，并使用 `AlertDialogMedia` 组件添加媒体元素，如图标或图片。
+
+<ComponentPreview
+  name="alert-dialog-small-media"
+  styleName="radix-nova"
+  previewClassName="h-56"
+/>
+
+### 危险操作
+
+使用 `AlertDialogAction` 组件为警告对话框添加危险操作按钮。
+
+<ComponentPreview
+  name="alert-dialog-destructive"
+  styleName="radix-nova"
+  previewClassName="h-56"
+/>
+
+## API 参考
+
+### size
+
+在 `AlertDialogContent` 组件上使用 `size` 属性来控制警告对话框的大小。它接受以下值：
+
+| 属性   | 类型                | 默认值      |
+| ------ | ------------------- | ----------- |
+| `size` | `"default" \| "sm"` | `"default"` |
+
+有关其它组件及其属性的更多信息，请参见 [Radix UI 文档](https://www.radix-ui.com/primitives/docs/components/alert-dialog#api-reference)。

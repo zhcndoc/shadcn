@@ -1,0 +1,122 @@
+---
+title: 选择框
+description: 显示一个选项列表供用户选择——通过按钮触发。
+base: radix
+component: true
+featured: true
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/select
+  api: https://www.radix-ui.com/docs/primitives/components/select#api-reference
+---
+
+<ComponentPreview styleName="radix-nova" name="select-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add select
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖项：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>复制并粘贴以下代码到你的项目中。</Step>
+
+<ComponentSource
+  name="select"
+  title="components/ui/select.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>根据你的项目结构更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+```
+
+```tsx showLineNumbers
+<Select>
+  <SelectTrigger className="w-[180px]">
+    <SelectValue placeholder="主题" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="light">浅色</SelectItem>
+    <SelectItem value="dark">深色</SelectItem>
+    <SelectItem value="system">系统</SelectItem>
+  </SelectContent>
+</Select>
+```
+
+## 示例
+
+### 项目与触发器对齐
+
+在 `SelectContent` 上使用 `position` 属性来控制对齐方式。当 `position="item-aligned"`（默认）时，弹出层定位使选中项出现在触发器上方。当 `position="popper"` 时，弹出层与触发器边缘对齐。
+
+<ComponentPreview styleName="radix-nova" name="select-align-item" />
+
+### 分组
+
+使用 `SelectGroup`、`SelectLabel` 和 `SelectSeparator` 来组织项目。
+
+<ComponentPreview styleName="radix-nova" name="select-groups" />
+
+### 可滚动
+
+一个拥有大量项目且可以滚动的选择框。
+
+<ComponentPreview styleName="radix-nova" name="select-scrollable" />
+
+### 禁用状态
+
+<ComponentPreview styleName="radix-nova" name="select-disabled" />
+
+### 无效状态
+
+在 `Field` 组件上添加 `data-invalid` 属性，并在 `SelectTrigger` 组件上添加 `aria-invalid` 属性以展示错误状态。
+
+```tsx showLineNumbers /data-invalid/ /aria-invalid/
+<Field data-invalid>
+  <FieldLabel>水果</FieldLabel>
+  <SelectTrigger aria-invalid>
+    <SelectValue />
+  </SelectTrigger>
+</Field>
+```
+
+<ComponentPreview styleName="radix-nova" name="select-invalid" />
+
+## API 参考
+
+请参阅 [Radix UI Select](https://www.radix-ui.com/docs/primitives/components/select#api-reference) 文档。

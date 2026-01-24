@@ -1,0 +1,126 @@
+---
+title: 折叠面板
+description: 一个可展开/折叠面板的交互组件。
+base: radix
+component: true
+featured: true
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/collapsible
+  api: https://www.radix-ui.com/docs/primitives/components/collapsible#api-reference
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="collapsible-demo"
+  align="start"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add collapsible
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="collapsible"
+  title="components/ui/collapsible.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目结构。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx showLineNumbers
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+```
+
+```tsx showLineNumbers
+<Collapsible>
+  <CollapsibleTrigger>我可以在项目中使用它吗？</CollapsibleTrigger>
+  <CollapsibleContent>
+    可以。免费用于个人和商业项目，无需署名。
+  </CollapsibleContent>
+</Collapsible>
+```
+
+## 受控状态
+
+使用 `open` 和 `onOpenChange` 属性来控制状态。
+
+```tsx showLineNumbers
+import * as React from "react"
+
+export function Example() {
+  const [open, setOpen] = React.useState(false)
+
+  return (
+    <Collapsible open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger>切换</CollapsibleTrigger>
+      <CollapsibleContent>内容</CollapsibleContent>
+    </Collapsible>
+  )
+}
+```
+
+## 示例
+
+### 基础
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="collapsible-basic"
+  align="start"
+/>
+
+### 设置面板
+
+使用触发按钮显示更多设置。
+
+<ComponentPreview styleName="radix-nova" name="collapsible-settings" />
+
+### 文件树
+
+使用嵌套折叠面板构建文件树。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="collapsible-file-tree"
+  previewClassName="h-[36rem]"
+/>
+
+## API 参考
+
+更多信息请参阅 [Radix UI](https://www.radix-ui.com/docs/primitives/components/collapsible#api-reference) 文档。

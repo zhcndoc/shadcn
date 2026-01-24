@@ -1,0 +1,97 @@
+---
+title: 徽章
+description: 显示一个徽章或看起来像徽章的组件。
+base: base
+component: true
+---
+
+<ComponentPreview styleName="base-nova" name="badge-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add badge
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="badge"
+  title="components/ui/badge.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Badge } from "@/components/ui/badge"
+```
+
+```tsx
+<Badge variant="default | outline | secondary | destructive">徽章</Badge>
+```
+
+## 示例
+
+### 变体
+
+使用 `variant` 属性来改变徽章的变体。
+
+<ComponentPreview styleName="base-nova" name="badge-variants" />
+
+### 带图标
+
+你可以在徽章内渲染图标。使用 `data-icon="inline-start"` 在左侧渲染图标，使用 `data-icon="inline-end"` 在右侧渲染图标。
+
+<ComponentPreview styleName="base-nova" name="badge-icon" />
+
+### 带加载动画
+
+你可以在徽章内渲染加载动画。记得给加载动画添加 `data-icon="inline-start"` 或 `data-icon="inline-end"` 属性。
+
+<ComponentPreview styleName="base-nova" name="badge-spinner" />
+
+### 链接
+
+使用 `render` 属性将链接渲染为徽章。
+
+<ComponentPreview styleName="base-nova" name="badge-link" />
+
+### 自定义颜色
+
+你可以通过向 `Badge` 组件添加自定义类名（如 `bg-green-50 dark:bg-green-800`）来自定义徽章颜色。
+
+<ComponentPreview styleName="base-nova" name="badge-colors" />
+
+## API 参考
+
+### Badge
+
+`Badge` 组件显示一个徽章或一个看起来像徽章的组件。
+
+| 属性        | 类型                                                                       | 默认值      |
+| ----------- | --------------------------------------------------------------------------- | ----------- |
+| `variant`   | `"default" \| "secondary" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` |
+| `className` | `string`                                                                    | -           |

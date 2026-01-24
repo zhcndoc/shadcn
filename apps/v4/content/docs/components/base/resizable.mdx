@@ -1,0 +1,95 @@
+---
+title: 可调整大小 Resizable
+description: 支持键盘操作的无障碍可调整大小面板组和布局。
+component: true
+links:
+  doc: https://github.com/bvaughn/react-resizable-panels
+  api: https://github.com/bvaughn/react-resizable-panels/tree/main/packages/react-resizable-panels
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="resizable-demo"
+/>
+
+## 关于
+
+`Resizable` 组件基于 [bvaughn](https://github.com/bvaughn) 的 [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels) 构建。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add resizable
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-resizable-panels
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="resizable"
+  title="components/ui/resizable.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx showLineNumbers
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
+```
+
+```tsx showLineNumbers
+<ResizablePanelGroup direction="horizontal">
+  <ResizablePanel>一</ResizablePanel>
+  <ResizableHandle />
+  <ResizablePanel>二</ResizablePanel>
+</ResizablePanelGroup>
+```
+
+## 示例
+
+### 垂直方向
+
+使用 `direction="vertical"` 来设置垂直方向的可调整大小。
+
+<ComponentPreview styleName="base-nova" name="resizable-vertical" />
+
+### 句柄
+
+使用 `withHandle` 属性在 `ResizableHandle` 上显示可见的句柄。
+
+<ComponentPreview styleName="base-nova" name="resizable-handle" />
+
+## API Reference
+
+请参阅 [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels/tree/main/packages/react-resizable-panels) 文档。

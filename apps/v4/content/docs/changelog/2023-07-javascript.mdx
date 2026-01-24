@@ -1,0 +1,45 @@
+---
+title: 2023 年 7 月 - JavaScript  
+description: 通过 CLI 提供的组件的 JavaScript 版本。  
+date: 2023-07-04  
+---
+
+该项目及组件均使用 TypeScript 编写。**我们也推荐你在项目中使用 TypeScript**。
+
+不过，我们提供了组件的 JavaScript 版本，可通过 [cli](/docs/cli) 获取。
+
+```txt
+Would you like to use TypeScript (recommended)? no
+```
+
+若选择不使用 TypeScript，可以在 `components.json` 文件中使用 `tsx` 标志。
+
+```json {10} title="components.json" showLineNumbers
+{
+  "style": "default",
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "src/app/globals.css",
+    "baseColor": "zinc",
+    "cssVariables": true
+  },
+  "rsc": false,
+  "tsx": false,
+  "aliases": {
+    "utils": "~/lib/utils",
+    "components": "~/components"
+  }
+}
+```
+
+若要配置导入别名，可以使用如下 `jsconfig.json`：
+
+```json {4} title="jsconfig.json" showLineNumbers
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
+```

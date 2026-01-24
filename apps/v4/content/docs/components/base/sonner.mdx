@@ -1,0 +1,126 @@
+---
+title: Sonner
+description: 一个为 React 设计的约定俗成的吐司组件。
+base: base
+component: true
+links:
+  doc: https://sonner.emilkowal.ski
+---
+
+<ComponentPreview styleName="base-nova" name="sonner-demo" />
+
+## 关于
+
+Sonner 由 [emilkowalski](https://twitter.com/emilkowalski) 构建和维护。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<Steps className="mb-0 pt-2">
+
+<Step>运行以下命令：</Step>
+
+```bash
+npx shadcn@latest add sonner
+```
+
+<Step>添加 Toaster 组件</Step>
+
+```tsx title="app/layout.tsx" {1,9} showLineNumbers
+import { Toaster } from "@/components/ui/sonner"
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head />
+      <body>
+        <main>{children}</main>
+        <Toaster />
+      </body>
+    </html>
+  )
+}
+```
+
+</Steps>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install sonner next-themes
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="sonner"
+  title="components/ui/sonner.tsx"
+  styleName="base-nova"
+/>
+
+<Step>添加 Toaster 组件</Step>
+
+```tsx showLineNumbers title="app/layout.tsx" {1,8}
+import { Toaster } from "@/components/ui/sonner"
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head />
+      <body>
+        <Toaster />
+        <main>{children}</main>
+      </body>
+    </html>
+  )
+}
+```
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx
+import { toast } from "sonner"
+```
+
+```tsx
+toast("事件已创建。")
+```
+
+## 示例
+
+### 类型
+
+<ComponentPreview styleName="base-nova" name="sonner-types" />
+
+### 描述
+
+<ComponentPreview styleName="base-nova" name="sonner-description" />
+
+### 位置
+
+使用 `position` 属性来更改吐司的位置。
+
+<ComponentPreview styleName="base-nova" name="sonner-position" />
+
+## API 参考
+
+更多信息请查看 [Sonner API 参考](https://sonner.emilkowal.ski/api)。

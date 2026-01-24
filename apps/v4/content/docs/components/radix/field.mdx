@@ -1,0 +1,346 @@
+---
+title: 字段
+description: 组合标签、控件和帮助文本，构建可访问的表单字段和分组输入。
+base: radix
+component: true
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="field-demo"
+  previewClassName="h-[800px] p-6 md:h-[850px]"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add field
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="field"
+  title="components/ui/field.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目结构。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldTitle,
+} from "@/components/ui/field"
+```
+
+```tsx showLineNumbers
+<FieldSet>
+  <FieldLegend>个人信息</FieldLegend>
+  <FieldDescription>这会显示在发票和邮件中。</FieldDescription>
+  <FieldGroup>
+    <Field>
+      <FieldLabel htmlFor="name">全名</FieldLabel>
+      <Input id="name" autoComplete="off" placeholder="邪恶兔子" />
+      <FieldDescription>这会显示在发票和邮件中。</FieldDescription>
+    </Field>
+    <Field>
+      <FieldLabel htmlFor="username">用户名</FieldLabel>
+      <Input id="username" autoComplete="off" aria-invalid />
+      <FieldError>请选择其他用户名。</FieldError>
+    </Field>
+    <Field orientation="horizontal">
+      <Switch id="newsletter" />
+      <FieldLabel htmlFor="newsletter">订阅新闻邮件</FieldLabel>
+    </Field>
+  </FieldGroup>
+</FieldSet>
+```
+
+## 结构
+
+`Field` 组件族专为构建可访问表单设计。一个典型字段结构如下：
+
+```tsx showLineNumbers
+<Field>
+  <FieldLabel htmlFor="input-id">标签</FieldLabel>
+  {/* 输入框、下拉选择、开关等 */}
+  <FieldDescription>可选的帮助文本。</FieldDescription>
+  <FieldError>验证信息。</FieldError>
+</Field>
+```
+
+- `Field` 是单个字段的核心容器。
+- `FieldContent` 是一个弹性列布局，用于包裹标签和描述。如果没有描述，则非必需。
+- 使用 `FieldGroup` 包裹相关字段，并搭配 `FieldSet` 和 `FieldLegend` 进行语义分组。
+
+## 表单
+
+参见 [Form](/docs/forms) 文档，了解如何结合 `Field` 组件与 [React Hook Form](/docs/forms/react-hook-form) 或 [Tanstack Form](/docs/forms/tanstack-form) 构建表单。
+
+## 示例
+
+### 输入框
+
+<ComponentPreview styleName="radix-nova" name="field-input" />
+
+### 多行文本框
+
+<ComponentPreview styleName="radix-nova" name="field-textarea" />
+
+### 选择框
+
+<ComponentPreview styleName="radix-nova" name="field-select" />
+
+### 滑块
+
+<ComponentPreview styleName="radix-nova" name="field-slider" />
+
+### 字段集
+
+<ComponentPreview styleName="radix-nova" name="field-fieldset" />
+
+### 复选框
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="field-checkbox"
+  previewClassName="h-[32rem]"
+/>
+
+### 单选框
+
+<ComponentPreview styleName="radix-nova" name="field-radio" />
+
+### 开关
+
+<ComponentPreview styleName="radix-nova" name="field-switch" />
+
+### 选择卡片
+
+将多个 `Field` 组件包裹在 `FieldLabel` 内，形成可选择的字段组。适用于 `RadioItem`、`Checkbox` 和 `Switch` 组件。
+
+<ComponentPreview styleName="radix-nova" name="field-choice-card" />
+
+### 字段组
+
+使用 `FieldGroup` 垂直堆叠多个 `Field`，通过添加 `FieldSeparator` 分隔它们。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="field-group"
+  previewClassName="h-96"
+/>
+
+## 响应式布局
+
+- **垂直字段：** 默认堆叠标签、控件和帮助文本，适合移动优先布局。
+- **水平字段：** 在 `Field` 上设置 `orientation="horizontal"` 来让标签和控件横向排列。结合使用 `FieldContent` 保持描述对齐。
+- **响应式字段：** 设置 `orientation="responsive"`，实现容器感知的自动列布局。在 `FieldGroup` 上应用 `@container/field-group` 类，在特定断点切换方向。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="field-responsive"
+  previewClassName="h-[650px] p-6 md:h-[500px] md:p-10"
+/>
+
+## 验证与错误
+
+- 给 `Field` 添加 `data-invalid` 属性，将整个块切换为错误状态。
+- 在输入控件本身添加 `aria-invalid`，支持辅助技术识别。
+- 在控件后或 `FieldContent` 内渲染 `FieldError`，以保持错误信息与字段对齐。
+
+```tsx showLineNumbers /data-invalid/ /aria-invalid/
+<Field data-invalid>
+  <FieldLabel htmlFor="email">电子邮箱</FieldLabel>
+  <Input id="email" type="email" aria-invalid />
+  <FieldError>请输入有效的电子邮件地址。</FieldError>
+</Field>
+```
+
+## 可访问性
+
+- `FieldSet` 和 `FieldLegend` 用于对相关控件进行分组，方便键盘和辅助技术用户操作。
+- `Field` 会输出 `role="group"`，使嵌套控件能继承来自 `FieldLabel` 和 `FieldLegend` 的标签信息。
+- 谨慎使用 `FieldSeparator`，保证屏幕阅读器能识别清晰的区域边界。
+
+## API 参考
+
+### FieldSet
+
+语义化的 `fieldset` 容器，自带间距预设。
+
+| 属性          | 类型      | 默认值  |
+| ------------- | --------- | ------- |
+| `className`   | `string`  |         |
+
+```tsx
+<FieldSet>
+  <FieldLegend>配送信息</FieldLegend>
+  <FieldGroup>{/* 字段们 */}</FieldGroup>
+</FieldSet>
+```
+
+### FieldLegend
+
+`FieldSet` 的标题元素。切换为 `label` 变体以匹配标签大小。
+
+| 属性          | 类型                    | 默认值       |
+| ------------- | ----------------------- | ------------ |
+| `variant`     | `"legend" \| "label"`   | `"legend"`   |
+| `className`   | `string`                |              |
+
+```tsx
+<FieldLegend variant="label">通知偏好</FieldLegend>
+```
+
+`FieldLegend` 有两个变体：`legend` 和 `label`。`label` 变体应用标签大小和对齐，适合嵌套 `FieldSet` 时使用。
+
+### FieldGroup
+
+布局包装器，垂直堆叠多个 `Field`，并启用容器查询实现响应式方向切换。
+
+| 属性          | 类型      | 默认值  |
+| ------------- | --------- | ------- |
+| `className`   | `string`  |         |
+
+```tsx
+<FieldGroup className="@container/field-group flex flex-col gap-6">
+  <Field>{/* ... */}</Field>
+  <Field>{/* ... */}</Field>
+</FieldGroup>
+```
+
+### Field
+
+单个字段的核心包装器。提供方向控制、无效状态样式和间距设置。
+
+| 属性            | 类型                                             | 默认值      |
+| --------------- | ------------------------------------------------ | ----------- |
+| `orientation`   | `"vertical" \| "horizontal" \| "responsive"`     | `"vertical"`|
+| `className`     | `string`                                         |             |
+| `data-invalid`  | `boolean`                                        |             |
+
+```tsx
+<Field orientation="horizontal">
+  <FieldLabel htmlFor="remember">记住我</FieldLabel>
+  <Switch id="remember" />
+</Field>
+```
+
+### FieldContent
+
+弹性列布局，包裹控件和描述，适用于标签与控件并列的情况。如果无描述，可省略。
+
+| 属性          | 类型      | 默认值  |
+| ------------- | --------- | ------- |
+| `className`   | `string`  |         |
+
+```tsx
+<Field>
+  <Checkbox id="notifications" />
+  <FieldContent>
+    <FieldLabel htmlFor="notifications">通知</FieldLabel>
+    <FieldDescription>电子邮件、短信和推送选项。</FieldDescription>
+  </FieldContent>
+</Field>
+```
+
+### FieldLabel
+
+用于直接输入控件和嵌套 `Field` 子元素的标签样式。
+
+| 属性          | 类型      | 默认值  |
+| ------------- | --------- | ------- |
+| `className`   | `string`  |         |
+| `asChild`     | `boolean` | `false` |
+
+```tsx
+<FieldLabel htmlFor="email">电子邮箱</FieldLabel>
+```
+
+### FieldTitle
+
+在 `FieldContent` 内渲染具有标签样式的标题。
+
+| 属性          | 类型      | 默认值  |
+| ------------- | --------- | ------- |
+| `className`   | `string`  |         |
+
+```tsx
+<FieldContent>
+  <FieldTitle>启用 Touch ID</FieldTitle>
+  <FieldDescription>更快解锁设备。</FieldDescription>
+</FieldContent>
+```
+
+### FieldDescription
+
+帮助文本区域，能在水平布局中自动平衡长行文本。
+
+| 属性          | 类型      | 默认值  |
+| ------------- | --------- | ------- |
+| `className`   | `string`  |         |
+
+```tsx
+<FieldDescription>我们绝不会泄露您的邮箱给任何人。</FieldDescription>
+```
+
+### FieldSeparator
+
+视觉分隔符，用于在 `FieldGroup` 内分割区域。支持可选的内嵌内容。
+
+| 属性          | 类型      | 默认值  |
+| ------------- | --------- | ------- |
+| `className`   | `string`  |         |
+
+```tsx
+<FieldSeparator>或继续使用</FieldSeparator>
+```
+
+### FieldError
+
+辅助访问的错误容器，支持接受子节点或 `errors` 数组（例如来自 `react-hook-form`）。
+
+| 属性          | 类型                                        | 默认值  |
+| ------------- | -------------------------------------------| ------- |
+| `errors`      | `Array<{ message?: string } \| undefined>`|         |
+| `className`   | `string`                                    |         |
+
+```tsx
+<FieldError errors={errors.username} />
+```
+
+当 `errors` 数组包含多条错误消息时，组件会自动渲染错误列表。
+
+`FieldError` 也支持任何实现了 [Standard Schema](https://standardschema.dev/) 的验证器产生的问题数据，包括 Zod、Valibot 和 ArkType。直接传递模式结果中的 `issues` 数组，即可跨库统一渲染错误列表。

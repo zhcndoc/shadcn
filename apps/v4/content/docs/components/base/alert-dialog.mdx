@@ -1,0 +1,158 @@
+---
+title: 警告对话框
+description: 一个模态对话框，用于向用户显示重要内容并期待其响应。
+featured: true
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/alert-dialog
+  api: https://base-ui.com/react/components/alert-dialog#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-dialog-demo"
+  previewClassName="h-56"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add alert-dialog
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="alert-dialog"
+  title="components/ui/alert-dialog.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+```
+
+```tsx showLineNumbers
+<AlertDialog>
+  <AlertDialogTrigger render={<Button variant="outline" />}>
+    显示对话框
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>您确定要继续吗？</AlertDialogTitle>
+      <AlertDialogDescription>
+        此操作不可撤销。这将永久删除您在我们服务器上的账户。
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>取消</AlertDialogCancel>
+      <AlertDialogAction>继续</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+## 示例
+
+### 基础示例
+
+一个带有标题、描述，以及取消和继续按钮的基础警告对话框。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-dialog-basic"
+  previewClassName="h-56"
+/>
+
+### 小号
+
+使用 `size="sm"` 属性可让警告对话框更小。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-dialog-small"
+  previewClassName="h-56"
+/>
+
+### 媒体
+
+使用 `AlertDialogMedia` 组件可向警告对话框添加媒体元素，如图标或图片。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-dialog-media"
+  previewClassName="h-56"
+/>
+
+### 小号带媒体
+
+使用 `size="sm"` 属性使警告对话框更小，同时使用 `AlertDialogMedia` 组件添加媒体元素，例如图标或图片。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-dialog-small-media"
+  previewClassName="h-56"
+/>
+
+### 危险操作
+
+使用 `AlertDialogAction` 组件向警告对话框添加一个危险操作按钮。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-dialog-destructive"
+  previewClassName="h-56"
+/>
+
+## API 参考
+
+### size
+
+在 `AlertDialogContent` 组件上使用 `size` 属性来控制警告对话框的大小。它接受以下值：
+
+| 属性   | 类型                 | 默认值      |
+| ------ | -------------------- | ----------- |
+| `size` | `"default" \| "sm"`  | `"default"` |
+
+有关其他组件及其属性的更多信息，请参阅 [Base UI 文档](https://base-ui.com/react/components/alert-dialog#api-reference)。

@@ -1,0 +1,504 @@
+---
+title: 日历 Calendar
+description: 一个允许用户输入和编辑日期的日期字段组件。
+base: radix
+component: true
+links:
+  doc: https://react-day-picker.js.org
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-demo"
+/>
+
+## 组件块
+
+我们构建了一套包含30多个日历组件块，您可以用它们来构建自己的日历组件。
+
+在[组件块库](/blocks/calendar)页面查看所有日历组件块。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add calendar
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-day-picker date-fns
+```
+
+<Step>将 `Button` 组件添加到您的项目中。</Step>
+
+`Calendar` 组件使用了 `Button` 组件。请确保您的项目中已经安装了它。
+
+<Step>复制并粘贴以下代码到您的项目中。</Step>
+
+<ComponentSource
+  name="calendar"
+  title="components/ui/calendar.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import { Calendar } from "@/components/ui/calendar"
+```
+
+```tsx showLineNumbers
+const [date, setDate] = React.useState<Date | undefined>(new Date())
+
+return (
+  <Calendar
+    mode="single"
+    selected={date}
+    onSelect={setDate}
+    className="rounded-lg border"
+  />
+)
+```
+
+更多信息请查看 [React DayPicker](https://react-day-picker.js.org) 文档。
+
+## 关于
+
+`Calendar` 组件基于 [React DayPicker](https://react-day-picker.js.org) 构建。
+
+## Date Picker
+
+您可以使用 `<Calendar>` 组件构建日期选择器。更多信息请参阅 [日期选择器](/docs/components/date-picker) 页面。
+
+## 波斯 / 希吉拉历 / 贾拉利历
+
+要使用波斯历，请编辑 `components/ui/calendar.tsx`，将 `react-day-picker` 替换为 `react-day-picker/persian`。
+
+```diff
+- import { DayPicker } from "react-day-picker"
++ import { DayPicker } from "react-day-picker/persian"
+```
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-hijri"
+  title="波斯历 / 希吉拉历 / 贾拉利历"
+  description="一个波斯历日历。"
+/>
+
+## 选定日期（带时区）
+
+日历组件接受一个 `timeZone` 属性，以确保日期在用户的本地时区中显示和选择。
+
+```tsx showLineNumbers
+export function CalendarWithTimezone() {
+  const [date, setDate] = React.useState<Date | undefined>(undefined)
+  const [timeZone, setTimeZone] = React.useState<string | undefined>(undefined)
+
+  React.useEffect(() => {
+    setTimeZone(Intl.DateTimeFormat().resolvedOptions().timeZone)
+  }, [])
+
+  return (
+    <Calendar
+      mode="single"
+      selected={date}
+      onSelect={setDate}
+      timeZone={timeZone}
+    />
+  )
+}
+```
+
+**注意：** 如果您注意到所选日期偏移（例如，选择 20 日突出显示 19 日），请确保 `timeZone` 属性设置为用户的本地时区。
+
+**为什么是客户端？** 时区是通过在 `useEffect` 中使用 `Intl.DateTimeFormat().resolvedOptions().timeZone` 来检测的，以确保与服务器端渲染的兼容性。在渲染期间检测时区会导致水合不匹配，因为服务器和客户端可能处于不同的时区。
+
+## 示例
+
+### 基础
+
+基础日历组件。我们使用了 `className="rounded-lg border"` 来样式化日历。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-basic"
+  previewClassName="h-96"
+/>
+
+### 范围日历
+
+使用 `mode="range"` 属性启用范围选择。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-range"
+  previewClassName="h-[36rem] md:h-96"
+/>
+
+### 月份和年份选择器
+
+使用 `captionLayout="dropdown"` 显示月份和年份下拉框。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-caption"
+  previewClassName="h-96"
+/>
+
+### 预设
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-presets"
+  previewClassName="h-[650px]"
+/>
+
+### 日期和时间选择器
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-time"
+  previewClassName="h-[600px]"
+/>
+
+### 已预订日期
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-booked-dates"
+  previewClassName="h-96"
+/>
+
+### 自定义单元格大小
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-custom-days"
+  title="自定义单元格大小"
+  description="一个具有响应式自定义单元格大小的日历。"
+  className="**:[.preview]:h-[560px]"
+/>
+
+您可以使用 `--cell-size` CSS 变量自定义日历单元格的大小。也可以通过使用特定断点的值实现响应式：
+
+```tsx showLineNumbers
+<Calendar
+  mode="single"
+  selected={date}
+  onSelect={setDate}
+  className="rounded-lg border [--cell-size:--spacing(11)] md:[--cell-size:--spacing(12)]"
+/>
+```
+
+或者使用固定值：
+
+```tsx showLineNumbers
+<Calendar
+  mode="single"
+  selected={date}
+  onSelect={setDate}
+  className="rounded-lg border [--cell-size:2.75rem] md:[--cell-size:3rem]"
+/>
+```
+
+### 显示周数
+
+使用 `showWeekNumber` 属性显示周数。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="calendar-week-numbers"
+  previewClassName="h-96"
+/>
+
+## 升级指南
+
+### Tailwind v4
+
+如果您已经在使用 Tailwind v4，可以通过运行以下命令升级到最新版本的 `Calendar` 组件：
+
+```bash
+npx shadcn@latest add calendar
+```
+
+当提示是否覆盖现有的 `Calendar` 组件时，选择 `Yes`。**如果您对 `Calendar` 组件做过修改，需手动合并您的改动与新版本。**
+
+此操作将会更新 `Calendar` 组件和 `react-day-picker` 至最新版本。
+
+接下来，请按照 [React DayPicker](https://daypicker.dev/upgrading) 升级指南，升级您现有的依赖和组件。
+
+#### 安装组件块
+
+升级 `Calendar` 组件后，您可以通过运行 `shadcn@latest add` 命令安装新的组件块。
+
+```bash
+npx shadcn@latest add calendar-02
+```
+
+此命令会安装最新版的日历组件块。
+
+### Tailwind v3
+
+如果您使用的是 Tailwind v3，可以通过将以下代码复制粘贴到您的 `calendar.tsx` 文件，升级至最新版 `Calendar`。
+
+<CodeCollapsibleWrapper>
+
+```tsx showLineNumbers title="components/ui/calendar.tsx"
+"use client"
+
+import * as React from "react"
+import {
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "lucide-react"
+import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
+
+import { cn } from "@/lib/utils"
+import { Button, buttonVariants } from "@/components/ui/button"
+
+function Calendar({
+  className,
+  classNames,
+  showOutsideDays = true,
+  captionLayout = "label",
+  buttonVariant = "ghost",
+  formatters,
+  components,
+  ...props
+}: React.ComponentProps<typeof DayPicker> & {
+  buttonVariant?: React.ComponentProps<typeof Button>["variant"]
+}) {
+  const defaultClassNames = getDefaultClassNames()
+
+  return (
+    <DayPicker
+      showOutsideDays={showOutsideDays}
+      className={cn(
+        "bg-background group/calendar p-3 [--cell-size:2rem] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
+        String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
+        String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
+        className
+      )}
+      captionLayout={captionLayout}
+      formatters={{
+        formatMonthDropdown: (date) =>
+          date.toLocaleString("default", { month: "short" }),
+        ...formatters,
+      }}
+      classNames={{
+        root: cn("w-fit", defaultClassNames.root),
+        months: cn(
+          "relative flex flex-col gap-4 md:flex-row",
+          defaultClassNames.months
+        ),
+        month: cn("flex w-full flex-col gap-4", defaultClassNames.month),
+        nav: cn(
+          "absolute inset-x-0 top-0 flex w-full items-center justify-between gap-1",
+          defaultClassNames.nav
+        ),
+        button_previous: cn(
+          buttonVariants({ variant: buttonVariant }),
+          "h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50",
+          defaultClassNames.button_previous
+        ),
+        button_next: cn(
+          buttonVariants({ variant: buttonVariant }),
+          "h-[--cell-size] w-[--cell-size] select-none p-0 aria-disabled:opacity-50",
+          defaultClassNames.button_next
+        ),
+        month_caption: cn(
+          "flex h-[--cell-size] w-full items-center justify-center px-[--cell-size]",
+          defaultClassNames.month_caption
+        ),
+        dropdowns: cn(
+          "flex h-[--cell-size] w-full items-center justify-center gap-1.5 text-sm font-medium",
+          defaultClassNames.dropdowns
+        ),
+        dropdown_root: cn(
+          "has-focus:border-ring border-input shadow-xs has-focus:ring-ring/50 has-focus:ring-[3px] relative rounded-md border",
+          defaultClassNames.dropdown_root
+        ),
+        dropdown: cn("absolute inset-0 opacity-0", defaultClassNames.dropdown),
+        caption_label: cn(
+          "select-none font-medium",
+          captionLayout === "label"
+            ? "text-sm"
+            : "[&>svg]:text-muted-foreground flex h-8 items-center gap-1 rounded-md pl-2 pr-1 text-sm [&>svg]:size-3.5",
+          defaultClassNames.caption_label
+        ),
+        table: "w-full border-collapse",
+        weekdays: cn("flex", defaultClassNames.weekdays),
+        weekday: cn(
+          "text-muted-foreground flex-1 select-none rounded-md text-[0.8rem] font-normal",
+          defaultClassNames.weekday
+        ),
+        week: cn("mt-2 flex w-full", defaultClassNames.week),
+        week_number_header: cn(
+          "w-[--cell-size] select-none",
+          defaultClassNames.week_number_header
+        ),
+        week_number: cn(
+          "text-muted-foreground select-none text-[0.8rem]",
+          defaultClassNames.week_number
+        ),
+        day: cn(
+          "relative w-full h-full p-0 text-center [&:last-child[data-selected=true]_button]:rounded-r-md group/day aspect-square select-none",
+          props.showWeekNumber
+            ? "[&:nth-child(2)[data-selected=true]_button]:rounded-l-md"
+            : "[&:first-child[data-selected=true]_button]:rounded-l-md",
+          defaultClassNames.day
+        ),
+        range_start: cn(
+          "bg-accent rounded-l-md",
+          defaultClassNames.range_start
+        ),
+        range_middle: cn("rounded-none", defaultClassNames.range_middle),
+        range_end: cn("bg-accent rounded-r-md", defaultClassNames.range_end),
+        today: cn(
+          "bg-accent text-accent-foreground rounded-md data-[selected=true]:rounded-none",
+          defaultClassNames.today
+        ),
+        outside: cn(
+          "text-muted-foreground aria-selected:text-muted-foreground",
+          defaultClassNames.outside
+        ),
+        disabled: cn(
+          "text-muted-foreground opacity-50",
+          defaultClassNames.disabled
+        ),
+        hidden: cn("invisible", defaultClassNames.hidden),
+        ...classNames,
+      }}
+      components={{
+        Root: ({ className, rootRef, ...props }) => {
+          return (
+            <div
+              data-slot="calendar"
+              ref={rootRef}
+              className={cn(className)}
+              {...props}
+            />
+          )
+        },
+        Chevron: ({ className, orientation, ...props }) => {
+          if (orientation === "left") {
+            return (
+              <ChevronLeftIcon className={cn("size-4", className)} {...props} />
+            )
+          }
+
+          if (orientation === "right") {
+            return (
+              <ChevronRightIcon
+                className={cn("size-4", className)}
+                {...props}
+              />
+            )
+          }
+
+          return (
+            <ChevronDownIcon className={cn("size-4", className)} {...props} />
+          )
+        },
+        DayButton: CalendarDayButton,
+        WeekNumber: ({ children, ...props }) => {
+          return (
+            <td {...props}>
+              <div className="flex size-[--cell-size] items-center justify-center text-center">
+                {children}
+              </div>
+            </td>
+          )
+        },
+        ...components,
+      }}
+      {...props}
+    />
+  )
+}
+
+function CalendarDayButton({
+  className,
+  day,
+  modifiers,
+  ...props
+}: React.ComponentProps<typeof DayButton>) {
+  const defaultClassNames = getDefaultClassNames()
+
+  const ref = React.useRef<HTMLButtonElement>(null)
+  React.useEffect(() => {
+    if (modifiers.focused) ref.current?.focus()
+  }, [modifiers.focused])
+
+  return (
+    <Button
+      ref={ref}
+      variant="ghost"
+      size="icon"
+      data-day={day.date.toLocaleDateString()}
+      data-selected-single={
+        modifiers.selected &&
+        !modifiers.range_start &&
+        !modifiers.range_end &&
+        !modifiers.range_middle
+      }
+      data-range-start={modifiers.range_start}
+      data-range-end={modifiers.range_end}
+      data-range-middle={modifiers.range_middle}
+      className={cn(
+        "data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-1 leading-none font-normal group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md [&>span]:text-xs [&>span]:opacity-70",
+        defaultClassNames.day,
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+export { Calendar, CalendarDayButton }
+```
+
+</CodeCollapsibleWrapper>
+
+**如果您对 `Calendar` 组件做过修改，请务必手动合并您的改动与新版本。**
+
+然后参照 [React DayPicker](https://daypicker.dev/upgrading) 升级指南，升级依赖及现有组件至最新版本。
+
+#### 安装组件块
+
+升级 `Calendar` 组件后，您可以通过运行 `shadcn@latest add` 命令安装新的组件块。
+
+```bash
+npx shadcn@latest add calendar-02
+```
+
+此命令会安装最新版的日历组件块。
+
+## API 参考
+
+更多关于 `Calendar` 组件 API 的信息，请参见 [React DayPicker](https://react-day-picker.js.org) 文档。

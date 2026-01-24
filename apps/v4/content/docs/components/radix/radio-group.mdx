@@ -1,0 +1,109 @@
+---
+title: 单选框组
+description: 一组可选按钮——称为单选按钮——一次最多只能选中一个按钮。
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/radio-group
+  api: https://www.radix-ui.com/docs/primitives/components/radio-group#api-reference
+---
+
+<ComponentPreview styleName="radix-nova" name="radio-group-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add radio-group
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="radio-group"
+  title="components/ui/radio-group.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+```
+
+```tsx showLineNumbers
+<RadioGroup defaultValue="option-one">
+  <div className="flex items-center gap-3">
+    <RadioGroupItem value="option-one" id="option-one" />
+    <Label htmlFor="option-one">选项一</Label>
+  </div>
+  <div className="flex items-center gap-3">
+    <RadioGroupItem value="option-two" id="option-two" />
+    <Label htmlFor="option-two">选项二</Label>
+  </div>
+</RadioGroup>
+```
+
+## 示例
+
+### 描述
+
+使用 `Field` 组件添加描述的单选组项。
+
+<ComponentPreview styleName="radix-nova" name="radio-group-description" />
+
+### 选择卡片
+
+使用 `FieldLabel` 包裹整个 `Field`，实现可点击的卡片式选择。
+
+<ComponentPreview styleName="radix-nova" name="radio-group-choice-card" />
+
+### 字段集
+
+使用 `FieldSet` 和 `FieldLegend` 对单选项进行分组，并添加标签和描述。
+
+<ComponentPreview styleName="radix-nova" name="radio-group-fieldset" />
+
+### 禁用
+
+在 `RadioGroupItem` 上使用 `disabled` 属性禁用单个选项。
+
+<ComponentPreview styleName="radix-nova" name="radio-group-disabled" />
+
+### 无效
+
+在 `RadioGroupItem` 上使用 `aria-invalid`，在 `Field` 上使用 `data-invalid` 来显示验证错误。
+
+<ComponentPreview styleName="radix-nova" name="radio-group-invalid" />
+
+## API 参考
+
+请参阅 [Radix UI 单选框组](https://www.radix-ui.com/docs/primitives/components/radio-group#api-reference) 文档。

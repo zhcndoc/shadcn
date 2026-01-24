@@ -1,0 +1,176 @@
+---
+title: 面包屑导航
+description: 使用层级链接显示当前资源的路径。
+base: base
+component: true
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="breadcrumb-demo"
+  previewClassName="p-2"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add breadcrumb
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>复制并粘贴以下代码到您的项目中。</Step>
+
+<ComponentSource
+  name="breadcrumb"
+  title="components/ui/breadcrumb.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+```
+
+```tsx showLineNumbers
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink render={<a href="/" />}>首页</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbLink render={<a href="/components" />}>
+        组件
+      </BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbSeparator />
+    <BreadcrumbItem>
+      <BreadcrumbPage>面包屑导航</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+## 示例
+
+### 基础
+
+基础的面包屑导航，包含首页链接和组件链接。
+
+<ComponentPreview styleName="base-nova" name="breadcrumb-basic" />
+
+### 自定义分隔符
+
+为 `<BreadcrumbSeparator />` 使用自定义组件作为 `children`，以创建自定义分隔符。
+
+<ComponentPreview styleName="base-nova" name="breadcrumb-separator" />
+
+### 下拉菜单
+
+你可以将 `<BreadcrumbItem />` 与 `<DropdownMenu />` 组合，在面包屑导航中创建下拉菜单。
+
+<ComponentPreview styleName="base-nova" name="breadcrumb-dropdown" />
+
+### 折叠
+
+我们提供了 `<BreadcrumbEllipsis />` 组件，当面包屑过长时显示折叠状态。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="breadcrumb-ellipsis"
+  previewClassName="p-2"
+/>
+
+### 链接组件
+
+若要使用来自你的路由库的自定义链接组件，可以在 `<BreadcrumbLink />` 上使用 `render` 属性。
+
+<ComponentPreview styleName="base-nova" name="breadcrumb-link" />
+
+## API 参考
+
+### Breadcrumb
+
+`Breadcrumb` 组件是根导航元素，包裹所有面包屑组件。
+
+| 属性          | 类型       | 默认值 |
+| ------------ | ---------- | ------ |
+| `className`  | `string`   | -      |
+
+### BreadcrumbList
+
+`BreadcrumbList` 组件显示面包屑项目的有序列表。
+
+| 属性          | 类型       | 默认值 |
+| ------------ | ---------- | ------ |
+| `className`  | `string`   | -      |
+
+### BreadcrumbItem
+
+`BreadcrumbItem` 组件包裹单个面包屑项目。
+
+| 属性          | 类型       | 默认值 |
+| ------------ | ---------- | ------ |
+| `className`  | `string`   | -      |
+
+### BreadcrumbLink
+
+`BreadcrumbLink` 组件显示面包屑中的可点击链接。
+
+| 属性          | 类型       | 默认值 |
+| ------------ | ---------- | ------ |
+| `className`  | `string`   | -      |
+
+### BreadcrumbPage
+
+`BreadcrumbPage` 组件显示当前页面面包屑（不可点击）。
+
+| 属性          | 类型       | 默认值 |
+| ------------ | ---------- | ------ |
+| `className`  | `string`   | -      |
+
+### BreadcrumbSeparator
+
+`BreadcrumbSeparator` 组件显示面包屑项目之间的分隔符。你可以传入自定义 children 来覆盖默认分隔符图标。
+
+| 属性          | 类型                | 默认值 |
+| ------------ | ------------------- | ------ |
+| `children`   | `React.ReactNode`   | -      |
+| `className`  | `string`            | -      |
+
+### BreadcrumbEllipsis
+
+`BreadcrumbEllipsis` 组件显示用于折叠面包屑项目的省略号指示器。
+
+| 属性          | 类型       | 默认值 |
+| ------------ | ---------- | ------ |
+| `className`  | `string`   | -      |

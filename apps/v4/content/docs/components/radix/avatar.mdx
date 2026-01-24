@@ -1,0 +1,195 @@
+---
+title: 头像
+description: 一个带有回退的图像元素，用于表示用户。
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/primitives/docs/components/avatar
+  api: https://www.radix-ui.com/primitives/docs/components/avatar#api-reference
+---
+
+<ComponentPreview styleName="radix-nova" name="avatar-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add avatar
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖:</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="avatar"
+  title="components/ui/avatar.tsx"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+```
+
+```tsx showLineNumbers
+<Avatar>
+  <AvatarImage src="https://github.com/shadcn.png" />
+  <AvatarFallback>CN</AvatarFallback>
+</Avatar>
+```
+
+## 示例
+
+### 基础
+
+一个带有图片和回退的基础头像组件。
+
+<ComponentPreview styleName="radix-nova" name="avatar-basic" />
+
+### 徽章
+
+使用 `AvatarBadge` 组件为头像添加徽章。徽章通常定位在头像的右下角。
+
+<ComponentPreview styleName="radix-nova" name="avatar-badge" />
+
+使用 `className` 属性为徽章添加自定义样式，如自定义颜色、尺寸等。
+
+```tsx showLineNumbers
+<Avatar>
+  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+  <AvatarFallback>CN</AvatarFallback>
+  <AvatarBadge className="bg-green-600 dark:bg-green-800" />
+</Avatar>
+```
+
+### 带图标的徽章
+
+你也可以在 `<AvatarBadge>` 中使用图标。
+
+<ComponentPreview
+  name="avatar-badge-icon"
+  styleName="radix-nova"
+/>
+
+### 头像组
+
+使用 `AvatarGroup` 组件添加一组头像。
+
+<ComponentPreview
+  name="avatar-group"
+  styleName="radix-nova"
+/>
+
+### 头像组计数
+
+使用 `<AvatarGroupCount>` 在头像组中添加计数。
+
+<ComponentPreview
+  name="avatar-group-count"
+  styleName="radix-nova"
+/>
+
+### 带图标的头像组计数
+
+你也可以在 `<AvatarGroupCount>` 中使用图标。
+
+<ComponentPreview
+  name="avatar-group-count-icon"
+  styleName="radix-nova"
+/>
+
+### 尺寸
+
+使用 `size` 属性更改头像的大小。
+
+<ComponentPreview
+  name="avatar-size"
+  styleName="radix-nova"
+/>
+
+### 下拉菜单
+
+你可以将 `Avatar` 组件用作下拉菜单的触发器。
+
+<ComponentPreview styleName="radix-nova" name="avatar-dropdown" />
+
+## API 参考
+
+### Avatar
+
+`Avatar` 组件是根组件，用于包裹头像图片和回退内容。
+
+| 属性        | 类型                        | 默认值     |
+| ----------- | --------------------------- | --------- |
+| `size`      | `"default" \| "sm" \| "lg"` | `"default"` |
+| `className` | `string`                    | -         |
+
+### AvatarImage
+
+`AvatarImage` 组件展示头像图片。它接受所有 Radix UI Avatar Image 属性。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------ |
+| `src`       | `string` | -      |
+| `alt`       | `string` | -      |
+| `className` | `string` | -      |
+
+### AvatarFallback
+
+`AvatarFallback` 组件在图片加载失败时展示回退内容。它接受所有 Radix UI Avatar Fallback 属性。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------ |
+| `className` | `string` | -      |
+
+### AvatarBadge
+
+`AvatarBadge` 组件在头像上显示徽章指示器，通常位于右下角。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------ |
+| `className` | `string` | -      |
+
+### AvatarGroup
+
+`AvatarGroup` 组件展示一组头像，带有重叠样式。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------ |
+| `className` | `string` | -      |
+
+### AvatarGroupCount
+
+`AvatarGroupCount` 组件在头像组中显示数量指示器，通常表示额外头像的数量。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------ |
+| `className` | `string` | -      |
+
+更多关于 Radix UI Avatar 属性的信息，请参阅 [Radix UI 文档](https://www.radix-ui.com/primitives/docs/components/avatar#api-reference)。

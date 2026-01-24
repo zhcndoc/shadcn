@@ -1,0 +1,92 @@
+---
+title: 提示 Tooltip
+description: 当元素获得键盘焦点或鼠标悬停时，显示与该元素相关信息的弹出框。
+base: radix
+component: true
+links:
+  doc: https://radix.zhcndoc.com/docs/primitives/components/tooltip
+  api: https://radix.zhcndoc.com/docs/primitives/components/tooltip#api-reference
+---
+
+<ComponentPreview styleName="radix-nova" name="tooltip-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add tooltip
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="tooltip"
+  title="components/ui/tooltip.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+```
+
+```tsx showLineNumbers
+<Tooltip>
+  <TooltipTrigger>悬停</TooltipTrigger>
+  <TooltipContent>
+    <p>添加到库</p>
+  </TooltipContent>
+</Tooltip>
+```
+
+## 位置
+
+使用 `side` 属性更改提示工具的位置。
+
+<ComponentPreview styleName="radix-nova" name="tooltip-sides" />
+
+## 带键盘快捷键
+
+<ComponentPreview styleName="radix-nova" name="tooltip-keyboard" />
+
+## 禁用按钮
+
+在禁用按钮上显示提示工具，通过用 span 包裹该按钮实现。
+
+<ComponentPreview styleName="radix-nova" name="tooltip-disabled" />
+
+## API 参考
+
+请参阅 [Radix Tooltip](https://www.radix-ui.com/docs/primitives/components/tooltip#api-reference) 文档。

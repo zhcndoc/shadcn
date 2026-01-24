@@ -1,0 +1,81 @@
+---
+title: 滚动区域
+description: 增强原生滚动功能，实现自定义的跨浏览器样式。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/scroll-area
+  api: https://base-ui.com/react/components/scroll-area#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="scroll-area-demo"
+  previewClassName="h-96"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add scroll-area
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="scroll-area"
+  title="components/ui/scroll-area.tsx"
+  styleName="base-nova"
+/>
+
+<Step>根据你的项目设置更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import { ScrollArea } from "@/components/ui/scroll-area"
+```
+
+```tsx showLineNumbers
+<ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+  在这里放置你的可滚动内容。
+</ScrollArea>
+```
+
+## 示例
+
+### 水平滚动
+
+使用带有 `orientation="horizontal"` 的 `ScrollBar` 实现水平滚动。
+
+<ComponentPreview styleName="base-nova" name="scroll-area-horizontal-demo" />
+
+## API 参考
+
+请参阅 [Base UI 滚动区域](https://base-ui.com/react/components/scroll-area#api-reference) 文档。

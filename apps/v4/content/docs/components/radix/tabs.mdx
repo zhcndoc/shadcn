@@ -1,0 +1,100 @@
+---
+title: 标签页 Tabs
+description: 一组分层内容区域——称为标签面板——一次只显示一个。
+base: radix
+component: true
+links:
+  doc: https://radix.zhcndoc.com/docs/primitives/components/tabs
+  api: https://radix.zhcndoc.com/docs/primitives/components/tabs#api-reference
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="tabs-demo"
+  previewClassName="h-96"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add tabs
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="tabs"
+  title="components/ui/tabs.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx showLineNumbers
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+```
+
+```tsx showLineNumbers
+<Tabs defaultValue="account" className="w-[400px]">
+  <TabsList>
+    <TabsTrigger value="account">账户</TabsTrigger>
+    <TabsTrigger value="password">密码</TabsTrigger>
+  </TabsList>
+  <TabsContent value="account">在此处修改你的账户信息。</TabsContent>
+  <TabsContent value="password">在此处更改你的密码。</TabsContent>
+</Tabs>
+```
+
+## 示例
+
+### 线型
+
+在 `TabsList` 上使用 `variant="line"` 属性以实现线型样式。
+
+<ComponentPreview styleName="radix-nova" name="tabs-line" />
+
+### 垂直
+
+使用 `orientation="vertical"` 实现垂直标签页。
+
+<ComponentPreview styleName="radix-nova" name="tabs-vertical" />
+
+### 禁用
+
+<ComponentPreview styleName="radix-nova" name="tabs-disabled" />
+
+### 图标
+
+<ComponentPreview styleName="radix-nova" name="tabs-icons" />
+
+## API 参考
+
+请参见 [Radix Tabs](https://www.radix-ui.com/docs/primitives/components/tabs#api-reference) 文档。

@@ -1,0 +1,126 @@
+---
+title: 复选框
+description: 允许用户在选中和未选中之间切换的控件。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/checkbox
+  api: https://base-ui.com/react/components/checkbox#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="checkbox-demo"
+  previewClassName="h-80"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add checkbox
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="checkbox"
+  title="components/ui/checkbox.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox"
+```
+
+```tsx
+<Checkbox />
+```
+
+## 选中状态
+
+对于非受控复选框，使用 `defaultChecked`，对于受控组件，则使用
+`checked` 和 `onCheckedChange` 来控制状态。
+
+```tsx showLineNumbers
+import * as React from "react"
+
+export function Example() {
+  const [checked, setChecked] = React.useState(false)
+
+  return <Checkbox checked={checked} onCheckedChange={setChecked} />
+}
+```
+
+## 无效状态
+
+在复选框上设置 `aria-invalid`，在字段容器上设置 `data-invalid`，以显示无效样式。
+
+<ComponentPreview styleName="base-nova" name="checkbox-invalid" />
+
+## 示例
+
+### 基本
+
+将复选框与 `Field` 和 `FieldLabel` 配合使用，实现正确的布局和标签。
+
+<ComponentPreview styleName="base-nova" name="checkbox-basic" />
+
+### 描述
+
+使用 `FieldContent` 和 `FieldDescription` 来添加辅助文本。
+
+<ComponentPreview styleName="base-nova" name="checkbox-description" />
+
+### 禁用
+
+使用 `disabled` 属性禁止交互，并在 `<Field>` 组件上添加 `data-disabled` 属性以显示禁用样式。
+
+<ComponentPreview styleName="base-nova" name="checkbox-disabled" />
+
+### 组
+
+使用多个字段创建复选框列表。
+
+<ComponentPreview styleName="base-nova" name="checkbox-group" />
+
+### 表格
+
+<ComponentPreview
+  styleName="base-nova"
+  name="checkbox-table"
+  previewClassName="p-4 md:p-8"
+/>
+
+## API 参考
+
+更多信息请参阅 [Base UI](https://base-ui.com/react/components/checkbox#api-reference) 文档。

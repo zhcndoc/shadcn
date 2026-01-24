@@ -1,0 +1,113 @@
+---
+title: 抽屉
+description: React 的抽屉组件。
+base: radix
+component: true
+links:
+  doc: https://vaul.emilkowal.ski/getting-started
+---
+
+<ComponentPreview styleName="radix-nova" name="drawer-demo" />
+
+## 关于
+
+抽屉组件基于 [emilkowalski](https://twitter.com/emilkowalski) 的 [Vaul](https://github.com/emilkowalski/vaul) 构建。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add drawer
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖:</Step>
+
+```bash
+npm install vaul
+```
+
+<Step>将以下代码复制粘贴到项目中。</Step>
+
+<ComponentSource
+  name="drawer"
+  title="components/ui/drawer.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>根据项目设置更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+```
+
+```tsx showLineNumbers
+<Drawer>
+  <DrawerTrigger>打开</DrawerTrigger>
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>你确定要这样做吗？</DrawerTitle>
+      <DrawerDescription>此操作不可撤销。</DrawerDescription>
+    </DrawerHeader>
+    <DrawerFooter>
+      <Button>提交</Button>
+      <DrawerClose>
+        <Button variant="outline">取消</Button>
+      </DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+</Drawer>
+```
+
+## 示例
+
+### 可滚动内容
+
+保持操作可见，同时内容可滚动。
+
+<ComponentPreview styleName="radix-nova" name="drawer-scrollable-content" />
+
+### 侧边
+
+使用 `direction` 属性设置抽屉显示的侧边。可选项有 `top`、`right`、`bottom` 和 `left`。
+
+<ComponentPreview styleName="radix-nova" name="drawer-sides" />
+
+### 响应式对话框
+
+你可以结合 `Dialog` 和 `Drawer` 组件来创建响应式对话框。在桌面端渲染 `Dialog` 组件，在移动端渲染 `Drawer`。
+
+<ComponentPreview styleName="radix-nova" name="drawer-dialog" />
+
+## API 参考
+
+完整 API 参考请参见 [Vaul 文档](https://vaul.emilkowal.ski/getting-started)。

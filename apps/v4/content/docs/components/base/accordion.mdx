@@ -1,0 +1,142 @@
+---
+title: 折叠面板
+description: 一个垂直堆叠的交互式标题集，每个标题都可以展开显示一段内容。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/accordion
+  api: https://base-ui.com/react/components/accordion#api-reference
+---
+
+<ComponentPreview
+  styleName="base-nova"
+  name="accordion-demo"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add accordion
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="accordion"
+  title="components/ui/accordion.tsx"
+  styleName="base-nova"
+/>
+
+<Step>根据你的项目配置更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+```
+
+```tsx showLineNumbers
+<Accordion defaultValue={["item-1"]}>
+  <AccordionItem value="item-1">
+    <AccordionTrigger>是否具备无障碍访问？</AccordionTrigger>
+    <AccordionContent>
+      是的。它遵循 WAI-ARIA 设计规范。
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## 示例
+
+### 基础用法
+
+一个基础的折叠面板，每次只显示一项。默认展开第一个项目。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="accordion-basic"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
+/>
+
+### 多项展开
+
+使用 `multiple` 属性允许同时展开多个项目。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="accordion-multiple"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[450px]"
+/>
+
+### 禁用状态
+
+在 `AccordionItem` 上使用 `disabled` 属性来禁用单个项。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="accordion-disabled"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
+/>
+
+### 边框样式
+
+给 `Accordion` 添加 `border`，并给 `AccordionItem` 添加 `border-b last:border-b-0`，为每个项添加边框。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="accordion-borders"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
+/>
+
+### 卡片样式
+
+将 `Accordion` 包裹在 `Card` 组件中。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="accordion-card"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[435px]"
+/>
+
+## API 参考
+
+更多信息请参见 [Base UI](https://base-ui.com/react/components/accordion#api-reference) 文档。

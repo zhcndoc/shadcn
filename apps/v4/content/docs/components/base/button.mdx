@@ -1,0 +1,155 @@
+---
+title: 按钮
+description: 显示一个按钮或看起来像按钮的组件。
+featured: true
+base: base
+component: true
+---
+
+<ComponentPreview styleName="base-nova" name="button-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add button
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>复制并粘贴以下代码到你的项目中。</Step>
+
+<ComponentSource
+  name="button"
+  title="components/ui/button.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Button } from "@/components/ui/button"
+```
+
+```tsx
+<Button variant="outline">按钮</Button>
+```
+
+## 光标
+
+Tailwind v4 [已改动](https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor)，按钮组件从 `cursor: pointer` 切换为 `cursor: default`。
+
+如果你想保留 `cursor: pointer` 行为，请将以下代码添加到你的 CSS 文件：
+
+```css showLineNumbers title="globals.css"
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+```
+
+## 示例
+
+### 大小
+
+使用 `size` 属性来更改按钮的大小。
+
+<ComponentPreview styleName="base-nova" name="button-size" />
+
+### 默认
+
+<ComponentPreview styleName="base-nova" name="button-default" />
+
+### 描边
+
+<ComponentPreview styleName="base-nova" name="button-outline" />
+
+### 次级
+
+<ComponentPreview styleName="base-nova" name="button-secondary" />
+
+### 幽灵
+
+<ComponentPreview styleName="base-nova" name="button-ghost" />
+
+### 危险
+
+<ComponentPreview styleName="base-nova" name="button-destructive" />
+
+### 链接
+
+<ComponentPreview styleName="base-nova" name="button-link" />
+
+### 图标
+
+<ComponentPreview styleName="base-nova" name="button-icon" />
+
+### 带图标
+
+记得给图标添加 `data-icon="inline-start"` 或 `data-icon="inline-end"` 属性，以便正确设置间距。
+
+<ComponentPreview styleName="base-nova" name="button-with-icon" />
+
+### 圆角
+
+使用 `rounded-full` 类来使按钮变为圆形。
+
+<ComponentPreview styleName="base-nova" name="button-rounded" />
+
+### 加载
+
+在按钮内部渲染 `<Spinner />` 组件以显示加载状态。记得给加载动画添加 `data-icon="inline-start"` 或 `data-icon="inline-end"` 属性，以便正确设置间距。
+
+<ComponentPreview styleName="base-nova" name="button-spinner" />
+
+### 按钮组
+
+要创建按钮组，请使用 `ButtonGroup` 组件。更多详情请查看 [按钮组](/docs/components/base/button-group) 文档。
+
+<ComponentPreview styleName="base-nova" name="button-group-demo" />
+
+### 链接
+
+你可以在 `<Button />` 组件上使用 `render` 属性，使其他组件看起来像按钮。下面是一个看起来像按钮的链接示例。
+
+如果返回的不是按钮元素，记得将 `nativeButton` 属性设置为 `false`。
+
+<ComponentPreview styleName="base-nova" name="button-render" />
+
+## API 参考
+
+### Button
+
+`Button` 组件是对 `button` 元素的封装，添加了多种样式和功能。
+
+| 属性       | 类型                                                                                 | 默认值      |
+| ---------- | ------------------------------------------------------------------------------------ | ----------- |
+| `variant`  | `"default" \| "outline" \| "ghost" \| "destructive" \| "secondary" \| "link"`        | `"default"` |
+| `size`     | `"default" \| "xs" \| "sm" \| "lg" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg"` | `"default"` |

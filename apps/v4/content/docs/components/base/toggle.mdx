@@ -1,0 +1,89 @@
+---
+title: 切换按钮
+description: 一个具有开关两种状态的按钮。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/toggle
+  api: https://base-ui.com/react/components/toggle#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="toggle-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add toggle
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui-components/react
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="toggle"
+  title="components/ui/toggle.tsx"
+  styleName="base-nova"
+/>
+
+<Step>根据您的项目设置更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Toggle } from "@/components/ui/toggle"
+```
+
+```tsx
+<Toggle>切换</Toggle>
+```
+
+## 示例
+
+### 线框样式
+
+使用 `variant="outline"` 来获得线框样式。
+
+<ComponentPreview styleName="base-nova" name="toggle-outline" />
+
+### 带文本
+
+<ComponentPreview styleName="base-nova" name="toggle-text" />
+
+### 大小
+
+使用 `size` 属性更改切换按钮的大小。
+
+<ComponentPreview styleName="base-nova" name="toggle-sizes" />
+
+### 禁用状态
+
+<ComponentPreview styleName="base-nova" name="toggle-disabled" />
+
+## API 参考
+
+查看 [Base UI 切换按钮](https://base-ui.com/react/components/toggle#api-reference) 文档。

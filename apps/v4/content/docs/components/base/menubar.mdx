@@ -1,0 +1,117 @@
+---
+title: 菜单栏
+description: 一种在桌面应用程序中常见的视觉持久菜单，提供快速访问一组一致命令的功能。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/menubar
+  api: https://base-ui.com/react/components/menubar#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="menubar-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add menubar
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>复制并粘贴以下代码到你的项目中。</Step>
+
+<ComponentSource
+  name="menubar"
+  title="components/ui/menubar.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以符合你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Menubar,
+  MenubarContent,
+  MenubarGroup,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/ui/menubar"
+```
+
+```tsx showLineNumbers
+<Menubar>
+  <MenubarMenu>
+    <MenubarTrigger>文件</MenubarTrigger>
+    <MenubarContent>
+      <MenubarGroup>
+        <MenubarItem>
+          新建标签页 <MenubarShortcut>⌘T</MenubarShortcut>
+        </MenubarItem>
+        <MenubarItem>新建窗口</MenubarItem>
+      </MenubarGroup>
+      <MenubarSeparator />
+      <MenubarGroup>
+        <MenubarItem>分享</MenubarItem>
+        <MenubarItem>打印</MenubarItem>
+      </MenubarGroup>
+    </MenubarContent>
+  </MenubarMenu>
+</Menubar>
+```
+
+## 示例
+
+### 复选框
+
+使用 `MenubarCheckboxItem` 处理可切换选项。
+
+<ComponentPreview styleName="base-nova" name="menubar-checkbox" />
+
+### 单选
+
+使用 `MenubarRadioGroup` 和 `MenubarRadioItem` 处理单选项。
+
+<ComponentPreview styleName="base-nova" name="menubar-radio" />
+
+### 子菜单
+
+使用 `MenubarSub`、`MenubarSubTrigger` 和 `MenubarSubContent` 创建嵌套菜单。
+
+<ComponentPreview styleName="base-nova" name="menubar-submenu" />
+
+### 带图标
+
+<ComponentPreview styleName="base-nova" name="menubar-icons" />
+
+## API 参考
+
+查看 [Base UI 菜单栏](https://base-ui.com/react/components/menubar#api-reference) 文档。

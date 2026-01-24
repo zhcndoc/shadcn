@@ -1,0 +1,390 @@
+---
+title: 2025年10月 - 新组件
+description: 旋转器（Spinner）、键盘按键（Kbd）、按钮组（Button Group）、输入组（Input Group）、表单字段（Field）、项（Item）和空状态组件（Empty）。
+date: 2025-10-03
+---
+
+这轮新组件，我关注了我们每天都在做的事情，那些无趣而重复构建的基础内容，并做了真正可重用的抽象组件。
+
+**这些组件兼容所有组件库，Radix、Base UI、React Aria，随你喜欢。复制粘贴直接用到你的项目里。**
+
+- [旋转器（Spinner）](#spinner)：显示加载状态的指示器。
+- [键盘按键（Kbd）](#kbd)：显示单个按键或一组合按键。
+- [按钮组（Button Group）](#button-group)：将相关按钮分组，用于操作组和拆分按钮。
+- [输入组（Input Group）](#input-group)：带图标、按钮、标签等的输入框组合。
+- [表单字段（Field）](#field)：一个组件搞定所有表单。
+- [项（Item）](#item)：用于显示列表项、卡片等。
+- [空状态（Empty）](#empty)：用于展示空状态的组件。
+
+### Spinner
+
+先从最简单的开始：**Spinner** 和 **Kbd**。非常基础，我们都知道它们是干什么的。
+
+下面是如何渲染一个旋转器：
+
+```tsx
+import { Spinner } from "@/components/ui/spinner"
+```
+
+```tsx
+<Spinner />
+```
+
+效果如下：
+
+<ComponentPreview
+  name="spinner-basic"
+/>
+
+放到按钮里是什么样子：
+
+<ComponentPreview
+  name="spinner-button"
+/>
+
+你可以编辑代码替换成你自己的旋转器。
+
+<ComponentPreview
+  name="spinner-custom"
+/>
+
+### Kbd
+
+Kbd 是一个渲染键盘按键的组件。
+
+```tsx
+import { Kbd, KbdGroup } from "@/components/ui/kbd"
+```
+
+```tsx
+<Kbd>Ctrl</Kbd>
+```
+
+使用 `KbdGroup` 可以将多个按键组合在一起。
+
+```tsx showLineNumbers
+<KbdGroup>
+  <Kbd>Ctrl</Kbd>
+  <Kbd>B</Kbd>
+</KbdGroup>
+```
+
+<ComponentPreview
+  name="kbd-demo"
+/>
+
+你可以将它添加到按钮、提示气泡、输入组等。
+
+### Button Group
+
+收到了很多关于这个的请求：按钮组（Button Group）。它是一个容器，将相关按钮以统一样式分组。非常适合操作组、拆分按钮等场景。
+
+<ComponentPreview
+  name="button-group-demo"
+/>
+
+代码如下：
+
+```tsx
+import { ButtonGroup } from "@/components/ui/button-group"
+```
+
+```tsx showLineNumbers
+<ButtonGroup>
+  <Button>按钮 1</Button>
+  <Button>按钮 2</Button>
+</ButtonGroup>
+```
+
+你可以嵌套按钮组来创建带间距的更复杂布局。
+
+```tsx showLineNumbers
+<ButtonGroup>
+  <ButtonGroup>
+    <Button>按钮 1</Button>
+    <Button>按钮 2</Button>
+  </ButtonGroup>
+  <ButtonGroup>
+    <Button>按钮 3</Button>
+    <Button>按钮 4</Button>
+  </ButtonGroup>
+</ButtonGroup>
+```
+
+使用 `ButtonGroupSeparator` 可创建拆分按钮，经典的下拉菜单模式。
+
+<ComponentPreview
+  name="button-group-dropdown"
+/>
+
+你也可以用它给输入框加前缀或后缀按钮和文字。
+
+<ComponentPreview
+  name="button-group-select"
+/>
+
+```tsx showLineNumbers
+<ButtonGroup>
+  <ButtonGroupText>前缀</ButtonGroupText>
+  <Input placeholder="在这里输入..." />
+  <Button>按钮</Button>
+</ButtonGroup>
+```
+
+### Input Group
+
+输入组（Input Group）让你在输入框中添加图标、按钮等等。就是你总是需要给输入框加上去的那些小配件。
+
+```tsx
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group"
+```
+
+```tsx showLineNumbers
+<InputGroup>
+  <InputGroupInput placeholder="搜索..." />
+  <InputGroupAddon>
+    <SearchIcon />
+  </InputGroupAddon>
+</InputGroup>
+```
+
+带图标的预览如下：
+
+<ComponentPreview
+  name="input-group-icon"
+  className="[&_.preview]:h-[300px] [&_pre]:!h-[300px]"
+/>
+
+你还可以在输入组中添加按钮。
+
+<ComponentPreview
+  name="input-group-button"
+  className="[&_.preview]:h-[300px] [&_pre]:!h-[300px]"
+/>
+
+或者文本、标签、提示气泡……
+
+<ComponentPreview
+  name="input-group-text"
+  className="[&_.preview]:h-[350px] [&_pre]:!h-[350px]"
+/>
+
+它同样支持多行文本输入框（textarea），让你构建真正复杂的组件，有无数控制选项，或者各种提示表单。
+
+<ComponentPreview
+  name="input-group-textarea"
+  className="[&_.preview]:h-[450px] [&_pre]:!h-[450px]"
+/>
+
+这里还有几个带旋转器的炫酷例子：
+
+<ComponentPreview
+  name="input-group-spinner"
+  className="[&_.preview]:h-[350px] [&_pre]:!h-[350px]"
+/>
+
+### Field
+
+介绍一下 **Field**，一个专为构建复杂表单设计的组件。这里的抽象非常优雅。
+
+我花了很长时间才做对，但它能兼容所有你的表单库：服务端 Actions，React Hook Form，TanStack Form，任意表单库都支持。
+
+```tsx
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/field"
+```
+
+下面是一个带输入框的基础表单字段示例：
+
+```tsx showLineNumbers
+<Field>
+  <FieldLabel htmlFor="username">用户名</FieldLabel>
+  <Input id="username" placeholder="Max Leiter" />
+  <FieldDescription>
+    为你的账户选择一个独一无二的用户名。
+  </FieldDescription>
+</Field>
+```
+
+<ComponentPreview
+  name="field-input"
+  className="[&_.preview]:h-[350px] [&_pre]:!h-[350px]"
+/>
+
+它兼容所有表单控件。输入框、多行文本框、选择框、复选框、单选钮、开关、滑块，应有尽有。完整示例：
+
+<ComponentPreview
+  name="field-demo"
+  className="[&_.preview]:h-[850px] [&_pre]:!h-[850px]"
+/>
+
+这是复选框字段的演示：
+
+<ComponentPreview
+  name="field-checkbox"
+  className="[&_.preview]:h-[500px] [&_pre]:!h-[500px]"
+/>
+
+你可以用 `FieldGroup` 和 `FieldSet` 来组合字段，非常适合多部分表单。
+
+```tsx showLineNumbers
+<FieldSet>
+  <FieldLegend />
+  <FieldGroup>
+    <Field />
+    <Field />
+  </FieldGroup>
+</FieldSet>
+```
+
+<ComponentPreview
+  name="field-fieldset"
+  className="[&_.preview]:h-[500px] [&_pre]:!h-[500px]"
+/>
+
+让表单响应式很简单。加上 `orientation="responsive"`，它会根据容器宽度自动切换垂直或水平布局。完美。
+
+<ComponentPreview
+  name="field-responsive"
+  className="[&_.preview]:h-[600px] [&_pre]:!h-[600px]"
+/>
+
+还有更多。用 `FieldLabel` 包裹字段，创建一个可选的字段组。非常简单，且非常美观。
+
+<ComponentPreview
+  name="field-choice-card"
+  className="[&_.preview]:h-[600px] [&_pre]:!h-[600px]"
+/>
+
+### Item
+
+这是一个简单的 flex 容器，几乎能容纳任何类型内容。
+
+我做过太多次类似组件了，索性做成了组件。现在我随时使用。用来展示列表项、卡片等内容非常合适。
+
+```tsx
+import {
+  Item,
+  ItemContent,
+  ItemDescription,
+  ItemMedia,
+  ItemTitle,
+} from "@/components/ui/item"
+```
+
+一个基础的项例子：
+
+```tsx showLineNumbers
+<Item>
+  <ItemMedia variant="icon">
+    <HomeIcon />
+  </ItemMedia>
+  <ItemContent>
+    <ItemTitle>仪表盘</ItemTitle>
+    <ItemDescription>你的账户和活动概览。</ItemDescription>
+  </ItemContent>
+</Item>
+```
+
+<ComponentPreview
+  name="item-demo"
+  className="[&_.preview]:h-[300px] [&_.preview]:p-4 [&_pre]:!h-[300px]"
+/>
+
+你可以添加图标、头像或图片。
+
+<ComponentPreview
+  name="item-icon"
+  className="[&_.preview]:h-[300px] [&_.preview]:p-4 [&_pre]:!h-[300px]"
+/>
+
+<ComponentPreview
+  name="item-avatar"
+  className="[&_.preview]:h-[300px] [&_.preview]:p-4 [&_pre]:!h-[300px]"
+/>
+
+下面是用 `ItemGroup` 组成的多个项：
+
+<ComponentPreview
+  name="item-group"
+  className="[&_.preview]:h-[500px] [&_.preview]:p-4 [&_pre]:!h-[500px]"
+/>
+
+需要作为链接使用？传入 `asChild` 属性即可：
+
+```tsx showLineNumbers
+<Item asChild>
+  <a href="/dashboard">
+    <ItemMedia variant="icon">
+      <HomeIcon />
+    </ItemMedia>
+    <ItemContent>
+      <ItemTitle>仪表盘</ItemTitle>
+      <ItemDescription>你的账户和活动概览。</ItemDescription>
+    </ItemContent>
+  </a>
+</Item>
+```
+
+<ComponentPreview
+  name="item-link"
+  className="[&_.preview]:h-[400px] [&_.preview]:p-4 [&_pre]:!h-[400px]"
+/>
+
+### Empty
+
+最后一个：**Empty**。用它来展示应用的空状态。
+
+```tsx
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
+```
+
+用法示例如下：
+
+```tsx showLineNumbers
+<Empty>
+  <EmptyMedia variant="icon">
+    <InboxIcon />
+  </EmptyMedia>
+  <EmptyTitle>无消息</EmptyTitle>
+  <EmptyDescription>你还没有任何消息。</EmptyDescription>
+  <EmptyContent>
+    <Button>发送消息</Button>
+  </EmptyContent>
+</Empty>
+```
+
+<ComponentPreview
+  name="empty-demo"
+  className="[&_.preview]:h-[400px] [&_.preview]:p-4 [&_pre]:!h-[400px]"
+/>
+
+你也可以搭配头像使用：
+
+<ComponentPreview
+  name="empty-avatar"
+  className="[&_.preview]:h-[400px] [&_pre]:!h-[400px]"
+/>
+
+或者配合输入组，用于搜索结果、邮箱订阅等场景：
+
+<ComponentPreview
+  name="empty-input-group"
+  className="[&_.preview]:h-[450px] [&_pre]:!h-[450px]"
+/>
+
+就是这样。七个新组件，兼容所有表单库，随时准备进入你的项目。

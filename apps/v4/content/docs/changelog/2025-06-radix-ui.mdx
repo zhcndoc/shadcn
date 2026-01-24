@@ -1,0 +1,22 @@
+---
+title: 2025年6月 - radix-ui 迁移
+description: 迁移到新的 radix-ui 包的新命令。
+date: 2025-06-11
+---
+
+我们新增了一个迁移到新的 `radix-ui` 包的命令。该命令会将所有 `@radix-ui/react-*` 的导入替换为 `radix-ui`。
+
+```bash
+npx shadcn@latest migrate radix
+```
+
+它会自动更新你 `ui` 组件中的所有导入，并安装 `radix-ui` 作为依赖。
+
+```diff showLineNumbers title="components/ui/alert-dialog.tsx"
+- import * as AlertDialogPrimitive from "@radix-ui/react-dialog"
++ import { AlertDialog as AlertDialogPrimitive } from "radix-ui"
+```
+
+运行命令后，请务必测试你的组件和项目。
+
+**注意：** 若要更新新添加组件的导入，请再次运行迁移命令。

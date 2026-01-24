@@ -1,0 +1,107 @@
+---
+title: 加载指示器（Spinner）
+description: 一个可用于显示加载状态的指示器。
+base: base
+component: true
+---
+
+<ComponentPreview styleName="base-nova" name="spinner-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add spinner
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="spinner"
+  title="components/ui/spinner.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx
+import { Spinner } from "@/components/ui/spinner"
+```
+
+```tsx
+<Spinner />
+```
+
+## 自定义
+
+您可以通过编辑 `Spinner` 组件，将默认的加载图标替换成任何其他图标。
+
+<ComponentPreview styleName="base-nova" name="spinner-custom" />
+
+```tsx showLineNumbers title="components/ui/spinner.tsx"
+import { LoaderIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="加载中"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  )
+}
+
+export { Spinner }
+```
+
+## 示例
+
+### 尺寸
+
+使用 `size-*` 工具类改变加载指示器的大小。
+
+<ComponentPreview styleName="base-nova" name="spinner-size" />
+
+### 按钮
+
+将加载指示器添加到按钮中以表示加载状态。记得使用 `data-icon="inline-start"` 属性将加载指示器添加到按钮的开头，使用 `data-icon="inline-end"` 属性将加载指示器添加到按钮的结尾。
+
+<ComponentPreview styleName="base-nova" name="spinner-button" />
+
+### 徽章（Badge）
+
+将加载指示器添加到徽章中以表示加载状态。记得使用 `data-icon="inline-start"` 属性将加载指示器添加到徽章的开头，使用 `data-icon="inline-end"` 属性将加载指示器添加到徽章的结尾。
+
+<ComponentPreview styleName="base-nova" name="spinner-badge" />
+
+### 输入组
+
+<ComponentPreview styleName="base-nova" name="spinner-input-group" />
+
+### 空状态
+
+<ComponentPreview styleName="base-nova" name="spinner-empty" />

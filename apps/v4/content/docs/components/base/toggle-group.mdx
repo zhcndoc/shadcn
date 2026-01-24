@@ -1,0 +1,101 @@
+---
+title: 切换组
+description: 一组可以切换开关的两状态按钮。
+base: base
+component: true
+links:
+  doc: https://base-ui.com/react/components/toggle-group
+  api: https://base-ui.com/react/components/toggle-group#api-reference
+---
+
+<ComponentPreview styleName="base-nova" name="toggle-group-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add toggle-group
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="toggle-group"
+  title="components/ui/toggle-group.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+```
+
+```tsx
+<ToggleGroup type="single">
+  <ToggleGroupItem value="a">A</ToggleGroupItem>
+  <ToggleGroupItem value="b">B</ToggleGroupItem>
+  <ToggleGroupItem value="c">C</ToggleGroupItem>
+</ToggleGroup>
+```
+
+## 示例
+
+### 外框样式
+
+使用 `variant="outline"` 以获得外框样式。
+
+<ComponentPreview styleName="base-nova" name="toggle-group-outline" />
+
+### 大小
+
+使用 `size` 属性来更改切换组的大小。
+
+<ComponentPreview styleName="base-nova" name="toggle-group-sizes" />
+
+### 间距
+
+使用 `spacing` 为切换组项添加间距。
+
+<ComponentPreview styleName="base-nova" name="toggle-group-spacing" />
+
+### 垂直排列
+
+使用 `orientation="vertical"` 实现垂直切换组。
+
+<ComponentPreview styleName="base-nova" name="toggle-group-vertical" />
+
+### 禁用状态
+
+<ComponentPreview styleName="base-nova" name="toggle-group-disabled" />
+
+## API 参考
+
+查看 [Base UI 切换组](https://base-ui.com/react/components/toggle-group#api-reference) 文档。

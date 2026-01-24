@@ -1,0 +1,122 @@
+---
+title: 悬停卡片
+description: 供有视力的用户预览链接后隐藏内容。
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/docs/primitives/components/hover-card
+  api: https://www.radix-ui.com/docs/primitives/components/hover-card#api-reference
+---
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="hover-card-demo"
+  previewClassName="h-80"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add hover-card
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="hover-card"
+  title="components/ui/hover-card.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card"
+```
+
+```tsx showLineNumbers
+<HoverCard>
+  <HoverCardTrigger>Hover</HoverCardTrigger>
+  <HoverCardContent>
+    React 框架 – 由 @vercel 创建和维护。
+  </HoverCardContent>
+</HoverCard>
+```
+
+## 触发延迟
+
+使用 `openDelay` 和 `closeDelay` 属性来控制卡片的打开和关闭时间。
+
+```tsx showLineNumbers
+<HoverCard openDelay={100} closeDelay={200}>
+  <HoverCardTrigger>Hover</HoverCardTrigger>
+  <HoverCardContent>内容</HoverCardContent>
+</HoverCard>
+```
+
+## 定位
+
+使用 `HoverCardContent` 上的 `side` 和 `align` 属性来控制位置。
+
+```tsx showLineNumbers
+<HoverCard>
+  <HoverCardTrigger>Hover</HoverCardTrigger>
+  <HoverCardContent side="top" align="start">
+    内容
+  </HoverCardContent>
+</HoverCard>
+```
+
+## 示例
+
+### 基础示例
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="hover-card-demo"
+  previewClassName="h-80"
+/>
+
+### 位置示例
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="hover-card-sides"
+  previewClassName="h-[22rem]"
+/>
+
+## API 参考
+
+更多信息请参阅 [Radix UI](https://www.radix-ui.com/docs/primitives/components/hover-card#api-reference) 文档。

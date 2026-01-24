@@ -1,0 +1,224 @@
+---
+title: 按钮组
+description: 一个容器，将相关的按钮以统一的样式进行分组。
+base: radix
+component: true
+---
+
+<ComponentPreview styleName="radix-nova" name="button-group-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add button-group
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install radix-ui
+```
+
+<Step>将以下代码复制到你的项目中。</Step>
+
+<ComponentSource
+  name="button-group"
+  title="components/ui/button-group.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目结构。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx
+import {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+} from "@/components/ui/button-group"
+```
+
+```tsx
+<ButtonGroup>
+  <Button>按钮 1</Button>
+  <Button>按钮 2</Button>
+</ButtonGroup>
+```
+
+## 无障碍支持
+
+- `ButtonGroup` 组件的 `role` 属性被设置为 `group`。
+- 使用 <Kbd>Tab</Kbd> 键在组内按钮间切换。
+- 使用 `aria-label` 或 `aria-labelledby` 为按钮组添加标签。
+
+```tsx showLineNumbers
+<ButtonGroup aria-label="按钮组">
+  <Button>按钮 1</Button>
+  <Button>按钮 2</Button>
+</ButtonGroup>
+```
+
+## ButtonGroup 和 ToggleGroup 的区别
+
+- 当你想将执行动作的按钮进行分组时，使用 `ButtonGroup` 组件。
+- 当你想将切换状态的按钮分组时，使用 `ToggleGroup` 组件。
+
+## 示例
+
+### 方向
+
+通过设置 `orientation` 属性改变按钮组布局。
+
+<ComponentPreview styleName="radix-nova" name="button-group-orientation" />
+
+### 大小
+
+通过单个按钮上的 `size` 属性控制按钮大小。
+
+<ComponentPreview styleName="radix-nova" name="button-group-size" />
+
+### 嵌套
+
+嵌套 `<ButtonGroup>` 组件以创建带间距的按钮组。
+
+<ComponentPreview styleName="radix-nova" name="button-group-nested" />
+
+### 分隔符
+
+`ButtonGroupSeparator` 组件在组内按钮之间进行视觉分割。
+
+当按钮变体为 `outline` 时不需要分隔符，因为它们有边框。对于其他变体，推荐使用分隔符以增强视觉层次。
+
+<ComponentPreview styleName="radix-nova" name="button-group-separator" />
+
+### 分割按钮组
+
+通过两个按钮间添加 `ButtonGroupSeparator` 创建分割按钮组。
+
+<ComponentPreview styleName="radix-nova" name="button-group-split" />
+
+### 输入框
+
+将 `Input` 组件包裹在按钮组内。
+
+<ComponentPreview styleName="radix-nova" name="button-group-input" />
+
+### 输入组
+
+包裹 `InputGroup` 组件以创建复杂的输入布局。
+
+<ComponentPreview styleName="radix-nova" name="button-group-input-group" />
+
+### 下拉菜单
+
+创建带有 `DropdownMenu` 组件的分割按钮组。
+
+<ComponentPreview styleName="radix-nova" name="button-group-dropdown" />
+
+### 选择组件
+
+与 `Select` 组件配合使用。
+
+<ComponentPreview styleName="radix-nova" name="button-group-select" />
+
+### 弹出框
+
+与 `Popover` 组件一起使用。
+
+<ComponentPreview styleName="radix-nova" name="button-group-popover" />
+
+## API 参考
+
+### ButtonGroup
+
+`ButtonGroup` 组件是一个容器，将相关按钮以统一样式分组。
+
+| 属性           | 类型                          | 默认值          |
+| -------------- | ----------------------------- | --------------- |
+| `orientation`  | `"horizontal" \| "vertical"`  | `"horizontal"`  |
+
+```tsx
+<ButtonGroup>
+  <Button>按钮 1</Button>
+  <Button>按钮 2</Button>
+</ButtonGroup>
+```
+
+嵌套多个按钮组可创建带间距的复杂布局。详见 [嵌套](#nested) 示例。
+
+```tsx
+<ButtonGroup>
+  <ButtonGroup />
+  <ButtonGroup />
+</ButtonGroup>
+```
+
+### ButtonGroupSeparator
+
+`ButtonGroupSeparator` 组件在组内按钮之间做视觉分割。
+
+| 属性           | 类型                          | 默认值        |
+| -------------- | ----------------------------- | ------------- |
+| `orientation`  | `"horizontal" \| "vertical"`  | `"vertical"`  |
+
+```tsx
+<ButtonGroup>
+  <Button>按钮 1</Button>
+  <ButtonGroupSeparator />
+  <Button>按钮 2</Button>
+</ButtonGroup>
+```
+
+### ButtonGroupText
+
+使用该组件在按钮组内显示文本。
+
+| 属性       | 类型      | 默认值  |
+| ---------- | --------- | ------- |
+| `asChild`  | `boolean` | `false` |
+
+```tsx
+<ButtonGroup>
+  <ButtonGroupText>文本</ButtonGroupText>
+  <Button>按钮</Button>
+</ButtonGroup>
+```
+
+使用 `asChild` 属性以自定义组件作为文本，例如标签。
+
+```tsx showLineNumbers
+import { ButtonGroupText } from "@/components/ui/button-group"
+import { Label } from "@/components/ui/label"
+
+export function ButtonGroupTextDemo() {
+  return (
+    <ButtonGroup>
+      <ButtonGroupText asChild>
+        <Label htmlFor="name">文本</Label>
+      </ButtonGroupText>
+      <Input placeholder="请输入内容..." id="name" />
+    </ButtonGroup>
+  )
+}
+```

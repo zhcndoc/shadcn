@@ -1,0 +1,147 @@
+---
+title: 输入 OTP
+description: 具有复制粘贴功能的无障碍一次性密码组件。
+base: radix
+component: true
+links:
+  doc: https://input-otp.rodz.dev
+---
+
+<ComponentPreview styleName="radix-nova" name="input-otp-demo" />
+
+## 关于
+
+Input OTP 构建于 [input-otp](https://github.com/guilhermerodz/input-otp) 之上，由 [@guilherme_rodz](https://twitter.com/guilherme_rodz) 开发。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add input-otp
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install input-otp
+```
+
+<Step>将以下代码复制粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="input-otp"
+  title="components/ui/input-otp.tsx"
+  styleName="radix-nova"
+/>
+
+<Step>根据你的项目结构更新导入路径。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用方法
+
+```tsx showLineNumbers
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
+```
+
+```tsx showLineNumbers
+<InputOTP maxLength={6}>
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>
+```
+
+## 模式
+
+使用 `pattern` 属性定义 OTP 输入的自定义模式。
+
+```tsx showLineNumbers {1,5}
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
+
+;<InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+  ...
+</InputOTP>
+```
+
+<ComponentPreview styleName="radix-nova" name="input-otp-pattern" />
+
+## 示例
+
+### 分隔符
+
+使用 `<InputOTPSeparator />` 组件在输入组之间添加分隔符。
+
+<ComponentPreview styleName="radix-nova" name="input-otp-separator" />
+
+### 禁用状态
+
+使用 `disabled` 属性禁用输入框。
+
+<ComponentPreview styleName="radix-nova" name="input-otp-disabled" />
+
+### 受控组件
+
+使用 `value` 和 `onChange` 属性控制输入值。
+
+<ComponentPreview styleName="radix-nova" name="input-otp-controlled" />
+
+### 无效状态
+
+在输入槽上使用 `aria-invalid` 来显示错误状态。
+
+<ComponentPreview styleName="radix-nova" name="input-otp-invalid" />
+
+### 四位数字
+
+常见的 PIN 码模式。该示例使用 `pattern={REGEXP_ONLY_DIGITS}` 属性。
+
+<ComponentPreview styleName="radix-nova" name="input-otp-four-digits" />
+
+### 字母数字混合
+
+使用 `REGEXP_ONLY_DIGITS_AND_CHARS` 接受字母和数字。
+
+<ComponentPreview styleName="radix-nova" name="input-otp-alphanumeric" />
+
+### 表单
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="input-otp-form"
+  previewClassName="h-[30rem]"
+/>
+
+## API 参考
+
+更多信息请参阅 [input-otp](https://input-otp.rodz.dev) 文档。
