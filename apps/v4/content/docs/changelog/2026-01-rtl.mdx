@@ -1,0 +1,82 @@
+---
+title: 2026 年 1 月 - RTL 支持
+description: shadcn CLI 现已支持 RTL（从右到左）布局，通过自动将物理 CSS 类转换为逻辑等效类实现。
+date: 2026-01-28
+---
+
+shadcn/ui 现在对从右到左（RTL）布局提供一流支持。你的组件会自动适配阿拉伯语、希伯来语和波斯语等语言。
+
+**这适用于 [shadcn/ui 组件](/docs/components) 以及 shadcn 注册表中分发的任何组件。**
+
+<ComponentPreview
+  styleName="base-nova"
+  name="alert-rtl"
+  direction="rtl"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+### 我们的 RTL 方案
+
+传统上，支持 RTL 的组件库会自带逻辑类。这意味着即使只构建 LTR 布局，大家也得使用像 `ms-4` 和 `start-2` 这样的类。
+
+我们采用了不同的方法。shadcn CLI 在安装时转换类，这样你只有在真正需要时才会看到逻辑类。如果你没有构建 RTL，仍然使用熟悉的类如 `ml-4` 和 `left-2`。启用 RTL 后，CLI 会帮你自动转换。
+
+**你只有在需要时才必须学习 RTL。**
+
+### 工作原理
+
+当你在 `components.json` 中设置 `rtl: true` 时，CLI 会自动将物理 CSS 类如 `ml-4` 和 `text-left` 转换为逻辑类如 `ms-4` 和 `text-start`。
+
+- 物理定位类如 `left-*` 和 `right-*` 被转换为 `start-*` 和 `end-*`。
+- 外边距和内边距类如 `ml-*` 和 `pr-*` 被转换为 `ms-*` 和 `pe-*`。
+- 文本对齐类如 `text-left` 改为 `text-start`。
+- 方向相关的属性更新为逻辑值。
+- 支持的图标会自动翻转，使用 `rtl:rotate-180`。
+- 动画类如 `slide-in-from-left` 变成 `slide-in-from-start`。
+
+### 每个组件的 RTL 示例
+
+我们为每个组件新增了 RTL 示例。你可以在每个[组件页面](/docs/components)找到实时预览和代码。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="card-rtl"
+  direction="rtl"
+  previewClassName="h-auto"
+/>
+
+### CLI 更新
+
+**新项目**：使用 `init` 或 `create` 命令时加上 `--rtl` 标志，即可从一开始就启用 RTL。
+
+```bash
+npx shadcn@latest init --rtl
+```
+
+```bash
+npx shadcn@latest create --rtl
+```
+
+**现有项目**：使用 `migrate rtl` 命令迁移你的组件。
+
+```bash
+npx shadcn@latest migrate rtl
+```
+
+这会将 `ui` 目录下的所有组件转换为使用逻辑类。你也可以传入具体路径或通配符。
+
+## 试用一下
+
+点击以下链接，在 v0 中打开一个支持 RTL 的 Next.js 项目。
+
+[![在 v0 中打开](https://v0.app/chat-static/button.svg)](https://v0.app/chat/api/open?url=https://github.com/shadcn-ui/next-template-rtl)
+
+### 相关链接
+
+- [RTL 文档](/docs/rtl)
+- [字体推荐](/docs/rtl#font-recommendations)
+- [动画](/docs/rtl#animations)
+- [迁移现有组件](/docs/rtl#migrating-existing-components)
+- [Next.js 设置](/docs/rtl/next)
+- [Vite 设置](/docs/rtl/vite)
+- [TanStack 启动设置](/docs/rtl/start)

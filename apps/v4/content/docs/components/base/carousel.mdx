@@ -304,3 +304,39 @@ export function Example() {
 />
 
 更多关于插件的使用信息，请参见 [Embla Carousel 文档](https://www.embla-carousel.com/api/plugins/)。
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL（从右到左）支持，请参见 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="carousel-rtl"
+  direction="rtl"
+  previewClassName="h-80 sm:h-[32rem]"
+/>
+
+在为 RTL 语言本地化轮播图时，您需要在 `opts` 属性中设置 `direction` 选项以匹配文本方向。这样可以确保轮播图按正确方向滚动。
+
+```tsx showLineNumbers {2-5}
+<Carousel
+  dir={dir}
+  opts={{
+    direction: dir,
+  }}
+>
+  <CarouselContent>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious className="rtl:rotate-180" />
+  <CarouselNext className="rtl:rotate-180" />
+</Carousel>
+```
+
+`direction` 选项接受 `"ltr"` 或 `"rtl"`，应与 `dir` 属性值匹配。您可能还需要使用 `rtl:rotate-180` 类旋转导航按钮，以确保它们指向正确方向。
+
+## API 参考
+
+有关属性和插件的更多信息，请参见 [Embla Carousel 文档](https://www.embla-carousel.com/api/plugins/)。

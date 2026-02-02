@@ -6,6 +6,7 @@
     "components-json",
     "theming",
     "[深色模式](/docs/dark-mode)",
+    "[RTL](/docs/rtl)",
     "[CLI](/docs/cli)",
     "monorepo",
     "typography",

@@ -176,17 +176,6 @@ Arguments:
   registries             要列出的注册表名称或 URL，名称必须以 @ 开头。
 ```
 
-**选项**
-
-```bash
-Usage: shadcn list [options] <registries...>
-
-list items from registries
-
-Arguments:
-  registries             要列出的注册表名称或 URL，名称必须以 @ 开头。
-```
-
 ---
 
 ## build
@@ -220,3 +209,69 @@ Options:
 ```bash
 npx shadcn@latest build --output ./public/registry
 ```
+
+---
+
+## migrate
+
+使用 `migrate` 命令对您的项目运行迁移操作。
+
+```bash
+npx shadcn@latest migrate [migration]
+```
+
+**可用的迁移**
+
+| 迁移名称  | 描述                           |
+| --------- | ------------------------------ |
+| `icons`   | 将您的 UI 组件迁移到不同的图标库。 |
+| `radix`   | 迁移到 radix-ui。              |
+| `rtl`     | 迁移您的组件以支持 RTL（从右到左）语言。 |
+
+**选项**
+
+```bash
+Usage: shadcn migrate [options] [migration] [path]
+
+run a migration.
+
+Arguments:
+  migration        要运行的迁移名称。
+  path             可选的路径或 glob 模式，用于迁移。
+
+Options:
+  -c, --cwd <cwd>  工作目录，默认当前目录。
+  -l, --list       列出所有迁移。（默认值：false）
+  -y, --yes        跳过确认提示。（默认值：false）
+  -h, --help       显示命令帮助信息
+```
+
+---
+
+### migrate rtl
+
+`rtl` 迁移会将您的组件转变为支持 RTL（从右到左）语言。
+
+```bash
+npx shadcn@latest migrate rtl
+```
+
+此迁移会：
+
+1. 更新 `components.json`，设置 `rtl: true`
+2. 将物理 CSS 属性转换为逻辑等价属性（例如，`ml-4` → `ms-4`，`text-left` → `text-start`）
+3. 根据需要添加 `rtl:` 变体（例如，`space-x-4` → `space-x-4 rtl:space-x-reverse`）
+
+**迁移特定文件**
+
+您可以迁移特定文件或使用 glob 模式：
+
+```bash
+# 迁移特定文件
+npx shadcn@latest migrate rtl src/components/ui/button.tsx
+
+# 迁移匹配 glob 模式的文件
+npx shadcn@latest migrate rtl "src/components/ui/**"
+```
+
+如果未提供路径，迁移将转换 `components.json` 中您的 `ui` 目录下的所有文件。

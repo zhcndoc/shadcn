@@ -95,6 +95,16 @@ import {
 - 使用 `NativeSelect` 可获得原生浏览器行为、更佳性能或移动端优化下拉菜单。
 - 使用 `Select` 可实现自定义样式、动画或复杂交互。
 
+## RTL
+
+要在 shadcn/ui 中启用 RTL（从右到左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="radix-nova"
+  name="native-select-rtl"
+  direction="rtl"
+/>
+
 ## API 参考
 
 ### NativeSelect
@@ -114,8 +124,8 @@ import {
 
 | 属性        | 类型       | 默认值   |
 | ----------- | ---------- | -------- |
-| `value`    | `string`   |          |
-| `disabled` | `boolean`  | `false`  |
+| `value`     | `string`   |          |
+| `disabled`  | `boolean`  | `false`  |
 
 ### NativeSelectOptGroup
 
@@ -123,8 +133,8 @@ import {
 
 | 属性        | 类型       | 默认值   |
 | ----------- | ---------- | -------- |
-| `label`    | `string`   |          |
-| `disabled` | `boolean`  | `false`  |
+| `label`     | `string`   |          |
+| `disabled`  | `boolean`  | `false`  |
 
 ```tsx
 <NativeSelectOptGroup label="水果">

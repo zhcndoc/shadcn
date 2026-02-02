@@ -135,6 +135,30 @@ import {
 
 <ComponentPreview styleName="base-nova" name="context-menu-sides" />
 
+## RTL
+
+要在 shadcn/ui 中启用 RTL（从右向左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="context-menu-rtl"
+  direction="rtl"
+/>
+
+使用 `side="inline-end"` 将菜单显示在触发器的逻辑右侧。
+
+```tsx showLineNumbers
+<ContextMenu>
+  <ContextMenuTrigger>右键点击这里</ContextMenuTrigger>
+  <ContextMenuContent side="inline-end">
+    <ContextMenuItem>个人资料</ContextMenuItem>
+    <ContextMenuItem>账单</ContextMenuItem>
+    <ContextMenuItem>团队</ContextMenuItem>
+    <ContextMenuItem>订阅</ContextMenuItem>
+  </ContextMenuContent>
+</ContextMenu>
+```
+
 ## API 参考
 
 更多信息请参见 [Base UI](https://base-ui.com/react/components/context-menu#api-reference) 文档。

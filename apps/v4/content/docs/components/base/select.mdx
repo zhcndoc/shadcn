@@ -59,6 +59,7 @@ npm install @base-ui/react
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -71,9 +72,11 @@ import {
     <SelectValue placeholder="主题" />
   </SelectTrigger>
   <SelectContent>
-    <SelectItem value="light">浅色</SelectItem>
-    <SelectItem value="dark">深色</SelectItem>
-    <SelectItem value="system">系统</SelectItem>
+    <SelectGroup>
+      <SelectItem value="light">浅色</SelectItem>
+      <SelectItem value="dark">深色</SelectItem>
+      <SelectItem value="system">系统</SelectItem>
+    </SelectGroup>
   </SelectContent>
 </Select>
 ```
@@ -116,6 +119,12 @@ import {
 ```
 
 <ComponentPreview styleName="base-nova" name="select-invalid" />
+
+## RTL
+
+要启用 shadcn/ui 的 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="base-nova" name="select-rtl" direction="rtl" />
 
 ## API 参考
 

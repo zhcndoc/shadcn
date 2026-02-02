@@ -6,7 +6,7 @@ import { fontVariables } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { LayoutProvider } from "@/hooks/use-layout"
 import { ActiveThemeProvider } from "@/components/active-theme"
-import { Analytics } from "@/components/analytics"
+// import { Analytics } from "@/components/analytics"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/registry/bases/radix/ui/sonner"
@@ -102,7 +102,7 @@ export default function RootLayout({
                 <Toaster position="top-center" />
               </NuqsAdapter>
               <TailwindIndicator />
-              <Analytics />
+              {/* <Analytics /> */}
             </ActiveThemeProvider>
           </LayoutProvider>
         </ThemeProvider>
