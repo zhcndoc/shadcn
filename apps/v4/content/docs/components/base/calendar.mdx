@@ -1,6 +1,6 @@
 ---
-title: Calendar
-description: A calendar component that allows users to select a date or a range of dates.
+title: 日历
+description: 一个允许用户选择单个日期或日期范围的日历组件。
 base: base
 component: true
 links:
@@ -13,19 +13,19 @@ links:
   previewClassName="h-96"
 />
 
-## Blocks
+## 块
 
-We have built a collection of 30+ calendar blocks that you can use to build your own calendar components.
+我们构建了 30 多个日历块，您可以使用它们来构建自己的日历组件。
 
-See all calendar blocks in the [Blocks Library](/blocks/calendar) page.
+请参阅 [块库](/blocks/calendar) 页面，查看所有日历块。
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">Command</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -39,17 +39,17 @@ npx shadcn@latest add calendar
 
 <Steps className="mb-0 pt-2">
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖项：</Step>
 
 ```bash
 npm install react-day-picker date-fns
 ```
 
-<Step>Add the `Button` component to your project.</Step>
+<Step>将 `Button` 组件添加到您的项目中。</Step>
 
-The `Calendar` component uses the `Button` component. Make sure you have it installed in your project.
+`Calendar` 组件使用了 `Button` 组件。请确保您的项目中已安装该组件。
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
 
 <ComponentSource
   name="calendar"
@@ -57,7 +57,7 @@ The `Calendar` component uses the `Button` component. Make sure you have it inst
   styleName="base-nova"
 />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>根据您的项目设置更新导入路径。</Step>
 
 </Steps>
 
@@ -65,7 +65,7 @@ The `Calendar` component uses the `Button` component. Make sure you have it inst
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import { Calendar } from "@/components/ui/calendar"
@@ -84,19 +84,19 @@ return (
 )
 ```
 
-See the [React DayPicker](https://react-day-picker.js.org) documentation for more information.
+更多信息请参阅 [React DayPicker](https://react-day-picker.js.org) 文档。
 
-## About
+## 关于
 
-The `Calendar` component is built on top of [React DayPicker](https://react-day-picker.js.org).
+`Calendar` 组件基于 [React DayPicker](https://react-day-picker.js.org) 构建。
 
-## Date Picker
+## 日期选择器
 
-You can use the `<Calendar>` component to build a date picker. See the [Date Picker](/docs/components/base/date-picker) page for more information.
+您可以使用 `<Calendar>` 组件构建日期选择器。详见 [日期选择器](/docs/components/base/date-picker) 页面。
 
-## Persian / Hijri / Jalali Calendar
+## 波斯历 / 伊斯兰历 / 贾拉利历
 
-To use the Persian calendar, edit `components/ui/calendar.tsx` and replace `react-day-picker` with `react-day-picker/persian`.
+要使用波斯历，请编辑 `components/ui/calendar.tsx`，将 `react-day-picker` 替换为 `react-day-picker/persian`。
 
 ```diff
 - import { DayPicker } from "react-day-picker"
@@ -106,14 +106,14 @@ To use the Persian calendar, edit `components/ui/calendar.tsx` and replace `reac
 <ComponentPreview
   styleName="base-nova"
   name="calendar-hijri"
-  title="Persian / Hijri / Jalali Calendar"
-  description="A Persian calendar."
+  title="波斯历 / 伊斯兰历 / 贾拉利历"
+  description="一个波斯历日历。"
   previewClassName="h-[400px]"
 />
 
-## Selected Date (With TimeZone)
+## 选定日期（含时区）
 
-The Calendar component accepts a `timeZone` prop to ensure dates are displayed and selected in the user's local timezone.
+Calendar 组件支持 `timeZone` 属性，确保日期在用户本地时区正确显示和选择。
 
 ```tsx showLineNumbers
 export function CalendarWithTimezone() {
@@ -135,15 +135,15 @@ export function CalendarWithTimezone() {
 }
 ```
 
-**Note:** If you notice a selected date offset (for example, selecting the 20th highlights the 19th), make sure the `timeZone` prop is set to the user's local timezone.
+**注意：** 如果您发现所选日期有偏移（例如选中 20 号时高亮显示了 19 号），请确保 `timeZone` 属性设置为用户的本地时区。
 
-**Why client-side?** The timezone is detected using `Intl.DateTimeFormat().resolvedOptions().timeZone` inside a `useEffect` to ensure compatibility with server-side rendering. Detecting the timezone during render would cause hydration mismatches, as the server and client may be in different timezones.
+**为什么要在客户端？** 由于使用了 `Intl.DateTimeFormat().resolvedOptions().timeZone` 来检测时区，因此该操作放在了 `useEffect` 中以保证与服务端渲染兼容。如果在渲染时检测时区，可能会导致服务器和客户端时区不同步，从而引起水合错误。
 
-## Examples
+## 示例
 
-### Basic
+### 基础示例
 
-A basic calendar component. We used `className="rounded-lg border"` to style the calendar.
+一个基础的日历组件。我们使用了 `className="rounded-lg border"` 来美化日历。
 
 <ComponentPreview
   styleName="base-nova"
@@ -151,9 +151,9 @@ A basic calendar component. We used `className="rounded-lg border"` to style the
   previewClassName="h-96"
 />
 
-### Range Calendar
+### 范围选择日历
 
-Use the `mode="range"` prop to enable range selection.
+使用 `mode="range"` 属性启用范围选择。
 
 <ComponentPreview
   styleName="base-nova"
@@ -161,9 +161,9 @@ Use the `mode="range"` prop to enable range selection.
   previewClassName="h-[36rem] md:h-96"
 />
 
-### Month and Year Selector
+### 月份和年份选择器
 
-Use `captionLayout="dropdown"` to show month and year dropdowns.
+使用 `captionLayout="dropdown"` 来显示月份和年份下拉菜单。
 
 <ComponentPreview
   styleName="base-nova"
@@ -171,7 +171,7 @@ Use `captionLayout="dropdown"` to show month and year dropdowns.
   previewClassName="h-96"
 />
 
-### Presets
+### 预设
 
 <ComponentPreview
   styleName="base-nova"
@@ -179,7 +179,7 @@ Use `captionLayout="dropdown"` to show month and year dropdowns.
   previewClassName="h-[650px]"
 />
 
-### Date and Time Picker
+### 日期和时间选择器
 
 <ComponentPreview
   styleName="base-nova"
@@ -187,7 +187,7 @@ Use `captionLayout="dropdown"` to show month and year dropdowns.
   previewClassName="h-[600px]"
 />
 
-### Booked dates
+### 已预订日期
 
 <ComponentPreview
   styleName="base-nova"
@@ -195,17 +195,17 @@ Use `captionLayout="dropdown"` to show month and year dropdowns.
   previewClassName="h-96"
 />
 
-### Custom Cell Size
+### 自定义单元格大小
 
 <ComponentPreview
   styleName="base-nova"
   name="calendar-custom-days"
-  title="Custom Cell Size"
-  description="A calendar with custom cell size that's responsive."
+  title="自定义单元格大小"
+  description="具有响应式自定义单元格大小的日历。"
   className="**:[.preview]:h-[560px]"
 />
 
-You can customize the size of calendar cells using the `--cell-size` CSS variable. You can also make it responsive by using breakpoint-specific values:
+您可以使用 CSS 变量 `--cell-size` 自定义日历单元格的大小。也可以通过断点特定值实现响应式：
 
 ```tsx showLineNumbers
 <Calendar
@@ -216,7 +216,7 @@ You can customize the size of calendar cells using the `--cell-size` CSS variabl
 />
 ```
 
-Or use fixed values:
+或者使用固定值：
 
 ```tsx showLineNumbers
 <Calendar
@@ -227,9 +227,9 @@ Or use fixed values:
 />
 ```
 
-### Week Numbers
+### 周数显示
 
-Use `showWeekNumber` to show week numbers.
+使用 `showWeekNumber` 属性显示周数。
 
 <ComponentPreview
   styleName="base-nova"
@@ -237,11 +237,11 @@ Use `showWeekNumber` to show week numbers.
   previewClassName="h-96"
 />
 
-## RTL
+## 从右到左（RTL）
 
-To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl).
+要启用 shadcn/ui 的 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
-See also the [Hijri Guide](#persian--hijri--jalali-calendar) for enabling the Persian / Hijri / Jalali calendar.
+另请参阅 [伊斯兰历指南](#波斯历--伊斯兰历--贾拉利历) 以启用波斯历 / 伊斯兰历 / 贾拉利历。
 
 <ComponentPreview
   styleName="base-nova"
@@ -250,7 +250,7 @@ See also the [Hijri Guide](#persian--hijri--jalali-calendar) for enabling the Pe
   previewClassName="h-96"
 />
 
-When using RTL, import the locale from `react-day-picker/locale` and pass both the `locale` and `dir` props to the Calendar component:
+使用 RTL 时，从 `react-day-picker/locale` 导入语言环境，并将 `locale` 和 `dir` 属性传递给 Calendar 组件：
 
 ```tsx showLineNumbers
 import { arSA } from "react-day-picker/locale"
@@ -264,21 +264,21 @@ import { arSA } from "react-day-picker/locale"
 />
 ```
 
-## API Reference
+## API 参考
 
-See the [React DayPicker](https://react-day-picker.js.org) documentation for more information on the `Calendar` component.
+有关 `Calendar` 组件的更多信息，请参阅 [React DayPicker](https://react-day-picker.js.org) 文档。
 
-## Changelog
+## 更新日志
 
-### RTL Support
+### RTL 支持
 
-If you're upgrading from a previous version of the `Calendar` component, you'll need to apply the following updates to add locale support:
+如果您从旧版本的 `Calendar` 组件升级，需要进行以下更新以添加语言环境支持：
 
 <Steps>
 
-<Step>Import the `Locale` type.</Step>
+<Step>导入 `Locale` 类型。</Step>
 
-Add `Locale` to your imports from `react-day-picker`:
+从 `react-day-picker` 导入时添加 `Locale`：
 
 ```diff
   import {
@@ -289,9 +289,9 @@ Add `Locale` to your imports from `react-day-picker`:
   } from "react-day-picker"
 ```
 
-<Step>Add `locale` prop to the Calendar component.</Step>
+<Step>为 Calendar 组件添加 `locale` 属性。</Step>
 
-Add the `locale` prop to the component's props:
+向组件的 props 添加 `locale` 属性：
 
 ```diff
   function Calendar({
@@ -309,9 +309,9 @@ Add the `locale` prop to the component's props:
   }) {
 ```
 
-<Step>Pass `locale` to DayPicker.</Step>
+<Step>将 `locale` 传递给 DayPicker。</Step>
 
-Pass the `locale` prop to the `DayPicker` component:
+将 `locale` 属性传递给 `DayPicker` 组件：
 
 ```diff
     <DayPicker
@@ -327,9 +327,9 @@ Pass the `locale` prop to the `DayPicker` component:
       }}
 ```
 
-<Step>Update CalendarDayButton to accept locale.</Step>
+<Step>更新 CalendarDayButton 以接收 locale。</Step>
 
-Update the `CalendarDayButton` component signature and pass `locale`:
+更新 `CalendarDayButton` 组件签名并传递 `locale`：
 
 ```diff
   function CalendarDayButton({
@@ -342,9 +342,9 @@ Update the `CalendarDayButton` component signature and pass `locale`:
 + }: React.ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
 ```
 
-<Step>Update date formatting in CalendarDayButton.</Step>
+<Step>更新 CalendarDayButton 中的日期格式化。</Step>
 
-Use `locale?.code` in the date formatting:
+使用 `locale?.code` 格式化日期：
 
 ```diff
     <Button
@@ -356,9 +356,9 @@ Use `locale?.code` in the date formatting:
     />
 ```
 
-<Step>Pass locale to DayButton component.</Step>
+<Step>将 locale 传递给 DayButton 组件。</Step>
 
-Update the `DayButton` component usage to pass the `locale` prop:
+更新 `DayButton` 组件使用，传递 `locale` 属性：
 
 ```diff
       components={{
@@ -371,12 +371,12 @@ Update the `DayButton` component usage to pass the `locale` prop:
       }}
 ```
 
-<Step>Update RTL-aware CSS classes.</Step>
+<Step>更新支持 RTL 的 CSS 类。</Step>
 
-Replace directional classes with logical properties for better RTL support:
+将方向性类替换为逻辑属性以改善 RTL 支持：
 
 ```diff
-  // In the day classNames:
+  // 在 day 类名中：
 - [&:last-child[data-selected=true]_button]:rounded-r-(--cell-radius)
 + [&:last-child[data-selected=true]_button]:rounded-e-(--cell-radius)
 - [&:nth-child(2)[data-selected=true]_button]:rounded-l-(--cell-radius)
@@ -384,15 +384,15 @@ Replace directional classes with logical properties for better RTL support:
 - [&:first-child[data-selected=true]_button]:rounded-l-(--cell-radius)
 + [&:first-child[data-selected=true]_button]:rounded-s-(--cell-radius)
 
-  // In range_start classNames:
+  // 在 range_start 类名中：
 - rounded-l-(--cell-radius) ... after:right-0
 + rounded-s-(--cell-radius) ... after:end-0
 
-  // In range_end classNames:
+  // 在 range_end 类名中：
 - rounded-r-(--cell-radius) ... after:left-0
 + rounded-e-(--cell-radius) ... after:start-0
 
-  // In CalendarDayButton className:
+  // 在 CalendarDayButton 类名中：
 - data-[range-end=true]:rounded-r-(--cell-radius)
 + data-[range-end=true]:rounded-e-(--cell-radius)
 - data-[range-start=true]:rounded-l-(--cell-radius)
@@ -401,7 +401,7 @@ Replace directional classes with logical properties for better RTL support:
 
 </Steps>
 
-After applying these changes, you can use the `locale` prop to provide locale-specific formatting:
+应用这些更改后，您可以使用 `locale` 属性提供特定语言环境的格式化：
 
 ```tsx
 import { enUS } from "react-day-picker/locale"

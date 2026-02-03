@@ -275,3 +275,47 @@ npx shadcn@latest migrate rtl "src/components/ui/**"
 ```
 
 如果未提供路径，迁移将转换 `components.json` 中您的 `ui` 目录下的所有文件。
+
+---
+
+### migrate radix
+
+`radix` 迁移会将您从各个 `@radix-ui/react-*` 包的导入更新为统一的 `radix-ui` 包。
+
+```bash
+npx shadcn@latest migrate radix
+```
+
+此操作将：
+
+1. 将 `@radix-ui/react-*` 的导入转换为 `radix-ui`
+2. 将 `radix-ui` 包添加到您的 `package.json` 中
+
+**迁移前**
+
+```tsx
+import * as DialogPrimitive from "@radix-ui/react-dialog"
+import * as SelectPrimitive from "@radix-ui/react-select"
+```
+
+**迁移后**
+
+```tsx
+import { Dialog as DialogPrimitive, Select as SelectPrimitive } from "radix-ui"
+```
+
+**迁移特定文件**
+
+您可以迁移特定文件或使用 glob 模式：
+
+```bash
+# 迁移特定文件
+npx shadcn@latest migrate radix src/components/ui/dialog.tsx
+
+# 迁移匹配 glob 模式的文件
+npx shadcn@latest migrate radix "src/components/ui/**"
+```
+
+如果未提供路径，迁移将转换 `components.json` 中您的 `ui` 目录下的所有文件。
+
+迁移完成后，您可以从 `package.json` 中移除未使用的 `@radix-ui/react-*` 包。

@@ -1,27 +1,27 @@
 ---
 title: Vite
-description: Create a new Vite project with RTL support.
+description: 创建一个支持 RTL 的新 Vite 项目。
 ---
 
 <Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
 
-**Starting a new project?** Use [shadcn/create](/create?template=vite&base=base&rtl=true) for a fully configured Vite app with custom themes, Base UI or Radix, and icon libraries.
+**开始新项目？** 使用 [shadcn/create](/create?template=vite&base=base&rtl=true) 来获取一个完全配置好的 Vite 应用，包含自定义主题、Base UI 或 Radix 以及图标库。
 
 </Callout>
 
 <Steps>
 
-### Create Project
+### 创建项目
 
-Create a new project using the `--rtl` flag and the `vite` template.
+使用 `--rtl` 标志和 `vite` 模板创建新项目。
 
-**You can skip this step if you have already created a project using [shadcn/create](/create?template=vite&base=base&rtl=true).**
+**如果你已经使用 [shadcn/create](/create?template=vite&base=base&rtl=true) 创建了项目，可以跳过此步骤。**
 
 ```bash
 npx shadcn@latest create --template vite --rtl
 ```
 
-This will create a `components.json` file with the `rtl: true` flag.
+这将创建一个带有 `rtl: true` 标志的 `components.json` 文件。
 
 ```json title="components.json" showLineNumbers {4}
 {
@@ -31,9 +31,9 @@ This will create a `components.json` file with the `rtl: true` flag.
 }
 ```
 
-### Add DirectionProvider
+### 添加 DirectionProvider
 
-Add the `dir="rtl"` and `lang="ar"` attributes to the `html` tag in your `index.html`. Update `lang="ar"` to your target language.
+在你的 `index.html` 文件中，给 `html` 标签添加 `dir="rtl"` 和 `lang="ar"` 属性。将 `lang="ar"` 替换为你的目标语言。
 
 ```html title="index.html" showLineNumbers {2}
 <!doctype html>
@@ -50,7 +50,7 @@ Add the `dir="rtl"` and `lang="ar"` attributes to the `html` tag in your `index.
 </html>
 ```
 
-Then wrap your app with the `DirectionProvider` component with the `direction="rtl"` prop in your `main.tsx`:
+然后在你的 `main.tsx` 文件中，用带有 `direction="rtl"` 属性的 `DirectionProvider` 组件包裹你的应用：
 
 ```tsx title="src/main.tsx" showLineNumbers {4,12-13}
 import { StrictMode } from "react"
@@ -71,17 +71,17 @@ createRoot(document.getElementById("root")!).render(
 )
 ```
 
-### Add Font
+### 添加字体
 
-For the best RTL experience, we recommend using fonts that have proper support for your target language. [Noto](https://fonts.google.com/noto) is a great font family for this and it pairs well with Inter and Geist.
+为了获得最佳的 RTL 体验，我们推荐使用对你的目标语言有良好支持的字体。 [Noto](https://fonts.google.com/noto) 是一个非常好的字体系列，它与 Inter 和 Geist 配合良好。
 
-Install the font using [Fontsource](https://fontsource.org/fonts/noto-sans-arabic):
+使用 [Fontsource](https://fontsource.org/fonts/noto-sans-arabic) 安装字体：
 
 ```bash
 npm install @fontsource-variable/noto-sans-arabic
 ```
 
-Import the font in your `index.css`:
+在你的 `index.css` 文件中导入该字体：
 
 ```css title="src/index.css" showLineNumbers {4,7}
 @import "tailwindcss";
@@ -94,11 +94,11 @@ Import the font in your `index.css`:
 }
 ```
 
-For other languages, eg. Hebrew, you can use `@fontsource-variable/noto-sans-hebrew`.
+对于其他语言，例如希伯来语，你可以使用 `@fontsource-variable/noto-sans-hebrew`。
 
-### Add Components
+### 添加组件
 
-You are now ready to add components to your project. The CLI will take care of handling RTL support for you.
+现在你已经准备好向项目中添加组件了。CLI 会帮你处理 RTL 支持。
 
 ```bash
 npx shadcn@latest add item

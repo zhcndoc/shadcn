@@ -1,9 +1,9 @@
 ---
 title: "RTL"
-description: "Right-to-left support for shadcn/ui components."
+description: "shadcn/ui 组件的从右到左支持。"
 ---
 
-shadcn/ui components have first-class support for right-to-left (RTL) layouts. Text alignment, positioning, and directional styles automatically adapt for languages like Arabic, Hebrew, and Persian.
+shadcn/ui 组件对从右到左 (RTL) 布局提供一流支持。文本对齐、定位和方向样式会自动适应阿拉伯语、希伯来语和波斯语等语言。
 
 <ComponentPreview
   styleName="base-nova"
@@ -11,15 +11,15 @@ shadcn/ui components have first-class support for right-to-left (RTL) layouts. T
   direction="rtl"
   previewClassName="h-auto"
   hideCode
-  caption="A card component in RTL mode."
+  caption="RTL 模式下的卡片组件。"
   className="mb-8"
 />
 
-When you install components, the CLI automatically transforms physical positioning classes to logical equivalents, so your components work seamlessly in both LTR and RTL contexts.
+安装组件时，CLI 会自动将物理定位类转换为逻辑等价类，使您的组件能够在 LTR 和 RTL 两种上下文中无缝工作。
 
-## Get Started
+## 快速开始
 
-Select your framework to get started with RTL support.
+选择您的框架，开始使用 RTL 支持。
 
 <div className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-6">
   <LinkedCard href="/docs/rtl/next">
@@ -61,42 +61,42 @@ Select your framework to get started with RTL support.
   </LinkedCard>
 </div>
 
-## How it works
+## 工作原理
 
-When you add components with `rtl: true` set in your `components.json`, the shadcn CLI automatically transforms classes and props to be RTL compatible:
+当您在 `components.json` 中设置 `rtl: true` 添加组件时，shadcn CLI 会自动转换类与属性，使其支持 RTL：
 
-- Physical positioning classes like `left-*` and `right-*` are converted to logical equivalents like `start-*` and `end-*`.
-- Directional props are updated to use logical values.
-- Text alignment and spacing classes are adjusted accordingly.
-- Supported icons are automatically flipped using `rtl:rotate-180`.
+- 物理定位类如 `left-*` 与 `right-*` 会转换为逻辑等价的 `start-*` 与 `end-*`。
+- 方向相关的属性将更新为使用逻辑值。
+- 文本对齐和间距类相应调整。
+- 支持的图标会自动通过 `rtl:rotate-180` 翻转。
 
-## Try it out
+## 试用
 
-Click the link below to open a Next.js project with RTL support in v0.
+点击下面的链接，打开一个包含 RTL 支持的 Next.js v0 项目。
 
 [![Open in v0](https://v0.app/chat-static/button.svg)](https://v0.app/chat/api/open?url=https://github.com/shadcn-ui/next-template-rtl)
 
-## Supported Styles
+## 支持的样式
 
-Automatic RTL transformation via the CLI is only available for projects created using `shadcn create` with the new styles (`base-nova`, `radix-nova`, etc.).
+通过 CLI 自动进行的 RTL 转换仅适用于使用 `shadcn create` 创建、使用新样式（比如 `base-nova`、`radix-nova` 等）的项目。
 
-For other styles, see the [Migration Guide](#migrating-existing-components).
+其他样式请参阅 [迁移指南](#migrating-existing-components)。
 
-## Font Recommendations
+## 字体建议
 
-For the best RTL experience, we recommend using fonts that have proper support for your target language. [Noto](https://fonts.google.com/noto) is a great font family for this and it pairs well with Inter and Geist.
+为了获得最佳 RTL 体验，我们推荐使用对目标语言有良好支持的字体。[Noto](https://fonts.google.com/noto) 是一个极佳的字体家族，且与 Inter 和 Geist 搭配良好。
 
-See your framework's RTL guide under [Get Started](#get-started) for details on installing and configuring RTL fonts.
+有关如何安装和配置 RTL 字体的详情，请参阅您框架下的 RTL 指南，见 [快速开始](#get-started)。
 
-## Animations
+## 动画
 
-The CLI also handles animation classes, automatically transforming physical directional animations to their logical equivalents. For example, `slide-in-from-right` becomes `slide-in-from-end`.
+CLI 同样处理动画类，自动将物理方向的动画转换为逻辑等价。例如，`slide-in-from-right` 会变为 `slide-in-from-end`。
 
-This ensures animations like dropdowns, popovers, and tooltips animate in the correct direction based on the document's text direction.
+这确保了下拉菜单、弹出框和工具提示等动画能根据文档的文本方向向正确方向播放。
 
-**A note on tw-animate-css:**
+**关于 tw-animate-css 的说明：**
 
-There is a [known issue](https://github.com/Wombosvideo/tw-animate-css/issues/67) with the `tw-animate-css` library where the logical slide utilities are not working as expected. For now, make sure you pass in the `dir` prop to portal elements.
+`tw-animate-css` 库存在一个[已知问题](https://github.com/Wombosvideo/tw-animate-css/issues/67)，逻辑滑动工具类无法正常工作。当前请确保为 portal 元素传入 `dir` 属性。
 
 ```tsx showLineNumbers /dir="rtl"/
 <Popover>
@@ -116,48 +116,48 @@ There is a [known issue](https://github.com/Wombosvideo/tw-animate-css/issues/67
 </Tooltip>
 ```
 
-## Migrating existing components
+## 迁移现有组件
 
-If you have existing components installed before enabling RTL, you can migrate them using the CLI as follows:
+如果您在启用 RTL 之前已经安装了组件，可以通过 CLI 进行迁移，步骤如下：
 
 <Steps>
 
-<Step>Run the migrate command</Step>
+<Step>运行迁移命令</Step>
 
 ```bash
 npx shadcn@latest migrate rtl [path]
 ```
 
-`[path]` accepts a path or glob pattern to migrate. If you don't provide a path, it will migrate all the files in the `ui` directory.
+`[path]` 支持路径或通配符模式。如果不提供路径，则会迁移 `ui` 目录下所有文件。
 
-### Manual Migration (Optional)
+### 手动迁移（可选）
 
-The following components are not automatically migrated by the CLI. Follow the RTL support section for each component to manually migrate them.
+以下组件不支持 CLI 自动迁移。请参考对应组件的 RTL 支持部分手动迁移。
 
 - [Calendar](/docs/components/radix/calendar#rtl-support)
 - [Pagination](/docs/components/radix/pagination#rtl-support)
 - [Sidebar](/docs/components/radix/sidebar#rtl-support)
 
-### Migrate Icons
+### 迁移图标
 
-Some icons like `ArrowRightIcon` or `ChevronLeftIcon` might need the `rtl:rotate-180` class to be flipped correctly. Add the `rtl:rotate-180` class to the icon component to flip it correctly.
+部分图标如 `ArrowRightIcon` 或 `ChevronLeftIcon` 可能需要添加 `rtl:rotate-180` 类以正确翻转。请为图标组件添加该类。
 
 ```tsx showLineNumbers /rtl:rotate-180/
 <ArrowRightIcon className="rtl:rotate-180" />
 ```
 
-### Add direction component
+### 添加 Direction 组件
 
-Add the direction component to your project.
+将方向组件添加到您的项目。
 
 ```bash
 npx shadcn@latest add direction
 ```
 
-### Add DirectionProvider
+### 添加 DirectionProvider
 
-Follow your framework's documentation for details on how to add the `DirectionProvider` component to your project.
+请根据您框架的文档，了解如何将 `DirectionProvider` 组件添加到项目中。
 
-See the [Get Started](#get-started) section for details on how to add the `DirectionProvider` component to your project.
+详情请参阅 [快速开始](#get-started) 部分关于添加 `DirectionProvider` 组件的说明。
 
 </Steps>

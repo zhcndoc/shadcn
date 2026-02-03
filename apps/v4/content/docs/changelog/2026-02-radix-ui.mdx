@@ -1,0 +1,38 @@
+---
+title: 2026年2月 - 统一的 Radix UI 包
+description: 纽约风格现在使用统一的 radix-ui 包。
+date: 2026-02-02
+---
+
+`new-york` 风格现在使用统一的 `radix-ui` 包，而不是单独的 `@radix-ui/react-*` 包。
+
+### 变更内容
+
+当你使用 `new-york` 风格添加组件时，它们将从 `radix-ui` 导入，而不是分别导入各个包：
+
+```diff title="components/ui/dialog.tsx"
+- import * as DialogPrimitive from "@radix-ui/react-dialog"
++ import { Dialog as DialogPrimitive } from "radix-ui"
+```
+
+这让你的 `package.json` 更加简洁，只需要一个 `radix-ui` 依赖，而不是多个 `@radix-ui/react-*` 包。
+
+### 迁移已有项目
+
+如果你已有使用 `new-york` 风格的项目，可以使用迁移命令升级到新的 `radix-ui` 包：
+
+```bash
+npx shadcn@latest migrate radix
+```
+
+此命令会更新你所有 UI 组件的导入，并将 `radix-ui` 添加到依赖中。
+
+如果要迁移 `ui` 目录外的组件，可以使用 `path` 参数：
+
+```bash
+npx shadcn@latest migrate radix src/components/custom
+```
+
+完成后，你可以从 `package.json` 中移除所有未使用的 `@radix-ui/react-*` 包。
+
+详情请参阅 [迁移 radix 文档](/docs/cli#migrate-radix)。
