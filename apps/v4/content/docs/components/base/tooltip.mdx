@@ -20,9 +20,31 @@ links:
 </TabsList>
 <TabsContent value="cli">
 
+<Steps className="mb-0 pt-2">
+
+<Step>运行以下命令：</Step>
+
 ```bash
 npx shadcn@latest add tooltip
 ```
+
+<Step>将 `TooltipProvider` 添加到应用根组件中。</Step>
+
+```tsx title="app/layout.tsx" showLineNumbers {1,7}
+import { TooltipProvider } from "@/components/ui/tooltip"
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <TooltipProvider>{children}</TooltipProvider>
+      </body>
+    </html>
+  )
+}
+```
+
+</Steps>
 
 </TabsContent>
 
@@ -44,7 +66,23 @@ npm install @base-ui/react
   styleName="base-nova"
 />
 
-<Step>更新导入路径以匹配您的项目设置。</Step>
+<Step>根据您的项目配置更新导入路径。</Step>
+
+<Step>将 `TooltipProvider` 添加到应用根组件中。</Step>
+
+```tsx title="app/layout.tsx" showLineNumbers {1,7}
+import { TooltipProvider } from "@/components/ui/tooltip"
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <TooltipProvider>{children}</TooltipProvider>
+      </body>
+    </html>
+  )
+}
+```
 
 </Steps>
 

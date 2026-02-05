@@ -71,7 +71,7 @@ import {
 ```
 
 ```tsx showLineNumbers
-<ResizablePanelGroup direction="horizontal">
+<ResizablePanelGroup orientation="horizontal">
   <ResizablePanel>一</ResizablePanel>
   <ResizableHandle />
   <ResizablePanel>二</ResizablePanel>
@@ -82,7 +82,7 @@ import {
 
 ### 垂直方向
 
-使用 `direction="vertical"` 实现垂直调整大小。
+使用 `orientation="vertical"` 实现垂直调整大小。
 
 <ComponentPreview styleName="radix-nova" name="resizable-vertical" />
 
@@ -101,3 +101,26 @@ import {
 ## API 参考
 
 请参阅 [react-resizable-panels](https://github.com/bvaughn/react-resizable-panels/tree/main/packages/react-resizable-panels) 的文档。
+
+## 更新日志
+
+### 2025-02-02 `react-resizable-panels` v4
+
+更新至 `react-resizable-panels` v4。完整详情请参阅 [v4.0.0 发布说明](https://github.com/bvaughn/react-resizable-panels/releases/tag/4.0.0)。
+
+如果你直接使用 `react-resizable-panels` 的基础组件，请注意以下变化：
+
+| v3                           | v4                      |
+| ---------------------------- | ----------------------- |
+| `PanelGroup`                 | `Group`                 |
+| `PanelResizeHandle`          | `Separator`             |
+| `direction` 属性             | `orientation` 属性      |
+| `defaultSize={50}`           | `defaultSize="50%"`     |
+| `onLayout`                   | `onLayoutChange`        |
+| `ImperativePanelHandle`      | `PanelImperativeHandle` |
+| 面板上的 `ref` 属性          | `panelRef` 属性         |
+| `data-panel-group-direction` | `aria-orientation`      |
+
+<Callout>
+  shadcn/ui 的包装组件 (`ResizablePanelGroup`, `ResizablePanel`, `ResizableHandle`) 保持不变。
+</Callout>
