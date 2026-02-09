@@ -228,6 +228,12 @@
     "description": "A comprehensive React Hooks Collection built with Shadcn."
   },
   {
+    "name": "@inferencesh",
+    "homepage": "https://ui.inference.sh",
+    "url": "https://ui.inference.sh/r/{name}.json",
+    "description": "batteries-included agent components by inference.sh. chat interfaces with streaming, tool invocation rendering, syntax-highlighted code blocks, markdown renderer, and more."
+  },
+  {
     "name": "@intentui",
     "homepage": "https://intentui.com",
     "url": "https://intentui.com/r/{name}",
@@ -334,6 +340,12 @@
     "homepage": "https://elements.nexus.availproject.org/docs/view-components",
     "url": "https://elements.nexus.availproject.org/r/{name}.json",
     "description": "Ready-made React components for almost any use case. Use as is or customise and go to market fast"
+  },
+  {
+    "name": "@openstatus",
+    "homepage": "https://openstatus.dev/registry",
+    "url": "https://openstatus.dev/r/{name}.json",
+    "description": "Hand-crafted, accessible components for building beautiful status pages."
   },
   {
     "name": "@optics",
