@@ -137,9 +137,9 @@ Tailwind v4 [已改动](https://tailwindcss.com/docs/upgrade-guide#buttons-use-t
 
 ### 链接
 
-你可以在 `<Button />` 组件上使用 `render` 属性，使其他组件看起来像按钮。下面是一个看起来像按钮的链接示例。
+你可以使用 `buttonVariants` 辅助函数使链接看起来像按钮。
 
-如果返回的不是按钮元素，记得将 `nativeButton` 属性设置为 `false`。
+**不要使用 `<Button render={<a />} nativeButton={false} />` 来作为链接。** Base UI 的 `Button` 组件始终会应用 `role="button"`，这会覆盖 `<a>` 元素的语义链接角色。应使用纯 `<a>` 标签配合 `buttonVariants` 代替。
 
 <ComponentPreview styleName="base-nova" name="button-render" />
 

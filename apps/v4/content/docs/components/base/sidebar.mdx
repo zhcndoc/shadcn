@@ -1,6 +1,6 @@
 ---
-title: Sidebar
-description: A composable, themeable and customizable sidebar component.
+title: 侧边栏
+description: 一个可组合、可主题化且可自定义的侧边栏组件。
 base: base
 component: true
 ---
@@ -15,25 +15,24 @@ import { ExternalLinkIcon } from "lucide-react"
     className="w-full"
   />
   <figcaption className="text-center text-sm text-gray-500">
-    A sidebar that collapses to icons.
+    一个可折叠为图标的侧边栏。
   </figcaption>
 </figure>
 
-Sidebars are one of the most complex components to build. They are central
-to any application and often contain a lot of moving parts.
+侧边栏是最复杂的组件之一。它们是任何应用的核心，通常包含许多动态部分。
 
-We now have a solid foundation to build on top of. Composable. Themeable.
-Customizable.
+我们现在拥有了坚实的基础可以在此之上构建。可组合。可主题化。
+可自定义。
 
-[Browse the Blocks Library](/blocks).
+[浏览组件库](/blocks)。
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">Command</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -55,33 +54,33 @@ npx shadcn@latest add sidebar
 
 </CodeTabs>
 
-## Structure
+## 结构
 
-A `Sidebar` component is composed of the following parts:
+`Sidebar` 组件由以下部分组成：
 
-- `SidebarProvider` - Handles collapsible state.
-- `Sidebar` - The sidebar container.
-- `SidebarHeader` and `SidebarFooter` - Sticky at the top and bottom of the sidebar.
-- `SidebarContent` - Scrollable content.
-- `SidebarGroup` - Section within the `SidebarContent`.
-- `SidebarTrigger` - Trigger for the `Sidebar`.
+- `SidebarProvider` - 处理折叠状态。
+- `Sidebar` - 侧边栏容器。
+- `SidebarHeader` 和 `SidebarFooter` - 分别位于侧边栏的顶部和底部，且为粘性定位。
+- `SidebarContent` - 可滚动的内容区域。
+- `SidebarGroup` - `SidebarContent` 中的分组区域。
+- `SidebarTrigger` - 用于触发侧边栏的开关。
 
 <Image
   src="/images/sidebar-structure.png"
   width="716"
   height="420"
-  alt="Sidebar Structure"
+  alt="侧边栏结构"
   className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
 />
 <Image
   src="/images/sidebar-structure-dark.png"
   width="716"
   height="420"
-  alt="Sidebar Structure"
+  alt="侧边栏结构"
   className="mt-6 hidden w-full overflow-hidden rounded-lg border dark:block"
 />
 
-## Usage
+## 使用方法
 
 ```tsx showLineNumbers title="app/layout.tsx"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
@@ -125,41 +124,41 @@ export function AppSidebar() {
 
 ## SidebarProvider
 
-The `SidebarProvider` component is used to provide the sidebar context to the `Sidebar` component. You should always wrap your application in a `SidebarProvider` component.
+`SidebarProvider` 组件用于为 `Sidebar` 组件提供侧边栏上下文。你应该始终用 `SidebarProvider` 组件包裹你的应用。
 
-### Props
+### 参数
 
-| Name           | Type                      | Description                                  |
-| -------------- | ------------------------- | -------------------------------------------- |
-| `defaultOpen`  | `boolean`                 | Default open state of the sidebar.           |
-| `open`         | `boolean`                 | Open state of the sidebar (controlled).      |
-| `onOpenChange` | `(open: boolean) => void` | Sets open state of the sidebar (controlled). |
+| 名称           | 类型                      | 描述                                         |
+| -------------- | ------------------------- | ---------------------------------------------- |
+| `defaultOpen`  | `boolean`                 | 侧边栏的默认打开状态。                          |
+| `open`         | `boolean`                 | 侧边栏的打开状态（受控）。                      |
+| `onOpenChange` | `(open: boolean) => void` | 设置侧边栏的打开状态（受控）。                  |
 
-### Width
+### 宽度
 
-If you have a single sidebar in your application, you can use the `SIDEBAR_WIDTH` and `SIDEBAR_WIDTH_MOBILE` variables in `sidebar.tsx` to set the width of the sidebar.
+如果你的应用中只有一个侧边栏，可以在 `sidebar.tsx` 中使用 `SIDEBAR_WIDTH` 和 `SIDEBAR_WIDTH_MOBILE` 变量来设置侧边栏的宽度。
 
 ```tsx showLineNumbers title="components/ui/sidebar.tsx"
 const SIDEBAR_WIDTH = "16rem"
 const SIDEBAR_WIDTH_MOBILE = "18rem"
 ```
 
-For multiple sidebars in your application, you can use the `--sidebar-width` and `--sidebar-width-mobile` CSS variables in the `style` prop.
+如果应用中有多个侧边栏，可以在 `style` 属性中使用 CSS 变量 `--sidebar-width` 和 `--sidebar-width-mobile`。
 
 ```tsx showLineNumbers
 <SidebarProvider
   style={{
     "--sidebar-width": "20rem",
     "--sidebar-width-mobile": "20rem",
-  }}
+  } as React.CSSProperties}
 >
   <Sidebar />
 </SidebarProvider>
 ```
 
-### Keyboard Shortcut
+### 键盘快捷键
 
-To trigger the sidebar, you use the `cmd+b` keyboard shortcut on Mac and `ctrl+b` on Windows.
+触发侧边栏使用 Mac 上的 `cmd+b`，Windows 上的 `ctrl+b` 快捷键。
 
 ```tsx showLineNumbers title="components/ui/sidebar.tsx"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
@@ -167,25 +166,24 @@ const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 
 ## Sidebar
 
-The main `Sidebar` component used to render a collapsible sidebar.
+主要的 `Sidebar` 组件用于渲染可折叠的侧边栏。
 
-### Props
+### 参数
 
-| Property      | Type                              | Description                       |
-| ------------- | --------------------------------- | --------------------------------- |
-| `side`        | `left` or `right`                 | The side of the sidebar.          |
-| `variant`     | `sidebar`, `floating`, or `inset` | The variant of the sidebar.       |
-| `collapsible` | `offcanvas`, `icon`, or `none`    | Collapsible state of the sidebar. |
+| 属性          | 类型                               | 描述                              |
+| ------------- | ---------------------------------- | --------------------------------- |
+| `side`        | `left` 或 `right`                  | 侧边栏所在的边。                  |
+| `variant`     | `sidebar`、`floating` 或 `inset`  | 侧边栏的变体类型。                |
+| `collapsible` | `offcanvas`、`icon` 或 `none`      | 侧边栏的折叠状态。                |
 
-| Prop        | Description                                                  |
+| 属性        | 描述                                                         |
 | ----------- | ------------------------------------------------------------ |
-| `offcanvas` | A collapsible sidebar that slides in from the left or right. |
-| `icon`      | A sidebar that collapses to icons.                           |
-| `none`      | A non-collapsible sidebar.                                   |
+| `offcanvas` | 可折叠的侧边栏，会从左侧或右侧滑入。                         |
+| `icon`      | 折叠为图标的侧边栏。                                         |
+| `none`      | 不可折叠的侧边栏。                                           |
 
 <Callout>
-  **Note:** If you use the `inset` variant, remember to wrap your main content
-  in a `SidebarInset` component.
+  **注意：** 如果你使用 `inset` 变体，记得将你的主内容包裹在 `SidebarInset` 组件中。
 </Callout>
 
 ```tsx showLineNumbers
@@ -199,7 +197,7 @@ The main `Sidebar` component used to render a collapsible sidebar.
 
 ## useSidebar
 
-The `useSidebar` hook is used to control the sidebar.
+`useSidebar` 钩子用于控制侧边栏。
 
 ```tsx showLineNumbers
 import { useSidebar } from "@/components/ui/sidebar"
@@ -217,19 +215,19 @@ export function AppSidebar() {
 }
 ```
 
-| Property        | Type                      | Description                                   |
-| --------------- | ------------------------- | --------------------------------------------- |
-| `state`         | `expanded` or `collapsed` | The current state of the sidebar.             |
-| `open`          | `boolean`                 | Whether the sidebar is open.                  |
-| `setOpen`       | `(open: boolean) => void` | Sets the open state of the sidebar.           |
-| `openMobile`    | `boolean`                 | Whether the sidebar is open on mobile.        |
-| `setOpenMobile` | `(open: boolean) => void` | Sets the open state of the sidebar on mobile. |
-| `isMobile`      | `boolean`                 | Whether the sidebar is on mobile.             |
-| `toggleSidebar` | `() => void`              | Toggles the sidebar. Desktop and mobile.      |
+| 属性           | 类型                                 | 描述                                               |
+| -------------- | ---------------------------------- | -------------------------------------------------- |
+| `state`        | `expanded` 或 `collapsed`          | 侧边栏当前状态。                                    |
+| `open`         | `boolean`                           | 侧边栏是否打开。                                    |
+| `setOpen`      | `(open: boolean) => void`           | 设置侧边栏的打开状态。                              |
+| `openMobile`   | `boolean`                           | 移动端侧边栏是否打开。                              |
+| `setOpenMobile`| `(open: boolean) => void`           | 设置移动端侧边栏的打开状态。                        |
+| `isMobile`     | `boolean`                           | 是否为移动端侧边栏。                                |
+| `toggleSidebar`| `() => void`                        | 切换侧边栏。支持桌面端和移动端。                   |
 
 ## SidebarHeader
 
-Use the `SidebarHeader` component to add a sticky header to the sidebar.
+使用 `SidebarHeader` 组件为侧边栏添加一个粘性头部。
 
 ```tsx showLineNumbers title="components/app-sidebar.tsx"
 <Sidebar>
@@ -239,7 +237,7 @@ Use the `SidebarHeader` component to add a sticky header to the sidebar.
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton>
-              Select Workspace
+              选择工作区
               <ChevronDown className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
@@ -257,7 +255,7 @@ Use the `SidebarHeader` component to add a sticky header to the sidebar.
 
 ## SidebarFooter
 
-Use the `SidebarFooter` component to add a sticky footer to the sidebar.
+使用 `SidebarFooter` 组件为侧边栏添加一个粘性底部。
 
 ```tsx showLineNumbers
 <Sidebar>
@@ -265,7 +263,7 @@ Use the `SidebarFooter` component to add a sticky footer to the sidebar.
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton>
-          <User2 /> Username
+          <User2 /> 用户名
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>
@@ -275,7 +273,7 @@ Use the `SidebarFooter` component to add a sticky footer to the sidebar.
 
 ## SidebarContent
 
-The `SidebarContent` component is used to wrap the content of the sidebar. This is where you add your `SidebarGroup` components. It is scrollable.
+`SidebarContent` 组件用于包裹侧边栏的内容。这里可以添加你的 `SidebarGroup` 组件。内容区域是可滚动的。
 
 ```tsx showLineNumbers
 <Sidebar>
@@ -288,28 +286,28 @@ The `SidebarContent` component is used to wrap the content of the sidebar. This 
 
 ## SidebarGroup
 
-Use the `SidebarGroup` component to create a section within the sidebar.
+使用 `SidebarGroup` 组件创建侧边栏内的分组区块。
 
-A `SidebarGroup` has a `SidebarGroupLabel`, a `SidebarGroupContent` and an optional `SidebarGroupAction`.
+`SidebarGroup` 包含一个 `SidebarGroupLabel`，一个 `SidebarGroupContent`，以及一个可选的 `SidebarGroupAction`。
 
 ```tsx showLineNumbers
 <SidebarGroup>
-  <SidebarGroupLabel>Application</SidebarGroupLabel>
+  <SidebarGroupLabel>应用</SidebarGroupLabel>
   <SidebarGroupAction>
-    <Plus /> <span className="sr-only">Add Project</span>
+    <Plus /> <span className="sr-only">添加项目</span>
   </SidebarGroupAction>
   <SidebarGroupContent></SidebarGroupContent>
 </SidebarGroup>
 ```
 
-To make a `SidebarGroup` collapsible, wrap it in a `Collapsible`.
+如果你想让 `SidebarGroup` 可折叠，可以用 `Collapsible` 组件包裹它。
 
 ```tsx showLineNumbers
 <Collapsible defaultOpen className="group/collapsible">
   <SidebarGroup>
     <SidebarGroupLabel asChild>
       <CollapsibleTrigger>
-        Help
+        帮助
         <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
       </CollapsibleTrigger>
     </SidebarGroupLabel>
@@ -322,20 +320,20 @@ To make a `SidebarGroup` collapsible, wrap it in a `Collapsible`.
 
 ## SidebarMenu
 
-The `SidebarMenu` component is used for building a menu within a `SidebarGroup`.
+`SidebarMenu` 组件用于在 `SidebarGroup` 内构建菜单。
 
 <Image
   src="/images/sidebar-menu.png"
   width="716"
   height="420"
-  alt="Sidebar Menu"
+  alt="侧边栏菜单"
   className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
 />
 <Image
   src="/images/sidebar-menu-dark.png"
   width="716"
   height="420"
-  alt="Sidebar Menu"
+  alt="侧边栏菜单"
   className="mt-6 hidden w-full overflow-hidden rounded-lg border dark:block"
 />
 
@@ -356,39 +354,39 @@ The `SidebarMenu` component is used for building a menu within a `SidebarGroup`.
 
 ## SidebarMenuButton
 
-The `SidebarMenuButton` component is used to render a menu button within a `SidebarMenuItem`.
+`SidebarMenuButton` 组件用于渲染 `SidebarMenuItem` 内的菜单按钮。
 
-By default, the `SidebarMenuButton` renders a button but you can use the `asChild` prop to render a different component such as a `Link` or an `a` tag.
+默认情况下，`SidebarMenuButton` 渲染为按钮，但你可以通过 `asChild` 属性来渲染为其他组件，比如 `Link` 或 `a` 标签。
 
-Use the `isActive` prop to mark a menu item as active.
+使用 `isActive` 属性标记菜单项为激活状态。
 
 ```tsx showLineNumbers
 <SidebarMenuButton asChild isActive>
-  <a href="#">Home</a>
+  <a href="#">首页</a>
 </SidebarMenuButton>
 ```
 
 ## SidebarMenuAction
 
-The `SidebarMenuAction` component is used to render a menu action within a `SidebarMenuItem`.
+`SidebarMenuAction` 组件用于在 `SidebarMenuItem` 中渲染操作按钮。
 
 ```tsx showLineNumbers
 <SidebarMenuItem>
   <SidebarMenuButton asChild>
     <a href="#">
       <Home />
-      <span>Home</span>
+      <span>首页</span>
     </a>
   </SidebarMenuButton>
   <SidebarMenuAction>
-    <Plus /> <span className="sr-only">Add Project</span>
+    <Plus /> <span className="sr-only">添加项目</span>
   </SidebarMenuAction>
 </SidebarMenuItem>
 ```
 
 ## SidebarMenuSub
 
-The `SidebarMenuSub` component is used to render a submenu within a `SidebarMenu`.
+`SidebarMenuSub` 组件用于在 `SidebarMenu` 内渲染子菜单。
 
 ```tsx showLineNumbers
 <SidebarMenuItem>
@@ -403,7 +401,7 @@ The `SidebarMenuSub` component is used to render a submenu within a `SidebarMenu
 
 ## SidebarMenuBadge
 
-The `SidebarMenuBadge` component is used to render a badge within a `SidebarMenuItem`.
+`SidebarMenuBadge` 组件用于在 `SidebarMenuItem` 里渲染徽章。
 
 ```tsx showLineNumbers
 <SidebarMenuItem>
@@ -414,7 +412,7 @@ The `SidebarMenuBadge` component is used to render a badge within a `SidebarMenu
 
 ## SidebarMenuSkeleton
 
-The `SidebarMenuSkeleton` component is used to render a skeleton for a `SidebarMenu`.
+`SidebarMenuSkeleton` 组件用于渲染 `SidebarMenu` 的骨架屏。
 
 ```tsx showLineNumbers
 <SidebarMenu>
@@ -428,7 +426,7 @@ The `SidebarMenuSkeleton` component is used to render a skeleton for a `SidebarM
 
 ## SidebarTrigger
 
-Use the `SidebarTrigger` component to render a button that toggles the sidebar.
+使用 `SidebarTrigger` 组件渲染一个切换侧边栏的按钮。
 
 ```tsx showLineNumbers
 import { useSidebar } from "@/components/ui/sidebar"
@@ -436,13 +434,13 @@ import { useSidebar } from "@/components/ui/sidebar"
 export function CustomTrigger() {
   const { toggleSidebar } = useSidebar()
 
-  return <button onClick={toggleSidebar}>Toggle Sidebar</button>
+  return <button onClick={toggleSidebar}>切换侧边栏</button>
 }
 ```
 
 ## SidebarRail
 
-The `SidebarRail` component is used to render a rail within a `Sidebar`. This rail can be used to toggle the sidebar.
+`SidebarRail` 组件用于在 `Sidebar` 内渲染侧边栏轨道。这个轨道可用来切换侧边栏。
 
 ```tsx showLineNumbers
 <Sidebar>
@@ -455,9 +453,9 @@ The `SidebarRail` component is used to render a rail within a `Sidebar`. This ra
 </Sidebar>
 ```
 
-## Controlled Sidebar
+## 受控侧边栏
 
-Use the `open` and `onOpenChange` props to control the sidebar.
+使用 `open` 和 `onOpenChange` 属性来控制侧边栏。
 
 ```tsx showLineNumbers
 export function AppSidebar() {
@@ -471,9 +469,9 @@ export function AppSidebar() {
 }
 ```
 
-## Theming
+## 主题化
 
-We use the following CSS variables to theme the sidebar.
+我们使用以下 CSS 变量来给侧边栏设置主题。
 
 ```css
 @layer base {
@@ -501,9 +499,9 @@ We use the following CSS variables to theme the sidebar.
 }
 ```
 
-## Styling
+## 样式技巧
 
-Here are some tips for styling the sidebar based on different states.
+这里提供一些基于不同状态给侧边栏设置样式的建议。
 
 ```tsx
 <Sidebar collapsible="icon">
@@ -520,26 +518,26 @@ Here are some tips for styling the sidebar based on different states.
 </SidebarMenuItem>
 ```
 
-## RTL
+## RTL（从右到左）
 
-To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl).
+要在 shadcn/ui 中启用 RTL 支持，请参阅[RTL 配置指南](/docs/rtl)。
 
 {/* prettier-ignore */}
 <Button asChild size="sm" className="mt-6">
-  <a href="/view/base-nova/sidebar-rtl" target="_blank">View RTL Sidebar <ExternalLinkIcon /></a>
+  <a href="/view/base-nova/sidebar-rtl" target="_blank">查看 RTL 侧边栏 <ExternalLinkIcon /></a>
 </Button>
 
-## Changelog
+## 更新日志
 
-### RTL Support
+### RTL 支持
 
-If you're upgrading from a previous version of the `Sidebar` component, you'll need to apply the following updates to add RTL support:
+如果你是从之前版本升级 `Sidebar` 组件，需要应用以下更新以添加 RTL 支持：
 
 <Steps>
 
-<Step>Add `dir` prop to Sidebar component.</Step>
+<Step>在 Sidebar 组件中添加 `dir` 属性。</Step>
 
-Add `dir` to the destructured props and pass it to `SheetContent` for mobile:
+在解构的属性中添加 `dir`，并传递给移动端的 `SheetContent`：
 
 ```diff
   function Sidebar({
@@ -557,7 +555,7 @@ Add `dir` to the destructured props and pass it to `SheetContent` for mobile:
   }) {
 ```
 
-Then pass it to `SheetContent` in the mobile view:
+然后在移动端视图中传递给 `SheetContent`：
 
 ```diff
   <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
@@ -568,9 +566,9 @@ Then pass it to `SheetContent` in the mobile view:
       data-mobile="true"
 ```
 
-<Step>Add `data-side` attribute to sidebar container.</Step>
+<Step>向侧边栏容器添加 `data-side` 属性。</Step>
 
-Add `data-side={side}` to the sidebar container element:
+为侧边栏容器元素添加 `data-side={side}`：
 
 ```diff
   <div
@@ -579,9 +577,9 @@ Add `data-side={side}` to the sidebar container element:
     className={cn(
 ```
 
-<Step>Update sidebar container positioning classes.</Step>
+<Step>更新侧边栏容器定位类名。</Step>
 
-Replace JavaScript ternary conditional classes with CSS data attribute selectors:
+使用 CSS 数据属性选择器替代 JavaScript 三元条件类名：
 
 ```diff
   className={cn(
@@ -592,9 +590,9 @@ Replace JavaScript ternary conditional classes with CSS data attribute selectors
 +   "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex data-[side=left]:left-0 data-[side=right]:right-0 data-[side=left]:group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)] data-[side=right]:group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
 ```
 
-<Step>Update SidebarRail positioning classes.</Step>
+<Step>更新 SidebarRail 定位类名。</Step>
 
-Update the `SidebarRail` component to use physical positioning for the rail:
+将 `SidebarRail` 组件改为使用物理定位：
 
 ```diff
   className={cn(
@@ -602,21 +600,21 @@ Update the `SidebarRail` component to use physical positioning for the rail:
 +   "hover:after:bg-sidebar-border absolute inset-y-0 z-20 hidden w-4 ltr:-translate-x-1/2 rtl:-translate-x-1/2 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:start-1/2 after:w-[2px] sm:flex",
 ```
 
-<Step>Add RTL flip to SidebarTrigger icon.</Step>
+<Step>在 SidebarTrigger 图标中添加 RTL 翻转。</Step>
 
-Add `className="rtl:rotate-180"` to the icon in `SidebarTrigger` to flip it in RTL mode:
+在 `SidebarTrigger` 中的图标添加 `className="rtl:rotate-180"` 以支持 RTL 模式下翻转：
 
 ```diff
   <Button ...>
 -   <PanelLeftIcon />
 +   <PanelLeftIcon className="rtl:rotate-180" />
-    <span className="sr-only">Toggle Sidebar</span>
+    <span className="sr-only">切换侧边栏</span>
   </Button>
 ```
 
 </Steps>
 
-After applying these changes, you can use the `dir` prop to set the direction:
+完成上述改动后，你就可以使用 `dir` 属性来设置方向：
 
 ```tsx
 <Sidebar dir="rtl" side="right">
@@ -624,4 +622,4 @@ After applying these changes, you can use the `dir` prop to set the direction:
 </Sidebar>
 ```
 
-The sidebar will correctly position itself and handle interactions in both LTR and RTL layouts.
+侧边栏将能正确定位并在 LTR 和 RTL 布局中正常交互。
