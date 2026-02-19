@@ -147,10 +147,12 @@ const SIDEBAR_WIDTH_MOBILE = "18rem"
 
 ```tsx showLineNumbers
 <SidebarProvider
-  style={{
-    "--sidebar-width": "20rem",
-    "--sidebar-width-mobile": "20rem",
-  } as React.CSSProperties}
+  style={
+    {
+      "--sidebar-width": "20rem",
+      "--sidebar-width-mobile": "20rem",
+    } as React.CSSProperties
+  }
 >
   <Sidebar />
 </SidebarProvider>
