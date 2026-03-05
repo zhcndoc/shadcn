@@ -825,7 +825,7 @@ export function DataTable<TData, TValue>({
 你可以使用 `table.getFilteredSelectedRowModel()` API 显示已选行数。
 
 ```tsx
-<div className="text-muted-foreground flex-1 text-sm">
+<div className="flex-1 text-sm text-muted-foreground">
   {table.getFilteredSelectedRowModel().rows.length} /{" "}
   {table.getFilteredRowModel().rows.length} 行已选中。
 </div>
@@ -885,7 +885,7 @@ export const columns = [
 
 ## RTL
 
-To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl).
+要启用 shadcn/ui 的 RTL（从右到左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
 <ComponentPreview
   styleName="radix-nova"

@@ -1,8 +1,8 @@
 ---
-title: 日期选择器 Date Picker
-description: 一款带有范围和预设选项的日期选择器组件。
-base: radix
-component: true
+title: 日期选择器 Date Picker  
+description: 一款带有范围和预设选项的日期选择器组件。  
+base: radix  
+component: true  
 ---
 
 <ComponentPreview styleName="radix-nova" name="date-picker-demo" />
@@ -40,7 +40,7 @@ export function DatePickerDemo() {
         <Button
           variant="outline"
           data-empty={!date}
-          className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
+          className="w-[280px] justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
         >
           <CalendarIcon />
           {date ? format(date, "PPP") : <span>请选择日期</span>}
@@ -96,7 +96,7 @@ export function DatePickerDemo() {
 
 ## RTL
 
-To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl).
+要在 shadcn/ui 中启用 RTL（从右到左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
 <ComponentPreview
   styleName="radix-nova"
