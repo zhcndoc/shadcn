@@ -5,7 +5,7 @@ description: 为 Vite 安装和配置 shadcn/ui。
 
 <Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
 
-**Starting fresh?** Use [shadcn/create](/create) to save time. It handles Tailwind, TypeScript, and path alias configuration for you, plus custom themes and presets.
+**从头开始？** 使用 [shadcn/create](/create) 来配置一个带有自定义主题、Base UI 或 Radix 以及图标库的 Vite 项目。
 
 </Callout>
 
@@ -13,105 +13,16 @@ description: 为 Vite 安装和配置 shadcn/ui。
 
 ### 创建项目
 
-首先使用 `vite` 创建一个新的 React 项目。选择 **React + TypeScript** 模板：
+运行 `init` 命令来创建一个新的 Vite 项目或设置一个现有项目：
 
 ```bash
-npm create vite@latest
+npx shadcn@latest init -t vite
 ```
 
-### 添加 Tailwind CSS
+**对于 monorepo 项目，使用 `--monorepo` 标志：**
 
 ```bash
-npm install tailwindcss @tailwindcss/vite
-```
-
-将 `src/index.css` 中的所有内容替换为以下内容：
-
-```css title="src/index.css"
-@import "tailwindcss";
-```
-
-### 编辑 tsconfig.json 文件
-
-当前版本的 Vite 将 TypeScript 配置拆分成三个文件，其中两个需要编辑。
-在 `tsconfig.json` 和 `tsconfig.app.json` 文件的 `compilerOptions` 部分添加 `baseUrl` 和 `paths` 属性：
-
-```ts title="tsconfig.json" {11-16} showLineNumbers
-{
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
-}
-```
-
-### 编辑 tsconfig.app.json 文件
-
-在 `tsconfig.app.json` 文件中添加以下代码，用于你的 IDE 解析路径：
-
-```ts title="tsconfig.app.json" {4-9} showLineNumbers
-{
-  "compilerOptions": {
-    // ...
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
-    // ...
-  }
-}
-```
-
-### 更新 vite.config.ts
-
-向 vite.config.ts 中添加以下代码，使你的应用能正确解析路径：
-
-```bash
-npm install -D @types/node
-```
-
-```typescript title="vite.config.ts" showLineNumbers {1,2,8-13}
-import path from "path"
-import tailwindcss from "@tailwindcss/vite"
-import react from "@vitejs/plugin-react"
-import { defineConfig } from "vite"
-
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-})
-```
-
-### 运行 CLI
-
-运行 `shadcn` 初始化命令来设置你的项目：
-
-```bash
-npx shadcn@latest init
-```
-
-你将被问到一些问题以配置 `components.json`。
-
-```txt
-Which color would you like to use as base color? › Neutral
+npx shadcn@latest init -t vite --monorepo
 ```
 
 ### 添加组件
@@ -124,18 +35,16 @@ npx shadcn@latest add button
 
 上述命令会将 `Button` 组件添加到你的项目中。然后你可以这样导入它：
 
-```tsx showLineNumbers title="src/App.tsx"
+```tsx {1,6} showLineNumbers title="src/App.tsx"
 import { Button } from "@/components/ui/button"
 
-function App() {
+export default function Home() {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center">
+    <div>
       <Button>点击我</Button>
     </div>
   )
 }
-
-export default App
 ```
 
 </Steps>

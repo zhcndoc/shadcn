@@ -5,7 +5,7 @@ description: 为 Next.js 安装和配置 shadcn/ui。
 
 <Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
 
-**Starting a new project?** Use [shadcn/create](/create) for a fully configured Next.js app with custom themes, Base UI or Radix, and icon libraries.
+**开始一个新项目？** 使用 [shadcn/create](/create) 创建一个包含自定义主题、Base UI 或 Radix 以及图标库的完整配置 Next.js 应用。
 
 </Callout>
 
@@ -16,10 +16,14 @@ description: 为 Next.js 安装和配置 shadcn/ui。
 运行 `init` 命令创建一个新的 Next.js 项目，或者设置一个现有项目：
 
 ```bash
-npx shadcn@latest init
+npx shadcn@latest init -t next
 ```
 
-选择 Next.js 项目或 Monorepo。
+**对于 monorepo 项目，使用 `--monorepo` 标志：**
+
+```bash
+npx shadcn@latest init -t next --monorepo
+```
 
 ### 添加组件
 

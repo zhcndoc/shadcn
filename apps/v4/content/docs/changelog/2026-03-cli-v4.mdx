@@ -1,0 +1,153 @@
+---
+title: 2026年3月 - shadcn/cli v4
+description: 功能更强大，使用更简便。为你和你的编码代理打造。技能、预设、干运行、新模板、单体仓库等诸多新功能。
+date: 2026-03-06
+---
+
+我们发布了 shadcn/cli 的第4版。功能更强大，使用更简便。为你和你的编码代理打造。以下是全部新特性。
+
+### shadcn/skills
+
+shadcn/skills 为编码代理提供了必要的上下文，使其能够正确地与组件和注册表协作。它涵盖了 Radix 和 Base UI 原语、更新的 API、组件模式和注册流程。该技能还知道如何使用 shadcn CLI、何时调用以及传递哪些标志。代理犯错更少，生成的代码真正匹配你的设计系统。
+
+你可以向代理提出如下请求：
+
+- “创建一个新的 vite 单体仓库”
+- “帮我找一个 tailark 的英雄组件，加到首页，用 react-bits 的动画来动画文本”
+- “安装并配置 @clerk 的登录页面”
+
+```bash
+npx skills add shadcn/ui
+```
+
+### 引入 --preset
+
+预设将你整个设计系统配置打包成一个短代码。颜色、主题、图标库、字体、圆角。一个字符串，包含一切。
+
+你可以在 [shadcn/create](/create) 上构建你的预设，实时预览，准备好时复制代码。
+
+```bash
+npx shadcn@latest init --preset a1Dg5eFl
+```
+
+用它从自定义配置搭建项目，与你的团队共享，或发布到注册表。把它放入提示中，让代理知道从哪里开始。支持 Claude、Codex、v0、Replit 等多平台随身携带你的预设。
+
+### 切换预设
+
+当你开发新应用时，找到满意的预设可能需要多次尝试，因此我们让切换预设变得非常简单。在你的应用中运行 init --preset，CLI 会重新配置一切，包括组件。
+
+```bash
+npx shadcn@latest init --preset ad3qkJ7
+```
+
+### 技能 + 预设
+
+你的代理知道如何使用预设。可以搭建项目，切换设计系统，尝试新风格。
+
+- “用 --preset adtk27v 创建一个新的 next 应用”
+- “我们试试 --preset adtk27v”
+
+### 全新 shadcn/create
+
+为了帮助你构建自定义预设，我们重构了 [shadcn/create](/create)。它现在包含了可以用于预览预设的 UI 组件库。在开始构建前，先看看颜色、字体和圆角如何应用于真实组件。
+
+### 新增 --dry-run、--diff 和 --view 标志
+
+在写入任何文件之前，先查看注册表会向你的项目添加什么。你可以自行审查变更，或传递给编码代理复核。
+
+```bash
+npx shadcn@latest add button --dry-run
+npx shadcn@latest add button --diff
+npx shadcn@latest add button --view
+```
+
+### 更新原语
+
+你可以用 `--diff` 标志检查注册表更新。或者让代理帮你：“检查 @shadcn 的更新并合并到本地改动”。
+
+```bash
+npx shadcn@latest add button --diff
+```
+
+### shadcn init --template
+
+`shadcn init` 现在支持为 Next.js、Vite、Laravel、React Router、Astro 和 TanStack Start 生成完整项目模板。Next.js 和 Vite 含内置暗黑模式。
+
+```bash
+npx shadcn@latest init
+
+选择模板 › - 使用方向键。回车确认。
+❯ Next.js
+  Vite
+  TanStack Start
+  React Router
+  Astro
+  Laravel
+```
+
+使用 `--monorepo` 参数来搭建单体仓库。
+
+```bash
+npx shadcn@latest init -t next --monorepo
+```
+
+### shadcn init --base
+
+选择你的原语。用 `--base` 参数开始一个 Radix 或 Base UI 项目。
+
+```bash
+npx shadcn@latest init --base radix
+```
+
+### shadcn info
+
+`info` 命令现在显示完整信息：框架、版本、CSS 变量、已安装组件，以及每个组件的文档和示例地址。非常适合给编码代理提供处理你项目所需的上下文。
+
+```bash
+npx shadcn@latest info
+```
+
+### shadcn docs
+
+通过 CLI 获取任意 UI 组件的文档、代码和示例。为你的编码代理提供正确使用原语的上下文。
+
+```bash
+npx shadcn@latest docs combobox
+
+combobox
+  - 文档      https://ui.shadcn.com/docs/components/radix/combobox
+  - 示例      https://raw.githubusercontent.com/shadcn-ui/ui/refs/heads/main/apps/v4/registry/bases/radix/examples/combobox-example.tsx
+  - API       https://base-ui.com/react/components/combobox
+```
+
+### registry:base 和 registry:font
+
+注册表现在可以用 `registry:base` 分发整个设计系统作为单一负载包。包含组件、依赖、CSS 变量、字体、配置。一键安装，全部设置完成。
+
+字体现在是一级注册类型。安装和配置方式与组件相同。
+
+```json title="font-inter.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-inter",
+  "type": "registry:font",
+  "font": {
+    "family": "'Inter Variable', sans-serif",
+    "provider": "google",
+    "import": "Inter",
+    "variable": "--font-sans",
+    "subsets": ["latin"]
+  }
+}
+```
+
+```bash
+npx shadcn@latest add font-inter
+```
+
+## 相关链接
+
+- [shadcn/skills](/skills)
+- [shadcn/create](/create)
+- [shadcn/cli](/cli)
+- [shadcn/registry](/docs/registry)

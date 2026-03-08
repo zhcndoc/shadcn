@@ -56,7 +56,7 @@ export default function IndexPage() {
         <PageHeaderDescription>{description}</PageHeaderDescription>
         <PageActions>
           <Button asChild size="sm" className="h-[31px] rounded-lg">
-            <Link href="/docs/installation">开始使用</Link>
+            <Link href="/create">新项目</Link>
           </Button>
           <Button asChild size="sm" variant="ghost" className="rounded-lg">
             <Link href="/docs/components">查看组件</Link>

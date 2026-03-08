@@ -9,13 +9,14 @@
     "[RTL](/docs/rtl)",
     "[CLI](/docs/cli)",
     "monorepo",
-    "typography",
+    "skills",
     "v0",
     "javascript",
     "blocks",
     "figma",
     "[更新日志](/docs/changelog)",
     "[大语言模型](/llms.txt)",
-    "legacy"
+    "legacy",
+    "!new"
   ]
 }

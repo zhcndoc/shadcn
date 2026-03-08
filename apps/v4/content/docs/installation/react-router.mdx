@@ -3,20 +3,24 @@ title: React Router
 description: 为 React Router 安装和配置 shadcn/ui。
 ---
 
+<Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
+
+**开始一个新项目？** 使用 [shadcn/create](/create) 来创建一个配置完整的 React Router 应用，包含自定义主题、Base UI 或 Radix 以及图标库。
+
+</Callout>
+
 <Steps>
 
 ### 创建项目
 
 ```bash
-npx create-react-router@latest my-app
+npx shadcn@latest init -t react-router
 ```
 
-### 运行命令行工具
-
-运行 `shadcn` 初始化命令以设置您的项目：
+**对于 monorepo 项目，使用 `--monorepo` 参数：**
 
 ```bash
-npx shadcn@latest init
+npx shadcn@latest init -t react-router --monorepo
 ```
 
 ### 添加组件
@@ -30,7 +34,7 @@ npx shadcn@latest add button
 上述命令会将 `Button` 组件添加到您的项目中。然后，您可以这样导入它：
 
 ```tsx showLineNumbers title="app/routes/home.tsx"
-import { Button } from "~/components/ui/button"
+import { Button } from "@/components/ui/button"
 
 import type { Route } from "./+types/home"
 

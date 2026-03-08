@@ -195,6 +195,368 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
 }
 ```
 
+## registry:ui
+
+### UI 组件
+
+`registry:ui` 项是一个可复用的 UI 组件。它可以包含依赖项、注册表依赖项以及 CSS 变量。
+
+```json title="button.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button",
+  "type": "registry:ui",
+  "dependencies": ["radix-ui"],
+  "files": [
+    {
+      "path": "ui/button.tsx",
+      "content": "...",
+      "type": "registry:ui"
+    }
+  ]
+}
+```
+
+### 带 CSS 变量的 UI 组件
+
+```json title="sidebar.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sidebar",
+  "type": "registry:ui",
+  "dependencies": ["radix-ui"],
+  "registryDependencies": ["button", "separator", "sheet", "tooltip"],
+  "files": [
+    {
+      "path": "ui/sidebar.tsx",
+      "content": "...",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "sidebar-background": "oklch(0.985 0 0)",
+      "sidebar-foreground": "oklch(0.141 0.005 285.823)",
+      "sidebar-border": "oklch(0.92 0.004 286.32)"
+    },
+    "dark": {
+      "sidebar-background": "oklch(0.141 0.005 285.823)",
+      "sidebar-foreground": "oklch(0.985 0 0)",
+      "sidebar-border": "oklch(0.274 0.006 286.033)"
+    }
+  }
+}
+```
+
+## registry:lib
+
+### 工具库
+
+`registry:lib` 项是一个工具库。用于共享辅助函数、常量或其他非组件代码。
+
+```json title="utils.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "utils",
+  "type": "registry:lib",
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "lib/utils.ts",
+      "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}",
+      "type": "registry:lib"
+    }
+  ]
+}
+```
+
+## registry:hook
+
+### 自定义 Hook
+
+`registry:hook` 项是一个自定义 React Hook。
+
+```json title="use-mobile.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-mobile",
+  "type": "registry:hook",
+  "files": [
+    {
+      "path": "hooks/use-mobile.ts",
+      "content": "...",
+      "type": "registry:hook"
+    }
+  ]
+}
+```
+
+### 带依赖项的 Hook
+
+```json title="use-debounce.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-debounce",
+  "type": "registry:hook",
+  "dependencies": ["react"],
+  "files": [
+    {
+      "path": "hooks/use-debounce.ts",
+      "content": "...",
+      "type": "registry:hook"
+    }
+  ]
+}
+```
+
+## registry:font
+
+### 自定义字体
+
+`registry:font` 项安装 Google 字体。`font` 字段是必需的，用于配置字体族、提供者、导入名称和 CSS 变量。
+
+```json title="font-inter.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-inter",
+  "type": "registry:font",
+  "font": {
+    "family": "'Inter Variable', sans-serif",
+    "provider": "google",
+    "import": "Inter",
+    "variable": "--font-sans",
+    "subsets": ["latin"]
+  }
+}
+```
+
+### 等宽字体
+
+```json title="font-jetbrains-mono.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-jetbrains-mono",
+  "type": "registry:font",
+  "font": {
+    "family": "'JetBrains Mono Variable', monospace",
+    "provider": "google",
+    "import": "JetBrains_Mono",
+    "variable": "--font-mono",
+    "weight": ["400", "500", "600", "700"],
+    "subsets": ["latin"]
+  }
+}
+```
+
+### 衬线字体
+
+```json title="font-lora.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-lora",
+  "type": "registry:font",
+  "font": {
+    "family": "'Lora Variable', serif",
+    "provider": "google",
+    "import": "Lora",
+    "variable": "--font-serif",
+    "subsets": ["latin"]
+  }
+}
+```
+
+### 带自定义选择器的字体
+
+使用 `selector` 字段可将字体应用于特定 CSS 选择器，而不是全局应用于 `html`。这适用于标题字体或其他目标字体应用。
+
+```json title="font-playfair-display.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "font-playfair-display",
+  "type": "registry:font",
+  "font": {
+    "family": "'Playfair Display Variable', serif",
+    "provider": "google",
+    "import": "Playfair_Display",
+    "variable": "--font-heading",
+    "subsets": ["latin"],
+    "selector": "h1, h2, h3, h4, h5, h6"
+  }
+}
+```
+
+当设置了 `selector` 时，字体实用类（例如 `font-heading`）通过 CSS `@apply` 应用到指定选择器的 `@layer base` 中，而不是添加到 `<html>` 元素上。CSS 变量仍会注入到 `<html>`，以便全局使用。
+
+## registry:base
+
+### 自定义基础配置
+
+`registry:base` 项是一个完整的设计系统基础。定义了项目的全套依赖项、CSS 变量和配置。`config` 字段是 `registry:base` 项独有的。
+
+`config` 字段支持以下属性（均为可选）：
+
+| 属性                 | 类型                                | 描述                                                             |
+| -------------------- | ---------------------------------- | ---------------------------------------------------------------- |
+| `style`              | `string`                           | 基础样式名称。                                                   |
+| `iconLibrary`        | `string`                           | 使用的图标库（例如 `lucide`）。                                  |
+| `rsc`                | `boolean`                          | 是否启用 React 服务端组件。默认为 `false`。                    |
+| `tsx`                | `boolean`                          | 是否使用 TypeScript。默认为 `true`。                            |
+| `rtl`                | `boolean`                          | 是否启用从右到左支持。默认为 `false`。                          |
+| `menuColor`          | `"default" \| "inverted"`          | 菜单配色方案。默认为 `"default"`。                              |
+| `menuAccent`         | `"subtle" \| "bold"`               | 菜单强调样式。默认为 `"subtle"`。                               |
+| `tailwind.baseColor` | `string`                           | 基础颜色名称（例如 `neutral`、`slate`、`zinc`）。              |
+| `tailwind.css`       | `string`                           | Tailwind CSS 文件路径。                                         |
+| `tailwind.prefix`    | `string`                           | 添加到所有 Tailwind 类的前缀。                                 |
+| `aliases.components` | `string`                           | 组件导入别名。                                                  |
+| `aliases.utils`      | `string`                           | 工具库导入别名。                                                |
+| `aliases.ui`         | `string`                           | UI 组件导入别名。                                               |
+| `aliases.lib`        | `string`                           | 库导入别名。                                                    |
+| `aliases.hooks`      | `string`                           | Hook 导入别名。                                                 |
+| `registries`         | `Record<string, string \| object>` | 自定义注册表 URL。键必须以 `@` 开头。                         |
+
+```json title="custom-base.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "custom-base",
+  "type": "registry:base",
+  "config": {
+    "style": "custom-base",
+    "iconLibrary": "lucide",
+    "tailwind": {
+      "baseColor": "neutral"
+    }
+  },
+  "dependencies": [
+    "class-variance-authority",
+    "tw-animate-css",
+    "lucide-react"
+  ],
+  "registryDependencies": ["utils", "font-inter"],
+  "cssVars": {
+    "light": {
+      "background": "oklch(1 0 0)",
+      "foreground": "oklch(0.141 0.005 285.823)",
+      "primary": "oklch(0.21 0.006 285.885)",
+      "primary-foreground": "oklch(0.985 0 0)"
+    },
+    "dark": {
+      "background": "oklch(0.141 0.005 285.823)",
+      "foreground": "oklch(0.985 0 0)",
+      "primary": "oklch(0.985 0 0)",
+      "primary-foreground": "oklch(0.21 0.006 285.885)"
+    }
+  },
+  "css": {
+    "@import \"tw-animate-css\"": {},
+    "@layer base": {
+      "*": {
+        "@apply border-border outline-ring/50": {}
+      },
+      "body": {
+        "@apply bg-background text-foreground": {}
+      }
+    }
+  }
+}
+```
+
+### 从头开始的基础配置
+
+使用 `extends: none` 创建一个不继承 shadcn/ui 默认的基础。
+
+```json title="custom-base.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "my-design-system",
+  "extends": "none",
+  "type": "registry:base",
+  "config": {
+    "style": "my-design-system",
+    "iconLibrary": "lucide",
+    "tailwind": {
+      "baseColor": "slate"
+    }
+  },
+  "dependencies": ["tailwind-merge", "clsx", "tw-animate-css", "lucide-react"],
+  "registryDependencies": ["utils", "font-geist"],
+  "cssVars": {
+    "light": {
+      "background": "oklch(1 0 0)",
+      "foreground": "oklch(0.141 0.005 285.823)"
+    },
+    "dark": {
+      "background": "oklch(0.141 0.005 285.823)",
+      "foreground": "oklch(0.985 0 0)"
+    }
+  }
+}
+```
+
+## 通用字段
+
+### 作者
+
+使用 `author` 字段为注册表项添加归属信息。
+
+```json title="example-item.json" showLineNumbers {5}
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "custom-component",
+  "type": "registry:ui",
+  "author": "shadcn",
+  "files": [
+    {
+      "path": "ui/custom-component.tsx",
+      "content": "...",
+      "type": "registry:ui"
+    }
+  ]
+}
+```
+
+### 开发依赖
+
+使用 `devDependencies` 字段安装开发依赖包。
+
+```json title="example-item.json" showLineNumbers {5}
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "custom-item",
+  "type": "registry:item",
+  "devDependencies": ["@types/mdx"],
+  "files": [
+    {
+      "path": "lib/mdx.ts",
+      "content": "...",
+      "type": "registry:lib"
+    }
+  ]
+}
+```
+
+### 元数据
+
+使用 `meta` 字段附加任意元数据给注册表项。工具或脚本可以使用这些自定义数据。
+
+```json title="example-item.json" showLineNumbers {5-8}
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "custom-component",
+  "type": "registry:ui",
+  "meta": {
+    "category": "forms",
+    "version": "2.0.0"
+  },
+  "files": [
+    {
+      "path": "ui/custom-component.tsx",
+      "content": "...",
+      "type": "registry:ui"
+    }
+  ]
+}
+```
+
 ## CSS 变量
 
 ### 自定义主题变量

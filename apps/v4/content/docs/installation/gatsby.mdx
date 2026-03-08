@@ -4,9 +4,8 @@ description: 安装并配置 Gatsby。
 ---
 
 <Callout className="mb-6 border-blue-600 bg-blue-50 dark:border-blue-900 dark:bg-blue-950 [&_code]:bg-blue-100 dark:[&_code]:bg-blue-900">
-  **更新：** 我们已在
-  `canary` 版本中添加了对 React 19 和 Tailwind v4 的完整支持。
-  更多信息请参见 [Tailwind v4](/docs/tailwind-v4) 文档。
+  **注意：** 本指南适用于使用 Tailwind CSS v3 的 Gatsby。对于新项目，我们
+  建议使用支持 Tailwind CSS v4 的其他框架之一。
 </Callout>
 
 <Steps>
@@ -83,22 +82,6 @@ export const onCreateWebpackConfig = ({ actions }) => {
 
 ```bash
 npx shadcn@latest init
-```
-
-### 配置 components.json
-
-系统会问你几个问题来配置 `components.json` 文件：
-
-```txt showLineNumbers
-你想使用 TypeScript 吗（推荐）？ no / yes
-你想用哪种样式？ › 默认
-你想用哪种颜色作为基础色？ › Slate
-你的全局 CSS 文件在哪里？ › › ./src/styles/globals.css
-你想用 CSS 变量来控制颜色吗？ › no / yes
-你的 tailwind.config.js 文件在哪里？ › tailwind.config.js
-配置组件的导入别名：› @/components
-配置工具的导入别名：› @/lib/utils
-你使用 React 服务端组件吗？ › no
 ```
 
 ### 完成

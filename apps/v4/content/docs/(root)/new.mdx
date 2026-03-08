@@ -1,0 +1,106 @@
+---
+title: 你的项目准备好了！
+description: 你已经使用 shadcn/ui 创建了一个新项目。
+---
+
+以下是一些入门时可以做的事情，帮助你开始使用 shadcn/ui 构建。
+
+## 添加组件
+
+使用 CLI 向你的项目添加组件。
+
+```bash
+npx shadcn@latest add button
+```
+
+然后在代码中导入并使用它。
+
+```tsx title="app/page.tsx"
+import { Button } from "@/components/ui/button"
+
+export default function Home() {
+  return <Button>点击我</Button>
+}
+```
+
+与传统的组件库不同，shadcn/ui 会将组件源码直接添加到你项目的 `components/ui/` 目录下。你拥有这些代码，并且可以按照自己的意愿自定义它们。
+
+你可以一次添加多个组件，或者添加所有可用组件。
+
+```bash
+npx shadcn@latest add button card input label
+```
+
+```bash
+npx shadcn@latest add --all
+```
+
+浏览所有组件，请访问 [组件页面](/docs/components)。
+
+## 自定义主题
+
+你可以直接在 CSS 文件中编辑你的主题。了解更多关于[主题定制](/docs/theming)，以及如何使用 CSS 变量或实用类。
+
+如果你想尝试新的预设，可以在 [ui.shadcn.com](https://ui.shadcn.com) 上以可视化方式创建自定义主题，并使用预设代码将其应用到你的项目中。
+
+```bash
+npx shadcn@latest init --preset [CODE]
+```
+
+## 添加区块
+
+你可以使用 CLI 向项目中添加区块。
+
+```bash
+npx shadcn@latest add login-03
+```
+
+这将把 `login-03` 区块添加到你的项目中。在代码中导入并使用它。
+
+```tsx title="app/page.tsx"
+import { Login03 } from "@/components/login-03"
+
+export default function Home() {
+  return <Login03 />
+}
+```
+
+## 从注册表安装
+
+shadcn/ui 拥有日益丰富的社区注册表生态系统。你可以使用 CLI 从任意注册表 URL 安装组件。
+
+```bash
+npx shadcn@latest add @[registry]/[name]
+```
+
+浏览[注册表目录](/docs/directory)获取可用注册表列表。
+
+## 使用 AI 构建
+
+shadcn/ui 设计时就考虑到了与 AI 的配合。你的 AI 助手可以读取项目中的组件源码，理解 API，并将它们组合起来构建页面和功能。
+
+以下是一些示例提示词供你尝试：
+
+- _“创建一个包含姓名、邮箱和密码输入表单的注册页面。”_
+- _“创建一个用于更新个人信息的设置页面表单。”_
+- _“构建一个包含页头、统计卡片和数据表的仪表盘。”_
+
+## 安装 shadcn 技能
+
+在你的 AI 助手中安装 shadcn 技能。这将赋予你的 AI 助手访问完整组件注册表、文档和搜索功能的能力。
+
+```bash
+npx skills add shadcn/ui
+```
+
+了解更多关于[技能](/docs/skills)。
+
+## 连接 MCP 服务器
+
+shadcn MCP 服务器为你的 AI 助手提供访问完整组件注册表、文档和搜索的能力。在编辑器中连接它以获得最佳体验。
+
+```bash
+npx shadcn@latest mcp init
+```
+
+在[MCP 服务器](/docs/mcp)页面了解更多。

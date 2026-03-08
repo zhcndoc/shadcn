@@ -34,10 +34,10 @@ description: 注册表项的规范。
       "font-heading": "Poppins, sans-serif"
     },
     "light": {
-      "brand": "20 14.3% 4.1%"
+      "brand": "oklch(0.205 0.015 18)"
     },
     "dark": {
-      "brand": "20 14.3% 4.1%"
+      "brand": "oklch(0.205 0.015 18)"
     }
   }
 }
@@ -147,9 +147,9 @@ description: 注册表项的规范。
 
 ### devDependencies
 
-The `devDependencies` property is used to specify the dev dependencies of your registry item. These are `npm` packages that are only needed during development.
+`devDependencies` 属性用于指定注册表项的开发依赖。这些是仅在开发期间需要的 `npm` 包。
 
-Use `@version` to specify the version of the package.
+使用 `@version` 指定包的版本号。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -210,7 +210,7 @@ Use `@version` to specify the version of the package.
 
 #### path
 
-`path` 属性用于指定文件在注册表中的路径。此路径被构建脚本用来解析、转换并生成注册表JSON负载。
+`path` 属性用于指定文件在注册表中的路径。此路径被构建脚本用来解析、转换并生成注册表 JSON 负载。
 
 #### type
 

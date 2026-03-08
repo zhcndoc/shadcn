@@ -3,6 +3,12 @@ title: Astro
 description: 为 Astro 安装和配置 shadcn/ui
 ---
 
+<Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
+
+**开始一个新项目？** 使用 [shadcn/create](/create) 来获取一个完整配置的 Astro 应用，包含自定义主题、Base UI 或 Radix，以及图标库。
+
+</Callout>
+
 <Steps>
 
 ### 创建项目
@@ -10,34 +16,13 @@ description: 为 Astro 安装和配置 shadcn/ui
 首先创建一个新的 Astro 项目：
 
 ```bash
-npx create-astro@latest astro-app  --template with-tailwindcss --install --add react --git
+npx shadcn@latest init -t astro
 ```
 
-### 编辑 tsconfig.json 文件
-
-在 `tsconfig.json` 文件中添加以下代码以解析路径：
-
-```ts title="tsconfig.json" {4-9} showLineNumbers
-{
-  "compilerOptions": {
-    // ...
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
-    // ...
-  }
-}
-```
-
-### 运行 CLI
-
-运行 `shadcn` 初始化命令来设置你的项目：
+**对于 monorepo 项目，使用 `--monorepo` 标志：**
 
 ```bash
-npx shadcn@latest init
+npx shadcn@latest init -t astro --monorepo
 ```
 
 ### 添加组件
@@ -65,8 +50,8 @@ import { Button } from "@/components/ui/button"
 	</head>
 
 	<body>
-		<div className="grid place-items-center h-screen content-center">
-			<Button>按钮</Button>
+		<div class="grid place-items-center h-screen content-center">
+			<Button>Button</Button>
 		</div>
 	</body>
 </html>

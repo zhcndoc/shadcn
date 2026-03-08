@@ -15,18 +15,21 @@ CLI 现在能够理解 monorepo 结构，会将组件、依赖和注册依赖安
 
 ### 创建一个新的 monorepo 项目
 
-要创建一个新的 monorepo 项目，运行 `init` 命令。你将被提示选择你要创建的项目类型。
+要创建一个新的 monorepo 项目，运行 `init` 命令并带上 `--monorepo` 标志。
 
 ```bash
-npx shadcn@latest init
+npx shadcn@latest init --monorepo
 ```
 
-选择 `Next.js (Monorepo)` 选项。
+然后选择你想使用的模板。
 
 ```bash
-? Would you like to start a new project?
-    Next.js
-❯   Next.js (Monorepo)
+? Select a template ›
+❯   Next.js
+    Vite
+    TanStack Start
+    React Router
+    Astro
 ```
 
 这将创建一个包含两个工作区 `web` 和 `ui` 的 monorepo 项目，并使用 [Turborepo](https://turbo.build/repo/docs) 作为构建系统。
@@ -108,13 +111,13 @@ turbo.json
 ```json showLineNumbers title="apps/web/components.json"
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
+  "style": "radix-nova",
   "rsc": true,
   "tsx": true,
   "tailwind": {
     "config": "",
     "css": "../../packages/ui/src/styles/globals.css",
-    "baseColor": "zinc",
+    "baseColor": "neutral",
     "cssVariables": true
   },
   "iconLibrary": "lucide",
@@ -131,13 +134,13 @@ turbo.json
 ```json showLineNumbers title="packages/ui/components.json"
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "new-york",
+  "style": "radix-nova",
   "rsc": true,
   "tsx": true,
   "tailwind": {
     "config": "",
     "css": "src/styles/globals.css",
-    "baseColor": "zinc",
+    "baseColor": "neutral",
     "cssVariables": true
   },
   "iconLibrary": "lucide",

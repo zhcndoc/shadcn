@@ -21,21 +21,33 @@ Usage: shadcn init [options] [components...]
 initialize your project and install dependencies
 
 Arguments:
-  components         组件的名称、URL 或本地路径
+  components              name, url or local path to component
 
 Options:
-  -t, --template <template>      使用的模板。（next，next-monorepo）
-  -b, --base-color <base-color>  基础颜色。（neutral，gray，zinc，stone，slate）
-  -y, --yes                      跳过确认提示。（默认值：true）
-  -f, --force                    强制覆盖已有配置。（默认值：false）
-  -c, --cwd <cwd>                工作目录，默认当前目录。
-  -s, --silent                   静默输出。（默认值：false）
-  --src-dir                      创建新项目时使用 src 目录。（默认值：false）
-  --no-src-dir                   创建新项目时不使用 src 目录。
-  --css-variables                使用 CSS 变量进行主题设置。（默认值：true）
-  --no-css-variables             不使用 CSS 变量进行主题设置。
-  --no-base-style                不安装 shadcn 基础样式
-  -h, --help                     显示命令帮助信息
+  -t, --template <template>  the template to use. (next, vite, start, react-router, laravel, astro)
+  -b, --base <base>          the component library to use. (radix, base)
+  -p, --preset [name]        use a preset configuration. (name, URL, or preset code)
+  -n, --name <name>          the name for the new project.
+  -d, --defaults             use default configuration. (default: false)
+  -y, --yes                  skip confirmation prompt. (default: true)
+  -f, --force                force overwrite of existing configuration. (default: false)
+  -c, --cwd <cwd>            the working directory. defaults to the current directory.
+  -s, --silent               mute output. (default: false)
+  --monorepo                 scaffold a monorepo project.
+  --no-monorepo              skip the monorepo prompt.
+  --reinstall                re-install existing UI components.
+  --no-reinstall             do not re-install existing UI components.
+  --rtl                      enable RTL support.
+  --no-rtl                   disable RTL support.
+  --css-variables            use css variables for theming. (default: true)
+  --no-css-variables         do not use css variables for theming.
+  -h, --help                 display help for command
+```
+
+`create` 命令是 `init` 的别名：
+
+```bash
+npx shadcn@latest create
 ```
 
 ---
@@ -56,20 +68,19 @@ Usage: shadcn add [options] [components...]
 add a component to your project
 
 Arguments:
-  components         组件的名称、URL 或本地路径
+  components           name, url or local path to component
 
 Options:
-  -y, --yes           跳过确认提示。（默认值：false）
-  -o, --overwrite     覆盖已有文件。（默认值：false）
-  -c, --cwd <cwd>     工作目录，默认当前目录。
-  -a, --all           添加所有可用组件。（默认值：false）
-  -p, --path <path>   添加组件的路径。
-  -s, --silent        静默输出。（默认值：false）
-  --src-dir           创建项目时使用 src 目录。（默认值：false）
-  --no-src-dir        创建项目时不使用 src 目录。
-  --css-variables     使用 CSS 变量进行主题设置。（默认值：true）
-  --no-css-variables  不使用 CSS 变量进行主题设置。
-  -h, --help          显示命令帮助信息
+  -y, --yes            skip confirmation prompt. (default: false)
+  -o, --overwrite      overwrite existing files. (default: false)
+  -c, --cwd <cwd>      the working directory. defaults to the current directory.
+  -a, --all            add all available components (default: false)
+  -p, --path <path>    the path to add the component to.
+  -s, --silent         mute output. (default: false)
+  --dry-run            preview changes without writing files. (default: false)
+  --diff [path]        show diff for a file.
+  --view [path]        show file contents.
+  -h, --help           display help for command
 ```
 
 ---
@@ -157,27 +168,6 @@ Options:
 
 ---
 
-## list
-
-使用 `list` 命令列出注册表中的所有项目。
-
-```bash
-npx shadcn@latest list @acme
-```
-
-**选项**
-
-```bash
-Usage: shadcn list [options] <registries...>
-
-list items from registries
-
-Arguments:
-  registries             要列出的注册表名称或 URL，名称必须以 @ 开头。
-```
-
----
-
 ## build
 
 使用 `build` 命令生成注册表 JSON 文件。
@@ -208,6 +198,56 @@ Options:
 
 ```bash
 npx shadcn@latest build --output ./public/registry
+```
+
+---
+
+## docs
+
+使用 `docs` 命令获取组件的文档和 API 参考。
+
+```bash
+npx shadcn@latest docs [component]
+```
+
+**选项**
+
+```bash
+Usage: shadcn docs [options] [component]
+
+fetch documentation and API references for components
+
+Arguments:
+  component          要获取文档的组件名称
+
+Options:
+  -c, --cwd <cwd>    工作目录，默认当前目录。
+  -b, --base <base>  使用的基础库，'base' 或 'radix'，默认使用项目基础设置。
+  --json             以 JSON 格式输出。（默认值：false）
+  -h, --help         显示命令帮助信息
+```
+
+---
+
+## info
+
+使用 `info` 命令获取您的项目相关信息。
+
+```bash
+npx shadcn@latest info
+```
+
+**选项**
+
+```bash
+Usage: shadcn info [options]
+
+get information about your project
+
+Options:
+  -c, --cwd <cwd>  工作目录，默认当前目录。
+  --json            以 JSON 格式输出。（默认值：false）
+  -h, --help        显示命令帮助信息
 ```
 
 ---

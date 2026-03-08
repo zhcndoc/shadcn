@@ -56,8 +56,8 @@ export function MyChart() {
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">Command</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -460,7 +460,7 @@ const chartData = [
 
 ## 提示框
 
-图表提示框包含标签、名称、指示符和值。您可以组合使用这些元素定制提示框。
+图表提示框包含标签、名称、指示器和值。您可以组合使用这些元素定制提示框。
 
 <ComponentPreview styleName="radix-nova" name="chart-tooltip" hideCode />
 
@@ -510,11 +510,11 @@ const chartConfig = {
   },
   chrome: {
     label: "Chrome",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   safari: {
     label: "Safari",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 ```
@@ -556,11 +556,11 @@ const chartData = [
 const chartConfig = {
   chrome: {
     label: "Chrome",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   safari: {
     label: "Safari",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 ```
@@ -583,7 +583,7 @@ const chartConfig = {
 
 ## RTL
 
-To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl).
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
 <ComponentPreview
   styleName="base-nova"
