@@ -395,24 +395,24 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
 
 `config` 字段支持以下属性（均为可选）：
 
-| 属性                 | 类型                                | 描述                                                             |
-| -------------------- | ---------------------------------- | ---------------------------------------------------------------- |
-| `style`              | `string`                           | 基础样式名称。                                                   |
-| `iconLibrary`        | `string`                           | 使用的图标库（例如 `lucide`）。                                  |
-| `rsc`                | `boolean`                          | 是否启用 React 服务端组件。默认为 `false`。                    |
-| `tsx`                | `boolean`                          | 是否使用 TypeScript。默认为 `true`。                            |
-| `rtl`                | `boolean`                          | 是否启用从右到左支持。默认为 `false`。                          |
-| `menuColor`          | `"default" \| "inverted"`          | 菜单配色方案。默认为 `"default"`。                              |
-| `menuAccent`         | `"subtle" \| "bold"`               | 菜单强调样式。默认为 `"subtle"`。                               |
-| `tailwind.baseColor` | `string`                           | 基础颜色名称（例如 `neutral`、`slate`、`zinc`）。              |
-| `tailwind.css`       | `string`                           | Tailwind CSS 文件路径。                                         |
-| `tailwind.prefix`    | `string`                           | 添加到所有 Tailwind 类的前缀。                                 |
-| `aliases.components` | `string`                           | 组件导入别名。                                                  |
-| `aliases.utils`      | `string`                           | 工具库导入别名。                                                |
-| `aliases.ui`         | `string`                           | UI 组件导入别名。                                               |
-| `aliases.lib`        | `string`                           | 库导入别名。                                                    |
-| `aliases.hooks`      | `string`                           | Hook 导入别名。                                                 |
-| `registries`         | `Record<string, string \| object>` | 自定义注册表 URL。键必须以 `@` 开头。                         |
+| 属性                 | 类型                                                                            | 描述                                                             |
+| -------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `style`              | `string`                                                                        | 基础样式名称。                                                   |
+| `iconLibrary`        | `string`                                                                        | 使用的图标库（例如 `lucide`）。                                  |
+| `rsc`                | `boolean`                                                                       | 是否启用 React 服务端组件。默认为 `false`。                    |
+| `tsx`                | `boolean`                                                                       | 是否使用 TypeScript。默认为 `true`。                            |
+| `rtl`                | `boolean`                                                                       | 是否启用从右到左支持。默认为 `false`。                          |
+| `menuColor`          | `"default" \| "inverted" \| "default-translucent" \| "inverted-translucent"`     | 菜单配色方案。默认为 `"default"`。                              |
+| `menuAccent`         | `"subtle" \| "bold"`                                                            | 菜单强调样式。默认为 `"subtle"`。                               |
+| `tailwind.baseColor` | `string`                                                                        | 基础颜色名称（例如 `neutral`、`slate`、`zinc`）。              |
+| `tailwind.css`       | `string`                                                                        | Tailwind CSS 文件路径。                                         |
+| `tailwind.prefix`    | `string`                                                                        | 添加到所有 Tailwind 类的前缀。                                 |
+| `aliases.components` | `string`                                                                        | 组件导入别名。                                                  |
+| `aliases.utils`      | `string`                                                                        | 工具库导入别名。                                                |
+| `aliases.ui`         | `string`                                                                        | UI 组件导入别名。                                               |
+| `aliases.lib`        | `string`                                                                        | 库导入别名。                                                    |
+| `aliases.hooks`      | `string`                                                                        | Hook 导入别名。                                                 |
+| `registries`         | `Record<string, string \| object>`                                              | 自定义注册表 URL。键必须以 `@` 开头。                         |
 
 ```json title="custom-base.json" showLineNumbers
 {
