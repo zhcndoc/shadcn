@@ -21,7 +21,7 @@ npx create-remix@latest my-app
 
 ### 运行 CLI
 
-运行 `shadcn` 初始化命令来设置你的项目：
+运行 `shadcn` init 命令来设置你的项目：
 
 ```bash
 npx shadcn@latest init
@@ -49,6 +49,8 @@ Which color would you like to use as base color? › Neutral
 - `app/tailwind.css` 文件包含全局 CSS。
 
 ### 安装 Tailwind CSS
+
+将 `tailwindcss` 和 `autoprefixer` 作为开发依赖安装：
 
 ```bash
 npm install -D tailwindcss@latest autoprefixer@latest
@@ -98,7 +100,7 @@ export const links: LinksFunction = () => [
 npx shadcn@latest add button
 ```
 
-上面的命令会将 `Button` 组件添加到你的项目中。然后你可以这样导入它：
+上面的命令会将 `Button` 组件添加到你的项目。然后你可以这样导入它：
 
 ```tsx {1,6} showLineNumbers title="app/routes/index.tsx"
 import { Button } from "~/components/ui/button"
@@ -106,7 +108,7 @@ import { Button } from "~/components/ui/button"
 export default function Home() {
   return (
     <div>
-      <Button>Click me</Button>
+      <Button>点击我</Button>
     </div>
   )
 }

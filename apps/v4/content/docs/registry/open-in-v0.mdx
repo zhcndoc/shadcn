@@ -1,29 +1,28 @@
 ---
 title: 在 v0 中打开
-description: 将您的注册表与 v0 中的“打开”功能集成。
----
+description: 将您的注册表与 v0 中的"打开"功能集成。
 
 如果您的注册表托管且可以通过 URL 公开访问，您可以通过使用 `https://v0.dev/chat/api/open?url=[URL]` 端点，在 v0 中打开注册表项目。
 
 例如：[https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json](https://v0.dev/chat/api/open?url=https://ui.shadcn.com/r/styles/new-york/login-01.json)
 
 <Callout className="mt-6">
-  **重要提示：** “在 v0 中打开”不支持 `cssVars`、`css`、`envVars`、命名空间注册表或高级身份验证方法。
+  **重要提示：** "在 v0 中打开"不支持 `cssVars`、`css`、`envVars`、命名空间注册表或高级身份验证方法。
 </Callout>
 
 ## 按钮
 
-有关如何构建您自己的“在 v0 中打开”按钮的更多信息，请参见 [构建您的 v0 打开按钮](https://v0.dev/chat/button)。
+有关如何构建您自己的"在 v0 中打开"按钮的更多信息，请参见 [构建您的 v0 打开按钮](https://v0.dev/chat/button)。
 
-下面是一个如何向您网站添加“在 v0 中打开”按钮的简单示例。
+下面是一个如何向您网站添加"在 v0 中打开"按钮的简单示例。
 
-```jsx showLineNumbers
+```tsx showLineNumbers
 import { Button } from "@/components/ui/button"
 
 export function OpenInV0Button({ url }: { url: string }) {
   return (
     <Button
-      aria-label="Open in v0"
+      aria-label="在 v0 中打开"
       className="h-8 gap-1 rounded-[6px] bg-black px-3 text-xs text-white hover:bg-black hover:text-white dark:bg-white dark:text-black"
       asChild
     >
@@ -32,7 +31,7 @@ export function OpenInV0Button({ url }: { url: string }) {
         target="_blank"
         rel="noreferrer"
       >
-        Open in{" "}
+        在{" "}
         <svg
           viewBox="0 0 40 20"
           fill="none"
@@ -48,6 +47,7 @@ export function OpenInV0Button({ url }: { url: string }) {
             fill="currentColor"
           ></path>
         </svg>
+        中打开
       </a>
     </Button>
   )
@@ -60,11 +60,11 @@ export function OpenInV0Button({ url }: { url: string }) {
 
 ## 身份验证
 
-“在 v0 中打开”仅支持通过查询参数进行身份验证。不支持命名空间注册表或诸如 Bearer 令牌或头部 API 密钥等高级身份验证方法。
+"在 v0 中打开"仅支持通过查询参数进行身份验证。不支持命名空间注册表或诸如 Bearer 令牌或头部 API 密钥等高级身份验证方法。
 
 ### 使用查询参数认证
 
-要为您的注册表添加“在 v0 中打开”的身份验证，请使用 `token` 查询参数：
+要为您的注册表添加"在 v0 中打开"的身份验证，请使用 `token` 查询参数：
 
 ```
 https://registry.company.com/r/hello-world.json?token=your_secure_token_here
@@ -75,7 +75,7 @@ https://registry.company.com/r/hello-world.json?token=your_secure_token_here
 1. 检查 `token` 查询参数
 2. 根据您的身份验证系统验证该令牌
 3. 如果令牌无效或缺失，返回 `401 Unauthorized` 响应
-4. shadcn CLI 和“在 v0 中打开”都会处理 401 响应并向用户显示相应消息
+4. shadcn CLI 和"在 v0 中打开"都会处理 401 响应并向用户显示相应消息
 
 ### 示例实现
 

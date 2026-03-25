@@ -5,9 +5,9 @@ base: radix
 component: true
 ---
 
-<Callout>
+<Callout className="mt-4">
 
-**注意：** 我们正在升级到 Recharts v3。与此同时，如果您想开始测试 v3，请参见此处评论中的代码 [here](https://github.com/shadcn-ui/ui/issues/7669#issuecomment-2998299159)。我们很快会有正式版本发布。
+**已更新：** `chart` 组件现在使用 Recharts v3。如果你正在升级现有的图表代码，请参阅 [Updating to Recharts v3](#updating-to-recharts-v3)。
 
 </Callout>
 
@@ -51,7 +51,16 @@ export function MyChart() {
 
 **这些组件属于您。**
 
-## 安装
+## Updating to Recharts v3
+
+If you're updating older chart code to Recharts v3:
+
+- Use `var(--chart-1)` instead of `hsl(var(--chart-1))` when you reference chart tokens from your CSS variables.
+- Use `ChartTooltip.defaultIndex` for initial tooltip state only. Keep persistent active shapes in your own chart state.
+- Remove `layout` from `<Bar>` when the parent `<BarChart>` already defines it.
+- Keep a height, `min-h-*`, or `aspect-*` on `ChartContainer` so `ResponsiveContainer` can measure on first render.
+
+## Installation
 
 <CodeTabs>
 
@@ -384,7 +393,7 @@ const chartConfig = {
     --chart-2: oklch(0.6 0.118 184.704);
   }
 
-  .dark: {
+  .dark {
     --chart-1: oklch(0.488 0.243 264.376);
     --chart-2: oklch(0.696 0.17 162.48);
   }
@@ -455,7 +464,7 @@ const chartData = [
 #### Tailwind 中
 
 ```tsx title="components/example-chart.tsx"
-<LabelList className="fill-[--color-desktop]" />
+<LabelList className="fill-(--color-desktop)" />
 ```
 
 ## 提示框

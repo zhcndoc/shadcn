@@ -5,9 +5,9 @@ base: base
 component: true
 ---
 
-<Callout>
+<Callout className="mt-4">
 
-**注意：** 我们正在升级到 Recharts v3。在此期间，如果你想开始测试 v3，请参见[这里](https://github.com/shadcn-ui/ui/issues/7669#issuecomment-2998299159)评论中的代码。我们很快会发布正式版本。
+**更新：** `chart` 组件现在使用 Recharts v3。如果你正在升级现有的图表代码，请参阅[升级到 Recharts v3](#updating-to-recharts-v3)。
 
 </Callout>
 
@@ -28,7 +28,7 @@ component: true
 
 我们底层使用的是 [Recharts](https://recharts.org/)。
 
-我们设计了 `chart` 组件时考虑了组合的思想。**你使用 Recharts 组件构建你的图表，仅在需要时引入自定义组件，比如 `ChartTooltip`**。
+我们设计 `chart` 组件时考虑了组合的思想。**你使用 Recharts 组件构建你的图表，仅在需要时引入自定义组件，比如 `ChartTooltip`**。
 
 ```tsx showLineNumbers /ChartContainer/ /ChartTooltipContent/
 import { Bar, BarChart } from "recharts"
@@ -50,6 +50,15 @@ export function MyChart() {
 我们不对 Recharts 进行封装。这意味着你不会被锁定在某个抽象层。当 Recharts 发布新版本时，你可以按照官方升级路径升级你的图表。
 
 **这些组件是属于你的**。
+
+## Updating to Recharts v3
+
+如果你正在将旧版图表代码更新到 Recharts v3：
+
+- 当你从 CSS 变量引用图表令牌时，使用 `var(--chart-1)` 代替 `hsl(var(--chart-1))`。
+- 仅在初始提示状态时使用 `ChartTooltip.defaultIndex`。在你的图表状态中保持持久激活的形状。
+- 当父级 `<BarChart>` 已定义 `layout` 时，从 `<Bar>` 中移除该属性。
+- 在 `ChartContainer` 上保持高度、`min-h-*` 或 `aspect-*`，以便 `ResponsiveContainer` 可以在首次渲染时进行测量。
 
 ## 安装
 
@@ -356,7 +365,7 @@ const chartConfig = {
   desktop: {
     label: "桌面",
     icon: Monitor,
-    // 颜色可以是类似 'hsl(220, 98%, 61%)' 或 'var(--color-name)'
+    // 颜色可以是类似 'hsl(220, 98%, 61%)' 或 'var(--color-name)' 的简单字符串
     color: "#2563eb",
     // 或者是包含 'light' 和 'dark' 主题颜色的对象
     theme: {
@@ -455,7 +464,7 @@ const chartData = [
 #### Tailwind 中
 
 ```tsx title="components/example-chart.tsx"
-<LabelList className="fill-[--color-desktop]" />
+<LabelList className="fill-(--color-desktop)" />
 ```
 
 ## 提示信息（Tooltip）
@@ -581,9 +590,9 @@ const chartConfig = {
 <LineChart accessibilityLayer />
 ```
 
-## RTL
+## 从右到左（RTL）
 
-要在 shadcn/ui 中启用 RTL 支持，请参阅[RTL 配置指南](/docs/rtl)。
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
 <ComponentPreview
   styleName="base-nova"

@@ -1,6 +1,6 @@
 ---
 title: Remix
-description: 在你的 Remix 应用中添加暗模式。
+description: 为你的 Remix 应用添加暗模式。
 ---
 
 <Steps>
@@ -103,7 +103,7 @@ export function App() {
 
 ## 添加一个 action 路由
 
-在 `/routes/action.set-theme.ts` 中创建一个文件。确保你将文件名传递给 ThemeProvider 组件。该路由用于在用户更改主题时，将首选主题存储到会话存储中。
+在 `/routes/action.set-theme.ts` 中创建一个文件。确保将文件名传递给 ThemeProvider 组件。当用户更改主题时，此路由用于将首选主题存储在会话存储中。
 
 ```tsx title="app/routes/action.set-theme.ts" showLineNumbers
 import { createThemeAction } from "remix-themes"

@@ -314,13 +314,13 @@ export const columns: ColumnDef<Payment>[] = [
 
 ## 行操作
 
-让我们给表格添加行操作。这里使用 `<Dropdown />` 组件实现。
+让我们为表格添加行操作。我们将为此使用 `<DropdownMenu />` 组件。
 
 <Steps className="mb-0 pt-2">
 
 ### 更新列定义
 
-在列定义中添加 `actions` 列，`actions` 的单元格返回一个 `<Dropdown />` 组件。
+更新我们的列定义以添加一个新的 `actions` 列。`actions` 单元格返回一个 `<DropdownMenu />` 组件。
 
 ```tsx showLineNumbers title="app/payments/columns.tsx" {4,6-14,18-45}
 "use client"
@@ -408,7 +408,7 @@ export function DataTable<TData, TValue>({
 }
 ```
 
-这会自动将行拆分页，每页显示 10 条。详情见 [分页文档](https://tanstack.com/table/v8/docs/api/features/pagination)，了解如何定制页面大小和实现手动分页。
+这会自动将行拆分成页，每页显示 10 条。详情见 [分页文档](https://tanstack.com/table/v8/docs/api/features/pagination)，了解如何定制页面大小和实现手动分页。
 
 ### 添加分页控制
 
@@ -470,7 +470,7 @@ export function DataTable<TData, TValue>({
 
 ### 更新 `<DataTable>`
 
-```tsx showLineNumbers title="app/payments/data-table.tsx" showLineNumbers {3,6,10,18,25-28}
+```tsx showLineNumbers title="app/payments/data-table.tsx" {3,6,10,18,25-28}
 "use client"
 
 import * as React from "react"

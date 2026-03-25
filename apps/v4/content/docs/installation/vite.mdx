@@ -1,7 +1,6 @@
 ---
 title: Vite
 description: 为 Vite 安装和配置 shadcn/ui。
----
 
 <Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
 
@@ -13,7 +12,7 @@ description: 为 Vite 安装和配置 shadcn/ui。
 
 ### 创建项目
 
-运行 `init` 命令来创建一个新的 Vite 项目或设置一个现有项目：
+运行 `init` 命令来创建新的 Vite 项目或设置现有项目：
 
 ```bash
 npx shadcn@latest init -t vite
@@ -38,7 +37,7 @@ npx shadcn@latest add button
 ```tsx {1,6} showLineNumbers title="src/App.tsx"
 import { Button } from "@/components/ui/button"
 
-export default function Home() {
+export default function App() {
   return (
     <div>
       <Button>点击我</Button>

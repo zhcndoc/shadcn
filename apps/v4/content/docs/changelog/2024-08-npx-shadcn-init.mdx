@@ -8,12 +8,12 @@ date: 2024-08-31
 
 这是朝着分发你和你的大型语言模型（LLMs）都能访问和使用的代码迈出的重要一步。
 
-1. 首先，CLI 现在开箱即支持所有主流 React 框架。包括 Next.js、Remix、Vite 和 Laravel。当你初始化一个新应用时，我们会更新你已有的 Tailwind 文件，而不是覆盖它们。
-2. 组件现在自带它们的依赖。例如手风琴（accordion）组件，可以定义它的 Tailwind 关键帧动画。当你将它添加到项目中时，我们会相应地更新你的 tailwind.config.ts 文件。
-3. 你还可以通过 URL 安装远程组件。例如：`npx shadcn add https://acme.com/registry/navbar.json`。
-4. 我们也改进了 init 命令。它支持框架检测，甚至可以通过一条命令初始化一个全新的 Next.js 应用。`npx shadcn init`。
-5. 我们创建了一个新的 schema，供你发布自己的组件注册表使用。并且由于支持 URL，你甚至可以用它来分发私有组件。
-6. 还有更多更新，比如更好的错误处理和 monorepo 支持。
+1. 首先，CLI 现在开箱即用地支持所有主流 React 框架。Next.js、Remix、Vite 和 Laravel。当你在新应用中初始化时，我们会更新你现有的 Tailwind 文件而不是覆盖它们。
+2. 组件现在自带其依赖项。以手风琴组件为例，它可以定义自己的 Tailwind 关键帧。当你将其添加到项目中时，我们会相应地更新你的 tailwind.config.ts 文件。
+3. 你还可以使用 URL 安装远程组件。`npx shadcn add https://acme.com/registry/navbar.json`。
+4. 我们还改进了 init 命令。它可以检测框架，甚至可以通过一条命令初始化一个全新的 Next.js 应用。`npx shadcn init`。
+5. 我们创建了一个新的 schema，你可以用它来发布你自己的组件注册表。由于它支持 URL，你甚至可以用它来分发私有组件。
+6. 还有一些其他更新，例如更好的错误处理和 monorepo 支持。
 
 你可以今天就试用新的 CLI。
 
@@ -42,4 +42,4 @@ npx shadcn init sidebar-01 login-01
 }
 ```
 
-如果你使用的是不同的导入别名前缀，比如 `~`，请将 `@` 替换成你的前缀。
+如果你使用不同的导入别名前缀，例如 `~`，请将 `@` 替换为你的前缀。

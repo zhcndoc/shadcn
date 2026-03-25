@@ -13,7 +13,7 @@ npx shadcn@latest migrate radix
 它会自动更新你 `ui` 组件中的所有导入，并安装 `radix-ui` 作为依赖。
 
 ```diff showLineNumbers title="components/ui/alert-dialog.tsx"
-- import * as AlertDialogPrimitive from "@radix-ui/react-dialog"
+- import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
 + import { AlertDialog as AlertDialogPrimitive } from "radix-ui"
 ```
 

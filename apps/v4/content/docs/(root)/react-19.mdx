@@ -11,7 +11,7 @@ description: 在 Next.js 15 和 React 19 中使用 shadcn/ui。
 
 如果你使用 `npm`，可以通过添加标志来安装 shadcn/ui 的依赖。在运行 `shadcn` CLI 时，会提示你选择一个标志。使用 pnpm、bun 或 yarn 则无需添加标志。
 
-有关每个包对 React 19 支持的状态，请参阅 [升级状态](#upgrade-status)。
+有关每个包对 React 19 支持的状态，请参阅 [升级状态](#升级状态)。
 
 ## 发生了什么？
 
@@ -98,12 +98,12 @@ npm i react@18 react-dom@18
 当你运行 `npx shadcn@latest init -d` 时，会提示你选择一种方式以解决 peer dependency 问题：
 
 ```bash
-It looks like you are using React 19.
-Some packages may fail to install due to peer dependency issues (see https://ui.shadcn.com/react-19).
+看起来你正在使用 React 19。
+由于 peer dependency 的问题，某些包可能无法安装（请参阅 https://ui.shadcn.com/react-19）。
 
-? How would you like to proceed? › - Use arrow-keys. Return to submit.
-❯   Use --force
-    Use --legacy-peer-deps
+? 你希望如何继续？ › - 使用方向键。按回车提交。
+❯   使用 --force
+    使用 --legacy-peer-deps
 ```
 
 接着，你可以使用选择的标志运行该命令。
@@ -116,7 +116,7 @@ Some packages may fail to install due to peer dependency issues (see https://ui.
 
 ## 升级状态
 
-为了方便你跟踪升级进度，我制作了下面的表格，列出了 shadcn/ui 依赖包对 React 19 的支持状态。
+为了方便你跟踪升级进度，下方表格列出了 shadcn/ui 依赖项对 React 19 的支持状态。
 
 - ✅ - 使用 npm、pnpm 和 bun 均支持 React 19。
 - 🚧 - 使用 pnpm 和 bun 支持 React 19。npm 需要添加标志。相关 PR 正在进行中。

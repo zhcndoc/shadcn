@@ -67,7 +67,7 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
   return (
     <LoaderIcon
       role="status"
-      aria-label="载入中"
+      aria-label="加载中"
       className={cn("size-4 animate-spin", className)}
       {...props}
     />
@@ -87,19 +87,13 @@ export { Spinner }
 
 ### 颜色
 
-使用 `text-` 工具类来改变加载指示器的颜色。
-
-<ComponentPreview name="spinner-color" />
-
-### 按钮
-
-在按钮中添加加载指示器，以表示加载状态。`<Button />` 会自动处理加载指示器与文本之间的间距。
+在按钮中添加加载指示器以表示加载状态。将 `<Spinner />` 放置在标签前并使用 `data-icon="inline-start"` 表示起始位置，或放置在标签后并使用 `data-icon="inline-end"` 表示结束位置。
 
 <ComponentPreview styleName="radix-nova" name="spinner-button" />
 
 ### 标记
 
-你也可以在标记（badge）内使用加载指示器。
+在标记中添加加载指示器以表示加载状态。将 `<Spinner />` 放置在标签前并使用 `data-icon="inline-start"` 表示起始位置，或放置在标签后并使用 `data-icon="inline-end"` 表示结束位置。
 
 <ComponentPreview styleName="radix-nova" name="spinner-badge" />
 
@@ -115,6 +109,6 @@ export { Spinner }
 
 ## RTL
 
-To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl).
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
 <ComponentPreview styleName="radix-nova" name="spinner-rtl" direction="rtl" />

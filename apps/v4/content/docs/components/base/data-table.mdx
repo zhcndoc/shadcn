@@ -314,13 +314,13 @@ export const columns: ColumnDef<Payment>[] = [
 
 ## 行操作
 
-让我们给表格添加行操作。我们将使用 `<Dropdown />` 组件。
+让我们添加行操作到我们的表格中。我们将使用 `<DropdownMenu />` 组件来实现。
 
 <Steps className="mb-0 pt-2">
 
 ### 更新列定义
 
-在列定义中新增一个 `actions` 列，`actions` 单元格返回一个 `<Dropdown />` 组件。
+更新我们的列定义以添加一个新的 `actions` 列。`actions` 单元格返回一个 `<DropdownMenu />` 组件。
 
 ```tsx showLineNumbers title="app/payments/columns.tsx" {4,6-14,18-45}
 "use client"
@@ -470,7 +470,7 @@ export function DataTable<TData, TValue>({
 
 ### 更新 `<DataTable>`
 
-```tsx showLineNumbers title="app/payments/data-table.tsx" showLineNumbers {3,6,10,18,25-29}
+```tsx showLineNumbers title="app/payments/data-table.tsx" {3,6,10,18,25-29}
 "use client"
 
 import * as React from "react"

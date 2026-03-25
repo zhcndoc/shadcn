@@ -93,7 +93,7 @@ description: 注册表项的规范。
 
 ### type
 
-`type` 属性用于指定注册表项目的类型。用于确定项目在解析到项目时的类型与目标路径。
+`type` 属性用于指定注册表项目的类型。用于确定项目的类型以及在项目中的安装位置。
 
 ```json title="registry-item.json" showLineNumbers
 {
@@ -338,6 +338,34 @@ description: 注册表项的规范。
 **重要：** 使用 `envVars` 添加开发或示例环境变量。请勿用来添加生产环境变量。
 
 </Callout>
+
+### font
+
+`font` 属性是 `registry:font` 类型项目必需的。它配置字体系列、提供方、导入名称、CSS 变量以及为非 Next.js 项目安装的 npm 包。
+
+```json title="registry-item.json" showLineNumbers
+{
+  "font": {
+    "family": "'Inter Variable', sans-serif",
+    "provider": "google",
+    "import": "Inter",
+    "variable": "--font-sans",
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/inter"
+  }
+}
+```
+
+| 属性     | 类型       | 必需 | 描述                                                                               |
+| ------------ | ---------- | -------- | ----------------------------------------------------------------------------------------- |
+| `family`     | `string`   | 是      | CSS font-family 值。                                                                |
+| `provider`   | `string`   | 是      | 字体提供方。目前仅支持 `google`。                                  |
+| `import`     | `string`   | 是      | 从 `next/font/google` 导入字体的名称。                                     |
+| `variable`   | `string`   | 是      | 字体的 CSS 变量名（例如 `--font-sans`、`--font-mono`）。                  |
+| `weight`     | `string[]` | 否       | 要包含的字体粗细数组。                                                         |
+| `subsets`    | `string[]` | 否       | 要包含的字体子集数组。                                                         |
+| `selector`   | `string`   | 否       | 应用字体的 CSS 选择器。默认为 `html`。                                    |
+| `dependency` | `string`   | 否       | 为非 Next.js 项目安装的 npm 包（例如 `@fontsource-variable/inter`）。 |
 
 ### docs
 

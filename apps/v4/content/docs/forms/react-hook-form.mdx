@@ -63,7 +63,7 @@ import { InfoIcon } from "lucide-react"
 
 ### 创建表单模式
 
-首先，我们使用 Zod 模式定义表单结构。
+We'll start by defining the shape of our form using a Zod schema.
 
 <Callout icon={<InfoIcon />}>
   **注意：** 本示例使用 `zod v3` 进行模式验证，但您可以使用 React Hook Form 支持的任何其他标准模式验证库替代。
@@ -84,7 +84,7 @@ const formSchema = z.object({
 })
 ```
 
-### 设置表单
+### Set up the form
 
 接下来，我们将使用 React Hook Form 中的 `useForm` 钩子创建表单实例，并添加 Zod 解析器用于数据验证。
 

@@ -44,7 +44,7 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
 
 以下注册表项是不扩展 shadcn/ui 的自定义样式。参见 `extends: none` 字段。
 
-它可用于从头创建新样式，例如自定义组件、CSS 变量、依赖项等。
+它可以用来从头创建新样式，即自定义组件、CSS 变量、依赖项等。
 
 执行 `npx shadcn add` 时，以下操作将会发生：
 
@@ -174,7 +174,7 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
 
 ### 安装块并覆盖基础组件
 
-你可以从 shadcn/ui 注册表安装一个块，并用自定义的基础组件覆盖其原始基础组件。
+你可以从 shadcn/ui 注册表安装一个块，并使用自定义的组件覆盖原语。
 
 执行 `npx shadcn add` 时，以下操作将发生：
 
@@ -325,7 +325,8 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
     "provider": "google",
     "import": "Inter",
     "variable": "--font-sans",
-    "subsets": ["latin"]
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/inter"
   }
 }
 ```
@@ -343,7 +344,8 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
     "import": "JetBrains_Mono",
     "variable": "--font-mono",
     "weight": ["400", "500", "600", "700"],
-    "subsets": ["latin"]
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/jetbrains-mono"
   }
 }
 ```
@@ -360,7 +362,8 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
     "provider": "google",
     "import": "Lora",
     "variable": "--font-serif",
-    "subsets": ["latin"]
+    "subsets": ["latin"],
+    "dependency": "@fontsource-variable/lora"
   }
 }
 ```
@@ -380,7 +383,8 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
     "import": "Playfair_Display",
     "variable": "--font-heading",
     "subsets": ["latin"],
-    "selector": "h1, h2, h3, h4, h5, h6"
+    "selector": "h1, h2, h3, h4, h5, h6",
+    "dependency": "@fontsource-variable/playfair-display"
   }
 }
 ```
@@ -873,7 +877,7 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
 你可以使用 `envVars` 字段添加环境变量。
 
 ```json title="example-item.json" showLineNumbers {5-9}
-{»
+{
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "custom-item",
   "type": "registry:item",
@@ -917,7 +921,7 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
 }
 ```
 
-另一个安装自定义 ESLint 配置的示例：
+下面是另一个用于安装自定义 ESLint 配置的示例：
 
 ```json title=".eslintrc.json" showLineNumbers {9}
 {
@@ -940,7 +944,7 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
 ```json title="my-custom-starter-template.json" showLineNumbers {9}
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "my-custom-start-template",
+  "name": "my-custom-starter-template",
   "type": "registry:item",
   "dependencies": ["better-auth"],
   "files": [

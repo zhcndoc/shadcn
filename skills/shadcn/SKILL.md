@@ -1,89 +1,90 @@
 ---
 name: shadcn
-description: Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for "shadcn init", "create an app with --preset", or "switch to --preset".
+description: 管理 shadcn 组件和项目 — 添加、搜索、修复、调试、样式设置和组合 UI。提供项目上下文、组件文档和使用示例。适用于使用 shadcn/ui、组件注册表、预设、--preset 代码或任何带有 components.json 文件的项目。也会在执行 "shadcn init"、"使用 --preset 创建应用" 或 "切换到 --preset" 时触发。
 user-invocable: false
+allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(bunx --bun shadcn@latest *)
 ---
 
 # shadcn/ui
 
-A framework for building ui, components and design systems. Components are added as source code to the user's project via the CLI.
+一个用于构建 UI、组件和设计系统的框架。组件通过 CLI 以源代码形式添加到用户的项目中。
 
-> **IMPORTANT:** Run all CLI commands using the project's package runner: `npx shadcn@latest`, `pnpm dlx shadcn@latest`, or `bunx --bun shadcn@latest` — based on the project's `packageManager`. Examples below use `npx shadcn@latest` but substitute the correct runner for the project.
+> **重要：** 使用项目的包管理器运行所有 CLI 命令：`npx shadcn@latest`、`pnpm dlx shadcn@latest` 或 `bunx --bun shadcn@latest` — 基于项目的 `packageManager`。下面的示例使用 `npx shadcn@latest`，但请为项目替换正确的运行器。
 
-## Current Project Context
+## 当前项目上下文
 
 ```json
-!`npx shadcn@latest info --json 2>/dev/null || echo '{"error": "No shadcn project found. Run shadcn init first."}'`
+!`npx shadcn@latest info --json`
 ```
 
-The JSON above contains the project config and installed components. Use `npx shadcn@latest docs <component>` to get documentation and example URLs for any component.
+上面的 JSON 包含项目配置和已安装的组件。使用 `npx shadcn@latest docs <component>` 获取任意组件的文档和示例 URL。
 
-## Principles
+## 原则
 
-1. **Use existing components first.** Use `npx shadcn@latest search` to check registries before writing custom UI. Check community registries too.
-2. **Compose, don't reinvent.** Settings page = Tabs + Card + form controls. Dashboard = Sidebar + Card + Chart + Table.
-3. **Use built-in variants before custom styles.** `variant="outline"`, `size="sm"`, etc.
-4. **Use semantic colors.** `bg-primary`, `text-muted-foreground` — never raw values like `bg-blue-500`.
+1. **优先使用现有组件。** 在编写自定义 UI 之前，使用 `npx shadcn@latest search` 检查注册表。也要检查社区注册表。
+2. **组合，不要重复发明。** 设置页面 = 标签页 + 卡片 + 表单控件。仪表板 = 侧边栏 + 卡片 + 图表 + 表格。
+3. **优先使用内置变体而非自定义样式。** `variant="outline"`、`size="sm"` 等。
+4. **使用语义化颜色。** `bg-primary`、`text-muted-foreground` — 永远不要使用原始值如 `bg-blue-500`。
 
-## Critical Rules
+## 关键规则
 
-These rules are **always enforced**. Each links to a file with Incorrect/Correct code pairs.
+这些规则**始终执行**。每个都链接到包含错误/正确代码对的文件。
 
-### Styling & Tailwind → [styling.md](./rules/styling.md)
+### 样式与 Tailwind → [styling.md](./rules/styling.md)
 
-- **`className` for layout, not styling.** Never override component colors or typography.
-- **No `space-x-*` or `space-y-*`.** Use `flex` with `gap-*`. For vertical stacks, `flex flex-col gap-*`.
-- **Use `size-*` when width and height are equal.** `size-10` not `w-10 h-10`.
-- **Use `truncate` shorthand.** Not `overflow-hidden text-ellipsis whitespace-nowrap`.
-- **No manual `dark:` color overrides.** Use semantic tokens (`bg-background`, `text-muted-foreground`).
-- **Use `cn()` for conditional classes.** Don't write manual template literal ternaries.
-- **No manual `z-index` on overlay components.** Dialog, Sheet, Popover, etc. handle their own stacking.
+- **`className` 用于布局，而非样式。** 永远不要覆盖组件颜色或排版。
+- **不要使用 `space-x-*` 或 `space-y-*`。** 使用 `flex` 配合 `gap-*`。对于垂直堆叠，使用 `flex flex-col gap-*`。
+- **当宽度和高度相等时使用 `size-*`。** `size-10` 而不是 `w-10 h-10`。
+- **使用 `truncate` 简写。** 不要写 `overflow-hidden text-ellipsis whitespace-nowrap`。
+- **不要手动覆盖 `dark:` 颜色。** 使用语义化标记（`bg-background`、`text-muted-foreground`）。
+- **使用 `cn()` 进行条件类名处理。** 不要写手动模板字面量三元表达式。
+- **不要在遮罩层组件上手动设置 `z-index`。** 对话框、工作表、弹出框等自行处理堆叠。
 
-### Forms & Inputs → [forms.md](./rules/forms.md)
+### 表单与输入 → [forms.md](./rules/forms.md)
 
-- **Forms use `FieldGroup` + `Field`.** Never use raw `div` with `space-y-*` or `grid gap-*` for form layout.
-- **`InputGroup` uses `InputGroupInput`/`InputGroupTextarea`.** Never raw `Input`/`Textarea` inside `InputGroup`.
-- **Buttons inside inputs use `InputGroup` + `InputGroupAddon`.**
-- **Option sets (2–7 choices) use `ToggleGroup`.** Don't loop `Button` with manual active state.
-- **`FieldSet` + `FieldLegend` for grouping related checkboxes/radios.** Don't use a `div` with a heading.
-- **Field validation uses `data-invalid` + `aria-invalid`.** `data-invalid` on `Field`, `aria-invalid` on the control. For disabled: `data-disabled` on `Field`, `disabled` on the control.
+- **表单使用 `FieldGroup` + `Field`。** 永远不要用原始 `div` 配合 `space-y-*` 或 `grid gap-*` 进行表单布局。
+- **`InputGroup` 使用 `InputGroupInput`/`InputGroupTextarea`。** 永远不要在 `InputGroup` 内使用原始 `Input`/`Textarea`。
+- **输入框内的按钮使用 `InputGroup` + `InputGroupAddon`。**
+- **选项组（2-7 个选择）使用 `ToggleGroup`。** 不要用手动激活状态循环 `Button`。
+- **相关复选框/单选按钮使用 `FieldSet` + `FieldLegend` 进行分组。** 不要使用带标题的 `div`。
+- **字段验证使用 `data-invalid` + `aria-invalid`。** `data-invalid` 在 `Field` 上，`aria-invalid` 在控件上。对于禁用状态：`data-disabled` 在 `Field` 上，`disabled` 在控件上。
 
-### Component Structure → [composition.md](./rules/composition.md)
+### 组件结构 → [composition.md](./rules/composition.md)
 
-- **Items always inside their Group.** `SelectItem` → `SelectGroup`. `DropdownMenuItem` → `DropdownMenuGroup`. `CommandItem` → `CommandGroup`.
-- **Use `asChild` (radix) or `render` (base) for custom triggers.** Check `base` field from `npx shadcn@latest info`. → [base-vs-radix.md](./rules/base-vs-radix.md)
-- **Dialog, Sheet, and Drawer always need a Title.** `DialogTitle`, `SheetTitle`, `DrawerTitle` required for accessibility. Use `className="sr-only"` if visually hidden.
-- **Use full Card composition.** `CardHeader`/`CardTitle`/`CardDescription`/`CardContent`/`CardFooter`. Don't dump everything in `CardContent`.
-- **Button has no `isPending`/`isLoading`.** Compose with `Spinner` + `data-icon` + `disabled`.
-- **`TabsTrigger` must be inside `TabsList`.** Never render triggers directly in `Tabs`.
-- **`Avatar` always needs `AvatarFallback`.** For when the image fails to load.
+- **项目始终在其组内。** `SelectItem` → `SelectGroup`。`DropdownMenuItem` → `DropdownMenuGroup`。`CommandItem` → `CommandGroup`。
+- **使用 `asChild` (radix) 或 `render` (base) 自定义触发器。** 从 `npx shadcn@latest info` 检查 `base` 字段。→ [base-vs-radix.md](./rules/base-vs-radix.md)
+- **对话框、工作表和抽屉始终需要标题。** `DialogTitle`、`SheetTitle`、`DrawerTitle` 为可访问性所必需。如果视觉隐藏，使用 `className="sr-only"`。
+- **使用完整的卡片组合。** `CardHeader`/`CardTitle`/`CardDescription`/`CardContent`/`CardFooter`。不要把所有内容都堆在 `CardContent` 里。
+- **按钮没有 `isPending`/`isLoading`。** 与 `Spinner` + `data-icon` + `disabled` 组合使用。
+- **`TabsTrigger` 必须位于 `TabsList` 内。** 永远不要直接在 `Tabs` 中渲染触发器。
+- **`Avatar` 始终需要 `AvatarFallback`。** 用于图片加载失败时。
 
-### Use Components, Not Custom Markup → [composition.md](./rules/composition.md)
+### 使用组件，而非自定义标记 → [composition.md](./rules/composition.md)
 
-- **Use existing components before custom markup.** Check if a component exists before writing a styled `div`.
-- **Callouts use `Alert`.** Don't build custom styled divs.
-- **Empty states use `Empty`.** Don't build custom empty state markup.
-- **Toast via `sonner`.** Use `toast()` from `sonner`.
-- **Use `Separator`** instead of `<hr>` or `<div className="border-t">`.
-- **Use `Skeleton`** for loading placeholders. No custom `animate-pulse` divs.
-- **Use `Badge`** instead of custom styled spans.
+- **优先使用现有组件而非自定义标记。** 在编写样式化的 `div` 之前检查组件是否存在。
+- **提示使用 `Alert`。** 不要构建自定义样式化的 div。
+- **空状态使用 `Empty`。** 不要构建自定义空状态标记。
+- **通过 `sonner` 使用 Toast。** 使用 `sonner` 中的 `toast()`。
+- **使用 `Separator`** 代替 `<hr>` 或 `<div className="border-t">`。
+- **使用 `Skeleton`** 作为加载占位符。不要使用自定义的 `animate-pulse` div。
+- **使用 `Badge`** 代替自定义样式化的 span。
 
-### Icons → [icons.md](./rules/icons.md)
+### 图标 → [icons.md](./rules/icons.md)
 
-- **Icons in `Button` use `data-icon`.** `data-icon="inline-start"` or `data-icon="inline-end"` on the icon.
-- **No sizing classes on icons inside components.** Components handle icon sizing via CSS. No `size-4` or `w-4 h-4`.
-- **Pass icons as objects, not string keys.** `icon={CheckIcon}`, not a string lookup.
+- **按钮中的图标使用 `data-icon`。** 在图标上使用 `data-icon="inline-start"` 或 `data-icon="inline-end"`。
+- **组件内的图标不要添加尺寸类。** 组件通过 CSS 处理图标尺寸。不要加 `size-4` 或 `w-4 h-4`。
+- **将图标作为对象传递，而非字符串键。** `icon={CheckIcon}`，而不是字符串查找。
 
 ### CLI
 
-- **Never decode or fetch preset codes manually.** Pass them directly to `npx shadcn@latest init --preset <code>`.
+- **永远不要手动解码或获取预设代码。** 直接传递给 `npx shadcn@latest init --preset <code>`。
 
-## Key Patterns
+## 关键模式
 
-These are the most common patterns that differentiate correct shadcn/ui code. For edge cases, see the linked rule files above.
+这些是与正确 shadcn/ui 代码区别最大的最常见模式。对于边缘情况，参见上面链接的规则文件。
 
 ```tsx
-// Form layout: FieldGroup + Field, not div + Label.
+// 表单布局：FieldGroup + Field，而非 div + Label。
 <FieldGroup>
   <Field>
     <FieldLabel htmlFor="email">Email</FieldLabel>
@@ -91,151 +92,151 @@ These are the most common patterns that differentiate correct shadcn/ui code. Fo
   </Field>
 </FieldGroup>
 
-// Validation: data-invalid on Field, aria-invalid on the control.
+// 验证：Field 上的 data-invalid，控件上的 aria-invalid。
 <Field data-invalid>
   <FieldLabel>Email</FieldLabel>
   <Input aria-invalid />
   <FieldDescription>Invalid email.</FieldDescription>
 </Field>
 
-// Icons in buttons: data-icon, no sizing classes.
+// 按钮中的图标：data-icon，无尺寸类。
 <Button>
   <SearchIcon data-icon="inline-start" />
   Search
 </Button>
 
-// Spacing: gap-*, not space-y-*.
-<div className="flex flex-col gap-4">  // correct
-<div className="space-y-4">           // wrong
+// 间距：gap-*，而非 space-y-*。
+<div className="flex flex-col gap-4">  // 正确
+<div className="space-y-4">           // 错误
 
-// Equal dimensions: size-*, not w-* h-*.
-<Avatar className="size-10">   // correct
-<Avatar className="w-10 h-10"> // wrong
+// 等尺寸：size-*，而非 w-* h-*。
+<Avatar className="size-10">   // 正确
+<Avatar className="w-10 h-10"> // 错误
 
-// Status colors: Badge variants or semantic tokens, not raw colors.
-<Badge variant="secondary">+20.1%</Badge>    // correct
-<span className="text-emerald-600">+20.1%</span> // wrong
+// 状态颜色：Badge 变体或语义化标记，而非原始颜色。
+<Badge variant="secondary">+20.1%</Badge>    // 正确
+<span className="text-emerald-600">+20.1%</span> // 错误
 ```
 
-## Component Selection
+## 组件选择
 
-| Need                       | Use                                                                                                 |
+| 需求                       | 使用                                                                                                 |
 | -------------------------- | --------------------------------------------------------------------------------------------------- |
-| Button/action              | `Button` with appropriate variant                                                                   |
-| Form inputs                | `Input`, `Select`, `Combobox`, `Switch`, `Checkbox`, `RadioGroup`, `Textarea`, `InputOTP`, `Slider` |
-| Toggle between 2–5 options | `ToggleGroup` + `ToggleGroupItem`                                                                   |
-| Data display               | `Table`, `Card`, `Badge`, `Avatar`                                                                  |
-| Navigation                 | `Sidebar`, `NavigationMenu`, `Breadcrumb`, `Tabs`, `Pagination`                                     |
-| Overlays                   | `Dialog` (modal), `Sheet` (side panel), `Drawer` (bottom sheet), `AlertDialog` (confirmation)       |
-| Feedback                   | `sonner` (toast), `Alert`, `Progress`, `Skeleton`, `Spinner`                                        |
-| Command palette            | `Command` inside `Dialog`                                                                           |
-| Charts                     | `Chart` (wraps Recharts)                                                                            |
-| Layout                     | `Card`, `Separator`, `Resizable`, `ScrollArea`, `Accordion`, `Collapsible`                          |
-| Empty states               | `Empty`                                                                                             |
-| Menus                      | `DropdownMenu`, `ContextMenu`, `Menubar`                                                            |
-| Tooltips/info              | `Tooltip`, `HoverCard`, `Popover`                                                                   |
+| 按钮/操作              | 具有适当变体的 `Button`                                                                   |
+| 表单输入                | `Input`、`Select`、`Combobox`、`Switch`、`Checkbox`、`RadioGroup`、`Textarea`、`InputOTP`、`Slider` |
+| 2-5 个选项之间的切换 | `ToggleGroup` + `ToggleGroupItem`                                                                   |
+| 数据显示               | `Table`、`Card`、`Badge`、`Avatar`                                                                  |
+| 导航                 | `Sidebar`、`NavigationMenu`、`Breadcrumb`、`Tabs`、`Pagination`                                     |
+| 遮罩层                   | `Dialog` (模态框)、`Sheet` (侧面板)、`Drawer` (底部工作表)、`AlertDialog` (确认)       |
+| 反馈                   | `sonner` (toast)、`Alert`、`Progress`、`Skeleton`、`Spinner`                                        |
+| 命令面板            | `Dialog` 内的 `Command`                                                                           |
+| 图表                     | `Chart` (封装 Recharts)                                                                            |
+| 布局                     | `Card`、`Separator`、`Resizable`、`ScrollArea`、`Accordion`、`Collapsible`                          |
+| 空状态               | `Empty`                                                                                             |
+| 菜单                      | `DropdownMenu`、`ContextMenu`、`Menubar`                                                            |
+| 工具提示/信息              | `Tooltip`、`HoverCard`、`Popover`                                                                   |
 
-## Key Fields
+## 关键字段
 
-The injected project context contains these key fields:
+注入的项目上下文包含这些关键字段：
 
-- **`aliases`** → use the actual alias prefix for imports (e.g. `@/`, `~/`), never hardcode.
-- **`isRSC`** → when `true`, components using `useState`, `useEffect`, event handlers, or browser APIs need `"use client"` at the top of the file. Always reference this field when advising on the directive.
-- **`tailwindVersion`** → `"v4"` uses `@theme inline` blocks; `"v3"` uses `tailwind.config.js`.
-- **`tailwindCssFile`** → the global CSS file where custom CSS variables are defined. Always edit this file, never create a new one.
-- **`style`** → component visual treatment (e.g. `nova`, `vega`).
-- **`base`** → primitive library (`radix` or `base`). Affects component APIs and available props.
-- **`iconLibrary`** → determines icon imports. Use `lucide-react` for `lucide`, `@tabler/icons-react` for `tabler`, etc. Never assume `lucide-react`.
-- **`resolvedPaths`** → exact file-system destinations for components, utils, hooks, etc.
-- **`framework`** → routing and file conventions (e.g. Next.js App Router vs Vite SPA).
-- **`packageManager`** → use this for any non-shadcn dependency installs (e.g. `pnpm add date-fns` vs `npm install date-fns`).
+- **`aliases`** → 使用实际别名前缀进行导入（例如 `@/`、`~/`），永远不要硬编码。
+- **`isRSC`** → 当为 `true` 时，使用 `useState`、`useEffect`、事件处理器或浏览器 API 的组件需要在文件顶部添加 `"use client"`。在建议指令时始终引用此字段。
+- **`tailwindVersion`** → `"v4"` 使用 `@theme inline` 块；`"v3"` 使用 `tailwind.config.js`。
+- **`tailwindCssFile`** → 定义自定义 CSS 变量的全局 CSS 文件。始终编辑此文件，永远不要创建新文件。
+- **`style`** → 组件视觉处理（例如 `nova`、`vega`）。
+- **`base`** → 基础库 (`radix` 或 `base`)。影响组件 API 和可用属性。
+- **`iconLibrary`** → 决定图标导入。`lucide` 使用 `lucide-react`，`tabler` 使用 `@tabler/icons-react` 等。永远不要假设 `lucide-react`。
+- **`resolvedPaths`** → 组件、工具函数、钩子等的确切文件系统目标位置。
+- **`framework`** → 路由和文件约定（例如 Next.js App Router 与 Vite SPA）。
+- **`packageManager`** → 用于任何非 shadcn 依赖安装（例如 `pnpm add date-fns` 与 `npm install date-fns`）。
 
-See [cli.md — `info` command](./cli.md) for the full field reference.
+参见 [cli.md — `info` 命令](./cli.md) 获取完整字段参考。
 
-## Component Docs, Examples, and Usage
+## 组件文档、示例和用法
 
-Run `npx shadcn@latest docs <component>` to get the URLs for a component's documentation, examples, and API reference. Fetch these URLs to get the actual content.
+运行 `npx shadcn@latest docs <component>` 获取组件文档、示例和 API 参考的 URL。获取这些 URL 以获取实际内容。
 
 ```bash
 npx shadcn@latest docs button dialog select
 ```
 
-**When creating, fixing, debugging, or using a component, always run `npx shadcn@latest docs` and fetch the URLs first.** This ensures you're working with the correct API and usage patterns rather than guessing.
+**在创建、修复、调试或使用组件时，始终先运行 `npx shadcn@latest docs` 并获取 URL。** 这确保你使用的是正确的 API 和用法模式，而不是猜测。
 
-## Workflow
+## 工作流
 
-1. **Get project context** — already injected above. Run `npx shadcn@latest info` again if you need to refresh.
-2. **Check installed components first** — before running `add`, always check the `components` list from project context or list the `resolvedPaths.ui` directory. Don't import components that haven't been added, and don't re-add ones already installed.
-3. **Find components** — `npx shadcn@latest search`.
-4. **Get docs and examples** — run `npx shadcn@latest docs <component>` to get URLs, then fetch them. Use `npx shadcn@latest view` to browse registry items you haven't installed. To preview changes to installed components, use `npx shadcn@latest add --diff`.
-5. **Install or update** — `npx shadcn@latest add`. When updating existing components, use `--dry-run` and `--diff` to preview changes first (see [Updating Components](#updating-components) below).
-6. **Fix imports in third-party components** — After adding components from community registries (e.g. `@bundui`, `@magicui`), check the added non-UI files for hardcoded import paths like `@/components/ui/...`. These won't match the project's actual aliases. Use `npx shadcn@latest info` to get the correct `ui` alias (e.g. `@workspace/ui/components`) and rewrite the imports accordingly. The CLI rewrites imports for its own UI files, but third-party registry components may use default paths that don't match the project.
-7. **Review added components** — After adding a component or block from any registry, **always read the added files and verify they are correct**. Check for missing sub-components (e.g. `SelectItem` without `SelectGroup`), missing imports, incorrect composition, or violations of the [Critical Rules](#critical-rules). Also replace any icon imports with the project's `iconLibrary` from the project context (e.g. if the registry item uses `lucide-react` but the project uses `hugeicons`, swap the imports and icon names accordingly). Fix all issues before moving on.
-8. **Registry must be explicit** — When the user asks to add a block or component, **do not guess the registry**. If no registry is specified (e.g. user says "add a login block" without specifying `@shadcn`, `@tailark`, etc.), ask which registry to use. Never default to a registry on behalf of the user.
-9. **Switching presets** — Ask the user first: **reinstall**, **merge**, or **skip**?
-   - **Reinstall**: `npx shadcn@latest init --preset <code> --force --reinstall`. Overwrites all components.
-   - **Merge**: `npx shadcn@latest init --preset <code> --force --no-reinstall`, then run `npx shadcn@latest info` to list installed components, then for each installed component use `--dry-run` and `--diff` to [smart merge](#updating-components) it individually.
-   - **Skip**: `npx shadcn@latest init --preset <code> --force --no-reinstall`. Only updates config and CSS, leaves components as-is.
-   - **Important**: Always run preset commands inside the user's project directory. The CLI automatically preserves the current base (`base` vs `radix`) from `components.json`. If you must use a scratch/temp directory (e.g. for `--dry-run` comparisons), pass `--base <current-base>` explicitly — preset codes do not encode the base.
+1. **获取项目上下文** — 已在上文注入。如需刷新，请再次运行 `npx shadcn@latest info`。
+2. **首先检查已安装的组件** — 在运行 `add` 之前，务必从项目上下文中检查 `components` 列表，或列出 `resolvedPaths.ui` 目录。不要导入尚未添加的组件，也不要重复添加已安装的组件。
+3. **查找组件** — `npx shadcn@latest search`。
+4. **获取文档和示例** — 运行 `npx shadcn@latest docs <component>` 获取 URL，然后拉取它们。使用 `npx shadcn@latest view` 浏览你尚未安装的注册表项目。要预览对已安装组件的更改，请使用 `npx shadcn@latest add --diff`。
+5. **安装或更新** — `npx shadcn@latest add`。更新现有组件时，请先用 `--dry-run` 和 `--diff` 预览更改（见下文[更新组件](#updating-components)）。
+6. **修复第三方组件中的导入** — 从社区注册表（如 `@bundui`、`@magicui`）添加组件后，检查添加的非 UI 文件中是否存在硬编码的导入路径，如 `@/components/ui/...`。这些路径与项目的实际别名不匹配。使用 `npx shadcn@latest info` 获取正确的 `ui` 别名（如 `@workspace/ui/components`），并相应重写导入。CLI 会为其自身的 UI 文件重写导入，但第三方注册表组件可能使用与项目不匹配的默认路径。
+7. **审查已添加的组件** — 从任何注册表添加组件或区块后，**务必阅读添加的文件并验证其正确性**。检查是否缺少子组件（如没有 `SelectGroup` 的 `SelectItem`）、缺少导入、组合不正确，或违反[关键规则](#critical-rules)。还要用项目上下文中的 `iconLibrary` 替换任何图标导入（例如，如果注册表项目使用 `lucide-react` 但项目使用 `hugeicons`，请相应交换导入和图标名称）。在继续之前修复所有问题。
+8. **注册表必须明确** — 当用户要求添加区块或组件时，**不要猜测注册表**。如果未指定注册表（例如用户说"添加一个登录区块"但未指定 `@shadcn`、`@tailark` 等），询问应使用哪个注册表。永远不要代表用户默认选择一个注册表。
+9. **切换预设** — 先询问用户：**重新安装**、**合并**还是**跳过**？
+   - **重新安装**：`npx shadcn@latest init --preset <code> --force --reinstall`。覆盖所有组件。
+   - **合并**：`npx shadcn@latest init --preset <code> --force --no-reinstall`，然后运行 `npx shadcn@latest info` 列出已安装的组件，接着对每个已安装的组件使用 `--dry-run` 和 `--diff` 单独进行[智能合并](#updating-components)。
+   - **跳过**：`npx shadcn@latest init --preset <code> --force --no-reinstall`。仅更新配置和 CSS，保持组件原样。
+   - **重要**：始终在用户的项目目录中运行预设命令。CLI 会自动从 `components.json` 保留当前的基础（`base` 与 `radix`）。如果必须使用临时目录（例如用于 `--dry-run` 比较），请显式传递 `--base <current-base>` —— 预设代码不包含基础信息。
 
-## Updating Components
+## 更新组件
 
-When the user asks to update a component from upstream while keeping their local changes, use `--dry-run` and `--diff` to intelligently merge. **NEVER fetch raw files from GitHub manually — always use the CLI.**
+当用户要求从上游更新组件同时保留其本地更改时，请使用 `--dry-run` 和 `--diff` 进行智能合并。**永远不要手动从 GitHub 获取原始文件 —— 始终使用 CLI。**
 
-1. Run `npx shadcn@latest add <component> --dry-run` to see all files that would be affected.
-2. For each file, run `npx shadcn@latest add <component> --diff <file>` to see what changed upstream vs local.
-3. Decide per file based on the diff:
-   - No local changes → safe to overwrite.
-   - Has local changes → read the local file, analyze the diff, and apply upstream updates while preserving local modifications.
-   - User says "just update everything" → use `--overwrite`, but confirm first.
-4. **Never use `--overwrite` without the user's explicit approval.**
+1. 运行 `npx shadcn@latest add <component> --dry-run` 查看将受影响的所有文件。
+2. 对每个文件，运行 `npx shadcn@latest add <component> --diff <file>` 查看上游与本地之间的更改。
+3. 根据差异针对每个文件决定：
+   - 无本地更改 → 可安全覆盖。
+   - 有本地更改 → 读取本地文件，分析差异，在保留本地修改的同时应用上游更新。
+   - 用户说"直接更新全部" → 使用 `--overwrite`，但需先确认。
+4. **未经用户明确批准，切勿使用 `--overwrite`。**
 
-## Quick Reference
+## 快速参考
 
 ```bash
-# Create a new project.
+# 创建新项目。
 npx shadcn@latest init --name my-app --preset base-nova
 npx shadcn@latest init --name my-app --preset a2r6bw --template vite
 
-# Create a monorepo project.
+# 创建 monorepo 项目。
 npx shadcn@latest init --name my-app --preset base-nova --monorepo
 npx shadcn@latest init --name my-app --preset base-nova --template next --monorepo
 
-# Initialize existing project.
+# 初始化现有项目。
 npx shadcn@latest init --preset base-nova
 npx shadcn@latest init --defaults  # shortcut: --template=next --preset=base-nova
 
-# Add components.
+# 添加组件。
 npx shadcn@latest add button card dialog
 npx shadcn@latest add @magicui/shimmer-button
 npx shadcn@latest add --all
 
-# Preview changes before adding/updating.
+# 在添加/更新前预览更改。
 npx shadcn@latest add button --dry-run
 npx shadcn@latest add button --diff button.tsx
 npx shadcn@latest add @acme/form --view button.tsx
 
-# Search registries.
+# 搜索注册表。
 npx shadcn@latest search @shadcn -q "sidebar"
 npx shadcn@latest search @tailark -q "stats"
 
-# Get component docs and example URLs.
+# 获取组件文档和示例 URL。
 npx shadcn@latest docs button dialog select
 
-# View registry item details (for items not yet installed).
+# 查看注册表项目详情（适用于尚未安装的项目）。
 npx shadcn@latest view @shadcn/button
 ```
 
-**Named presets:** `base-nova`, `radix-nova`
-**Templates:** `next`, `vite`, `start`, `react-router`, `astro` (all support `--monorepo`) and `laravel` (not supported for monorepo)
-**Preset codes:** Base62 strings starting with `a` (e.g. `a2r6bw`), from [ui.shadcn.com](https://ui.shadcn.com).
+**命名预设：** `base-nova`, `radix-nova`
+**模板：** `next`、`vite`、`start`、`react-router`、`astro`（均支持 `--monorepo`）和 `laravel`（不支持 monorepo）
+**预设代码：** 以 `a` 开头的 Base62 字符串（如 `a2r6bw`），来自 [ui.shadcn.com](https://ui.shadcn.com)。
 
-## Detailed References
+## 详细参考
 
-- [rules/forms.md](./rules/forms.md) — FieldGroup, Field, InputGroup, ToggleGroup, FieldSet, validation states
-- [rules/composition.md](./rules/composition.md) — Groups, overlays, Card, Tabs, Avatar, Alert, Empty, Toast, Separator, Skeleton, Badge, Button loading
-- [rules/icons.md](./rules/icons.md) — data-icon, icon sizing, passing icons as objects
-- [rules/styling.md](./rules/styling.md) — Semantic colors, variants, className, spacing, size, truncate, dark mode, cn(), z-index
-- [rules/base-vs-radix.md](./rules/base-vs-radix.md) — asChild vs render, Select, ToggleGroup, Slider, Accordion
-- [cli.md](./cli.md) — Commands, flags, presets, templates
-- [customization.md](./customization.md) — Theming, CSS variables, extending components
+- [rules/forms.md](./rules/forms.md) — FieldGroup、Field、InputGroup、ToggleGroup、FieldSet、验证状态
+- [rules/composition.md](./rules/composition.md) — Groups、overlays、Card、Tabs、Avatar、Alert、Empty、Toast、Separator、Skeleton、Badge、Button loading
+- [rules/icons.md](./rules/icons.md) — data-icon、图标尺寸、将图标作为对象传递
+- [rules/styling.md](./rules/styling.md) — 语义化颜色、变体、className、间距、尺寸、截断、暗黑模式、cn()、z-index
+- [rules/base-vs-radix.md](./rules/base-vs-radix.md) — asChild 与 render、Select、ToggleGroup、Slider、Accordion
+- [cli.md](./cli.md) — 命令、标志、预设、模板
+- [customization.md](./customization.md) — 主题、CSS 变量、扩展组件
