@@ -1,5 +1,6 @@
 {
   "app_dir": "apps/v4",
+  "install_command": "npm install -g bun && pnpm install",
   "build_command": "pnpm --filter=v4 build",
   "start_command": "pnpm --filter=v4 start"
 }
