@@ -3,15 +3,124 @@ title: React Router
 description: 为 React Router 安装和配置 shadcn/ui。
 ---
 
-<Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
+选择与您起点相符的设置。
 
-**开始一个新项目？** 使用 [shadcn/create](/create) 来创建一个配置完整的 React Router 应用，包含自定义主题、Base UI 或 Radix 以及图标库。
+<div className="mt-6 grid gap-4 sm:grid-cols-3 sm:gap-6">
+  <LinkedCard
+    href="#scaffold-with-create"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">使用 shadcn/create</div>
+    <div className="leading-relaxed text-muted-foreground">
+      构建您的预设并生成一个 React Router 项目。
+    </div>
+  </LinkedCard>
+  <LinkedCard
+    href="#scaffold-with-cli"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">使用 CLI</div>
+    <div className="leading-relaxed text-muted-foreground">
+      直接从终端搭建一个新的 React Router 项目。
+    </div>
+  </LinkedCard>
+  <LinkedCard
+    href="#existing-react-router-project"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">现有项目</div>
+    <div className="leading-relaxed text-muted-foreground">
+      在现有的 React Router 项目中手动配置 shadcn/ui。
+    </div>
+  </LinkedCard>
+</div>
 
-</Callout>
+<div id="scaffold-with-create" className="scroll-mt-24" />
+## 使用 shadcn/create
+
+<Steps>
+
+### 构建您的预设
+
+打开 [shadcn/create](/create?template=react-router) 并以可视化方式构建您的预设。选择您的样式、颜色、字体、图标等。
+
+<Button asChild size="sm">
+  <Link
+    href="/create?template=react-router"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mt-6 no-underline!"
+  >
+    打开 shadcn/create
+  </Link>
+</Button>
+
+### 创建项目
+
+点击 `Create Project`，选择您的包管理器，并复制生成的命令。
+
+生成的命令将类似于：
+
+```bash
+npx shadcn@latest init --preset [CODE] --template react-router
+```
+
+确切命令将包含您选择的选项，例如 `--base`、`--monorepo` 或 `--rtl`。
+
+### 添加组件
+
+将 `Card` 组件添加到您的项目：
+
+```bash
+npx shadcn@latest add card
+```
+
+如果您创建了 monorepo，请从 `apps/web` 运行命令，或从仓库根目录指定工作区：
+
+```bash
+npx shadcn@latest add card -c apps/web
+```
+
+上述命令会将 `Card` 组件添加到您的项目。然后您可以这样导入它：
+
+```tsx showLineNumbers title="app/routes/home.tsx"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card"
+
+export default function Home() {
+  return (
+    <Card className="max-w-sm">
+      <CardHeader>
+        <CardTitle>项目概览</CardTitle>
+        <CardDescription>
+          跟踪您的 React Router 应用的进度和最近活动。
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        您的设计系统已就绪。开始构建您的下一个组件。
+      </CardContent>
+    </Card>
+  )
+}
+```
+
+如果您创建了 monorepo，请更新 `apps/web/app/routes/home.tsx` 并改为从 `@workspace/ui/components/card` 导入。
+
+</Steps>
+
+<div id="scaffold-with-cli" className="scroll-mt-24" />
+## 使用 CLI
 
 <Steps>
 
 ### 创建项目
+
+运行 `init` 命令来搭建一个新的 React Router 项目。按照提示配置您的项目：base、preset、monorepo 等。
 
 ```bash
 npx shadcn@latest init -t react-router
@@ -25,7 +134,76 @@ npx shadcn@latest init -t react-router --monorepo
 
 ### 添加组件
 
-现在您可以开始将组件添加到项目中。
+将 `Card` 组件添加到您的项目：
+
+```bash
+npx shadcn@latest add card
+```
+
+如果您创建了 monorepo，请从 `apps/web` 运行命令，或从仓库根目录指定工作区：
+
+```bash
+npx shadcn@latest add card -c apps/web
+```
+
+上述命令会将 `Card` 组件添加到您的项目。然后您可以这样导入它：
+
+```tsx showLineNumbers title="app/routes/home.tsx"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card"
+
+export default function Home() {
+  return (
+    <Card className="max-w-sm">
+      <CardHeader>
+        <CardTitle>项目概览</CardTitle>
+        <CardDescription>
+          跟踪您的 React Router 应用的进度和最近活动。
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        您的设计系统已就绪。开始构建您的下一个组件。
+      </CardContent>
+    </Card>
+  )
+}
+```
+
+如果您创建了 monorepo，请更新 `apps/web/app/routes/home.tsx` 并改为从 `@workspace/ui/components/card` 导入。
+
+</Steps>
+
+<div id="existing-react-router-project" className="scroll-mt-24" />
+## 现有项目
+
+<Steps>
+
+### 创建项目
+
+如果您需要一个新的 React Router 项目，请先创建一个。否则，跳过此步骤。
+
+```bash
+npm create react-router@latest
+```
+
+`create-react-router` 已经为您配置了 Tailwind CSS 和默认的 `~/*` 导入别名。如果您要将 shadcn/ui 添加到较旧或自定义的 React Router 应用中，请确保在继续之前两者都已配置好。
+
+### 运行 CLI
+
+运行 `shadcn` init 命令以在您的项目中设置 shadcn/ui。
+
+```bash
+npx shadcn@latest init
+```
+
+### 添加组件
+
+您现在可以开始向项目添加组件了。
 
 ```bash
 npx shadcn@latest add button
@@ -34,16 +212,7 @@ npx shadcn@latest add button
 上述命令会将 `Button` 组件添加到您的项目中。然后，您可以这样导入它：
 
 ```tsx showLineNumbers title="app/routes/home.tsx"
-import { Button } from "@/components/ui/button"
-
-import type { Route } from "./+types/home"
-
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ]
-}
+import { Button } from "~/components/ui/button"
 
 export default function Home() {
   return (

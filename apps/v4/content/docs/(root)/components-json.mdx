@@ -21,7 +21,7 @@ npx shadcn@latest init
 
 ## $schema
 
-您可以在[这里](https://ui.shadcn.com/schema.json)查看 `components.json` 的 JSON Schema。
+您可以在 [这里](https://ui.shadcn.com/schema.json) 查看 `components.json` 的 JSON Schema。
 
 ```json title="components.json"
 {
@@ -73,21 +73,21 @@ npx shadcn@latest init
 
 ### tailwind.baseColor
 
-用于生成组件默认颜色调色板。**初始化后不可更改。**
+这用于为您的组件生成默认主题令牌。**初始化后不可更改。**
 
 ```json title="components.json"
 {
   "tailwind": {
-    "baseColor": "gray" | "neutral" | "slate" | "stone" | "zinc" | "mauve" | "olive" | "mist" | "taupe"
+    "baseColor": "neutral" | "stone" | "zinc" | "mauve" | "olive" | "mist" | "taupe"
   }
 }
 ```
 
 ### tailwind.cssVariables
 
-可选择使用 CSS 变量或 Tailwind CSS 实用类进行主题定制。
+我们使用并推荐使用 CSS 变量进行主题设置。
 
-若想使用实用类主题，将 `tailwind.cssVariables` 设为 `false`；使用 CSS 变量则设为 `true`。
+将 `tailwind.cssVariables` 设置为 `true` 以生成语义化主题令牌，例如 `background`、`foreground` 和 `primary`。将其设置为 `false` 则改为生成内联 Tailwind 颜色实用类。
 
 ```json title="components.json"
 {

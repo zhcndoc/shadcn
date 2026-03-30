@@ -5,23 +5,80 @@ description: 如何安装依赖并构建你的应用。
 
 <Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
 
-**开始一个新项目？** 使用 [shadcn/create](/create) 来脚手架一个带有自定义主题、组件和预设的完整应用。兼容 Next.js、Vite、Laravel、React Router、Astro 和 TanStack Start。
+**新项目推荐：** 使用 [shadcn/create](/create) 可视化构建你的预设，并为你的框架生成正确的 setup 命令。
 
 </Callout>
 
-## 快速开始
+选择符合你起点的 setup 方案。
 
-运行以下命令以使用 shadcn/ui 创建一个新项目：
+<div className="mt-6 grid gap-4 sm:grid-cols-3 sm:gap-6">
+  <LinkedCard
+    href="#use-create"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">使用 shadcn/create</div>
+    <div className="leading-relaxed text-muted-foreground">
+      可视化构建你的预设并生成 setup 命令。
+    </div>
+  </LinkedCard>
+  <LinkedCard href="#use-cli" className="items-start gap-1 p-6 text-sm md:p-6">
+    <div className="font-medium">使用 CLI</div>
+    <div className="leading-relaxed text-muted-foreground">
+      直接从终端搭建支持的模板。
+    </div>
+  </LinkedCard>
+  <LinkedCard
+    href="#existing-project"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">现有项目</div>
+    <div className="leading-relaxed text-muted-foreground">
+      将 shadcn/ui 添加到你已创建的应用中。
+    </div>
+  </LinkedCard>
+</div>
+
+<div id="use-create" className="scroll-mt-24" />
+## 使用 shadcn/create
+
+可视化构建你的预设，预览你的选择，并生成特定框架的 setup 命令。
+
+<Button asChild size="sm">
+  <Link
+    href="/create"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mt-6 no-underline!"
+  >
+    打开 shadcn/create
+  </Link>
+</Button>
+
+适用于 Next.js、Vite、Laravel、React Router、Astro 和 TanStack Start。
+
+<div id="use-cli" className="scroll-mt-24" />
+## 使用 CLI
+
+使用 CLI 直接从终端搭建新项目：
 
 ```bash
-npx shadcn@latest init
+npx shadcn@latest init -t [framework]
 ```
 
-这将引导你完成使用你喜欢的框架、图标库和主题创建 shadcn/ui 新项目的过程。
+支持的模板：`next`、`vite`、`start`、`react-router` 和 `astro`。
+
+对于 Laravel，请先使用 `laravel new` 创建应用，然后运行 `npx shadcn@latest init`。
+
+<div id="existing-project" className="scroll-mt-24" />
+## 现有项目
+
+每个框架指南都包含一个 `现有项目` 部分，其中包含该框架的手动 setup 步骤。
+
+在下方选择你的框架并按照该路径操作。
 
 ## 选择你的框架
 
-首先选择你喜欢的框架。然后按照说明安装依赖并构建你的应用。shadcn/ui 支持所有 React 框架。
+对于 Laravel，在使用 `shadcn/create` 或 `shadcn init` 之前，请先运行 `laravel new`。
 
 <div className="mt-8 grid gap-4 sm:grid-cols-2 sm:gap-6">
   <LinkedCard href="/docs/installation/next">

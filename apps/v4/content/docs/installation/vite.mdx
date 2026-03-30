@@ -1,18 +1,128 @@
 ---
 title: Vite
 description: 为 Vite 安装和配置 shadcn/ui。
+---
 
-<Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
+选择符合你起点的设置。
 
-**从头开始？** 使用 [shadcn/create](/create) 来配置一个带有自定义主题、Base UI 或 Radix 以及图标库的 Vite 项目。
+<div className="mt-6 grid gap-4 sm:grid-cols-3 sm:gap-6">
+  <LinkedCard
+    href="#scaffold-with-create"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">使用 shadcn/create</div>
+    <div className="leading-relaxed text-muted-foreground">
+      构建你的预设并生成 Vite 项目命令。
+    </div>
+  </LinkedCard>
+  <LinkedCard
+    href="#scaffold-with-cli"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">使用 CLI</div>
+    <div className="leading-relaxed text-muted-foreground">
+      直接从终端搭建新的 Vite 项目。
+    </div>
+  </LinkedCard>
+  <LinkedCard
+    href="#existing-vite-project"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">现有项目</div>
+    <div className="leading-relaxed text-muted-foreground">
+      在现有的 Vite 项目中手动配置 shadcn/ui。
+    </div>
+  </LinkedCard>
+</div>
 
-</Callout>
+<div id="scaffold-with-create" className="scroll-mt-24" />
+## 使用 shadcn/create
+
+<Steps>
+
+### 构建你的预设
+
+打开 [shadcn/create](/create?template=vite) 并可视化地构建你的预设。选择你的风格、颜色、字体、图标等。
+
+<Button asChild size="sm">
+  <Link
+    href="/create?template=vite"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mt-6 no-underline!"
+  >
+    打开 shadcn/create
+  </Link>
+</Button>
+
+### 创建项目
+
+点击 `Create Project`，选择你的包管理器，并复制生成的命令。
+
+生成的命令将类似于这样：
+
+```bash
+npx shadcn@latest init --preset [CODE] --template vite
+```
+
+确切命令将包含你选择的选项，例如 `--base`、`--monorepo` 或 `--rtl`。
+
+### 添加组件
+
+将 `Card` 组件添加到你的项目中：
+
+```bash
+npx shadcn@latest add card
+```
+
+如果你创建了 monorepo，请从 `apps/web` 运行命令或从仓库根目录指定工作区：
+
+```bash
+npx shadcn@latest add card -c apps/web
+```
+
+上述命令会将 `Card` 组件添加到你的项目中。然后你可以这样导入它：
+
+```tsx showLineNumbers title="src/App.tsx"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+function App() {
+  return (
+    <Card className="max-w-sm">
+      <CardHeader>
+        <CardTitle>Project Overview</CardTitle>
+        <CardDescription>
+          Track progress and recent activity for your Vite app.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        Your design system is ready. Start building your next component.
+      </CardContent>
+    </Card>
+  )
+}
+
+export default App
+```
+
+如果你创建了 monorepo，请更新 `apps/web/src/App.tsx` 并从 `@workspace/ui/components/card` 导入。
+
+</Steps>
+
+<div id="scaffold-with-cli" className="scroll-mt-24" />
+## 使用 CLI
 
 <Steps>
 
 ### 创建项目
 
-运行 `init` 命令来创建新的 Vite 项目或设置现有项目：
+运行 `init` 命令来搭建新的 Vite 项目。按照提示配置你的项目：base、preset、monorepo 等。
 
 ```bash
 npx shadcn@latest init -t vite
@@ -26,7 +136,160 @@ npx shadcn@latest init -t vite --monorepo
 
 ### 添加组件
 
-现在你可以开始向项目中添加组件了。
+将 `Card` 组件添加到你的项目中：
+
+```bash
+npx shadcn@latest add card
+```
+
+如果你创建了 monorepo，请从 `apps/web` 运行命令或从仓库根目录指定工作区：
+
+```bash
+npx shadcn@latest add card -c apps/web
+```
+
+上述命令会将 `Card` 组件添加到你的项目中。然后你可以这样导入它：
+
+```tsx showLineNumbers title="src/App.tsx"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+function App() {
+  return (
+    <Card className="max-w-sm">
+      <CardHeader>
+        <CardTitle>Project Overview</CardTitle>
+        <CardDescription>
+          Track progress and recent activity for your Vite app.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        Your design system is ready. Start building your next component.
+      </CardContent>
+    </Card>
+  )
+}
+
+export default App
+```
+
+如果你创建了 monorepo，请更新 `apps/web/src/App.tsx` 并从 `@workspace/ui/components/card` 导入。
+
+</Steps>
+
+<div id="existing-vite-project" className="scroll-mt-24" />
+## 现有项目
+
+<Steps>
+
+### 创建项目
+
+如果你需要新的 Vite 项目，请先创建一个并选择 **React + TypeScript** 模板。否则，跳过此步骤。
+
+```bash
+npm create vite@latest
+```
+
+### 添加 Tailwind CSS
+
+如果你的项目已经配置了 Tailwind CSS，请跳过此步骤。
+
+```bash
+npm install tailwindcss @tailwindcss/vite
+```
+
+将 `src/index.css` 中的所有内容替换为以下内容：
+
+```css title="src/index.css"
+@import "tailwindcss";
+```
+
+### 编辑 tsconfig.json 文件
+
+如果你的项目已经配置了 `@/*` 别名，请跳过此步骤。
+
+Vite 将 TypeScript 配置分散在多个文件中。将 `baseUrl` 和 `paths` 属性添加到 `tsconfig.json` 和 `tsconfig.app.json` 的 `compilerOptions` 部分：
+
+```ts title="tsconfig.json" {11-16} showLineNumbers
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+### 编辑 tsconfig.app.json 文件
+
+将相同的别名添加到 `tsconfig.app.json` 以便你的编辑器可以解析导入：
+
+```ts title="tsconfig.app.json" {4-9} showLineNumbers
+{
+  "compilerOptions": {
+    // ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+    // ...
+  }
+}
+```
+
+### 更新 vite.config.ts
+
+安装 `@types/node` 并更新 `vite.config.ts` 以便 Vite 可以解析 `@` 别名：
+
+```bash
+npm install -D @types/node
+```
+
+```typescript title="vite.config.ts" showLineNumbers {1,2,8-13}
+import path from "path"
+import tailwindcss from "@tailwindcss/vite"
+import react from "@vitejs/plugin-react"
+import { defineConfig } from "vite"
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+})
+```
+
+### 运行 CLI
+
+运行 `shadcn` init 命令在你的项目中设置 shadcn/ui：
+
+```bash
+npx shadcn@latest init
+```
+
+### 添加组件
+
+你现在可以开始向项目添加组件了。
 
 ```bash
 npx shadcn@latest add button
@@ -34,16 +297,18 @@ npx shadcn@latest add button
 
 上述命令会将 `Button` 组件添加到你的项目中。然后你可以这样导入它：
 
-```tsx {1,6} showLineNumbers title="src/App.tsx"
+```tsx showLineNumbers title="src/App.tsx"
 import { Button } from "@/components/ui/button"
 
-export default function App() {
+function App() {
   return (
-    <div>
-      <Button>点击我</Button>
+    <div className="flex min-h-svh flex-col items-center justify-center">
+      <Button>Click me</Button>
     </div>
   )
 }
+
+export default App
 ```
 
 </Steps>

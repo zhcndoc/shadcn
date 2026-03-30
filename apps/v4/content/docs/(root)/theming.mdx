@@ -1,75 +1,48 @@
 ---
-title: 主题定制
-description: 使用 CSS 变量和颜色工具进行主题定制。
+title: 主题化
+description: 使用 CSS 变量和主题令牌。
 ---
 
-你可以选择使用 CSS 变量（推荐）或工具类来进行主题定制。
+<Callout>
 
-## CSS 变量
+想要可视化地构建你的主题吗？使用 [shadcn/create](/create) 预览颜色、圆角、字体和图标，然后为你的项目生成预设。
+
+</Callout>
+
+我们使用并推荐使用 CSS 变量进行主题化。
+
+这为你提供了语义化的主题令牌，如 `background`、`foreground` 和 `primary`，组件默认使用这些令牌。在 CSS 中覆盖这些令牌即可更改应用的外观，而无需重写组件类。
 
 ```tsx /bg-background/ /text-foreground/
 <div className="bg-background text-foreground" />
 ```
 
-如果想使用 CSS 变量进行主题定制，请在你的 `components.json` 文件中将 `tailwind.cssVariables` 设置为 `true`。
+要在主题化中使用 CSS 变量，请在 `components.json` 文件中将 `tailwind.cssVariables` 设置为 `true`。这是默认值。
 
 ```json {8} title="components.json" showLineNumbers
 {
-  "style": "new-york",
+  "style": "base-nova",
   "rsc": true,
   "tailwind": {
     "config": "",
     "css": "app/globals.css",
     "baseColor": "neutral",
     "cssVariables": true
-  },
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
-  },
-  "iconLibrary": "lucide"
-}
-```
-
-## 工具类
-
-```tsx /bg-zinc-950/ /text-zinc-50/ /dark:bg-white/ /dark:text-zinc-950/
-<div className="bg-zinc-950 dark:bg-white" />
-```
-
-如果想使用工具类进行主题定制，请在你的 `components.json` 文件中将 `tailwind.cssVariables` 设置为 `false`。
-
-```json {8} title="components.json" showLineNumbers
-{
-  "style": "new-york",
-  "rsc": true,
-  "tailwind": {
-    "config": "",
-    "css": "app/globals.css",
-    "baseColor": "neutral",
-    "cssVariables": false
-  },
-  "iconLibrary": "lucide",
-  "aliases": {
-    "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
   }
 }
 ```
 
-## 命名规范
+Tailwind 将这些令牌映射为实用工具类，如 `bg-background`、`text-foreground`、`border-border` 和 `ring-ring`。
 
-我们采用简单的 `background` 和 `foreground` 颜色命名规范。`background` 变量用于组件的背景色，而 `foreground` 变量用于文本颜色。
+深色模式通过在 `.dark` 选择器内覆盖相同的令牌来工作。请参阅 [深色模式文档](/docs/dark-mode/next) 了解如何添加主题提供者并切换 `.dark` 类。
+
+## 令牌约定
+
+我们使用语义化的背景和前景配对。基础令牌控制表面颜色，而 `-foreground` 令牌控制位于该表面上的文本和图标颜色。
 
 <Callout className="mt-4">
 
-当变量用于组件背景色时，`background` 后缀会被省略。
+表面令牌省略了背景后缀。例如，`primary` 与 `primary-foreground` 配对。
 
 </Callout>
 
@@ -86,11 +59,148 @@ description: 使用 CSS 变量和颜色工具进行主题定制。
 <div className="bg-primary text-primary-foreground">Hello</div>
 ```
 
-## 变量列表
+## 主题令牌
 
-以下是可自定义的变量列表：
+这些令牌位于你的 CSS 文件中的 `:root` 和 `.dark` 下。
+
+| Token                                            | 控制内容                                       | 使用者                                                                      |
+| ------------------------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| `background` / `foreground`                      | 默认应用背景和文本颜色。             | 页面外壳、页面部分和默认文本。                             |
+| `card` / `card-foreground`                       | 层级表面及其内部内容。         | `Card`、仪表板面板、设置面板。                                   |
+| `popover` / `popover-foreground`                 | 浮动表面及其内部内容。         | `Popover`、`DropdownMenu`、`ContextMenu` 和其他覆盖层。                |
+| `primary` / `primary-foreground`                 | 高强调操作和品牌表面。              | 默认 `Button`、选中状态、徽章和活跃强调色。               |
+| `secondary` / `secondary-foreground`             | 低强调填充操作和支持表面。 | 次要按钮、次要徽章和支持性 UI。                      |
+| `muted` / `muted-foreground`                     | 微妙表面和低强调内容。            | 描述、占位符、空状态、辅助文本和柔和表面。 |
+| `accent` / `accent-foreground`                   | 交互 hover、focus 和 active 表面。         | Ghost 按钮、菜单高亮状态、悬停行和选中项。      |
+| `destructive`                                    | 破坏性操作和错误强调。                | 破坏性按钮、无效状态和破坏性菜单项。             |
+| `border`                                         | 默认边框和分隔线。                        | 卡片、菜单、表格、分隔线和布局分割线。                       |
+| `input`                                          | 表单控件边框和输入表面处理。      | `Input`、`Textarea`、`Select` 和轮廓样式控件。                   |
+| `ring`                                           | 焦点环和轮廓。                              | 按钮、输入框、复选框、菜单和其他可聚焦控件。            |
+| `chart-1` ... `chart-5`                          | 默认图表调色板。                             | 图表和基于图表的仪表板块。                                    |
+| `sidebar` / `sidebar-foreground`                 | 基础侧边栏表面和默认侧边栏文本。     | `Sidebar` 容器及其默认内容。                             |
+| `sidebar-primary` / `sidebar-primary-foreground` | 侧边栏内的高强调操作。              | 活跃项、图标块、徽章和侧边栏 CTA。                          |
+| `sidebar-accent` / `sidebar-accent-foreground`   | 侧边栏内的悬停和选中状态。          | 侧边栏菜单悬停状态、打开项和交互行。                 |
+| `sidebar-border`                                 | 侧边栏特定的边框和分隔线。               | 侧边栏头部、组和内部分隔线。                              |
+| `sidebar-ring`                                   | 侧边栏特定的焦点环。                          | 侧边栏内聚焦的控件。                                         |
+| `radius`                                         | 基础圆角比例。                          | 卡片、输入框、按钮、popovers 和派生的 `radius-*` 令牌。         |
+
+<Callout className="mt-4">
+
+图表令牌在 [图表主题文档](/docs/components/chart#theming) 中有更详细的介绍。
+
+</Callout>
+
+## 圆角比例
+
+`--radius` 是你主题的基础圆角令牌。
+
+我们从中派生出一个小的圆角比例，以便组件可以使用一致的圆角大小，同时共享单一事实来源。
 
 ```css title="app/globals.css" showLineNumbers
+@theme inline {
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+```
+
+这意味着：
+
+- `radius-lg` 是基础值。
+- 较小的圆角从 `--radius` 向下缩放。
+- 较大的圆角从 `--radius` 向上缩放。
+- 更改 `--radius` 会更新整个圆角比例。
+
+## 添加新令牌
+
+要添加新令牌，请在 `:root` 和 `.dark` 下定义它，然后使用 `@theme inline` 将其暴露给 Tailwind。
+
+```css title="app/globals.css" showLineNumbers
+:root {
+  --warning: oklch(0.84 0.16 84);
+  --warning-foreground: oklch(0.28 0.07 46);
+}
+
+.dark {
+  --warning: oklch(0.41 0.11 46);
+  --warning-foreground: oklch(0.99 0.02 95);
+}
+
+@theme inline {
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+}
+```
+
+你现在可以在组件中使用 `bg-warning` 和 `text-warning-foreground`。
+
+```tsx /bg-warning/ /text-warning-foreground/
+<div className="bg-warning text-warning-foreground" />
+```
+
+## 基础颜色
+
+`tailwind.baseColor` 控制当你运行 `init` 或使用预设时为项目生成的默认令牌值。
+
+可用的基础颜色有：**Neutral**、**Stone**、**Zinc**、**Mauve**、**Olive**、**Mist** 和 **Taupe**。
+
+## 默认主题 CSS
+
+以下是完整的默认 `neutral` 主题脚手架。将其复制到你的全局 CSS 文件中并根据需要调整令牌。
+
+<CodeCollapsibleWrapper>
+
+```css showLineNumbers title="app/globals.css"
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -108,7 +218,6 @@ description: 使用 CSS 变量和颜色工具进行主题定制。
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
@@ -132,7 +241,7 @@ description: 使用 CSS 变量和颜色工具进行主题定制。
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.269 0 0);
+  --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
@@ -140,10 +249,9 @@ description: 使用 CSS 变量和颜色工具进行主题定制。
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.371 0 0);
+  --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
@@ -159,43 +267,38 @@ description: 使用 CSS 变量和颜色工具进行主题定制。
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.439 0 0);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 ```
 
-## 添加新颜色
+</CodeCollapsibleWrapper>
 
-要添加新颜色，需要将它们添加到 CSS 文件中的 `:root` 和 `.dark` 伪类中。然后，使用 `@theme inline` 指令将颜色作为 CSS 变量提供使用。
+## 不使用 CSS 变量
 
-```css title="app/globals.css" showLineNumbers
-:root {
-  --warning: oklch(0.84 0.16 84);
-  --warning-foreground: oklch(0.28 0.07 46);
-}
+如果您不想使用 CSS 变量，CLI 可以改为生成使用内联 Tailwind 颜色工具类的组件。
 
-.dark {
-  --warning: oklch(0.41 0.11 46);
-  --warning-foreground: oklch(0.99 0.02 95);
-}
-
-@theme inline {
-  --color-warning: var(--warning);
-  --color-warning-foreground: var(--warning-foreground);
-}
+```bash
+npx shadcn@latest init --no-css-variables
 ```
 
-现在，你可以在组件中使用 `warning` 工具类。
+这会在您的 `components.json` 文件中将 `tailwind.cssVariables` 设置为 `false`。
 
-```tsx /bg-warning/ /text-warning-foreground/
-<div className="bg-warning text-warning-foreground" />
+```tsx /bg-zinc-950/ /text-zinc-50/ /dark:bg-white/ /dark:text-zinc-950/
+<div className="bg-zinc-950 text-zinc-50 dark:bg-white dark:text-zinc-950" />
 ```
 
-## 其他颜色格式
+<Callout className="mt-4">
 
-更多关于在 Tailwind CSS 中使用颜色的信息，请参阅 [Tailwind CSS 文档](https://tailwindcss.zhcndoc.com/docs/colors)。
+这是一个安装时的选择。要切换现有项目，请删除并重新安装您的组件。
 
-## 基础颜色
-
-可用的基础颜色包括：**中性色 (Neutral)**、**Stone**、**Zinc**、**Mauve**、**Olive**、**Mist** 和 **Taupe**。
-
-你可以在初始化项目时通过预设或更新 `components.json` 文件中的 `baseColor` 字段来设置基础颜色。
+</Callout>

@@ -3,35 +3,88 @@ title: Laravel
 description: 为 Laravel 安装并配置 shadcn/ui。
 ---
 
-<Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
-
-**开始一个新项目？** 使用 [shadcn/create](/create) 来快速获得一个配置完备的 Laravel 应用，包含自定义主题、Base UI 或 Radix 以及图标库。
-
-</Callout>
+shadcn CLI 不会生成新的 Laravel 应用。首先使用 React starter kit 创建一个 Laravel 应用，然后选择您想要如何配置 shadcn/ui。
 
 <Steps>
 
 ### 创建项目
 
-使用 Laravel 安装器创建一个带有 Inertia 和 React 的新 Laravel 项目：
+使用 Laravel 安装程序创建一个新的 Laravel 应用：
 
 ```bash
-laravel new my-app --react
+laravel new my-app
 ```
 
-### 运行 shadcn/ui CLI
+如果您已经有一个配置了 React 和 Inertia 的 Laravel 应用，请跳过此步骤。
 
-运行 `init` 命令，在你的 Laravel 项目中配置 shadcn/ui：
+当提示时选择 **React** starter kit。更多信息，请参阅官方 [Laravel 前端文档](https://laravel.com/docs/12.x/frontend)。
+
+然后进入您的项目目录：
 
 ```bash
-npx shadcn@latest init --force
+cd my-app
 ```
 
-如果系统提示是否覆盖已有组件，输入 `y` 继续。
+</Steps>
+
+<div className="mt-10 grid gap-4 sm:grid-cols-2 sm:gap-6">
+  <LinkedCard
+    href="#configure-with-create"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">使用 shadcn/create</div>
+    <div className="leading-relaxed text-muted-foreground">
+      可视化构建您的预设并生成 Laravel 初始化命令。
+    </div>
+  </LinkedCard>
+  <LinkedCard
+    href="#configure-with-cli"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">使用 CLI</div>
+    <div className="leading-relaxed text-muted-foreground">
+      直接在终端中配置 Laravel 应用中的 shadcn/ui。
+    </div>
+  </LinkedCard>
+</div>
+
+<div id="configure-with-create" className="scroll-mt-24" />
+## 使用 shadcn/create
+
+<Steps>
+
+### 构建您的预设
+
+打开 [shadcn/create](/create?template=laravel) 并可视化构建您的预设。选择您的风格、颜色、字体、图标等。
+
+<Button asChild size="sm">
+  <Link
+    href="/create?template=laravel"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mt-6 no-underline!"
+  >
+    打开 shadcn/create
+  </Link>
+</Button>
+
+### 运行命令
+
+点击 `Create Project`，选择您的包管理器，并复制生成的命令。
+
+生成的命令将类似于这样：
+
+```bash
+npx shadcn@latest init --preset [CODE] --template laravel
+```
+
+从 Laravel 应用的根目录运行该命令。
+
+当被问及是否覆盖 `components.json` 和组件时，选择 `Yes`。
 
 ### 添加组件
 
-现在你可以开始向项目中添加组件。
+将 `Switch` 组件添加到您的项目：
 
 ```bash
 npx shadcn@latest add switch
@@ -39,7 +92,48 @@ npx shadcn@latest add switch
 
 上述命令会将 `Switch` 组件添加到 `resources/js/components/ui/switch.tsx`。然后你可以这样导入它：
 
-```tsx title="resources/js/pages/index.tsx" {1,6} showLineNumbers
+```tsx title="resources/js/pages/index.tsx" showLineNumbers {1,6}
+import { Switch } from "@/components/ui/switch"
+
+const MyPage = () => {
+  return (
+    <div>
+      <Switch />
+    </div>
+  )
+}
+
+export default MyPage
+```
+
+</Steps>
+
+<div id="configure-with-cli" className="scroll-mt-24" />
+## 使用 CLI
+
+<Steps>
+
+### 运行 CLI
+
+从 Laravel 应用的根目录运行 `shadcn` init 命令：
+
+```bash
+npx shadcn@latest init
+```
+
+当被问及是否覆盖 `components.json` 和组件时，选择 `Yes`。
+
+### 添加组件
+
+将 `Switch` 组件添加到您的项目：
+
+```bash
+npx shadcn@latest add switch
+```
+
+上述命令会将 `Switch` 组件添加到 `resources/js/components/ui/switch.tsx`。然后您可以像这样导入它：
+
+```tsx title="resources/js/pages/index.tsx" showLineNumbers {1,6}
 import { Switch } from "@/components/ui/switch"
 
 const MyPage = () => {

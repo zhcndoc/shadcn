@@ -3,17 +3,125 @@ title: Astro
 description: 为 Astro 安装和配置 shadcn/ui。
 ---
 
-<Callout className="mb-6 border-emerald-600 bg-emerald-100 dark:border-emerald-400 dark:bg-emerald-900">
+选择符合你起点的设置。
 
-**开始一个新项目？** 使用 [shadcn/create](/create) 来获取一个完整配置的 Astro 应用，包含自定义主题、Base UI 或 Radix，以及图标库。
+<div className="mt-6 grid gap-4 sm:grid-cols-3 sm:gap-6">
+  <LinkedCard
+    href="#scaffold-with-create"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">使用 shadcn/create</div>
+    <div className="leading-relaxed text-muted-foreground">
+      构建你的预设并生成 Astro 项目命令。
+    </div>
+  </LinkedCard>
+  <LinkedCard
+    href="#scaffold-with-cli"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">使用 CLI</div>
+    <div className="leading-relaxed text-muted-foreground">
+      直接从终端搭建新的 Astro 项目。
+    </div>
+  </LinkedCard>
+  <LinkedCard
+    href="#existing-astro-project"
+    className="items-start gap-1 p-6 text-sm md:p-6"
+  >
+    <div className="font-medium">现有项目</div>
+    <div className="leading-relaxed text-muted-foreground">
+      在现有的 Astro 项目中手动配置 shadcn/ui。
+    </div>
+  </LinkedCard>
+</div>
 
-</Callout>
+<div id="scaffold-with-create" className="scroll-mt-24" />
+## 使用 shadcn/create
+
+<Steps>
+
+### 构建你的预设
+
+打开 [shadcn/create](/create?template=astro) 并以可视化方式构建你的预设。选择你的风格、颜色、字体、图标等。
+
+<Button asChild size="sm">
+  <Link
+    href="/create?template=astro"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="mt-6 no-underline!"
+  >
+    打开 shadcn/create
+  </Link>
+</Button>
+
+### 创建项目
+
+点击 `Create Project`，选择你的包管理器，并复制生成的命令。
+
+生成的命令将类似于这样：
+
+```bash
+npx shadcn@latest init --preset [CODE] --template astro
+```
+
+确切命令将包含你选择的选项，例如 `--base`、`--monorepo` 或 `--rtl`。
+
+### 添加组件
+
+将 `Card` 组件添加到你的项目：
+
+```bash
+npx shadcn@latest add card
+```
+
+如果你创建了 monorepo，请从 `apps/web` 运行命令或从仓库根目录指定工作区：
+
+```bash
+npx shadcn@latest add card -c apps/web
+```
+
+上述命令会将 `Card` 组件添加到你的项目。然后你可以这样导入它：
+
+```astro title="src/pages/index.astro" showLineNumbers
+---
+import Layout from "@/layouts/main.astro"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+---
+
+<Layout>
+  <Card className="max-w-sm">
+    <CardHeader>
+      <CardTitle>项目概览</CardTitle>
+      <CardDescription>
+        跟踪你的 Astro 应用的进度和最近活动。
+      </CardDescription>
+    </CardHeader>
+    <CardContent>
+      你的设计系统已就绪。开始构建你的下一个组件。
+    </CardContent>
+  </Card>
+</Layout>
+```
+
+如果你创建了 monorepo，请更新 `apps/web/src/pages/index.astro` 并改为从 `@workspace/ui/components/card` 导入。`apps/web/src/layouts/main.astro` 处的 monorepo 布局已经为你导入了 `@workspace/ui/globals.css`。
+
+</Steps>
+
+<div id="scaffold-with-cli" className="scroll-mt-24" />
+## 使用 CLI
 
 <Steps>
 
 ### 创建项目
 
-首先创建一个新的 Astro 项目：
+运行 `init` 命令来搭建新的 Astro 项目。按照提示配置你的项目：base、preset、monorepo 等。
 
 ```bash
 npx shadcn@latest init -t astro
@@ -27,7 +135,100 @@ npx shadcn@latest init -t astro --monorepo
 
 ### 添加组件
 
-现在你可以开始向项目中添加组件。
+将 `Card` 组件添加到你的项目：
+
+```bash
+npx shadcn@latest add card
+```
+
+如果你创建了 monorepo，请从 `apps/web` 运行命令或从仓库根目录指定工作区：
+
+```bash
+npx shadcn@latest add card -c apps/web
+```
+
+上述命令会将 `Card` 组件添加到你的项目。然后你可以这样导入它：
+
+```astro title="src/pages/index.astro" showLineNumbers
+---
+import Layout from "@/layouts/main.astro"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+---
+
+<Layout>
+  <Card className="max-w-sm">
+    <CardHeader>
+      <CardTitle>项目概览</CardTitle>
+      <CardDescription>
+        跟踪你的 Astro 应用的进度和最近活动。
+      </CardDescription>
+    </CardHeader>
+    <CardContent>
+      你的设计系统已就绪。开始构建你的下一个组件。
+    </CardContent>
+  </Card>
+</Layout>
+```
+
+如果你创建了 monorepo，请更新 `apps/web/src/pages/index.astro` 并改为从 `@workspace/ui/components/card` 导入。`apps/web/src/layouts/main.astro` 处的 monorepo 布局已经为你导入了 `@workspace/ui/globals.css`。
+
+</Steps>
+
+<div id="existing-astro-project" className="scroll-mt-24" />
+## 现有项目
+
+<Steps>
+
+### 创建项目
+
+如果你需要新的 Astro 项目，请先创建一个。否则，跳过此步骤。
+
+```bash
+npm create astro@latest astro-app -- --template with-tailwindcss --install --add react --git
+```
+
+此命令为你设置 Tailwind CSS 和 React 集成。如果你要将 shadcn/ui 添加到较旧或自定义的 Astro 应用，请确保在继续之前两者都已配置。
+
+Tailwind starter 通过 `src/layouts/main.astro` 加载你的全局样式表。保留该布局，或确保你的页面导入了 `@/styles/global.css`。
+
+### 编辑 tsconfig.json 文件
+
+如果你的项目已经配置了 `@/*` 别名，请跳过此步骤。
+
+将以下代码添加到 `tsconfig.json` 文件以解析路径：
+
+```ts title="tsconfig.json" {4-9} showLineNumbers
+{
+  "compilerOptions": {
+    // ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+    // ...
+  }
+}
+```
+
+### 运行 CLI
+
+运行 `shadcn` init 命令来设置你的项目：
+
+```bash
+npx shadcn@latest init
+```
+
+### 添加组件
+
+你现在可以开始向项目添加组件了。
 
 ```bash
 npx shadcn@latest add button
@@ -35,26 +236,17 @@ npx shadcn@latest add button
 
 以上命令将把 `Button` 组件添加到你的项目中。然后你可以这样导入它：
 
-```astro title="src/pages/index.astro" {2,16} showLineNumbers
+```astro title="src/pages/index.astro" showLineNumbers
 ---
+import Layout from "@/layouts/main.astro"
 import { Button } from "@/components/ui/button"
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro + Tailwind CSS</title>
-	</head>
-
-	<body>
-		<div class="grid place-items-center h-screen content-center">
-			<Button>Button</Button>
-		</div>
-	</body>
-</html>
+<Layout>
+  <div class="grid h-screen place-items-center content-center">
+    <Button>按钮</Button>
+  </div>
+</Layout>
 ```
 
 </Steps>
