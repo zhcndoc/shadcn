@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import dynamic from "next/dynamic"
 import { type RegistryItem } from "shadcn/schema"
 
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -31,6 +32,13 @@ import { V0Button } from "@/app/(app)/create/components/v0-button"
 import { FONT_HEADING_OPTIONS, FONTS } from "@/app/(app)/create/lib/fonts"
 import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params"
 
+// Only visible when user clicks "Create Project".
+const ProjectForm = dynamic(() =>
+  import("@/app/(app)/create/components/project-form").then(
+    (m) => m.ProjectForm
+  )
+)
+
 export function Customizer({
   itemsByBase,
 }: {
@@ -56,7 +64,6 @@ export function Customizer({
       </CardHeader>
       <CardContent className="no-scrollbar min-h-0 flex-1 overflow-x-auto overflow-y-hidden md:overflow-y-auto">
         <FieldGroup className="flex-row gap-2.5 py-px **:data-[slot=field-separator]:-mx-4 **:data-[slot=field-separator]:w-auto md:flex-col md:gap-3.25">
-          {isMobile && <BasePicker isMobile={isMobile} anchorRef={anchorRef} />}
           <StylePicker
             styles={STYLES}
             isMobile={isMobile}
@@ -91,13 +98,17 @@ export function Customizer({
           <FieldSeparator className="hidden md:block" />
           <MenuColorPicker isMobile={isMobile} anchorRef={anchorRef} />
           <MenuAccentPicker isMobile={isMobile} anchorRef={anchorRef} />
+          {isMobile && <BasePicker isMobile={isMobile} anchorRef={anchorRef} />}
         </FieldGroup>
       </CardContent>
-      <CardFooter className="flex min-w-0 gap-2 md:flex-col md:**:[button,a]:w-full">
+      <CardFooter className="flex min-w-0 gap-2 md:flex-col md:rounded-b-none md:**:[button,a]:w-full">
         <CopyPreset className="flex-1 md:flex-none" />
         <RandomButton className="flex-1 md:flex-none" />
         <ActionMenu itemsByBase={itemsByBase} />
         <ResetDialog />
+      </CardFooter>
+      <CardFooter className="-mt-3 hidden min-w-0 gap-2 md:flex md:flex-col md:**:[button,a]:w-full">
+        <ProjectForm />
       </CardFooter>
     </Card>
   )
