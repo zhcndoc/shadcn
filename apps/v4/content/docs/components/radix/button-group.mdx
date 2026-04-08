@@ -66,7 +66,18 @@ import {
 </ButtonGroup>
 ```
 
-## 无障碍支持
+## Composition
+
+使用以下组合来构建 `ButtonGroup`：
+
+```text
+ButtonGroup
+├── 按钮或输入框
+├── ButtonGroupSeparator
+└── ButtonGroupText
+```
+
+## Accessibility
 
 - `ButtonGroup` 组件的 `role` 属性被设置为 `group`。
 - 使用 <Kbd>Tab</Kbd> 键在组内按钮间切换。

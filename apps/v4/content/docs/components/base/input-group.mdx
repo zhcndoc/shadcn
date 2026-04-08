@@ -71,6 +71,18 @@ import {
 </InputGroup>
 ```
 
+## 组合
+
+使用以下组合来构建 `InputGroup`：
+
+```text
+InputGroup
+├── InputGroupInput or InputGroupTextarea
+├── InputGroupAddon
+├── InputGroupButton
+└── InputGroupText
+```
+
 ## 对齐
 
 使用 `InputGroupAddon` 上的 `align` 属性来相对于输入框定位附加内容。
@@ -81,7 +93,7 @@ import {
   视觉位置调整。
 </Callout>
 
-### inline-start
+### 起始端
 
 使用 `align="inline-start"` 将附加内容放置在输入框的起始位置。这是默认值。
 
@@ -91,7 +103,7 @@ import {
   previewClassName="h-48"
 />
 
-### inline-end
+### 末端端
 
 使用 `align="inline-end"` 将附加内容放置在输入框的末尾。
 
@@ -101,7 +113,7 @@ import {
   previewClassName="h-48"
 />
 
-### block-start
+### 上方
 
 使用 `align="block-start"` 将附加内容放置在输入框上方。
 
@@ -111,7 +123,7 @@ import {
   previewClassName="h-96"
 />
 
-### block-end
+### 下方
 
 使用 `align="block-end"` 将附加内容放置在输入框下方。
 
@@ -191,9 +203,9 @@ import {
   previewClassName="h-56"
 />
 
-## RTL
+## 从右到左
 
-要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+要在 shadcn/ui 中启用从右到左支持，请参阅 [从右到左配置指南](/docs/rtl)。
 
 <ComponentPreview
   styleName="base-nova"

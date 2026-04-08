@@ -64,6 +64,32 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 </Avatar>
 ```
 
+## 组合
+
+使用以下组合来构建 `Avatar`：
+
+```text
+Avatar
+├── AvatarImage
+├── AvatarFallback
+└── AvatarBadge
+```
+
+使用以下组合来构建 `AvatarGroup`：
+
+```text
+AvatarGroup
+├── Avatar
+│   ├── AvatarImage
+│   ├── AvatarFallback
+│   └── AvatarBadge
+├── Avatar
+│   ├── AvatarImage
+│   ├── AvatarFallback
+│   └── AvatarBadge
+└── AvatarGroupCount
+```
+
 ## 示例
 
 ### 基础
@@ -139,7 +165,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 <ComponentPreview styleName="radix-nova" name="avatar-dropdown" />
 
-## RTL
+## RTL 支持
 
 要在 shadcn/ui 中启用 RTL（从右到左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

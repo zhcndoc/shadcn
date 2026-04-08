@@ -90,6 +90,62 @@ export function ExampleCombobox() {
 }
 ```
 
+## 组合
+
+### 简单
+
+单行输入框和扁平列表（请参见 [基础](#basic)）。
+
+```text
+Combobox
+├── ComboboxInput
+└── ComboboxContent
+    ├── ComboboxEmpty
+    └── ComboboxList
+        ├── ComboboxItem
+        └── ComboboxItem
+```
+
+### 带芯片
+
+使用 `multiple` 进行多选，带芯片和芯片输入（请参见 [多选](#multiple)）。
+
+```text
+Combobox
+├── ComboboxChips
+│   ├── ComboboxValue
+│   │   └── ComboboxChip
+│   └── ComboboxChipsInput
+└── ComboboxContent
+    ├── ComboboxEmpty
+    └── ComboboxList
+        ├── ComboboxItem
+        └── ComboboxItem
+```
+
+### 带分组和集合
+
+在每个 `ComboboxGroup` 内使用 `ComboboxCollection` 按分组嵌套项目，组间有分隔符（请参见 [分组](#groups)）。
+
+```text
+Combobox
+├── ComboboxInput
+└── ComboboxContent
+    ├── ComboboxEmpty
+    └── ComboboxList
+        ├── ComboboxGroup
+        │   ├── ComboboxLabel
+        │   └── ComboboxCollection
+        │       ├── ComboboxItem
+        │       └── ComboboxItem
+        ├── ComboboxSeparator
+        └── ComboboxGroup
+            ├── ComboboxLabel
+            └── ComboboxCollection
+                ├── ComboboxItem
+                └── ComboboxItem
+```
+
 ## 自定义项目
 
 当您的项目是对象时，请使用 `itemToStringValue`。

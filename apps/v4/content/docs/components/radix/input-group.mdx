@@ -71,6 +71,18 @@ import {
 </InputGroup>
 ```
 
+## 组合
+
+使用以下组合来构建 `InputGroup`:
+
+```text
+InputGroup
+├── InputGroupInput or InputGroupTextarea
+├── InputGroupAddon
+├── InputGroupButton
+└── InputGroupText
+```
+
 ## 对齐
 
 使用 `InputGroupAddon` 组件的 `align` 属性来相对于输入框定位附加内容。
@@ -79,7 +91,7 @@ import {
   为了正确的焦点管理，`InputGroupAddon` 应始终放置在 `InputGroupInput` 或 `InputGroupTextarea` 之后。使用 `align` 属性实现视觉定位。
 </Callout>
 
-### inline-start
+### 行内起始
 
 使用 `align="inline-start"` 将附加内容定位在输入框开始位置。这是默认值。
 
@@ -89,7 +101,7 @@ import {
   previewClassName="h-48"
 />
 
-### inline-end
+### 行内结束
 
 使用 `align="inline-end"` 将附加内容定位在输入框末尾。
 
@@ -99,7 +111,7 @@ import {
   previewClassName="h-48"
 />
 
-### block-start
+### 块级起始
 
 使用 `align="block-start"` 将附加内容定位在输入框上方。
 
@@ -109,7 +121,7 @@ import {
   previewClassName="h-96"
 />
 
-### block-end
+### 块级结束
 
 使用 `align="block-end"` 将附加内容定位在输入框下方。
 
@@ -217,7 +229,7 @@ export function InputGroupCustom() {
 }
 ```
 
-## RTL
+## 从右到左
 
 要启用 shadcn/ui 的 RTL 支持，请参见 [RTL 配置指南](/docs/rtl)。
 

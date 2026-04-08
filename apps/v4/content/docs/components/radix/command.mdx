@@ -96,6 +96,24 @@ import {
 </Command>
 ```
 
+## 组合
+
+使用以下组合来构建 `Command`：
+
+```text
+Command
+├── CommandInput
+└── CommandList
+    ├── CommandEmpty
+    ├── CommandGroup
+    │   ├── CommandItem
+    │   └── CommandItem
+    ├── CommandSeparator
+    └── CommandGroup
+        ├── CommandItem
+        └── CommandItem
+```
+
 ## 示例
 
 ### 基础示例

@@ -79,6 +79,37 @@ import {
 </ContextMenu>
 ```
 
+## 组合
+
+使用以下组合来构建 `ContextMenu`:
+
+```text
+ContextMenu
+├── ContextMenuTrigger
+└── ContextMenuContent
+    ├── ContextMenuGroup
+    │   ├── ContextMenuLabel
+    │   ├── ContextMenuItem
+    │   └── ContextMenuItem
+    ├── ContextMenuSeparator
+    ├── ContextMenuGroup
+    │   ├── ContextMenuLabel
+    │   ├── ContextMenuCheckboxItem
+    │   └── ContextMenuCheckboxItem
+    ├── ContextMenuSeparator
+    ├── ContextMenuGroup
+    │   ├── ContextMenuLabel
+    │   └── ContextMenuRadioGroup
+    │       ├── ContextMenuRadioItem
+    │       └── ContextMenuRadioItem
+    └── ContextMenuSub
+        ├── ContextMenuSubTrigger
+        └── ContextMenuSubContent
+            └── ContextMenuGroup
+                ├── ContextMenuItem
+                └── ContextMenuItem
+```
+
 ## 示例
 
 ### 基础
@@ -135,7 +166,7 @@ import {
 
 <ComponentPreview styleName="base-nova" name="context-menu-sides" />
 
-## RTL
+## 从右向左
 
 要在 shadcn/ui 中启用 RTL（从右向左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

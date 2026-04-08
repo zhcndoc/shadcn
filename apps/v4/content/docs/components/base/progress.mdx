@@ -62,7 +62,34 @@ import { Progress } from "@/components/ui/progress"
 <Progress value={33} />
 ```
 
-## 示例
+## Composition
+
+### 带标签和数值
+
+使用 `ProgressLabel` 和 `ProgressValue` 添加标签和数值显示。
+
+```tsx showLineNumbers
+import {
+  Progress,
+  ProgressLabel,
+  ProgressValue,
+} from "@/components/ui/progress"
+
+;<Progress value={56} className="w-full max-w-sm">
+  <ProgressLabel>Upload progress</ProgressLabel>
+  <ProgressValue />
+</Progress>
+```
+
+```text
+Progress
+├── ProgressLabel
+├── ProgressValue
+└── ProgressTrack
+    └── ProgressIndicator
+```
+
+## Examples
 
 ### 标签
 

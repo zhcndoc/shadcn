@@ -75,6 +75,16 @@ import {
 </HoverCard>
 ```
 
+## 组合
+
+使用以下组合来构建 `HoverCard`:
+
+```text
+HoverCard
+├── HoverCardTrigger
+└── HoverCardContent
+```
+
 ## 触发延迟
 
 在触发组件上使用 `delay` 和 `closeDelay` 来控制卡片何时打开和关闭。
@@ -119,7 +129,7 @@ import {
   previewClassName="h-[22rem]"
 />
 
-## RTL
+## RTL 支持
 
 要在 shadcn/ui 中启用 RTL（从右至左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

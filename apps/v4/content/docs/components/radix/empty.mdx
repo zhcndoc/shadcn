@@ -1,5 +1,5 @@
 ---
-title: Empty
+title: 空状态
 description: 使用 Empty 组件来显示空状态。
 base: radix
 component: true
@@ -75,7 +75,20 @@ import {
 </Empty>
 ```
 
-## 示例
+## Composition
+
+使用以下组合来构建空状态：
+
+```text
+Empty
+├── EmptyHeader
+│   ├── EmptyMedia
+│   ├── EmptyTitle
+│   └── EmptyDescription
+└── EmptyContent
+```
+
+## Examples
 
 ### 边框样式
 

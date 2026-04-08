@@ -84,6 +84,20 @@ import {
 </Dialog>
 ```
 
+## 组合
+
+使用以下组合来构建 `Dialog`:
+
+```text
+Dialog
+├── DialogTrigger
+└── DialogContent
+    ├── DialogHeader
+    │   ├── DialogTitle
+    │   └── DialogDescription
+    └── DialogFooter
+```
+
 ## 示例
 
 ### 自定义关闭按钮
@@ -110,7 +124,7 @@ import {
 
 <ComponentPreview styleName="base-nova" name="dialog-scrollable-content" />
 
-## RTL
+## 从右到左
 
 要在 shadcn/ui 中启用 RTL（从右到左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

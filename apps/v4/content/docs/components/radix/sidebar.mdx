@@ -53,33 +53,7 @@ npx shadcn@latest add sidebar
 
 </CodeTabs>
 
-## 结构
-
-一个 `Sidebar` 组件由以下部分组成：
-
-- `SidebarProvider` - 处理可折叠状态。
-- `Sidebar` - 侧边栏容器。
-- `SidebarHeader` 和 `SidebarFooter` - 分别固定在侧边栏的顶部和底部。
-- `SidebarContent` - 可滚动内容区域。
-- `SidebarGroup` - 侧边栏内容内的分组区域。
-- `SidebarTrigger` - 侧边栏的触发按钮。
-
-<Image
-  src="/images/sidebar-structure.png"
-  width="716"
-  height="420"
-  alt="侧边栏结构"
-  className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
-/>
-<Image
-  src="/images/sidebar-structure-dark.png"
-  width="716"
-  height="420"
-  alt="侧边栏结构"
-  className="mt-6 hidden w-full overflow-hidden rounded-lg border dark:block"
-/>
-
-## 用法
+## Usage
 
 ```tsx showLineNumbers title="app/layout.tsx"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
@@ -120,6 +94,67 @@ export function AppSidebar() {
   )
 }
 ```
+
+## Composition
+
+使用以下组合来构建 `Sidebar` 布局：
+
+```text
+SidebarProvider
+├── Sidebar
+│   ├── SidebarHeader
+│   ├── SidebarContent
+│   │   ├── SidebarGroup
+│   │   │   ├── SidebarGroupLabel
+│   │   │   ├── SidebarGroupAction
+│   │   │   ├── SidebarGroupContent
+│   │   │   └── SidebarMenu
+│   │   │       ├── SidebarMenuItem
+│   │   │       │   ├── SidebarMenuButton
+│   │   │       │   ├── SidebarMenuAction
+│   │   │       │   └── SidebarMenuBadge
+│   │   │       └── SidebarMenuItem
+│   │   │           ├── SidebarMenuButton
+│   │   │           └── SidebarMenuSub
+│   │   │               ├── SidebarMenuSubItem
+│   │   │               └── SidebarMenuSubItem
+│   │   └── SidebarGroup
+│   │       └── SidebarMenu
+│   │           ├── SidebarMenuItem
+│   │           └── SidebarMenuItem
+│   ├── SidebarFooter
+│   └── SidebarRail
+├── SidebarInset
+└── SidebarTrigger
+```
+
+## Structure
+
+- **SidebarProvider** — 处理可折叠状态，并为子组件提供侧边栏上下文。
+- **Sidebar** — 主要的可折叠侧边栏面板。
+- **SidebarHeader** — 顶部固定；用于品牌标识、标题或工作区切换器。
+- **SidebarFooter** — 底部固定；用于用户菜单、设置或操作。
+- **SidebarContent** — 头部和脚部之间的可滚动区域。
+- **SidebarGroup** — 将相关导航分组，可选标签、操作和内容区域。
+- **SidebarMenu** / **SidebarMenuItem** — 用于链接、徽章、操作和嵌套子菜单的菜单结构。
+- **SidebarRail** — 在适用时调整侧边栏宽度的调整手柄。
+- **SidebarInset** — 使用 `inset` 变体时包裹主内容。
+- **SidebarTrigger** — 切换侧边栏打开或折叠的控件。
+
+<Image
+  src="/images/sidebar-structure.png"
+  width="716"
+  height="420"
+  alt="侧边栏结构"
+  className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
+/>
+<Image
+  src="/images/sidebar-structure-dark.png"
+  width="716"
+  height="420"
+  alt="侧边栏结构"
+  className="mt-6 hidden w-full overflow-hidden rounded-lg border dark:block"
+/>
 
 ## SidebarProvider
 
@@ -177,11 +212,11 @@ const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 | `variant`      | `'sidebar'`、`'floating'` 或 `'inset'` | 侧边栏的样式变体。           |
 | `collapsible`  | `'offcanvas'`、`'icon'` 或 `'none'` | 侧边栏的可折叠状态。         |
 
-| Prop        | Description                                                  |
-| ----------- | ------------------------------------------------------------ |
-| `offcanvas` | 可折叠的侧边栏，从左或右侧滑入。                             |
-| `icon`      | 可折叠为图标的侧边栏。                                       |
-| `none`      | 不可折叠的侧边栏。                                           |
+| 属性        | 说明                                                  |
+| ----------- | ------------------------------------------------------ |
+| `offcanvas` | 可折叠的侧边栏，从左或右侧滑入。                       |
+| `icon`      | 可折叠为图标的侧边栏。                                 |
+| `none`      | 不可折叠的侧边栏。                                     |
 
 <Callout>
   **注意：** 如果使用 `inset` 变体，记得用 `SidebarInset` 组件包裹主内容。
@@ -369,7 +404,7 @@ export function AppSidebar() {
 
 ## SidebarMenuAction
 
-`SidebarMenuAction` 组件用于渲染 `SidebarMenuItem` 内的菜单操作按钮。
+`SidebarMenuAction` 组件用于在 `SidebarMenuItem` 内渲染菜单操作按钮。
 
 ```tsx showLineNumbers
 <SidebarMenuItem>
@@ -387,7 +422,7 @@ export function AppSidebar() {
 
 ## SidebarMenuSub
 
-`SidebarMenuSub` 组件用于渲染 `SidebarMenu` 内的子菜单。
+`SidebarMenuSub` 组件用于在 `SidebarMenu` 内渲染子菜单。
 
 ```tsx showLineNumbers
 <SidebarMenuItem>
@@ -402,7 +437,7 @@ export function AppSidebar() {
 
 ## SidebarMenuBadge
 
-`SidebarMenuBadge` 组件用于渲染 `SidebarMenuItem` 内的徽章。
+`SidebarMenuBadge` 组件用于在 `SidebarMenuItem` 内渲染徽章。
 
 ```tsx showLineNumbers
 <SidebarMenuItem>

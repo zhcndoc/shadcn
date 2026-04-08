@@ -54,33 +54,7 @@ npx shadcn@latest add sidebar
 
 </CodeTabs>
 
-## 结构
-
-`Sidebar` 组件由以下部分组成：
-
-- `SidebarProvider` - 处理折叠状态。
-- `Sidebar` - 侧边栏容器。
-- `SidebarHeader` 和 `SidebarFooter` - 分别位于侧边栏的顶部和底部，且为粘性定位。
-- `SidebarContent` - 可滚动的内容区域。
-- `SidebarGroup` - `SidebarContent` 中的分组区域。
-- `SidebarTrigger` - 用于触发侧边栏的开关。
-
-<Image
-  src="/images/sidebar-structure.png"
-  width="716"
-  height="420"
-  alt="侧边栏结构"
-  className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
-/>
-<Image
-  src="/images/sidebar-structure-dark.png"
-  width="716"
-  height="420"
-  alt="侧边栏结构"
-  className="mt-6 hidden w-full overflow-hidden rounded-lg border dark:block"
-/>
-
-## 使用方法
+## Usage
 
 ```tsx showLineNumbers title="app/layout.tsx"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
@@ -121,6 +95,67 @@ export function AppSidebar() {
   )
 }
 ```
+
+## Composition
+
+Use the following composition to build a `Sidebar` layout:
+
+```text
+SidebarProvider
+├── Sidebar
+│   ├── SidebarHeader
+│   ├── SidebarContent
+│   │   ├── SidebarGroup
+│   │   │   ├── SidebarGroupLabel
+│   │   │   ├── SidebarGroupAction
+│   │   │   ├── SidebarGroupContent
+│   │   │   └── SidebarMenu
+│   │   │       ├── SidebarMenuItem
+│   │   │       │   ├── SidebarMenuButton
+│   │   │       │   ├── SidebarMenuAction
+│   │   │       │   └── SidebarMenuBadge
+│   │   │       └── SidebarMenuItem
+│   │   │           ├── SidebarMenuButton
+│   │   │           └── SidebarMenuSub
+│   │   │               ├── SidebarMenuSubItem
+│   │   │               └── SidebarMenuSubItem
+│   │   └── SidebarGroup
+│   │       └── SidebarMenu
+│   │           ├── SidebarMenuItem
+│   │           └── SidebarMenuItem
+│   ├── SidebarFooter
+│   └── SidebarRail
+├── SidebarInset
+└── SidebarTrigger
+```
+
+## Structure
+
+- **SidebarProvider** — Handles collapsible state and provides sidebar context to child components.
+- **Sidebar** — The main collapsible sidebar panel.
+- **SidebarHeader** — Sticky at the top; use for branding, titles, or workspace switchers.
+- **SidebarFooter** — Sticky at the bottom; use for user menus, settings, or actions.
+- **SidebarContent** — Scrollable region between the header and footer.
+- **SidebarGroup** — Groups related navigation with optional label, action, and content areas.
+- **SidebarMenu** / **SidebarMenuItem** — Menu structure for links, badges, actions, and nested submenus.
+- **SidebarRail** — Resize handle for adjusting sidebar width when applicable.
+- **SidebarInset** — Wraps main content when using the `inset` variant.
+- **SidebarTrigger** — Control that toggles the sidebar open or collapsed.
+
+<Image
+  src="/images/sidebar-structure.png"
+  width="716"
+  height="420"
+  alt="侧边栏结构"
+  className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
+/>
+<Image
+  src="/images/sidebar-structure-dark.png"
+  width="716"
+  height="420"
+  alt="侧边栏结构"
+  className="mt-6 hidden w-full overflow-hidden rounded-lg border dark:block"
+/>
 
 ## SidebarProvider
 
@@ -356,7 +391,7 @@ export function AppSidebar() {
 
 ## SidebarMenuButton
 
-`SidebarMenuButton` 组件用于渲染 `SidebarMenuItem` 内的菜单按钮。
+`SidebarMenuButton` 组件用于在 `SidebarMenuItem` 内渲染菜单按钮。
 
 默认情况下，`SidebarMenuButton` 渲染为按钮，但你可以通过 `asChild` 属性来渲染为其他组件，比如 `Link` 或 `a` 标签。
 

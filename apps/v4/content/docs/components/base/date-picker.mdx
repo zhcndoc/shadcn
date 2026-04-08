@@ -58,6 +58,17 @@ export function DatePickerDemo() {
 
 更多信息请查看 [React DayPicker](https://react-day-picker.js.org) 文档。
 
+## 组合方式
+
+日期选择器由 `Popover` 和 `Calendar` 构建而成（没有 `DatePicker` 根组件）：
+
+```text
+Popover
+├── PopoverTrigger
+└── PopoverContent
+    └── Calendar
+```
+
 ## 示例
 
 ### 基础

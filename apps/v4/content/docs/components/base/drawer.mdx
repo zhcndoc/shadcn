@@ -1,5 +1,5 @@
 ---
-title: 抽屉 Drawer
+title: 抽屉
 description: React 的抽屉组件。
 component: true
 links:
@@ -87,7 +87,21 @@ import {
 </Drawer>
 ```
 
-## 示例
+## Composition
+
+使用以下组合来构建 `Drawer`:
+
+```text
+Drawer
+├── DrawerTrigger
+└── DrawerContent
+    ├── DrawerHeader
+    │   ├── DrawerTitle
+    │   └── DrawerDescription
+    └── DrawerFooter
+```
+
+## Examples
 
 ### 可滚动内容
 

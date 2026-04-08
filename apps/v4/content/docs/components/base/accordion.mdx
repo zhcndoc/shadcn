@@ -80,6 +80,20 @@ import {
 </Accordion>
 ```
 
+## 组合
+
+使用以下组合来构建 `Accordion`：
+
+```text
+Accordion
+├── AccordionItem
+│   ├── AccordionTrigger
+│   └── AccordionContent
+└── AccordionItem
+    ├── AccordionTrigger
+    └── AccordionContent
+```
+
 ## 示例
 
 ### 基础用法
@@ -137,7 +151,7 @@ import {
   previewClassName="*:data-[slot=accordion]:max-w-sm h-[435px]"
 />
 
-## RTL
+## 从右至左
 
 要在 shadcn/ui 中启用从右至左（RTL）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

@@ -83,6 +83,33 @@ import {
 </Table>
 ```
 
+## 组合
+
+使用以下组合来构建 `Table`：
+
+```text
+Table
+├── TableCaption
+├── TableHeader
+│   └── TableRow
+│       ├── TableHead
+│       ├── TableHead
+│       ├── TableHead
+│       └── TableHead
+├── TableBody
+│   ├── TableRow
+│   │   ├── TableCell
+│   │   ├── TableCell
+│   │   ├── TableCell
+│   │   └── TableCell
+│   └── TableRow
+│       ├── TableCell
+│       ├── TableCell
+│       ├── TableCell
+│       └── TableCell
+└── TableFooter
+```
+
 ## 示例
 
 ### 底部
@@ -105,7 +132,7 @@ import {
 
 你也可以在 [任务](/examples/tasks) 示例中查看数据表格的示例。
 
-## RTL
+## RTL 支持
 
 要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

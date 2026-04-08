@@ -67,6 +67,18 @@ import {
 </Alert>
 ```
 
+## 组合
+
+使用以下组合来构建 `Alert`：
+
+```text
+Alert
+├── Icon
+├── AlertTitle
+├── AlertDescription
+└── AlertAction
+```
+
 ## 示例
 
 ### 基础
@@ -109,7 +121,7 @@ import {
   previewClassName="h-auto sm:h-72 p-6"
 />
 
-## RTL
+## RTL 支持
 
 要启用 shadcn/ui 中的 RTL（从右到左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
@@ -122,7 +134,7 @@ import {
 
 ## API 参考
 
-### Alert
+### 警告
 
 `Alert` 组件用于显示引起用户注意的提示框。
 
@@ -130,7 +142,7 @@ import {
 | ---------- | ----------------------------- | ------------ |
 | `variant`  | `"default" \| "destructive"`  | `"default"`  |
 
-### AlertTitle
+### 警告标题
 
 `AlertTitle` 组件用于显示警告提示的标题。
 
@@ -138,7 +150,7 @@ import {
 | ----------- | -------- | ------ |
 | `className` | `string` | -      |
 
-### AlertDescription
+### 警告描述
 
 `AlertDescription` 组件用于显示警告提示的描述或内容。
 
@@ -146,7 +158,7 @@ import {
 | ----------- | -------- | ------ |
 | `className` | `string` | -      |
 
-### AlertAction
+### 警告操作
 
 `AlertAction` 组件用于显示操作元素（如按钮），该元素绝对定位于警告提示的右上角。
 

@@ -8,7 +8,7 @@ component: true
 import { InfoIcon } from "lucide-react"
 
 <Callout variant="info" icon={<InfoIcon className="!translate-y-[3px]" />}>
-  有关样式化的选择组件，请参见 [Select](/docs/components/select)
+  有关样式化的选择组件，请参见 [选择组件](/docs/components/select)
   组件。
 </Callout>
 
@@ -68,6 +68,34 @@ import {
   <NativeSelectOption value="blueberry">蓝莓</NativeSelectOption>
   <NativeSelectOption value="pineapple">菠萝</NativeSelectOption>
 </NativeSelect>
+```
+
+## 组合
+
+### 简单
+
+选项直接放置在 `NativeSelect` 下（无 `NativeSelectOptGroup`）。
+
+```text
+NativeSelect
+├── NativeSelectOption
+├── NativeSelectOption
+├── NativeSelectOption
+└── NativeSelectOption
+```
+
+### 带分组
+
+使用 `NativeSelectOptGroup` 将选项组织成类别。
+
+```text
+NativeSelect
+├── NativeSelectOptGroup
+│   ├── NativeSelectOption
+│   └── NativeSelectOption
+└── NativeSelectOptGroup
+    ├── NativeSelectOption
+    └── NativeSelectOption
 ```
 
 ## 示例

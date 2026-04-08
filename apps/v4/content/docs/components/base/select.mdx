@@ -89,7 +89,27 @@ const items = [
 </Select>
 ```
 
-## 示例
+## Composition
+
+使用以下组合来构建 `Select`：
+
+```text
+Select
+├── SelectTrigger
+│   └── SelectValue
+└── SelectContent
+    ├── SelectGroup
+    │   ├── SelectLabel
+    │   ├── SelectItem
+    │   └── SelectItem
+    ├── SelectSeparator
+    └── SelectGroup
+        ├── SelectLabel
+        ├── SelectItem
+        └── SelectItem
+```
+
+## Examples
 
 ### 让选项与触发器对齐
 

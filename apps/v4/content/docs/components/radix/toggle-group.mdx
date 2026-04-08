@@ -66,6 +66,16 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 </ToggleGroup>
 ```
 
+## 组合
+
+使用以下组合来构建 `ToggleGroup`：
+
+```text
+ToggleGroup
+├── ToggleGroupItem
+└── ToggleGroupItem
+```
+
 ## 示例
 
 ### 轮廓样式
@@ -96,9 +106,9 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 <ComponentPreview styleName="radix-nova" name="toggle-group-disabled" />
 
-### Custom
+### 自定义
 
-A custom toggle group example.
+一个自定义切换组示例。
 
 <ComponentPreview
   styleName="radix-nova"
@@ -106,9 +116,9 @@ A custom toggle group example.
   previewClassName="*:data-[slot=field]:max-w-xs"
 />
 
-## RTL
+## 从右到左
 
-要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+要在 shadcn/ui 中启用从右到左支持，请参阅 [从右到左配置指南](/docs/rtl)。
 
 <ComponentPreview
   styleName="radix-nova"

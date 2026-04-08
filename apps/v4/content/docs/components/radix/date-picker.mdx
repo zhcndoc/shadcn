@@ -1,8 +1,8 @@
 ---
-title: 日期选择器 Date Picker  
-description: 一款带有范围和预设选项的日期选择器组件。  
-base: radix  
-component: true  
+title: 日期选择器 Date Picker
+description: 一款带有范围和预设选项的日期选择器组件。
+base: radix
+component: true
 ---
 
 <ComponentPreview styleName="radix-nova" name="date-picker-demo" />
@@ -56,6 +56,17 @@ export function DatePickerDemo() {
 
 更多信息请参阅 [React DayPicker](https://react-day-picker.js.org) 文档。
 
+## 组合
+
+日期选择器由 `Popover` 和 `Calendar` 构建（没有 `DatePicker` 根组件）：
+
+```text
+Popover
+├── PopoverTrigger
+└── PopoverContent
+    └── Calendar
+```
+
 ## 示例
 
 ### 基本用法
@@ -94,7 +105,7 @@ export function DatePickerDemo() {
 
 <ComponentPreview styleName="radix-nova" name="date-picker-natural-language" />
 
-## RTL
+## RTL 支持
 
 要在 shadcn/ui 中启用 RTL（从右到左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

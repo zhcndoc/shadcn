@@ -77,7 +77,7 @@ allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(b
 
 ### CLI
 
-- **永远不要手动解码或获取预设代码。** 直接传递给 `npx shadcn@latest init --preset <code>`。
+- **Never decode or fetch preset codes manually.** Pass them directly to `npx shadcn@latest apply --preset <code>` for existing projects, or `npx shadcn@latest init --preset <code>` when initializing.
 
 ## 关键模式
 
@@ -165,23 +165,23 @@ npx shadcn@latest docs button dialog select
 
 ## 工作流
 
-1. **获取项目上下文** — 已在上文注入。如需刷新，请再次运行 `npx shadcn@latest info`。
-2. **首先检查已安装的组件** — 在运行 `add` 之前，务必从项目上下文中检查 `components` 列表，或列出 `resolvedPaths.ui` 目录。不要导入尚未添加的组件，也不要重复添加已安装的组件。
-3. **查找组件** — `npx shadcn@latest search`。
-4. **获取文档和示例** — 运行 `npx shadcn@latest docs <component>` 获取 URL，然后拉取它们。使用 `npx shadcn@latest view` 浏览你尚未安装的注册表项目。要预览对已安装组件的更改，请使用 `npx shadcn@latest add --diff`。
-5. **安装或更新** — `npx shadcn@latest add`。更新现有组件时，请先用 `--dry-run` 和 `--diff` 预览更改（见下文[更新组件](#updating-components)）。
-6. **修复第三方组件中的导入** — 从社区注册表（如 `@bundui`、`@magicui`）添加组件后，检查添加的非 UI 文件中是否存在硬编码的导入路径，如 `@/components/ui/...`。这些路径与项目的实际别名不匹配。使用 `npx shadcn@latest info` 获取正确的 `ui` 别名（如 `@workspace/ui/components`），并相应重写导入。CLI 会为其自身的 UI 文件重写导入，但第三方注册表组件可能使用与项目不匹配的默认路径。
-7. **审查已添加的组件** — 从任何注册表添加组件或区块后，**务必阅读添加的文件并验证其正确性**。检查是否缺少子组件（如没有 `SelectGroup` 的 `SelectItem`）、缺少导入、组合不正确，或违反[关键规则](#critical-rules)。还要用项目上下文中的 `iconLibrary` 替换任何图标导入（例如，如果注册表项目使用 `lucide-react` 但项目使用 `hugeicons`，请相应交换导入和图标名称）。在继续之前修复所有问题。
-8. **注册表必须明确** — 当用户要求添加区块或组件时，**不要猜测注册表**。如果未指定注册表（例如用户说"添加一个登录区块"但未指定 `@shadcn`、`@tailark` 等），询问应使用哪个注册表。永远不要代表用户默认选择一个注册表。
-9. **切换预设** — 先询问用户：**重新安装**、**合并**还是**跳过**？
-   - **重新安装**：`npx shadcn@latest init --preset <code> --force --reinstall`。覆盖所有组件。
-   - **合并**：`npx shadcn@latest init --preset <code> --force --no-reinstall`，然后运行 `npx shadcn@latest info` 列出已安装的组件，接着对每个已安装的组件使用 `--dry-run` 和 `--diff` 单独进行[智能合并](#updating-components)。
-   - **跳过**：`npx shadcn@latest init --preset <code> --force --no-reinstall`。仅更新配置和 CSS，保持组件原样。
-   - **重要**：始终在用户的项目目录中运行预设命令。CLI 会自动从 `components.json` 保留当前的基础（`base` 与 `radix`）。如果必须使用临时目录（例如用于 `--dry-run` 比较），请显式传递 `--base <current-base>` —— 预设代码不包含基础信息。
+1. **Get project context** — already injected above. Run `npx shadcn@latest info` again if you need to refresh.
+2. **Check installed components first** — before running `add`, always check the `components` list from project context or list the `resolvedPaths.ui` directory. Don't import components that haven't been added, and don't re-add ones already installed.
+3. **Find components** — `npx shadcn@latest search`.
+4. **Get docs and examples** — run `npx shadcn@latest docs <component>` to get URLs, then fetch them. Use `npx shadcn@latest view` to browse registry items you haven't installed. To preview changes to installed components, use `npx shadcn@latest add --diff`.
+5. **Install or update** — `npx shadcn@latest add`. When updating existing components, use `--dry-run` and `--diff` to preview changes first (see [Updating Components](#updating-components) below).
+6. **Fix imports in third-party components** — After adding components from community registries (e.g. `@bundui`, `@magicui`), check the added non-UI files for hardcoded import paths like `@/components/ui/...`. These won't match the project's actual aliases. Use `npx shadcn@latest info` to get the correct `ui` alias (e.g. `@workspace/ui/components`) and rewrite the imports accordingly. The CLI rewrites imports for its own UI files, but third-party registry components may use default paths that don't match the project.
+7. **Review added components** — After adding a component or block from any registry, **always read the added files and verify they are correct**. Check for missing sub-components (e.g. `SelectItem` without `SelectGroup`), missing imports, incorrect composition, or violations of the [Critical Rules](#critical-rules). Also replace any icon imports with the project's `iconLibrary` from the project context (e.g. if the registry item uses `lucide-react` but the project uses `hugeicons`, swap the imports and icon names accordingly). Fix all issues before moving on.
+8. **Registry must be explicit** — When the user asks to add a block or component, **do not guess the registry**. If no registry is specified (e.g. user says "add a login block" without specifying `@shadcn`, `@tailark`, etc.), ask which registry to use. Never default to a registry on behalf of the user.
+9. **Switching presets** — Ask the user first: **overwrite**, **merge**, or **skip**?
+   - **Overwrite**: `npx shadcn@latest apply --preset <code>`. Overwrites detected components, fonts, and CSS variables.
+   - **Merge**: `npx shadcn@latest init --preset <code> --force --no-reinstall`, then run `npx shadcn@latest info` to list installed components, then for each installed component use `--dry-run` and `--diff` to [smart merge](#updating-components) it individually.
+   - **Skip**: `npx shadcn@latest init --preset <code> --force --no-reinstall`. Only updates config and CSS, leaves components as-is.
+   - **Important**: Always run preset commands inside the user's project directory. `apply` only works in an existing project with a `components.json` file. The CLI automatically preserves the current base (`base` vs `radix`) from `components.json`. If you must use a scratch/temp directory (e.g. for `--dry-run` comparisons), pass `--base <current-base>` explicitly — preset codes do not encode the base.
 
-## 更新组件
+## Updating Components
 
-当用户要求从上游更新组件同时保留其本地更改时，请使用 `--dry-run` 和 `--diff` 进行智能合并。**永远不要手动从 GitHub 获取原始文件 —— 始终使用 CLI。**
+When the user asks to update a component from upstream while keeping their local changes, use `--dry-run` and `--diff` to intelligently merge. **NEVER fetch raw files from GitHub manually — always use the CLI.**
 
 1. 运行 `npx shadcn@latest add <component> --dry-run` 查看将受影响的所有文件。
 2. 对每个文件，运行 `npx shadcn@latest add <component> --diff <file>` 查看上游与本地之间的更改。
@@ -204,9 +204,13 @@ npx shadcn@latest init --name my-app --preset base-nova --template next --monore
 
 # 初始化现有项目。
 npx shadcn@latest init --preset base-nova
-npx shadcn@latest init --defaults  # shortcut: --template=next --preset=base-nova
+npx shadcn@latest init --defaults  # shortcut: --template=next --preset=nova (base style implied)
 
-# 添加组件。
+# Apply a preset to an existing project.
+npx shadcn@latest apply --preset a2r6bw
+npx shadcn@latest apply a2r6bw
+
+# Add components.
 npx shadcn@latest add button card dialog
 npx shadcn@latest add @magicui/shimmer-button
 npx shadcn@latest add --all
@@ -227,9 +231,9 @@ npx shadcn@latest docs button dialog select
 npx shadcn@latest view @shadcn/button
 ```
 
-**命名预设：** `base-nova`, `radix-nova`
-**模板：** `next`、`vite`、`start`、`react-router`、`astro`（均支持 `--monorepo`）和 `laravel`（不支持 monorepo）
-**预设代码：** 以 `a` 开头的 Base62 字符串（如 `a2r6bw`），来自 [ui.shadcn.com](https://ui.shadcn.com)。
+**Named presets:** `nova`, `vega`, `maia`, `lyra`, `mira`, `luma`
+**Templates:** `next`, `vite`, `start`, `react-router`, `astro` (all support `--monorepo`) and `laravel` (not supported for monorepo)
+**Preset codes:** Version-prefixed base62 strings (e.g. `a2r6bw` or `b0`), from [ui.shadcn.com](https://ui.shadcn.com).
 
 ## 详细参考
 

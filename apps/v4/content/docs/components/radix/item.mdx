@@ -73,7 +73,23 @@ import {
 </Item>
 ```
 
-## Item 与 Field 的区别
+## 组合
+
+使用以下组合来构建 `Item`：
+
+```text
+ItemGroup
+└── Item
+    ├── ItemHeader
+    ├── ItemMedia
+    ├── ItemContent
+    │   ├── ItemTitle
+    │   └── ItemDescription
+    ├── ItemActions
+    └── ItemFooter
+```
+
+## Item 与 Field
 
 如果需要显示表单输入，如复选框、输入框、单选框或选择框，请使用 `Field`。
 
@@ -163,7 +179,7 @@ import {
 
 <ComponentPreview styleName="radix-nova" name="item-dropdown" />
 
-## RTL
+## RTL 支持
 
 要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

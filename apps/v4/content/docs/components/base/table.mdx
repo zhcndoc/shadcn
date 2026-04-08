@@ -78,7 +78,34 @@ import {
 </Table>
 ```
 
-## 数据表格
+## 组合
+
+使用以下组合来构建 `Table`：
+
+```text
+Table
+├── TableCaption
+├── TableHeader
+│   └── TableRow
+│       ├── TableHead
+│       ├── TableHead
+│       ├── TableHead
+│       └── TableHead
+├── TableBody
+│   ├── TableRow
+│   │   ├── TableCell
+│   │   ├── TableCell
+│   │   ├── TableCell
+│   │   └── TableCell
+│   └── TableRow
+│       ├── TableCell
+│       ├── TableCell
+│       ├── TableCell
+│       └── TableCell
+└── TableFooter
+```
+
+## 示例
 
 你可以使用 `<Table />` 组件构建更复杂的数据表格。将其与 [@tanstack/react-table](https://tanstack.com/table/v8) 结合使用，创建支持排序、筛选和分页的表格。
 

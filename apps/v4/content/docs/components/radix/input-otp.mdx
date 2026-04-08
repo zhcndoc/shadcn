@@ -82,6 +82,27 @@ import {
 </InputOTP>
 ```
 
+## 组合
+
+使用以下组合来构建 `InputOTP`：
+
+```text
+InputOTP
+├── InputOTPGroup
+│   ├── InputOTPSlot
+│   ├── InputOTPSlot
+│   └── InputOTPSlot
+├── InputOTPSeparator
+├── InputOTPGroup
+│   ├── InputOTPSlot
+│   ├── InputOTPSlot
+│   └── InputOTPSlot
+├── InputOTPSeparator
+└── InputOTPGroup
+    ├── InputOTPSlot
+    └── InputOTPSlot
+```
+
 ## 模式
 
 使用 `pattern` 属性定义 OTP 输入的自定义模式。
@@ -142,7 +163,7 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
   previewClassName="h-[30rem]"
 />
 
-## RTL
+## RTL 支持
 
 在 shadcn/ui 中启用 RTL（从右到左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

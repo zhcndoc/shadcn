@@ -93,7 +93,24 @@ import {
 </AlertDialog>
 ```
 
-## 示例
+## Composition
+
+使用以下组合来构建 `AlertDialog`:
+
+```text
+AlertDialog
+├── AlertDialogTrigger
+└── AlertDialogContent
+    ├── AlertDialogHeader
+    │   ├── AlertDialogMedia
+    │   ├── AlertDialogTitle
+    │   └── AlertDialogDescription
+    └── AlertDialogFooter
+        ├── AlertDialogCancel
+        └── AlertDialogAction
+```
+
+## Examples
 
 ### 基础示例
 

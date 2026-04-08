@@ -1,5 +1,5 @@
 ---
-title: 分页 Pagination
+title: 分页
 description: 带有页面导航、下一页和上一页链接的分页。
 base: base
 component: true
@@ -84,6 +84,23 @@ import {
 </Pagination>
 ```
 
+## 组合
+
+使用以下组合来构建 `Pagination`：
+
+```text
+分页
+└── 分页内容
+    ├── 分页项
+    │   └── 上一页
+    ├── 分页项
+    │   └── 分页链接
+    ├── 分页项
+    │   └── 省略号
+    └── 分页项
+        └── 下一页
+```
+
 ## 示例
 
 ### 简单
@@ -130,19 +147,19 @@ const PaginationLink = ({...props }: ) => (
 
 ## RTL
 
-To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl).
+要启用 shadcn/ui 中的 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
 <ComponentPreview styleName="base-nova" name="pagination-rtl" direction="rtl" />
 
-## Changelog
+## 更新日志
 
-### RTL Support
+### RTL 支持
 
-If you're upgrading from a previous version of the `Pagination` component, you'll need to apply the following updates to add the `text` prop:
+如果你从之前的 `Pagination` 组件版本升级，你需要应用以下更新来添加 `text` 属性：
 
 <Steps>
 
-<Step>Update `PaginationPrevious`.</Step>
+<Step>更新 `PaginationPrevious`。</Step>
 
 ```diff
   function PaginationPrevious({
@@ -168,7 +185,7 @@ If you're upgrading from a previous version of the `Pagination` component, you'l
   }
 ```
 
-<Step>Update `PaginationNext`.</Step>
+<Step>更新 `PaginationNext`。</Step>
 
 ```diff
   function PaginationNext({

@@ -1,5 +1,5 @@
 ---
-title: Sheet
+title: 抽屉 Sheet
 description: 扩展了 Dialog 组件，用于显示补充屏幕主内容的内容。
 base: base
 component: true
@@ -79,11 +79,25 @@ import {
 </Sheet>
 ```
 
+## 组合
+
+使用以下组合来构建 `Sheet`：
+
+```text
+Sheet
+├── SheetTrigger
+└── SheetContent
+    ├── SheetHeader
+    │   ├── SheetTitle
+    │   └── SheetDescription
+    └── SheetFooter
+```
+
 ## 示例
 
 ### 侧边
 
-在 `SheetContent` 上使用 `side` 属性设置 sheet 出现的屏幕边缘。可选值为 `top`、`right`、`bottom` 或 `left`。
+在 `SheetContent` 上使用 `side` 属性设置抽屉出现的屏幕边缘。可选值为 `top`、`right`、`bottom` 或 `left`。
 
 <ComponentPreview styleName="base-nova" name="sheet-side" />
 

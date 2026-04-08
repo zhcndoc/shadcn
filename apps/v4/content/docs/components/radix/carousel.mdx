@@ -1,5 +1,5 @@
 ---
-title: Carousel
+title: 轮播图
 description: 使用 Embla 构建的具有动效和滑动功能的轮播图。
 base: radix
 component: true
@@ -85,7 +85,20 @@ import {
 </Carousel>
 ```
 
-## 示例
+## Composition
+
+使用以下组合来构建 `Carousel`:
+
+```text
+Carousel
+├── CarouselContent
+│   ├── CarouselItem
+│   └── CarouselItem
+├── CarouselPrevious
+└── CarouselNext
+```
+
+## Examples
 
 ### 尺寸
 

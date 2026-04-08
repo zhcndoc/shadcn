@@ -72,6 +72,16 @@ import {
 </Collapsible>
 ```
 
+## 组合
+
+使用以下组合来构建 `Collapsible`:
+
+```text
+Collapsible
+├── CollapsibleTrigger
+└── CollapsibleContent
+```
+
 ## 受控状态
 
 使用 `open` 和 `onOpenChange` 属性来控制状态。
@@ -117,7 +127,7 @@ export function Example() {
   previewClassName="h-[36rem]"
 />
 
-## RTL
+## RTL 支持
 
 要在 shadcn/ui 中启用 RTL（从右到左）支持，请参阅 [RTL 配置指南](/docs/rtl)。
 

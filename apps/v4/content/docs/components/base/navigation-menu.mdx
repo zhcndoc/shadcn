@@ -82,7 +82,24 @@ import {
 </NavigationMenu>
 ```
 
-## Link 组件
+## 组合
+
+使用以下组合来构建 `NavigationMenu`：
+
+```text
+NavigationMenu
+├── NavigationMenuList
+│   ├── NavigationMenuItem
+│   │   ├── NavigationMenuTrigger
+│   │   └── NavigationMenuContent
+│   │       ├── NavigationMenuLink
+│   │       └── NavigationMenuLink
+│   └── NavigationMenuItem
+│       └── NavigationMenuLink
+└── NavigationMenuIndicator
+```
+
+## 链接组件
 
 使用 `render` 属性组合自定义的链接组件，例如 Next.js 的 `Link`。
 
@@ -109,7 +126,7 @@ export function NavigationMenuDemo() {
 }
 ```
 
-## RTL
+## 从右到左
 
 要在 shadcn/ui 中启用 RTL（从右到左）支持，请参阅[RTL 配置指南](/docs/rtl)。
 

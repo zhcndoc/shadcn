@@ -75,6 +75,19 @@ import {
 </Empty>
 ```
 
+## 组合
+
+使用以下组合来构建 `Empty` 状态：
+
+```text
+Empty
+├── EmptyHeader
+│   ├── EmptyMedia
+│   ├── EmptyTitle
+│   └── EmptyDescription
+└── EmptyContent
+```
+
 ## 示例
 
 ### 边框样式
@@ -127,7 +140,7 @@ import {
   previewClassName="h-96 p-0"
 />
 
-## RTL
+## RTL 支持
 
 要在 shadcn/ui 中启用 RTL 支持，请参阅[RTL 配置指南](/docs/rtl)。
 

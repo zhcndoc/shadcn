@@ -87,6 +87,56 @@ import {
 </FieldSet>
 ```
 
+## 组合
+
+### 字段
+
+一个带有标签、帮助文本和验证的单个控件。
+
+```text
+Field
+├── FieldLabel
+├── Input / Textarea / Switch / Select
+├── FieldDescription
+└── FieldError
+```
+
+### 字段组
+
+一组相关字段。必要时在分区之间使用 `FieldSeparator`。
+
+```text
+FieldGroup
+├── Field
+│   ├── FieldLabel
+│   ├── Input / Textarea / Switch / Select
+│   ├── FieldDescription
+│   └── FieldError
+├── FieldSeparator
+└── Field
+    ├── FieldLabel
+    └── Input / Textarea / Switch / Select
+```
+
+### 字段集
+
+带有图例和描述的语义分组，通常包含一个 `FieldGroup`。
+
+```text
+FieldSet
+├── FieldLegend
+├── FieldDescription
+└── FieldGroup
+    ├── Field
+    │   ├── FieldLabel
+    │   ├── Input / Textarea / Switch / Select
+    │   ├── FieldDescription
+    │   └── FieldError
+    └── Field
+        ├── FieldLabel
+        └── Input / Textarea / Switch / Select
+```
+
 ## 结构
 
 `Field` 组件族专为构建可访问表单设计。一个典型字段结构如下：
@@ -106,7 +156,7 @@ import {
 
 ## 表单
 
-参见 [Form](/docs/forms) 文档，了解如何结合 `Field` 组件与 [React Hook Form](/docs/forms/react-hook-form) 或 [Tanstack Form](/docs/forms/tanstack-form) 构建表单。
+参见 [表单](/docs/forms) 文档，了解如何结合 `Field` 组件与 [React Hook Form](/docs/forms/react-hook-form) 或 [Tanstack Form](/docs/forms/tanstack-form) 构建表单。
 
 ## 示例
 
@@ -162,7 +212,7 @@ import {
   previewClassName="h-96"
 />
 
-## RTL
+## RTL 支持
 
 要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
@@ -207,7 +257,7 @@ import {
 
 ## API 参考
 
-### FieldSet
+### 字段集
 
 语义化的 `fieldset` 容器，自带间距预设。
 
@@ -222,7 +272,7 @@ import {
 </FieldSet>
 ```
 
-### FieldLegend
+### 字段图例
 
 `FieldSet` 的标题元素。切换为 `label` 变体以匹配标签大小。
 
@@ -237,7 +287,7 @@ import {
 
 `FieldLegend` 有两个变体：`legend` 和 `label`。`label` 变体应用标签大小和对齐，适合嵌套 `FieldSet` 时使用。
 
-### FieldGroup
+### 字段组
 
 布局包装器，垂直堆叠多个 `Field`，并启用容器查询实现响应式方向切换。
 
@@ -252,7 +302,7 @@ import {
 </FieldGroup>
 ```
 
-### Field
+### 字段
 
 单个字段的核心包装器。提供方向控制、无效状态样式和间距设置。
 
@@ -269,7 +319,7 @@ import {
 </Field>
 ```
 
-### FieldContent
+### 字段内容
 
 弹性列布局，包裹控件和描述，适用于标签与控件并列的情况。如果无描述，可省略。
 
@@ -287,7 +337,7 @@ import {
 </Field>
 ```
 
-### FieldLabel
+### 字段标签
 
 用于直接输入控件和嵌套 `Field` 子元素的标签样式。
 
@@ -300,7 +350,7 @@ import {
 <FieldLabel htmlFor="email">电子邮箱</FieldLabel>
 ```
 
-### FieldTitle
+### 字段标题
 
 在 `FieldContent` 内渲染具有标签样式的标题。
 
@@ -315,7 +365,7 @@ import {
 </FieldContent>
 ```
 
-### FieldDescription
+### 字段描述
 
 帮助文本区域，能在水平布局中自动平衡长行文本。
 
@@ -327,7 +377,7 @@ import {
 <FieldDescription>我们绝不会泄露您的邮箱给任何人。</FieldDescription>
 ```
 
-### FieldSeparator
+### 字段分隔符
 
 视觉分隔符，用于在 `FieldGroup` 内分割区域。支持可选的内嵌内容。
 
@@ -339,7 +389,7 @@ import {
 <FieldSeparator>或继续使用</FieldSeparator>
 ```
 
-### FieldError
+### 字段错误
 
 辅助访问的错误容器，支持接受子节点或 `errors` 数组（例如来自 `react-hook-form`）。
 

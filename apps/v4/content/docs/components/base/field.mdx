@@ -87,7 +87,57 @@ import {
 </FieldSet>
 ```
 
-## 结构解析
+## 组成
+
+### 字段
+
+一个带有标签、帮助文本和验证的单个控件。
+
+```text
+Field
+├── FieldLabel
+├── Input / Textarea / Switch / Select
+├── FieldDescription
+└── FieldError
+```
+
+### 字段组
+
+一组相关字段。必要时在分区之间使用 `FieldSeparator`。
+
+```text
+FieldGroup
+├── Field
+│   ├── FieldLabel
+│   ├── Input / Textarea / Switch / Select
+│   ├── FieldDescription
+│   └── FieldError
+├── FieldSeparator
+└── Field
+    ├── FieldLabel
+    └── Input / Textarea / Switch / Select
+```
+
+### 字段集
+
+带有图例和描述的语义分组，通常包含一个 `FieldGroup`。
+
+```text
+FieldSet
+├── FieldLegend
+├── FieldDescription
+└── FieldGroup
+    ├── Field
+    │   ├── FieldLabel
+    │   ├── Input / Textarea / Switch / Select
+    │   ├── FieldDescription
+    │   └── FieldError
+    └── Field
+        ├── FieldLabel
+        └── Input / Textarea / Switch / Select
+```
+
+## 结构
 
 `Field` 组件族用于组合无障碍的表单。一个典型的字段结构如下：
 
@@ -162,7 +212,7 @@ import {
   previewClassName="h-96"
 />
 
-## RTL
+## 右到左布局
 
 要启用 shadcn/ui 的 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
@@ -207,7 +257,7 @@ import {
 
 ## API 参考
 
-### FieldSet
+### 字段集
 
 语义容器，渲染 `fieldset`，带有预设间距。
 
@@ -222,7 +272,7 @@ import {
 </FieldSet>
 ```
 
-### FieldLegend
+### 字段图例
 
 `FieldSet` 的标题元素。切换到 `label` 变体可以配合标签大小对齐。
 
@@ -237,7 +287,7 @@ import {
 
 `FieldLegend` 有两个变体：`legend` 和 `label`。`label` 变体应用标签大小和对齐，适用于嵌套的 `FieldSet`。
 
-### FieldGroup
+### 字段组
 
 布局容器，堆叠 `Field` 组件并支持响应式容器查询。
 
@@ -252,7 +302,7 @@ import {
 </FieldGroup>
 ```
 
-### Field
+### 字段
 
 单个字段的核心外壳。提供方向控制、无效态样式和间距。
 
@@ -269,7 +319,7 @@ import {
 </Field>
 ```
 
-### FieldContent
+### 字段内容
 
 flex 列，用于标签旁边含描述时分组控件和说明。无说明时可不使用。
 
@@ -287,7 +337,7 @@ flex 列，用于标签旁边含描述时分组控件和说明。无说明时可
 </Field>
 ```
 
-### FieldLabel
+### 字段标签
 
 标签，适用于直接输入控件或嵌套 `Field` 的子元素。
 
@@ -300,7 +350,7 @@ flex 列，用于标签旁边含描述时分组控件和说明。无说明时可
 <FieldLabel htmlFor="email">电子邮箱</FieldLabel>
 ```
 
-### FieldTitle
+### 字段标题
 
 在 `FieldContent` 内渲染带标签样式的标题。
 
@@ -315,7 +365,7 @@ flex 列，用于标签旁边含描述时分组控件和说明。无说明时可
 </FieldContent>
 ```
 
-### FieldDescription
+### 字段描述
 
 辅助文本槽，在水平布局中自动平衡长行。
 
@@ -327,7 +377,7 @@ flex 列，用于标签旁边含描述时分组控件和说明。无说明时可
 <FieldDescription>我们绝不向他人泄露您的邮箱。</FieldDescription>
 ```
 
-### FieldSeparator
+### 字段分隔符
 
 视视觉分隔线，用于 `FieldGroup` 内部分割区块。可接受内联内容。
 
@@ -339,7 +389,7 @@ flex 列，用于标签旁边含描述时分组控件和说明。无说明时可
 <FieldSeparator>或继续使用</FieldSeparator>
 ```
 
-### FieldError
+### 字段错误
 
 无障碍错误容器，支持子节点或 `errors` 数组（例如来自 `react-hook-form`）。
 

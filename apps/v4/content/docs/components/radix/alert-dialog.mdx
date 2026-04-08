@@ -93,6 +93,23 @@ import {
 </AlertDialog>
 ```
 
+## 组合
+
+使用以下组合来构建 `AlertDialog`：
+
+```text
+AlertDialog
+├── AlertDialogTrigger
+└── AlertDialogContent
+    ├── AlertDialogHeader
+    │   ├── AlertDialogMedia
+    │   ├── AlertDialogTitle
+    │   └── AlertDialogDescription
+    └── AlertDialogFooter
+        ├── AlertDialogCancel
+        └── AlertDialogAction
+```
+
 ## 示例
 
 ### 基础示例
@@ -160,7 +177,7 @@ import {
 
 ### size
 
-在 `AlertDialogContent` 组件上使用 `size` 属性来控制警告对话框的大小。它接受以下值：
+在 `AlertDialogContent` 组件上，使用 `size` 属性来控制警告对话框的大小。它接受以下值：
 
 | 属性   | 类型                | 默认值      |
 | ------ | ------------------- | ----------- |

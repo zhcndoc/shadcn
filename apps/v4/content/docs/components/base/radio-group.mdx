@@ -1,7 +1,7 @@
 ---
 title: 单选组
 description: 一组可选按钮——称为单选按钮——一次最多只能选中一个按钮。
-base: base
+base: 基础
 component: true
 links:
   doc: https://base-ui.com/react/components/radio-group
@@ -72,7 +72,17 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 </RadioGroup>
 ```
 
-## 示例
+## Composition
+
+使用以下组合来构建 `RadioGroup`:
+
+```text
+RadioGroup
+├── RadioGroupItem
+└── RadioGroupItem
+```
+
+## Examples
 
 ### 描述
 

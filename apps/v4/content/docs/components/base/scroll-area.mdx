@@ -68,6 +68,15 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 </ScrollArea>
 ```
 
+## Composition
+
+使用以下组合来构建 `ScrollArea`：
+
+```text
+ScrollArea
+└── ScrollBar
+```
+
 ## 示例
 
 ### 水平滚动
@@ -76,7 +85,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
 
 <ComponentPreview styleName="base-nova" name="scroll-area-horizontal-demo" />
 
-## RTL
+## RTL 支持
 
 要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
