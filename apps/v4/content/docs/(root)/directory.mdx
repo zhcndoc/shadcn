@@ -3,15 +3,10 @@ title: 注册表目录
 description: 发现 shadcn/ui 组件和区块的社区注册表。
 ---
 
-import { TriangleAlertIcon } from "lucide-react"
+这些注册表已内置在 CLI 中，无需额外配置即可使用。要添加组件，请运行：`npx shadcn add @<注册表>/<组件>`。
 
-这些注册表内置于 CLI，无需额外配置。要添加组件，请运行：`npx shadcn add @<registry>/<component>`。
-
-<Callout
-  type="warning"
-  className="border-amber-200 bg-amber-50 font-semibold dark:border-amber-900 dark:bg-amber-950"
->
-  社区注册表由第三方开发者维护，非官方策划。安装时务必检查代码，以确保符合您的安全和质量标准。
+<Callout className="bg-muted font-semibold">
+  社区注册表由第三方开发者维护。安装时请务必检查代码，以确保符合您的安全与质量标准。
 </Callout>
 
 没有看到注册表？了解如何[在此添加](/docs/registry/registry-index)。
@@ -20,7 +15,7 @@ import { TriangleAlertIcon } from "lucide-react"
 
 ## 文档
 
-您可以使用 `shadcn` CLI 来运行您自己的代码注册表。运行自己的注册表使您能够将自定义组件、hooks、页面、配置、规则和其他文件分发到任何项目中。
+您可以使用 `shadcn` CLI 运行您自己的代码注册表。运行自己的注册表可以让您将自定义组件、hooks、页面、配置、规则和其他文件分发到任意项目中。
 
 <div className="mt-6 grid gap-4 sm:grid-cols-2">
   <LinkedCard href="/docs/registry/getting-started" className="items-start text-sm md:p-6">

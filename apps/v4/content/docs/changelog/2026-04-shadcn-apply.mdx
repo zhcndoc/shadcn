@@ -1,0 +1,21 @@
+---
+title: 2026年4月 - shadcn apply
+description: 在不重头开始的情况下切换现有项目的预设。
+date: 2026-04-08
+---
+
+我们添加了 `shadcn apply`，这样你可以在不重头开始的情况下切换现有项目的预设。
+
+当你在现有项目中运行 `npx shadcn@latest apply` 时，我们会应用一个新的预设，重新安装你现有的组件，并更新你的主题、颜色、CSS 变量、字体和图标。
+
+```bash
+npx shadcn@latest apply --preset b2D0vQ7G4
+```
+
+即使预设 URL 是使用不同的值生成的，CLI 也会保留你现有项目的当前基础和 RTL 设置。
+
+<Button asChild size="sm">
+  <Link href="/create" className="mt-6 no-underline!">
+    尝试一个预设
+  </Link>
+</Button>
