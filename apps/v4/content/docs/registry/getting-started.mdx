@@ -139,6 +139,106 @@ npm run dev
 
 你的文件现在将通过 `http://localhost:3000/r/[NAME].json` 访问，例如 `http://localhost:3000/r/hello-world.json`。
 
+## 内容协商
+
+`shadcn` CLI 支持 **HTTP 内容协商**。这使你可以将注册表托管在任何端点——包括你的域名根路径——并根据请求方返回不同的内容。
+
+通过同一个 URL，你可以提供：
+
+- **HTML** 给浏览器——着陆页、文档或营销站点。
+- **JSON** 给 `shadcn` CLI——可安装的注册表条目。
+- **Markdown** 给 AI 代理和 LLM——内容的机器可读版本。
+
+客户端使用 `Accept` 请求头来表明其偏好，由你的服务器决定返回什么。
+
+### 请求头
+
+当 CLI 向注册表发起请求时，它会发送以下请求头：
+
+- **User-Agent**: `shadcn`
+- **Accept**: `application/vnd.shadcn.v1+json, application/json;q=0.9`
+
+### 根路径托管
+
+通过在服务器上检查这些请求头，你可以将 CLI 流量路由到可安装的注册表条目，同时让浏览器流量继续访问你的文档或主页。
+
+下面的示例假设你构建后的注册表条目通过 `/r/index.json` 提供服务。请根据你的输出调整路径。
+
+在 Next.js 中，可以在 `next.config.ts` 中将其表示为重写规则。这样可以将协商保留在路由层，而无需为这种静态重写使用 Proxy 函数：
+
+```typescript title="next.config.ts" showLineNumbers
+import type { NextConfig } from "next"
+
+const nextConfig: NextConfig = {
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/",
+          has: [
+            {
+              type: "header",
+              key: "accept",
+              value: "(.*)application/vnd\\.shadcn\\.v1\\+json(.*)",
+            },
+          ],
+          destination: "/r/index.json",
+        },
+        {
+          source: "/",
+          has: [
+            {
+              type: "header",
+              key: "user-agent",
+              value: "shadcn",
+            },
+          ],
+          destination: "/r/index.json",
+        },
+      ],
+    }
+  },
+  async headers() {
+    return [
+      {
+        source: "/",
+        headers: [{ key: "Vary", value: "Accept, User-Agent" }],
+      },
+    ]
+  },
+}
+
+export default nextConfig
+```
+
+或者，在 Express.js 服务器中：
+
+```javascript title="server.js" showLineNumbers
+app.get("/", (req, res) => {
+  res.vary("Accept")
+  res.vary("User-Agent")
+
+  // 检查客户端是否偏好 shadcn 的 vendor 类型。
+  if (req.accepts("application/vnd.shadcn.v1+json")) {
+    return res.json(registryData)
+  }
+
+  // 可选：对 User-Agent 进行二次检查。
+  if (req.get("User-Agent") === "shadcn") {
+    return res.json(registryData)
+  }
+
+  // 否则，提供你的文档或主页。
+  res.send(htmlContent)
+})
+```
+
+这可以实现：
+
+- **品牌化注册表 URL**：`shadcn add https://ui.example.com`
+- **更短的 URL**：用户输入你的域名根路径，而不是 `/r/` 或 `/registry/` 子路径。
+- **更容易记忆**：用户更容易记住并分享你的注册表。
+
 ## 发布你的注册表
 
 为了让其他开发者访问你的注册表，你可以将项目部署到一个公开的 URL。
