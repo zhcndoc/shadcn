@@ -93,6 +93,14 @@ npx shadcn@latest add [component]
 npx shadcn@latest apply --preset a2r6bw
 ```
 
+您可以仅从预设中应用主题或字体，而无需重新安装 UI 组件：
+
+```bash
+npx shadcn@latest apply --preset a2r6bw --only theme
+```
+
+`--only` 的支持值为 `theme` 和 `font`。
+
 **选项**
 
 ```bash
@@ -105,6 +113,7 @@ npx shadcn@latest apply --preset a2r6bw
 
 选项：
   --preset <preset>  要应用的预设配置
+  --only [parts]     仅应用预设的一部分：theme、font
   -y, --yes          跳过确认提示。（默认值：false）
   -c, --cwd <cwd>    工作目录。默认为当前目录。
   -s, --silent       静默输出。（默认值：false）
