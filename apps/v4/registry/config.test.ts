@@ -1,12 +1,17 @@
 import { describe, expect, it } from "vitest"
 
+import publicSchema from "../public/schema.json"
 import {
   buildPartialRegistryBase,
   buildRegistryBase,
   DEFAULT_CONFIG,
   designSystemConfigSchema,
   parseRegistryBaseParts,
+  POINTER_CURSOR_SELECTOR,
+  PRESETS,
 } from "./config"
+
+const legacyPublicSchemaStyles = ["default", "new-york"] as const
 
 describe("buildRegistryBase", () => {
   it("seeds a font-heading fallback when heading inherits the body font", () => {
@@ -67,6 +72,41 @@ describe("buildRegistryBase", () => {
     expect(result.chartColor).toBe("neutral")
   })
 
+  it("defaults pointer to false when omitted", () => {
+    const result = designSystemConfigSchema.parse({
+      base: "radix",
+      style: "nova",
+      iconLibrary: "lucide",
+      theme: "neutral",
+      font: "inter",
+      fontHeading: "inherit",
+      menuAccent: "subtle",
+      menuColor: "default",
+      radius: "default",
+    })
+
+    expect(result.pointer).toBe(false)
+  })
+
+  it("does not include pointer cursor css by default", () => {
+    const result = buildRegistryBase(DEFAULT_CONFIG)
+
+    expect(
+      result.css?.["@layer base"]?.[POINTER_CURSOR_SELECTOR]
+    ).toBeUndefined()
+  })
+
+  it("includes pointer cursor css when pointer is enabled", () => {
+    const result = buildRegistryBase({
+      ...DEFAULT_CONFIG,
+      pointer: true,
+    })
+
+    expect(result.css?.["@layer base"]?.[POINTER_CURSOR_SELECTOR]).toEqual({
+      cursor: "pointer",
+    })
+  })
+
   it("defaults chartColor to the selected theme when omitted", () => {
     const result = designSystemConfigSchema.parse({
       base: "base",
@@ -82,6 +122,15 @@ describe("buildRegistryBase", () => {
     })
 
     expect(result.chartColor).toBe("taupe")
+  })
+
+  it("keeps the public schema style enum in sync with presets", () => {
+    expect([...publicSchema.properties.style.enum].sort()).toEqual(
+      [
+        ...legacyPublicSchemaStyles,
+        ...PRESETS.map((preset) => preset.name),
+      ].sort()
+    )
   })
 
   it("rejects chartColor values that are unavailable for the selected base color", () => {

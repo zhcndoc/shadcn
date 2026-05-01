@@ -23,9 +23,9 @@ npx shadcn@latest init
 参数：
   components                 组件名称、URL 或本地路径
 
-选项：
-  -t, --template <template>  要使用的模板。（next, vite, start, react-router, laravel, astro）
-  -b, --base <base>          要使用的组件库。（radix, base）
+Options:
+  -t, --template <template>  要使用的模板。（next、vite、start、react-router、laravel、astro）
+  -b, --base <base>          要使用的组件库。（radix、base）
   -p, --preset [name]        使用预设配置
   -y, --yes                  跳过确认提示。（默认值：true）
   -d, --defaults             使用默认配置：--template=next --preset=nova（默认值：false）
@@ -33,12 +33,14 @@ npx shadcn@latest init
   -c, --cwd <cwd>            工作目录。默认为当前目录。
   -n, --name <name>          新项目的名称。
   -s, --silent               静默输出。（默认值：false）
-  --css-variables            使用 CSS 变量进行主题设置。（默认值：true）
-  --no-css-variables         不使用 CSS 变量进行主题设置。
+  --css-variables            使用 CSS 变量进行主题定制。（默认值：true）
+  --no-css-variables         不使用 CSS 变量进行主题定制。
   --monorepo                 搭建 monorepo 项目。
   --no-monorepo              跳过 monorepo 提示。
   --rtl                      启用 RTL 支持。
   --no-rtl                   禁用 RTL 支持。
+  --pointer                  为按钮启用指针光标。
+  --no-pointer               禁用按钮的指针光标。
   --reinstall                重新安装现有 UI 组件。
   --no-reinstall             不重新安装现有 UI 组件。
   -h, --help                 显示命令帮助
@@ -90,13 +92,13 @@ npx shadcn@latest add [component]
 使用 `apply` 命令将预设应用于现有项目。
 
 ```bash
-npx shadcn@latest apply --preset a2r6bw
+npx shadcn@latest apply a2r6bw
 ```
 
 您可以仅从预设中应用主题或字体，而无需重新安装 UI 组件：
 
 ```bash
-npx shadcn@latest apply --preset a2r6bw --only theme
+npx shadcn@latest apply a2r6bw --only theme
 ```
 
 `--only` 的支持值为 `theme` 和 `font`。
@@ -118,6 +120,110 @@ npx shadcn@latest apply --preset a2r6bw --only theme
   -c, --cwd <cwd>    工作目录。默认为当前目录。
   -s, --silent       静默输出。（默认值：false）
   -h, --help         显示命令帮助
+```
+
+---
+
+## preset
+
+使用 `preset` 命令来检查预设代码并解析现有项目的预设。
+
+```bash
+npx shadcn@latest preset decode a2r6bw
+```
+
+### preset decode
+
+使用 `preset decode` 来解码预设代码。
+
+```bash
+npx shadcn@latest preset decode a2r6bw
+```
+
+**选项**
+
+```bash
+Usage: shadcn preset decode [options] <code>
+
+解码预设代码
+
+Arguments:
+  code        要解码的预设代码
+
+Options:
+  --json      以 JSON 格式输出。（默认值：false）
+  -h, --help  显示命令帮助
+```
+
+### preset resolve
+
+使用 `preset resolve` 从当前项目中解析预设。
+
+```bash
+npx shadcn@latest preset resolve
+```
+
+`preset info` 命令是 `preset resolve` 的别名：
+
+```bash
+npx shadcn@latest preset info
+```
+
+**选项**
+
+```bash
+Usage: shadcn preset resolve|info [options]
+
+从您的项目中解析预设
+
+Options:
+  -c, --cwd <cwd>  工作目录。默认为当前目录。
+  --json            以 JSON 格式输出。（默认值：false）
+  -h, --help        显示命令帮助
+```
+
+### preset url
+
+使用 `preset url` 打印预设代码的创建 URL。
+
+```bash
+npx shadcn@latest preset url a2r6bw
+```
+
+**选项**
+
+```bash
+Usage: shadcn preset url [options] <code>
+
+获取预设代码的创建 URL
+
+Arguments:
+  code        预设代码
+
+Options:
+  -h, --help  显示命令帮助
+```
+
+### preset open
+
+使用 `preset open` 在浏览器中打开预设代码。
+
+```bash
+npx shadcn@latest preset open a2r6bw
+```
+
+**选项**
+
+```bash
+Usage: shadcn preset open [options] <code>
+
+在浏览器中打开预设代码
+
+Arguments:
+  code        预设代码
+
+Options:
+  -h, --help  显示命令帮助
 ```
 
 ---

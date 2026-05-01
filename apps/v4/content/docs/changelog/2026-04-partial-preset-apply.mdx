@@ -1,0 +1,35 @@
+---
+title: 2026年4月 - 部分应用预设
+description: 在保留现有组件的同时，仅应用预设中的主题或字体。
+date: 2026-04-22
+---
+
+你现在可以选择性地应用一个预设。
+
+比如有人和你分享了一个预设，而你已经有了自己的组件，但你喜欢它的主题或字体。现在你可以只应用这些内容。
+
+保留你的组件。只应用你想要的部分。
+
+```bash
+# 应用完整预设。
+npx shadcn@latest apply --preset b2D0vQ7G4
+
+# 仅应用主题。
+npx shadcn@latest apply --preset b2D0vQ7G4 --only theme
+
+# 仅应用字体。
+npx shadcn@latest apply --preset b2D0vQ7G4 --only font
+
+# 应用主题和字体。
+npx shadcn@latest apply --preset b2D0vQ7G4 --only theme,font
+```
+
+默认行为保持不变。运行 `shadcn apply --preset <preset>` 仍然会应用完整预设。
+
+目前部分应用预设支持 `theme` 和 `font`。
+
+<Button asChild size="sm">
+  <Link href="/create" className="mt-6 no-underline!">
+    试试预设
+  </Link>
+</Button>

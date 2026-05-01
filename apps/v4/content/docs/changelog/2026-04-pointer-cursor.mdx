@@ -1,0 +1,24 @@
+---
+title: 2026年4月 - 指针光标
+description: 在项目设置期间为按钮添加指针光标行为。
+date: 2026-04-25
+---
+
+现在你可以在初始化项目时为按钮启用 `cursor: pointer`。
+
+```bash
+npx shadcn@latest init --pointer
+```
+
+这会向你的全局 CSS 文件中添加以下 CSS：
+
+```css title="globals.css"
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+```
+
+`--pointer` 选项不属于预设代码。它作为项目设置选项应用，类似于 `--rtl`。

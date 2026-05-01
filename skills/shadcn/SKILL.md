@@ -77,7 +77,8 @@ allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(b
 
 ### CLI
 
-- **Never decode or fetch preset codes manually.** Pass them directly to `npx shadcn@latest apply --preset <code>` for existing projects, or `npx shadcn@latest init --preset <code>` when initializing.
+- **Never decode preset codes or build preset URLs manually.** Use `npx shadcn@latest preset decode <code>`, `preset url <code>`, or `preset open <code>`. For project-aware preset detection, use `npx shadcn@latest preset resolve`.
+- **Apply preset codes directly with the CLI.** Use `npx shadcn@latest apply <code>` for existing projects, or `npx shadcn@latest init --preset <code>` when initializing.
 
 ## 关键模式
 
@@ -136,26 +137,27 @@ allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(b
 | 菜单                      | `DropdownMenu`、`ContextMenu`、`Menubar`                                                            |
 | 工具提示/信息              | `Tooltip`、`HoverCard`、`Popover`                                                                   |
 
-## 关键字段
+## Key Fields
 
-注入的项目上下文包含这些关键字段：
+The injected project context contains these key fields:
 
-- **`aliases`** → 使用实际别名前缀进行导入（例如 `@/`、`~/`），永远不要硬编码。
-- **`isRSC`** → 当为 `true` 时，使用 `useState`、`useEffect`、事件处理器或浏览器 API 的组件需要在文件顶部添加 `"use client"`。在建议指令时始终引用此字段。
-- **`tailwindVersion`** → `"v4"` 使用 `@theme inline` 块；`"v3"` 使用 `tailwind.config.js`。
-- **`tailwindCssFile`** → 定义自定义 CSS 变量的全局 CSS 文件。始终编辑此文件，永远不要创建新文件。
-- **`style`** → 组件视觉处理（例如 `nova`、`vega`）。
-- **`base`** → 基础库 (`radix` 或 `base`)。影响组件 API 和可用属性。
-- **`iconLibrary`** → 决定图标导入。`lucide` 使用 `lucide-react`，`tabler` 使用 `@tabler/icons-react` 等。永远不要假设 `lucide-react`。
-- **`resolvedPaths`** → 组件、工具函数、钩子等的确切文件系统目标位置。
-- **`framework`** → 路由和文件约定（例如 Next.js App Router 与 Vite SPA）。
-- **`packageManager`** → 用于任何非 shadcn 依赖安装（例如 `pnpm add date-fns` 与 `npm install date-fns`）。
+- **`aliases`** → use the actual alias prefix for imports (e.g. `@/`, `~/`), never hardcode.
+- **`isRSC`** → when `true`, components using `useState`, `useEffect`, event handlers, or browser APIs need `"use client"` at the top of the file. Always reference this field when advising on the directive.
+- **`tailwindVersion`** → `"v4"` uses `@theme inline` blocks; `"v3"` uses `tailwind.config.js`.
+- **`tailwindCssFile`** → the global CSS file where custom CSS variables are defined. Always edit this file, never create a new one.
+- **`style`** → component visual treatment (e.g. `nova`, `vega`).
+- **`base`** → primitive library (`radix` or `base`). Affects component APIs and available props.
+- **`iconLibrary`** → determines icon imports. Use `lucide-react` for `lucide`, `@tabler/icons-react` for `tabler`, etc. Never assume `lucide-react`.
+- **`resolvedPaths`** → exact file-system destinations for components, utils, hooks, etc.
+- **`framework`** → routing and file conventions (e.g. Next.js App Router vs Vite SPA).
+- **`packageManager`** → use this for any non-shadcn dependency installs (e.g. `pnpm add date-fns` vs `npm install date-fns`).
+- **`preset`** → resolved preset code and values for the current project. Use `npx shadcn@latest preset resolve --json` when you only need preset information.
 
-参见 [cli.md — `info` 命令](./cli.md) 获取完整字段参考。
+See [cli.md — `info` command](./cli.md) for the full field reference.
 
-## 组件文档、示例和用法
+## Component Docs, Examples, and Usage
 
-运行 `npx shadcn@latest docs <component>` 获取组件文档、示例和 API 参考的 URL。获取这些 URL 以获取实际内容。
+Run `npx shadcn@latest docs <component>` to get the URLs for a component's documentation, examples, and API reference. Fetch these URLs to get the actual content.
 
 ```bash
 npx shadcn@latest docs button dialog select
@@ -174,8 +176,10 @@ npx shadcn@latest docs button dialog select
 7. **Review added components** — After adding a component or block from any registry, **always read the added files and verify they are correct**. Check for missing sub-components (e.g. `SelectItem` without `SelectGroup`), missing imports, incorrect composition, or violations of the [Critical Rules](#critical-rules). Also replace any icon imports with the project's `iconLibrary` from the project context (e.g. if the registry item uses `lucide-react` but the project uses `hugeicons`, swap the imports and icon names accordingly). Fix all issues before moving on.
 8. **Registry must be explicit** — When the user asks to add a block or component, **do not guess the registry**. If no registry is specified (e.g. user says "add a login block" without specifying `@shadcn`, `@tailark`, etc.), ask which registry to use. Never default to a registry on behalf of the user.
 9. **Switching presets** — Ask the user first: **overwrite**, **partial**, **merge**, or **skip**?
-   - **Overwrite**: `npx shadcn@latest apply --preset <code>`. Overwrites detected components, fonts, and CSS variables.
-   - **Partial**: `npx shadcn@latest apply --preset <code> --only theme,font`. Updates only the selected preset parts without reinstalling UI components. Supported values are `theme` and `font`; comma-separated combinations are allowed. `icon` is intentionally not supported, because icon changes may require full component reinstall and transforms.
+   - **Inspect current preset**: `npx shadcn@latest preset resolve`. Use `--json` when you need structured values.
+   - **Inspect incoming preset**: `npx shadcn@latest preset decode <code>`. Use `preset url <code>` or `preset open <code>` to share or open the preset builder.
+   - **Overwrite**: `npx shadcn@latest apply <code>`. Overwrites detected components, fonts, and CSS variables.
+   - **Partial**: `npx shadcn@latest apply <code> --only theme,font`. Updates only the selected preset parts without reinstalling UI components. Supported values are `theme` and `font`; comma-separated combinations are allowed. `icon` is intentionally not supported, because icon changes may require full component reinstall and transforms.
    - **Merge**: `npx shadcn@latest init --preset <code> --force --no-reinstall`, then run `npx shadcn@latest info` to list installed components, then for each installed component use `--dry-run` and `--diff` to [smart merge](#updating-components) it individually.
    - **Skip**: `npx shadcn@latest init --preset <code> --force --no-reinstall`. Only updates config and CSS, leaves components as-is.
    - **Important**: Always run preset commands inside the user's project directory. `apply` only works in an existing project with a `components.json` file. The CLI automatically preserves the current base (`base` vs `radix`) from `components.json`. If you must use a scratch/temp directory (e.g. for `--dry-run` comparisons), pass `--base <current-base>` explicitly — preset codes do not encode the base.
@@ -208,11 +212,17 @@ npx shadcn@latest init --preset base-nova
 npx shadcn@latest init --defaults  # shortcut: --template=next --preset=nova (base style implied)
 
 # Apply a preset to an existing project.
-npx shadcn@latest apply --preset a2r6bw
 npx shadcn@latest apply a2r6bw
-npx shadcn@latest apply --preset a2r6bw --only theme
-npx shadcn@latest apply --preset a2r6bw --only font
-npx shadcn@latest apply --preset a2r6bw --only theme,font
+npx shadcn@latest apply a2r6bw --only theme
+npx shadcn@latest apply a2r6bw --only font
+npx shadcn@latest apply a2r6bw --only theme,font
+
+# Inspect preset codes and project preset state.
+npx shadcn@latest preset decode a2r6bw
+npx shadcn@latest preset url a2r6bw
+npx shadcn@latest preset open a2r6bw
+npx shadcn@latest preset resolve
+npx shadcn@latest preset resolve --json
 
 # Add components.
 npx shadcn@latest add button card dialog

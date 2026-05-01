@@ -1,0 +1,93 @@
+---
+title: 2026年4月 - shadcn 预设
+description: 解码、分享、打开并解析来自 shadcn CLI 的预设代码。
+date: 2026-04-28
+---
+
+我们新增了用于处理预设代码的 `shadcn preset` 命令。
+
+## 解码预设
+
+你可以解码一个预设代码，查看它的具体内容：
+
+```bash
+npx shadcn@latest preset decode b5owWMfJ8l
+```
+
+```txt
+预设
+  code         b5owWMfJ8l
+  version      b
+  style        mira
+  baseColor    mauve
+  theme        mauve
+  chartColor   amber
+  iconLibrary  hugeicons
+  font         inter
+  fontHeading  oxanium
+  radius       large
+  menuAccent   subtle
+  menuColor    inverted-translucent
+  url          https://ui.shadcn.com/create?preset=b5owWMfJ8l
+```
+
+## 从项目中解析
+
+在现有项目中使用 `preset resolve`，查看与你当前配置匹配的预设。
+
+```bash
+npx shadcn@latest preset resolve
+```
+
+```txt
+预设
+  code         b5Kc6P0Vc
+  version      b
+  style        luma
+  baseColor    olive
+  theme        lime
+  chartColor   sky
+  iconLibrary  hugeicons
+  font         geist
+  fontHeading  inherit
+  radius       default
+  menuAccent   subtle
+  menuColor    default
+  url          https://ui.shadcn.com/create?preset=b5Kc6P0Vc
+```
+
+它也支持 monorepo：
+
+```bash
+npx shadcn@latest preset resolve -c apps/web
+```
+
+## 分享或打开
+
+当你需要一个可分享的链接时，使用 `preset url`：
+
+```bash
+npx shadcn@latest preset url b5owWMfJ8l
+```
+
+```txt
+https://ui.shadcn.com/create?preset=b5owWMfJ8l
+```
+
+使用 `preset open` 在 shadcn/create 中打开预设以进行自定义：
+
+```bash
+npx shadcn@latest preset open b5owWMfJ8l
+```
+
+```txt
+正在浏览器中打开 https://ui.shadcn.com/create?preset=b5owWMfJ8l。
+```
+
+这使得预设更容易检查、分享，并交接给编码代理，而无需手动解码代码或构建 URL。
+
+<Button asChild size="sm">
+  <Link href="/create" className="mt-6 no-underline!">
+    尝试一个预设
+  </Link>
+</Button>
