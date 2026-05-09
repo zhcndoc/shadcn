@@ -1,0 +1,57 @@
+---
+title: 2026年5月 - 包导入和目标别名
+description: 使用 package.json 导入和可移植的注册表目标别名来配置 shadcn/ui。
+date: 2026-05-05
+---
+
+我们已在 `shadcn@4.7.0` 的 `files.target` 中添加了对包导入和别名的支持。
+
+## 包导入
+
+`shadcn` CLI 现在支持用于安装组件、重写导入以及解析第三方注册表的 `package.json#imports`。你可以直接使用 `package.json` 中私有的 `#...` 导入别名，而不必仅依赖 `tsconfig.json` 中的 `compilerOptions.paths`。
+
+```json title="package.json" showLineNumbers
+{
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  }
+}
+```
+
+然后在 `components.json` 中使用相同的根路径：
+
+```json title="components.json" showLineNumbers
+{
+  "aliases": {
+    "components": "#components",
+    "ui": "#components/ui",
+    "lib": "#lib",
+    "hooks": "#hooks",
+    "utils": "#lib/utils"
+  }
+}
+```
+
+这也适用于 monorepo，其中应用本地文件使用包导入，共享 UI 文件则从工作区包导出中导入。
+
+有关设置详情，请参阅[包导入指南](/docs/package-imports)。
+
+## 目标别名
+
+注册表项现在可以在 `files[].target` 中使用目标别名，将文件安装到用户配置的 shadcn 目录下。例如，下面的注册表项会将 `prompt-input.tsx` 文件安装到 `ui/ai` 目录下。
+
+```json title="example.json" showLineNumbers
+{
+  "files": [
+    {
+      "path": "registry/default/ai/prompt-input.tsx",
+      "type": "registry:ui",
+      "target": "@ui/ai/prompt-input.tsx"
+    }
+  ]
+}
+```
+
+更多详情请参阅[注册表示例](/docs/registry/examples#target-placeholders)。

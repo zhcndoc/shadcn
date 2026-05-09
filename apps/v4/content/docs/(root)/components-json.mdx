@@ -139,13 +139,85 @@ Tailwind CSS 实用类前缀。组件会使用该前缀添加类名。
 
 ## aliases
 
-CLI 使用此配置和您 `tsconfig.json` 或 `jsconfig.json` 中的 `paths` 配置，将生成的组件放置到正确位置。
+CLI 会使用这些值将生成的组件放置到正确的位置，并重写导入路径。
 
-路径别名需在您的 `tsconfig.json` 或 `jsconfig.json` 中设置。
+您可以通过以下任一方式为这些别名提供支持：
+
+1. `tsconfig.json` 或 `jsconfig.json` 中的 `compilerOptions.paths`
+2. 启用 TypeScript 包导入解析后，在 `package.json#imports` 中配置
+
+即使使用 CLI，`components.json` 中的别名仍然是必需的。它们会告诉 CLI 哪些导入根映射到 `components`、`ui`、`lib`、`hooks` 和 `utils`。
 
 <Callout className="mt-6">
-  **重要提示：** 如果您使用 `src` 目录，确保它已包含在您的 `tsconfig.json` 或 `jsconfig.json` 文件的 `paths` 设置中。
+  **重要：** 如果您使用包导入，请启用
+  `resolvePackageJsonImports`，并在您的
+  `tsconfig.json` 中使用 `moduleResolution: "bundler"`。如果您使用 `paths`，请确保在适用时别名包含
+  `src` 目录。
 </Callout>
+
+### 使用 `tsconfig` 或 `jsconfig` 路径
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+```
+
+### 使用 `package.json#imports`
+
+单包应用的推荐配置：
+
+```json title="package.json"
+{
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  }
+}
+```
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "resolvePackageJsonImports": true
+  }
+}
+```
+
+```json title="components.json"
+{
+  "aliases": {
+    "components": "#components",
+    "ui": "#components/ui",
+    "lib": "#lib",
+    "hooks": "#hooks",
+    "utils": "#lib/utils"
+  }
+}
+```
+
+`components.json` 中的别名仍然会告诉 CLI 将 `components`、`ui`、`lib`、`hooks` 和 `utils` 放置到哪里。`package.json#imports` 为这些 `#...` 标识符提供运行时和 TypeScript 解析。
+
+匹配到的 `imports` 目标还会控制生成的 `#...` 导入是否保留文件扩展名：
+
+- `"#components/*": "./src/components/*"` 会保留源文件扩展名，并可能生成如下导入：
+  `#components/button.tsx`
+- `"#components/*": "./src/components/*.tsx"` 会去除源文件扩展名，并生成如下导入：
+  `#components/button`
+
+对于 monorepo，请参见 <Link href="/docs/monorepo">monorepo 文档</Link>。本地
+工作区别名可以使用 `package.json#imports`，而像
+`@workspace/ui/components` 这样的共享工作区导入则会从目标
+包的 `exports` 中解析。
+
+有关框架特定的设置，请参见 [package imports 指南](/docs/package-imports)。
 
 ### aliases.utils
 

@@ -1,0 +1,226 @@
+---
+title: 包导入
+description: 使用 package.json imports 配置 shadcn/ui。
+---
+
+`shadcn` CLI 支持 [包导入](https://nodejs.org/api/packages.html#imports)，用于安装组件、重写导入以及解析第三方注册表。
+
+包导入让你可以使用 `package.json` 中私有的 `#...` 导入别名，而不是在 `tsconfig.json` 中使用 `compilerOptions.paths`。
+
+## 示例
+
+你可以在 `package.json` 中配置 `imports`：
+
+```json title="package.json" showLineNumbers
+{
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  }
+}
+```
+
+然后使用 `#...` 标识符导入生成的组件：
+
+```tsx
+import { Button } from "#components/ui/button"
+import { cn } from "#lib/utils"
+```
+
+<Callout className="mt-6">
+  包导入标识符必须以 `#` 开头。请使用 TypeScript 5 或更高版本，并将
+  `moduleResolution` 设为 `"bundler"`，同时启用 `resolvePackageJsonImports: true`。
+</Callout>
+
+## 应用
+
+适用于 Next.js、Vite 和 TanStack Start 应用，这些应用会将组件安装到同一个工作区中。
+
+<Steps>
+
+### 配置 `package.json`
+
+为 shadcn/ui 的安装目标添加 imports。
+
+```json title="package.json" showLineNumbers
+{
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  }
+}
+```
+
+如果你的应用不使用 `src` 目录，请从目标路径中移除 `src/`。例如：
+
+```json title="package.json" showLineNumbers
+{
+  "imports": {
+    "#components/*": "./components/*.tsx",
+    "#lib/*": "./lib/*.ts",
+    "#hooks/*": "./hooks/*.ts"
+  }
+}
+```
+
+### 配置 TypeScript
+
+启用包导入解析。
+
+```json title="tsconfig.json" showLineNumbers
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "resolvePackageJsonImports": true
+  }
+}
+```
+
+对于这些别名，你不需要 `compilerOptions.paths`。
+
+### 配置 `components.json`
+
+在 `components.json` 中使用相同的 `#...` 根路径。
+
+```json title="components.json" showLineNumbers
+{
+  "aliases": {
+    "components": "#components",
+    "ui": "#components/ui",
+    "lib": "#lib",
+    "hooks": "#hooks",
+    "utils": "#lib/utils"
+  }
+}
+```
+
+`ui` 别名使用 `#components/ui`。它仍然会被 `package.json` 中的
+`#components/*` 导入所覆盖。
+
+`utils` 别名使用 `#lib/utils`。它会被 `#lib/*` 覆盖，因此你不需要单独的
+`#utils` 导入。
+
+</Steps>
+
+## 单仓库
+
+在单仓库中，对每个包内部的文件使用包导入，对在各工作区之间共享的文件使用包导出。
+
+对于应用工作区：
+
+```json title="apps/web/package.json" showLineNumbers
+{
+  "name": "web",
+  "private": true,
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  },
+  "dependencies": {
+    "@workspace/ui": "workspace:*"
+  }
+}
+```
+
+```json title="apps/web/components.json" showLineNumbers
+{
+  "aliases": {
+    "components": "#components",
+    "ui": "@workspace/ui/components",
+    "lib": "#lib",
+    "hooks": "#hooks",
+    "utils": "@workspace/ui/lib/utils"
+  }
+}
+```
+
+对于共享 UI 包：
+
+```json title="packages/ui/package.json" showLineNumbers
+{
+  "name": "@workspace/ui",
+  "private": true,
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  },
+  "exports": {
+    "./globals.css": "./src/styles/globals.css",
+    "./components/*": "./src/components/*.tsx",
+    "./lib/*": "./src/lib/*.ts",
+    "./hooks/*": "./src/hooks/*.ts"
+  }
+}
+```
+
+```json title="packages/ui/components.json" showLineNumbers
+{
+  "aliases": {
+    "components": "#components",
+    "ui": "#components",
+    "lib": "#lib",
+    "hooks": "#hooks",
+    "utils": "#lib/utils"
+  }
+}
+```
+
+当你从 `apps/web` 执行 `add` 时，应用本地文件使用 `#...` 导入，
+共享的 UI 文件则从 `@workspace/ui` 导入。
+
+```tsx
+import { Button } from "@workspace/ui/components/button"
+import { LoginForm } from "#components/login-form"
+```
+
+## 文件扩展名
+
+`package.json#imports` 中的目标模式会控制生成的导入是否包含文件扩展名。
+
+```json title="package.json" showLineNumbers
+{
+  "imports": {
+    "#components/*": "./src/components/*.tsx"
+  }
+}
+```
+
+这会生成不带扩展名的导入：
+
+```tsx
+import { Button } from "#components/ui/button"
+```
+
+如果你使用不带扩展名的目标：
+
+```json title="package.json" showLineNumbers
+{
+  "imports": {
+    "#components/*": "./src/components/*"
+  }
+}
+```
+
+生成的导入会保留源文件扩展名：
+
+```tsx
+import { Button } from "#components/ui/button.tsx"
+```
+
+对于大多数应用，建议在目标模式中使用扩展名。
+
+## 故障排查
+
+如果 TypeScript 无法解析 `#...` 导入，请检查以下内容：
+
+- 标识符是否以 `#` 开头
+- `imports` 条目是否位于最近的 `package.json` 中
+- `moduleResolution` 是否设置为 `bundler`
+- 是否已启用 `resolvePackageJsonImports`
+- 添加组件后是否存在匹配的目标路径
+
+如果组件已安装，但导入仍然指向 `@/...`，请检查 `components.json` 是否使用了与你的包导入相同的 `#...` 别名。

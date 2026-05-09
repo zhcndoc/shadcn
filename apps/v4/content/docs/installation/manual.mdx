@@ -19,9 +19,11 @@ description: 手动将依赖添加到你的项目中。
 npm install shadcn class-variance-authority clsx tailwind-merge lucide-react tw-animate-css
 ```
 
-### 配置路径别名
+### 配置导入别名
 
-在你的 `tsconfig.json` 文件中配置路径别名。
+请选择以下别名设置之一。
+
+#### 选项 A：`tsconfig.json` 路径
 
 ```json {3-6} title="tsconfig.json" showLineNumbers
 {
@@ -34,7 +36,29 @@ npm install shadcn class-variance-authority clsx tailwind-merge lucide-react tw-
 }
 ```
 
-`@` 别名是一个偏好设置。如果你愿意，也可以使用其他别名。
+#### 选项 B：`package.json#imports`
+
+```json title="package.json" showLineNumbers
+{
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  }
+}
+```
+
+```json title="tsconfig.json" showLineNumbers
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "resolvePackageJsonImports": true
+  }
+}
+```
+
+`@` 别名只是一个偏好。你也可以根据需要使用其他别名。如果你使用 `package.json#imports`，请在 `components.json` 中保留相匹配的别名根路径。
+有关针对不同框架的设置，请参阅 <Link href="/docs/package-imports">包导入指南</Link>。
 
 ### 配置样式
 
@@ -211,7 +235,21 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-### 完成
+如果你正在使用 `package.json#imports`，请改用相应的 `#...` 别名：
+
+```json title="components.json" showLineNumbers
+{
+  "aliases": {
+    "components": "#components",
+    "utils": "#lib/utils",
+    "ui": "#components/ui",
+    "lib": "#lib",
+    "hooks": "#hooks"
+  }
+}
+```
+
+### 就是这样
 
 现在你可以开始向你的项目中添加组件了。
 

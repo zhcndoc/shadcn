@@ -9,7 +9,7 @@ description: 在 monorepo 中使用 shadcn/ui 组件和 CLI。
 
 CLI 现在能够理解 monorepo 结构，会将组件、依赖和注册依赖安装到正确的路径，并帮你处理导入。
 
-## 快速开始
+## 快速入门
 
 <Steps>
 
@@ -102,11 +102,11 @@ package.json
 turbo.json
 ```
 
-## 需求
+## 要求
 
-1. 每个工作区必须有一个 `components.json` 文件。`package.json` 文件告诉 npm 如何安装依赖，`components.json` 文件则告诉 CLI 如何及在哪里安装组件。
+1. 每个工作区都必须有一个 `components.json` 文件。`package.json` 文件告诉 npm 如何安装依赖，而 `components.json` 文件则告诉 CLI 如何以及在哪里安装组件。
 
-2. `components.json` 文件必须正确定义该工作区的别名。这告诉 CLI 如何导入组件、hooks、工具等。
+2. `components.json` 文件必须正确定义该工作区的别名。这会告诉 CLI 如何导入组件、hooks、工具等。
 
 ```json showLineNumbers title="apps/web/components.json"
 {
@@ -158,4 +158,88 @@ turbo.json
 
 4. **对于 Tailwind CSS v4，`components.json` 中的 `tailwind` 配置需留空。**
 
-遵守以上要求，CLI 就能将 ui 组件、区块、库和 hooks 安装到正确的路径，并帮你管理导入。
+遵循这些要求后，CLI 就能够将 ui 组件、blocks、libs 和 hooks 安装到正确的路径，并为你处理导入。
+
+<Callout className="mt-6">
+  `package.json#imports` 非常适合工作区内的包本地别名，例如 `packages/ui` 内部。对于共享工作区导入，例如 `@workspace/ui/components`，请在 `components.json` 中保留显式别名。CLI 会使用这些别名来跨工作区边界路由文件。
+</Callout>
+
+## 使用 `package.json#imports`
+
+对于使用包导入且不依赖 `tsconfig.json` `paths` 的 monorepo，请使用：
+
+- 为每个工作区内的文件使用本地 `#...` 别名
+- 使用工作区包的 `exports` 来处理共享导入，例如
+  `@workspace/ui/components`
+
+例如，应用工作区可以使用本地包导入：
+
+```json showLineNumbers title="apps/web/package.json"
+{
+  "name": "web",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  },
+  "dependencies": {
+    "@workspace/ui": "workspace:*"
+  }
+}
+```
+
+```json showLineNumbers title="apps/web/components.json"
+{
+  "aliases": {
+    "components": "#components",
+    "ui": "@workspace/ui/components",
+    "lib": "#lib",
+    "hooks": "#hooks",
+    "utils": "@workspace/ui/lib/utils"
+  }
+}
+```
+
+而共享的 UI 包可以通过 `exports` 暴露其安装目标：
+
+```json showLineNumbers title="packages/ui/package.json"
+{
+  "name": "@workspace/ui",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#components/*": "./src/components/*.tsx",
+    "#lib/*": "./src/lib/*.ts",
+    "#hooks/*": "./src/hooks/*.ts"
+  },
+  "exports": {
+    "./globals.css": "./src/styles/globals.css",
+    "./components/*": "./src/components/*.tsx",
+    "./lib/*": "./src/lib/*.ts",
+    "./hooks/*": "./src/hooks/*.ts"
+  }
+}
+```
+
+```json showLineNumbers title="packages/ui/components.json"
+{
+  "aliases": {
+    "components": "#components",
+    "ui": "#components",
+    "lib": "#lib",
+    "hooks": "#hooks",
+    "utils": "#lib/utils"
+  }
+}
+```
+
+在这个设置中：
+
+- 从应用添加到共享 UI 包的文件会通过
+  `@workspace/ui/...` 路由
+- 在 `packages/ui` 内添加的文件使用包本地的 `#...` 别名
+- 共享包必须导出任何被另一个工作区引用的路径
+
+关于框架特定的包导入配置，请参阅 [package imports 指南](/docs/package-imports)。

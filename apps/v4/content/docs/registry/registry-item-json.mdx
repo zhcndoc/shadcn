@@ -1,6 +1,6 @@
 ---
 title: registry-item.json
-description: 注册表项的规范。
+description: 注册表项规范。
 ---
 
 `registry-item.json` 模式用于定义您的自定义注册表项。
@@ -226,6 +226,69 @@ description: 注册表项的规范。
 
 使用 `~` 表示项目根目录，例如 `~/foo.config.js`。
 
+您还可以使用注册表目标占位符，将文件放置到由用户 `components.json` 配置的目录中。这些占位符仅支持出现在 `target` 的开头，并且与项目的导入前缀无关。例如，无论项目使用 `@/`、`#`、包导入还是工作区导出导入组件，`@ui/button.tsx` 都可以正常工作。
+
+| 占位符         | 解析为               |
+| -------------- | -------------------- |
+| `@components/` | `aliases.components` |
+| `@ui/`         | `aliases.ui`         |
+| `@lib/`        | `aliases.lib`        |
+| `@hooks/`      | `aliases.hooks`      |
+
+当您希望某个注册表项安装到项目中配置好的 shadcn 目录，而不是硬编码 `components`、`src` 或工作区包路径时，请使用这些占位符。占位符之后的内容会被保留，因此 `@ui/ai/prompt-input.tsx` 会安装到用户配置的 `ui` 目录下的 `ai/prompt-input.tsx`。
+
+```json title="registry-item.json" showLineNumbers
+{
+  "files": [
+    {
+      "path": "registry/new-york/example/button.tsx",
+      "type": "registry:ui",
+      "target": "@ui/button.tsx"
+    },
+    {
+      "path": "registry/new-york/example/prompt-input.tsx",
+      "type": "registry:ui",
+      "target": "@ui/ai/prompt-input.tsx"
+    },
+    {
+      "path": "registry/new-york/example/card.tsx",
+      "type": "registry:component",
+      "target": "@components/card.tsx"
+    },
+    {
+      "path": "registry/new-york/example/helper.ts",
+      "type": "registry:lib",
+      "target": "@lib/helper.ts"
+    },
+    {
+      "path": "registry/new-york/example/use-demo.ts",
+      "type": "registry:hook",
+      "target": "@hooks/use-demo.ts"
+    }
+  ]
+}
+```
+
+`target` 属性决定文件的写入位置。它可以指向与文件 `type` 不同的 shadcn 目录。
+
+```json title="registry-item.json" showLineNumbers
+{
+  "files": [
+    {
+      "path": "registry/new-york/example/format-date.ts",
+      "type": "registry:ui",
+      "target": "@lib/format-date.ts"
+    }
+  ]
+}
+```
+
+未知占位符会被视为普通目标路径。例如，`@foo/bar.ts` 会写入为 `foo/bar.ts`。嵌入式占位符，例如 `components/@ui/button.tsx`，也会被视为普通路径。
+
+<Callout>
+  `@utils/` 不受支持，因为 `utils` 指向的是文件，而不是目录。
+</Callout>
+
 ### tailwind
 
 **弃用：** Tailwind V4 项目建议使用 `cssVars.theme` 来代替。
@@ -356,16 +419,16 @@ description: 注册表项的规范。
 }
 ```
 
-| 属性     | 类型       | 必需 | 描述                                                                               |
-| ------------ | ---------- | -------- | ----------------------------------------------------------------------------------------- |
-| `family`     | `string`   | 是      | CSS font-family 值。                                                                |
-| `provider`   | `string`   | 是      | 字体提供方。目前仅支持 `google`。                                  |
-| `import`     | `string`   | 是      | 从 `next/font/google` 导入字体的名称。                                     |
-| `variable`   | `string`   | 是      | 字体的 CSS 变量名（例如 `--font-sans`、`--font-mono`）。                  |
-| `weight`     | `string[]` | 否       | 要包含的字体粗细数组。                                                         |
-| `subsets`    | `string[]` | 否       | 要包含的字体子集数组。                                                         |
-| `selector`   | `string`   | 否       | 应用字体的 CSS 选择器。默认为 `html`。                                    |
-| `dependency` | `string`   | 否       | 为非 Next.js 项目安装的 npm 包（例如 `@fontsource-variable/inter`）。 |
+| 属性         | 类型       | 必需 | 描述                                                                               |
+| ------------ | ---------- | ---- | ---------------------------------------------------------------------------------- |
+| `family`     | `string`   | 是   | CSS `font-family` 值。                                                             |
+| `provider`   | `string`   | 是   | 字体提供方。目前仅支持 `google`。                                                  |
+| `import`     | `string`   | 是   | 从 `next/font/google` 导入字体的名称。                                              |
+| `variable`   | `string`   | 是   | 字体的 CSS 变量名（例如 `--font-sans`、`--font-mono`）。                           |
+| `weight`     | `string[]` | 否   | 要包含的字体粗细数组。                                                             |
+| `subsets`    | `string[]` | 否   | 要包含的字体子集数组。                                                             |
+| `selector`   | `string`   | 否   | 应用字体的 CSS 选择器。默认为 `html`。                                              |
+| `dependency` | `string`   | 否   | 为非 Next.js 项目安装的 npm 包（例如 `@fontsource-variable/inter`）。             |
 
 ### docs
 

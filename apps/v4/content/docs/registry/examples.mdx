@@ -309,6 +309,85 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
 }
 ```
 
+## 目标占位符
+
+当某个注册表项需要将文件安装到用户配置的 shadcn 目录下时，请使用 `files[].target` 占位符。可用的占位符有 `@components/`、`@ui/`、`@lib/` 和 `@hooks/`。
+
+这些占位符会根据 `components.json` 进行解析，因此同一个注册表项可以在使用 `@/`、自定义 TypeScript 别名、包导入或工作区包导出的项目中正常工作。
+
+占位符后面的内容都会保留。例如，`@ui/ai/prompt-input.tsx` 会安装到用户配置的 `ui` 目录下的 `ai/prompt-input.tsx`。
+
+```json title="alias-child.json" showLineNumbers {9,15,21}
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alias-child",
+  "type": "registry:item",
+  "files": [
+    {
+      "path": "registry/new-york/alias/target-alias-button.tsx",
+      "type": "registry:ui",
+      "target": "@ui/target-alias-button.tsx",
+      "content": "..."
+    },
+    {
+      "path": "registry/new-york/alias/target-alias-helper.ts",
+      "type": "registry:lib",
+      "target": "@lib/target-alias-helper.ts",
+      "content": "..."
+    },
+    {
+      "path": "registry/new-york/alias/prompt-input.tsx",
+      "type": "registry:ui",
+      "target": "@ui/ai/prompt-input.tsx",
+      "content": "..."
+    }
+  ]
+}
+```
+
+注册表依赖项也可以使用目标占位符。以下示例中，子项会安装一个 UI 组件和一个辅助函数，而父项会安装一个应用组件和一个 Hook。
+
+```json title="alias-parent.json" showLineNumbers {7,13}
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "alias-parent",
+  "type": "registry:item",
+  "registryDependencies": ["https://example.com/r/alias-child.json"],
+  "files": [
+    {
+      "path": "registry/new-york/alias/target-alias-panel.tsx",
+      "type": "registry:component",
+      "target": "@components/target-alias-panel.tsx",
+      "content": "..."
+    },
+    {
+      "path": "registry/new-york/alias/use-target-alias.ts",
+      "type": "registry:hook",
+      "target": "@hooks/use-target-alias.ts",
+      "content": "..."
+    }
+  ]
+}
+```
+
+`target` 用于控制文件的写入位置，即使它与文件的 `type` 不同也是如此。
+
+```json title="type-mismatch.json" showLineNumbers {9}
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "type-mismatch",
+  "type": "registry:item",
+  "files": [
+    {
+      "path": "registry/new-york/example/format-date.ts",
+      "type": "registry:ui",
+      "target": "@lib/format-date.ts",
+      "content": "..."
+    }
+  ]
+}
+```
+
 ## registry:font
 
 ### 自定义字体
