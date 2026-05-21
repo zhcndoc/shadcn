@@ -1,0 +1,663 @@
+---
+title: Formisch
+description: 使用 Formisch 和 Valibot 在 React 中构建表单。
+links:
+  doc: https://formisch.dev
+---
+
+import { InfoIcon } from "lucide-react"
+
+本指南介绍如何使用 [Formisch](https://formisch.dev) 构建表单。Formisch 是一个适用于 React 的轻量级、以 schema 为先且完全类型安全的表单库。我们将使用 `<Field />` 组件创建表单，使用 Valibot schemas 进行验证，处理错误，并确保可访问性。
+
+## 演示
+
+我们将构建以下表单。它包含一个简单的文本输入框和一个文本域。提交时，我们会验证表单数据并显示任何错误。
+
+<Callout icon={<InfoIcon />}>
+  **注意：** 为了演示效果，我们特意禁用了浏览器验证，以展示 schema 验证和表单错误在 Formisch 中的工作方式。建议在生产代码中添加基础的浏览器验证。
+</Callout>
+
+<ComponentPreview
+  name="form-formisch-demo"
+  className="sm:[&_.preview]:h-[700px]"
+  chromeLessOnMobile
+/>
+
+## 方法
+
+这个表单利用 Formisch 实现无头、以 schema 为先的表单处理。我们将使用 `<Field />` 组件来构建表单，它能让你对**标记和样式拥有完全的灵活性**。
+
+- 使用 Formisch 的 `useForm` hook 管理表单状态。
+- 使用 `<Form />` 组件包裹原生 `<form>` 元素并处理提交。
+- 使用 `<Field />` 渲染属性组件来控制输入。
+- 使用 [Valibot](https://valibot.dev) 进行 schema 验证。
+- 从 schema 推导出类型安全的字段路径。
+
+## 表单方法
+
+Formisch 将表单操作暴露为**顶层函数**，而不是表单对象上的方法。只导入你需要的内容：
+
+```ts
+import { getInput, insert, reset, submit } from "@formisch/react"
+```
+
+每个方法都遵循相同的签名：**第一个参数始终是表单存储**，**第二个参数（如果需要）始终是配置对象**。
+
+```ts
+// 读取字段值
+const email = getInput(form, { path: ["email"] })
+
+// 使用新的初始值重置表单
+reset(form, { initialInput: { email: "", password: "" } })
+
+// 在字段数组中移动一项
+move(form, { path: ["items"], from: 0, to: 3 })
+```
+
+这种设计使 API 在所有方法中都保持灵活且一致。你会在本指南中看到同样的 `(form, config)` 结构，用于读取状态（`getInput`、`getErrors`）、写入状态（`setInput`、`setErrors`）、表单控制（`submit`、`validate`、`focus`），以及数组操作（`insert`、`remove`、`move`、`swap`、`replace`）。详情请参阅[完整方法参考](https://formisch.dev/react/guides/form-methods)。
+
+## 结构
+
+下面是一个使用 Formisch 的 `<Field />` 组件和 shadcn 的 `<Field />` 组件的基础示例。
+
+```tsx showLineNumbers {3-21}
+<Form of={form} onSubmit={handleSubmit}>
+  <FieldGroup>
+    <FormischField of={form} path={["title"]}>
+      {(field) => (
+        <Field data-invalid={field.errors !== null}>
+          <FieldLabel htmlFor="form-title">Bug 标题</FieldLabel>
+          <Input
+            {...field.props}
+            id="form-title"
+            value={field.input}
+            aria-invalid={field.errors !== null}
+            placeholder="Login button not working on mobile"
+            autoComplete="off"
+          />
+          <FieldDescription>
+            请为你的 bug 报告提供一个简洁的标题。
+          </FieldDescription>
+          {field.errors && (
+            <FieldError errors={field.errors.map((message) => ({ message }))} />
+          )}
+        </Field>
+      )}
+    </FormischField>
+  </FieldGroup>
+</Form>
+```
+
+<Callout icon={<InfoIcon />}>
+  **注意：** Formisch 自带了自己的 `Field` 组件。为了避免与 shadcn 的 `Field` 重名，下面的示例将 Formisch 的组件导入为 `FormischField`，并保留 shadcn 的 `Field` 原名。在你自己的代码中，也可以对任一方进行别名处理——只要保持一致即可。
+</Callout>
+
+## 表单
+
+### 创建表单 schema
+
+我们先通过 Valibot schema 定义表单的结构。Formisch 会直接从这个 schema 推导出所有输入和输出类型。
+
+```tsx showLineNumbers title="form.tsx"
+import * as v from "valibot"
+
+const FormSchema = v.object({
+  title: v.pipe(
+    v.string(),
+    v.minLength(5, "Bug 标题至少需要 5 个字符。"),
+    v.maxLength(32, "Bug 标题最多只能有 32 个字符。")
+  ),
+  description: v.pipe(
+    v.string(),
+    v.minLength(20, "描述至少需要 20 个字符。"),
+    v.maxLength(100, "描述最多只能有 100 个字符。")
+  ),
+})
+```
+
+### 设置表单
+
+接下来，我们将使用 Formisch 的 `useForm` hook 创建表单实例。schema 会直接传给 `useForm`——不需要 resolver 步骤。
+
+```tsx showLineNumbers title="form.tsx" {1-2,21-25}
+import { Form, Field as FormischField, useForm } from "@formisch/react"
+import type { SubmitHandler } from "@formisch/react"
+import * as v from "valibot"
+
+const FormSchema = v.object({
+  title: v.pipe(
+    v.string(),
+    v.minLength(5, "Bug 标题至少需要 5 个字符。"),
+    v.maxLength(32, "Bug 标题最多只能有 32 个字符。")
+  ),
+  description: v.pipe(
+    v.string(),
+    v.minLength(20, "描述至少需要 20 个字符。"),
+    v.maxLength(100, "描述最多只能有 100 个字符。")
+  ),
+})
+
+export function BugReportForm() {
+  const form = useForm({
+    schema: FormSchema,
+    initialInput: {
+      title: "",
+      description: "",
+    },
+  })
+
+  const handleSubmit: SubmitHandler<typeof FormSchema> = (output) => {
+    // 使用已验证的表单值进行一些处理。
+    console.log(output)
+  }
+
+  return (
+    <Form of={form} onSubmit={handleSubmit}>
+      {/* ... */}
+      {/* 在这里构建表单 */}
+      {/* ... */}
+    </Form>
+  )
+}
+```
+
+`<Form />` 组件会包裹原生 `<form>` 元素。它会调用 `event.preventDefault()`，执行验证，并且只在数据有效时才触发 `onSubmit`。你收到的 `output` 会根据 schema 完整推导出类型。
+
+### 构建表单
+
+现在我们可以使用 Formisch 的 `<Field />` 组件和 shadcn 的 `<Field />` 组件来构建表单了。
+
+<ComponentSource
+  src="/registry/new-york-v4/examples/form-formisch-demo.tsx"
+  title="form.tsx"
+/>
+
+### 完成
+
+就是这样。你现在已经拥有一个带有客户端验证、且完全可访问的表单。
+
+当你提交表单时，`handleSubmit` 函数会接收已验证的表单数据。如果表单数据无效，Formisch 会为每个无效字段填充 `field.errors`，UI 也会将其显示出来。
+
+## 验证
+
+### 客户端验证
+
+Formisch 使用你传给 `useForm` 的 Valibot schema 来验证表单数据。这里没有 resolver——schema 同时是运行时验证和静态类型的唯一事实来源。
+
+```tsx showLineNumbers title="form.tsx" {1,3-6,11}
+import { useForm } from "@formisch/react"
+
+const FormSchema = v.object({
+  title: v.string(),
+  description: v.optional(v.string()),
+})
+
+export function ExampleForm() {
+  const form = useForm({
+    schema: FormSchema,
+    initialInput: {
+      title: "",
+      description: "",
+    },
+  })
+}
+```
+
+### 验证模式
+
+Formisch 将**首次**验证与**后续**验证分开处理。你可以在 `useForm` 上通过 `validate` 和 `revalidate` 选项进行配置。
+
+```tsx showLineNumbers title="form.tsx" {3-4}
+const form = useForm({
+  schema: FormSchema,
+  validate: "blur",
+  revalidate: "input",
+})
+```
+
+| 选项         | 值           | 描述                                                         |
+| ------------ | ------------ | ------------------------------------------------------------ |
+| `validate`   | `"submit"`   | 在表单提交时验证（默认）。                                   |
+| `validate`   | `"blur"`     | 当字段失去焦点时验证。                                       |
+| `validate`   | `"input"`    | 每次输入变化时都验证。                                       |
+| `validate`   | `"initial"`  | 在表单创建后立即验证。                                       |
+| `revalidate` | `"input"`    | 首次运行后，每次输入变化时重新验证（默认）。                  |
+| `revalidate` | `"blur"`     | 首次运行后，在失焦时重新验证。                               |
+| `revalidate` | `"submit"`   | 仅在表单提交时重新验证。                                     |
+
+## 显示错误
+
+使用 `<FieldError />` 在字段旁边显示错误。Formisch 会将错误作为字符串数组返回，因此需要把它们映射成 `<FieldError />` 所期望的结构。为了样式和可访问性：
+
+- 将 `data-invalid` 属性添加到 `<Field />` 组件。
+- 将 `aria-invalid` 属性添加到表单控件，如 `<Input />`、`<SelectTrigger />`、`<Checkbox />` 等。
+
+```tsx showLineNumbers title="form.tsx" {3,10,12-14}
+<FormischField of={form} path={["email"]}>
+  {(field) => (
+    <Field data-invalid={field.errors !== null}>
+      <FieldLabel htmlFor="form-email">邮箱</FieldLabel>
+      <Input
+        {...field.props}
+        id="form-email"
+        value={field.input}
+        type="email"
+        aria-invalid={field.errors !== null}
+      />
+      {field.errors && (
+        <FieldError errors={field.errors.map((message) => ({ message }))} />
+      )}
+    </Field>
+  )}
+</FormischField>
+```
+
+## 处理不同类型的字段
+
+Formisch 提供两种方式将字段绑定到元素：
+
+- **原生 HTML 元素**（例如 `<Input />` 和 `<Textarea />`）——展开 `field.props` 并提供 `value={field.input}`。Formisch 会为你处理 `name`、`ref`、`onChange`、`onBlur` 和 `onFocus`。
+- **组件库输入控件**（例如基于 Radix 的 `<Select />`、`<Checkbox />`、`<RadioGroup />`、`<Switch />`）——从 `field.input` 读取值，并调用 `field.onChange(value)` 来更新它。
+
+### 输入框
+
+- 对于输入字段，展开 `field.props` 并提供 `value={field.input}`。
+- 要显示错误，请为 `<Input />` 组件添加 `aria-invalid` 属性，并为 `<Field />` 组件添加 `data-invalid` 属性。
+
+<ComponentPreview
+  name="form-formisch-input"
+  className="sm:[&_.preview]:h-[700px]"
+  chromeLessOnMobile
+/>
+
+```tsx showLineNumbers title="form.tsx" {5-8}
+<FormischField of={form} path={["username"]}>
+  {(field) => (
+    <Field data-invalid={field.errors !== null}>
+      <FieldLabel htmlFor="form-username">用户名</FieldLabel>
+      <Input
+        {...field.props}
+        id="form-username"
+        value={field.input}
+        aria-invalid={field.errors !== null}
+      />
+      {field.errors && (
+        <FieldError errors={field.errors.map((message) => ({ message }))} />
+      )}
+    </Field>
+  )}
+</FormischField>
+```
+
+### 文本域
+
+- 对于 textarea 字段，展开 `field.props` 并提供 `value={field.input}`。
+- 要显示错误，请为 `<Textarea />` 组件添加 `aria-invalid` 属性，并为 `<Field />` 组件添加 `data-invalid` 属性。
+
+<ComponentPreview
+  name="form-formisch-textarea"
+  className="sm:[&_.preview]:h-[700px]"
+  chromeLessOnMobile
+/>
+
+```tsx showLineNumbers title="form.tsx" {7-10}
+<FormischField of={form} path={["about"]}>
+  {(field) => (
+    <Field data-invalid={field.errors !== null}>
+      <FieldLabel htmlFor="form-about">关于你更多信息</FieldLabel>
+      <Textarea
+        {...field.props}
+        id="form-about"
+        value={field.input}
+        aria-invalid={field.errors !== null}
+        placeholder="I'm a software engineer..."
+        className="min-h-[120px]"
+      />
+      <FieldDescription>
+        告诉我们更多关于你的信息。这将用于帮助我们个性化你的体验。
+      </FieldDescription>
+      {field.errors && (
+        <FieldError errors={field.errors.map((message) => ({ message }))} />
+      )}
+    </Field>
+  )}
+</FormischField>
+```
+
+### 下拉选择
+
+- 对于选择组件，从 `field.input` 读取值，并在 `<Select />` 的 `onValueChange` 中调用 `field.onChange`。
+- 要显示错误，请为 `<SelectTrigger />` 组件添加 `aria-invalid` 属性，并为 `<Field />` 组件添加 `data-invalid` 属性。
+
+<ComponentPreview
+  name="form-formisch-select"
+  className="sm:[&_.preview]:h-[500px]"
+  chromeLessOnMobile
+/>
+
+```tsx showLineNumbers title="form.tsx" {15-19}
+<FormischField of={form} path={["language"]}>
+  {(field) => (
+    <Field orientation="responsive" data-invalid={field.errors !== null}>
+      <FieldContent>
+        <FieldLabel htmlFor="form-language">口语</FieldLabel>
+        <FieldDescription>
+          为获得最佳效果，请选择你所说的语言。
+        </FieldDescription>
+        {field.errors && (
+          <FieldError errors={field.errors.map((message) => ({ message }))} />
+        )}
+      </FieldContent>
+      <Select value={field.input} onValueChange={field.onChange}>
+        <SelectTrigger
+          id="form-language"
+          aria-invalid={field.errors !== null}
+          className="min-w-[120px]"
+        >
+          <SelectValue placeholder="Select" />
+        </SelectTrigger>
+        <SelectContent position="item-aligned">
+          <SelectItem value="auto">Auto</SelectItem>
+          <SelectItem value="en">English</SelectItem>
+        </SelectContent>
+      </Select>
+    </Field>
+  )}
+</FormischField>
+```
+
+### 复选框
+
+- 对于复选框数组，从 `field.input` 读取值，并在 `onCheckedChange` 中使用 `field.onChange` 更新它。
+- 要显示错误，请为 `<Checkbox />` 组件添加 `aria-invalid` 属性，并为 `<Field />` 组件添加 `data-invalid` 属性。
+- 记得为 `<FieldGroup />` 组件添加 `data-slot="checkbox-group"`，以便获得正确的样式和间距。
+
+<ComponentPreview
+  name="form-formisch-checkbox"
+  className="sm:[&_.preview]:h-[700px]"
+  chromeLessOnMobile
+/>
+
+```tsx showLineNumbers title="form.tsx" {16,19-25}
+<FormischField of={form} path={["tasks"]}>
+  {(field) => (
+    <FieldSet>
+      <FieldLegend variant="label">任务</FieldLegend>
+      <FieldDescription>
+        当你创建的任务有更新时接收通知。
+      </FieldDescription>
+      <FieldGroup data-slot="checkbox-group">
+        {tasks.map((task) => (
+          <Field
+            key={task.id}
+            orientation="horizontal"
+            data-invalid={field.errors !== null}
+          >
+            <Checkbox
+              id={`form-checkbox-${task.id}`}
+              aria-invalid={field.errors !== null}
+              checked={field.input?.includes(task.id) ?? false}
+              onCheckedChange={(checked) => {
+                const current = field.input ?? []
+                field.onChange(
+                  checked === true
+                    ? [...current, task.id]
+                    : current.filter((value) => value !== task.id)
+                )
+              }}
+            />
+            <FieldLabel
+              htmlFor={`form-checkbox-${task.id}`}
+              className="font-normal"
+            >
+              {task.label}
+            </FieldLabel>
+          </Field>
+        ))}
+      </FieldGroup>
+      {field.errors && (
+        <FieldError errors={field.errors.map((message) => ({ message }))} />
+      )}
+    </FieldSet>
+  )}
+</FormischField>
+```
+
+### 单选组
+
+- 对于单选组，从 `field.input` 读取值，并在 `onValueChange` 中调用 `field.onChange`。
+- 要显示错误，请为 `<RadioGroupItem />` 组件添加 `aria-invalid` 属性，并为 `<Field />` 组件添加 `data-invalid` 属性。
+
+<ComponentPreview
+  name="form-formisch-radiogroup"
+  className="sm:[&_.preview]:h-[700px]"
+  chromeLessOnMobile
+/>
+
+```tsx showLineNumbers title="form.tsx" {9-13,21}
+<FormischField of={form} path={["plan"]}>
+  {(field) => (
+    <FieldSet>
+      <FieldLegend>套餐</FieldLegend>
+      <FieldDescription>
+        你可以随时升级或降级你的套餐。
+      </FieldDescription>
+      <RadioGroup value={field.input} onValueChange={field.onChange}>
+        {plans.map((plan) => (
+          <FieldLabel key={plan.id} htmlFor={`form-radiogroup-${plan.id}`}>
+            <Field
+              orientation="horizontal"
+              data-invalid={field.errors !== null}
+            >
+              <FieldContent>
+                <FieldTitle>{plan.title}</FieldTitle>
+                <FieldDescription>{plan.description}</FieldDescription>
+              </FieldContent>
+              <RadioGroupItem
+                value={plan.id}
+                id={`form-radiogroup-${plan.id}`}
+                aria-invalid={field.errors !== null}
+              />
+            </Field>
+          </FieldLabel>
+        ))}
+      </RadioGroup>
+      {field.errors && (
+        <FieldError errors={field.errors.map((message) => ({ message }))} />
+      )}
+    </FieldSet>
+  )}
+</FormischField>
+```
+
+### 开关
+
+- 对于开关，从 `field.input` 读取值，并在 `onCheckedChange` 中调用 `field.onChange`。
+- 要显示错误，请为 `<Switch />` 组件添加 `aria-invalid` 属性，并为 `<Field />` 组件添加 `data-invalid` 属性。
+
+<ComponentPreview
+  name="form-formisch-switch"
+  className="sm:[&_.preview]:h-[500px]"
+  chromeLessOnMobile
+/>
+
+```tsx showLineNumbers title="form.tsx" {15-19}
+<FormischField of={form} path={["twoFactor"]}>
+  {(field) => (
+    <Field orientation="horizontal" data-invalid={field.errors !== null}>
+      <FieldContent>
+        <FieldLabel htmlFor="form-twoFactor">
+          多因素身份验证
+        </FieldLabel>
+        <FieldDescription>
+          启用多因素身份验证以保护你的账户安全。
+        </FieldDescription>
+        {field.errors && (
+          <FieldError errors={field.errors.map((message) => ({ message }))} />
+        )}
+      </FieldContent>
+      <Switch
+        id="form-twoFactor"
+        checked={field.input ?? false}
+        onCheckedChange={field.onChange}
+        aria-invalid={field.errors !== null}
+      />
+    </Field>
+  )}
+</FormischField>
+```
+
+### 复杂表单
+
+下面是一个包含多个字段和验证的更复杂表单示例。
+
+<ComponentPreview
+  name="form-formisch-complex"
+  className="sm:[&_.preview]:h-[1300px]"
+  chromeLessOnMobile
+/>
+
+## 重置表单
+
+Formisch 暴露了一个顶层的 `reset` 函数。传入表单存储以将其重置为初始输入。
+
+```tsx showLineNumbers
+<Button type="button" variant="outline" onClick={() => reset(form)}>
+  Reset
+</Button>
+```
+
+你也可以重置为新的初始值，或者在保留用户当前输入的同时进行重置：
+
+```tsx showLineNumbers
+// 重置为一组全新的初始值
+reset(form, { initialInput: { title: "", description: "" } })
+
+// 将基线同步为新的服务器数据，但保留用户的编辑内容
+reset(form, { initialInput: serverData, keepInput: true })
+```
+
+## 数组字段
+
+Formisch 提供了一个 `<FieldArray />` 组件以及一组用于管理动态数组字段的辅助函数。当你需要添加、删除或重新排序项目时，请使用它。
+
+<ComponentPreview
+  name="form-formisch-array"
+  className="sm:[&_.preview]:h-[700px]"
+  chromeLessOnMobile
+/>
+
+### 使用 FieldArray
+
+`<FieldArray />` 采用与 `<Field />` 相同的 render-prop 模式。它的 `items` 数组中包含每个项目的稳定 key，你应该将其用作 React 的 `key`。
+
+```tsx showLineNumbers title="form.tsx" {1,7-22}
+import {
+  Field as FormischField,
+  FieldArray,
+  insert,
+  remove,
+} from "@formisch/react"
+
+export function ExampleForm() {
+  // ... 表单配置
+
+  return (
+    <FieldArray of={form} path={["emails"]}>
+      {(fieldArray) => (
+        <FieldGroup className="gap-4">
+          {fieldArray.items.map((item, index) => (
+            <FormischField
+              key={item}
+              of={form}
+              path={["emails", index, "address"]}
+            >
+              {(field) => /* ... */}
+            </FormischField>
+          ))}
+        </FieldGroup>
+      )}
+    </FieldArray>
+  )
+}
+```
+
+### 数组字段结构
+
+将你的数组字段包裹在带有 `<FieldLegend />` 和 `<FieldDescription />` 的 `<FieldSet />` 中。
+
+```tsx showLineNumbers title="form.tsx"
+<FieldSet className="gap-4">
+  <FieldLegend variant="label">电子邮件地址</FieldLegend>
+  <FieldDescription>
+    添加最多 5 个我们可以联系你的电子邮件地址。
+  </FieldDescription>
+  <FieldGroup className="gap-4">{/* 数组项放在这里 */}</FieldGroup>
+</FieldSet>
+```
+
+### 添加项目
+
+使用 `insert` 函数向数组中添加新项目。默认情况下，新项目会追加到末尾。你也可以传入一个 `at` 索引来插入到特定位置。
+
+```tsx showLineNumbers title="form.tsx"
+<Button
+  type="button"
+  variant="outline"
+  size="sm"
+  onClick={() =>
+    insert(form, { path: ["emails"], initialInput: { address: "" } })
+  }
+  disabled={fieldArray.items.length >= 5}
+>
+  添加电子邮件地址
+</Button>
+```
+
+### 删除项目
+
+使用带有 `at` 索引的 `remove` 函数从数组中删除项目。
+
+```tsx showLineNumbers title="form.tsx"
+import { remove } from "@formisch/react"
+
+{
+  fieldArray.items.length > 1 && (
+    <InputGroupAddon align="inline-end">
+      <InputGroupButton
+        type="button"
+        variant="ghost"
+        size="icon-xs"
+        onClick={() => remove(form, { path: ["emails"], at: index })}
+        aria-label={`移除第 ${index + 1} 个电子邮件`}
+      >
+        <XIcon />
+      </InputGroupButton>
+    </InputGroupAddon>
+  )
+}
+```
+
+Formisch 还提供了用于重新排序和替换项目的 `move`、`swap` 和 `replace`。它们遵循相同的 `(form, config)` 签名。
+
+### 数组验证
+
+使用 Valibot 的 `array` 和管道验证器来约束数组字段。
+
+```tsx showLineNumbers title="form.tsx"
+const FormSchema = v.object({
+  emails: v.pipe(
+    v.array(
+      v.object({
+        address: v.pipe(
+          v.string(),
+          v.nonEmpty("请输入电子邮件地址。"),
+          v.email("请输入有效的电子邮件地址。")
+        ),
+      })
+    ),
+    v.minLength(1, "至少添加一个电子邮件地址。"),
+    v.maxLength(5, "你最多可以添加 5 个电子邮件地址。")
+  ),
+})
+```
