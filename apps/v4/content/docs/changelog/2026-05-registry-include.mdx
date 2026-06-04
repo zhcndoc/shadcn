@@ -1,0 +1,117 @@
+---
+title: 2026年5月 - Registry Include 和 Validate
+description: 组织并验证源注册表。
+date: 2026-05-20
+---
+
+本次发布为 registry 作者带来了两个更新：
+
+- `include` 用于通过多个 `registry.json`
+  文件组合大型源注册表。
+- `shadcn registry validate` 用于在发布前检查源注册表。
+
+这使得无需手动维护一个大型 `registry.json` 文件，也能更轻松地维护源注册表和动态注册表。
+
+Registry 作者现在可以将一个大型源注册表分散到多个 `registry.json` 文件中进行组织，并通过 `shadcn build` 将它们组合起来。
+
+```txt /registry.json/
+registry.json
+components
+└── ui
+    ├── button.tsx
+    ├── input.tsx
+    └── registry.json
+hooks
+├── registry.json
+├── use-media-query.ts
+└── use-toggle.ts
+```
+
+{/* prettier-ignore */}
+```json title="registry.json" showLineNumbers {6-7}
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme",
+  "homepage": "https://acme.com",
+  "include": [
+    "components/ui/registry.json",
+    "hooks/registry.json"
+  ]
+}
+```
+
+包含的 `registry.json` 文件是用于组合的有效注册表文件，并且可以省略
+`name` 和 `homepage`。只有根 `registry.json` 必须定义
+注册表元数据。
+
+```json title="components/ui/registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## 构建输出
+
+`shadcn build` 会解析包含的注册表，并写出一个扁平化的
+`registry.json`，且不包含 `include`。项目文件路径会从根
+注册表中保留，因此在 `components/ui/registry.json` 中声明的文件会在构建后的注册表项中写为
+`components/ui/button.tsx`。
+
+## 验证你的注册表
+
+现在你可以在发布或提供服务之前验证源注册表。
+
+```bash
+npx shadcn registry validate
+```
+
+验证会直接针对源注册表文件运行。你不需要先
+运行 `shadcn build`。
+
+该命令会检查根 `registry.json`、包含的注册表文件、项目
+schema 错误、重复的项目名称、include 规则，以及本地项目文件路径。
+验证会在一次运行中报告它能找到的所有可操作错误。
+
+## 注册表加载器
+
+`shadcn/registry` 包也导出 `loadRegistry` 和
+`loadRegistryItem`，用于动态注册表路由。
+
+```ts title="app/r/registry.json/route.ts" showLineNumbers
+import { loadRegistry } from "shadcn/registry"
+
+export async function GET() {
+  const registry = await loadRegistry()
+
+  return Response.json(registry)
+}
+```
+
+```ts title="app/r/[name].json/route.ts" showLineNumbers
+import { loadRegistryItem } from "shadcn/registry"
+
+export async function GET(
+  _: Request,
+  { params }: { params: Promise<{ name: string }> }
+) {
+  const { name } = await params
+  const item = await loadRegistryItem(name)
+
+  return Response.json(item)
+}
+```
+
+有关更多详情，请参阅 [registry.json 文档](/docs/registry/registry-json#include) 和
+[入门指南](/docs/registry/getting-started#structure-your-registry)。

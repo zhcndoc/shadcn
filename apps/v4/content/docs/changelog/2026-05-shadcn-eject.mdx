@@ -1,0 +1,61 @@
+---
+title: 2026 年 5 月 - shadcn eject
+description: 将 shadcn/tailwind.css 内联并移除 shadcn 依赖。
+date: 2026-05-31
+---
+
+当我们为 Radix 和 Base UI 都添加支持时，我们需要一个用于共享 Tailwind 工具类的地方，这些工具类是这两个库都依赖的，例如 `data-open:` 和 `data-closed:` 这样的自定义变体，以及 `no-scrollbar` 这样的工具类。
+
+在处理 RTL 支持时，我们还遇到了一些 bug，把它们在一个共享位置修复要比在每个组件中重复修复更容易。
+
+所以我们创建了 `shadcn/tailwind.css`。当你运行 `init` 时，它会将 `@import "shadcn/tailwind.css"` 添加到你的全局 CSS 文件中。它的工作方式与其他 CSS 导入类似，例如 `tw-animate-css`：这是一个小型依赖，在生产环境中会被 tree-shaken，并在构建时解析。
+
+如果你不希望为了这段 CSS 依赖 `shadcn` 包，我们新增了 `shadcn eject` 命令。它会将 `shadcn/tailwind.css` 内联到你的全局 CSS 文件中，并从你的项目中移除 `shadcn` 依赖。
+
+```bash
+npx shadcn@latest eject
+```
+
+**之前**
+
+```css
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+```
+
+**之后**
+
+```css
+@import "tailwindcss";
+@import "tw-animate-css";
+/* 从 shadcn@4.8.3 中导出 */
+@theme inline {
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(
+        --radix-accordion-content-height,
+        var(--accordion-panel-height, auto)
+      );
+    }
+  }
+}
+
+@custom-variant data-open {
+  &:where([data-state="open"]),
+  &:where([data-open]:not([data-open="false"])) {
+    @slot;
+  }
+}
+```
+
+在 monorepo 中，请从包含你的 `components.json` 和全局 CSS 文件的 workspace 中运行该命令：
+
+```bash
+npx shadcn@latest eject -c packages/ui
+```
+
+更多详情请参阅 [CLI 文档](/docs/cli#eject)。

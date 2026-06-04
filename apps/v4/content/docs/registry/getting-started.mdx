@@ -3,13 +3,19 @@ title: 入门指南
 description: 学习如何设置并运行你自己的组件注册表。
 ---
 
-本指南将引导你完成设置自己的组件注册表的过程。假设你已经有一个包含组件的项目，并希望将其转变为一个注册表。
+本指南将带你完成设置你自己的注册表的过程。它假设你已经有一个项目，其中包含你想要分发的组件、hooks、工具或其他文件。
+
+**如果你已经有一个现有的公开 GitHub 仓库，只需在根目录添加一个 `registry.json` 文件，就可以将其转换为一个
+注册表。** 详情请参见
+[GitHub Registries](/docs/registry/github)。
 
 如果你是从头开始创建一个新的注册表项目，可以使用[注册表模板](https://github.com/shadcn-ui/registry-template)作为起点。我们已经为你做好了配置。
 
 ## 要求
 
-你可以根据自己的需求设计并托管自定义注册表。唯一的要求是你的注册表项目必须是符合[注册表条目模式规范](/docs/registry/registry-item-json)的有效 JSON 文件。
+你可以自由设计并发布你的自定义注册表，只要你愿意。唯一的要求是，你的注册表目录和注册表条目必须符合[注册表模式规范](/docs/registry/registry-json)和[注册表条目模式规范](/docs/registry/registry-item-json)。
+
+你的注册表可以是 Next.js、Vite、Vue、Svelte、PHP，或者任何其他框架，只要它支持通过 HTTP 提供 JSON 即可。它也可以是一个公开的 GitHub 仓库，只要根目录下有一个 `registry.json` 文件。
 
 如果你想查看一个注册表示例，我们提供了一个[模板项目](https://github.com/shadcn-ui/registry-template)供你作为起点使用。
 
@@ -19,11 +25,7 @@ description: 学习如何设置并运行你自己的组件注册表。
 
 你的注册表必须在注册表端点根目录下存在此文件（或 JSON 数据）。注册表端点是你托管注册表的 URL。
 
-当你运行 `build` 命令时，`shadcn` CLI 会自动为你生成此文件。
-
-## 添加一个 registry.json 文件
-
-在项目根目录创建一个 `registry.json` 文件。你的项目可以是 Next.js、Vite、Vue、Svelte、PHP 或任何其他支持通过 HTTP 提供 JSON 的框架。
+下面是一个 `registry.json` 文件示例：
 
 ```json title="registry.json" showLineNumbers
 {
@@ -31,41 +33,198 @@ description: 学习如何设置并运行你自己的组件注册表。
   "name": "acme",
   "homepage": "https://acme.com",
   "items": [
-    // ...
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "一个简单的按钮组件。",
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## 构建你的注册表结构
+
+你可以通过以下两种方式之一来组织你的源注册表：
+
+- 在单个根目录 `registry.json` 中定义所有条目。
+- 使用带有 `include` 的根目录 `registry.json` 来组合多个 `registry.json` 文件。
+
+### 选项 A：单个 registry.json
+
+在项目根目录创建一个 `registry.json` 文件。将所有注册表条目添加到 `items` 数组中。这是定义注册表最简单的方式。
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme",
+  "homepage": "https://acme.com",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "一个简单的按钮组件。",
+      "files": [
+        {
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hello-world",
+      "type": "registry:block",
+      "title": "Hello World",
+      "description": "一个简单的 hello world 组件。",
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/default/hello-world/hello-world.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
   ]
 }
 ```
 
 该 `registry.json` 文件必须符合[注册表模式规范](/docs/registry/registry-json)。
 
-## 添加一个注册表条目
+### 选项 B：使用 include
 
-### 创建你的组件
+对于更大的注册表，你可以使用 `include` 将你的源注册表组合自多个 `registry.json` 文件。
 
-添加你的第一个组件。下面是一个简单的 `<HelloWorld />` 组件示例：
+```txt
+registry.json
+components
+└── ui
+    ├── button.tsx
+    ├── input.tsx
+    └── registry.json
+hooks
+├── registry.json
+├── use-media-query.ts
+└── use-toggle.ts
+```
 
-```tsx title="registry/new-york/hello-world/hello-world.tsx" showLineNumbers
-import { Button } from "@/components/ui/button"
+根目录的 `registry.json` 定义了注册表元数据，并包含嵌套的
+注册表文件。
 
-export function HelloWorld() {
-  return <Button>Hello World</Button>
+{/* prettier-ignore */}
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme",
+  "homepage": "https://acme.com",
+  "include": [
+    "components/ui/registry.json",
+    "hooks/registry.json"
+  ]
+}
+```
+
+被包含的 `registry.json` 文件是用于组合的有效注册表文件，可以省略 `name` 和 `homepage`。只有根级 `registry.json` 必须定义注册表元数据。
+
+```json title="components/ui/registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
+```
+
+```json title="hooks/registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "use-toggle",
+      "type": "registry:hook",
+      "files": [
+        {
+          "path": "use-toggle.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "name": "use-media-query",
+      "type": "registry:hook",
+      "files": [
+        {
+          "path": "use-media-query.ts",
+          "type": "registry:hook"
+        }
+      ]
+    }
+  ]
+}
+```
+
+使用 `include` 时，文件路径相对于声明该条目的 `registry.json` 文件。
+
+## 添加条目
+
+### 创建一个 UI 组件
+
+添加你的第一个条目。下面是一个简单 `<Button />` 组件的示例：
+
+```tsx title="components/ui/button.tsx" showLineNumbers
+import * as React from "react"
+
+export function Button(props: React.ComponentProps<"button">) {
+  return (
+    <button
+      {...props}
+      className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white"
+    />
+  )
 }
 ```
 
 <Callout className="mt-6">
-  **注意：** 此示例中将组件放置在 `registry/new-york` 目录。你可以将组件放在项目中的任意位置，只要在 `registry.json` 文件中设置正确的路径，并遵循 `registry/[NAME]` 目录结构即可。
+  **注意：** 此示例将组件放在 `components/ui` 目录中。
+  只要你在 `registry.json` 文件中设置了正确的路径，就可以将其放在项目中的任何位置。
 </Callout>
 
 ```txt
-registry
-└── new-york
-    └── hello-world
-        └── hello-world.tsx
+components
+└── ui
+    └── button.tsx
 ```
 
-### 将组件添加到注册表
+### 将条目添加到注册表
 
-要将组件添加到注册表，需要将组件定义添加到 `registry.json` 文件中。
+要将组件添加到注册表，请在 `registry.json` 中添加一个条目定义。
+如果你正在使用 `include`，请将条目添加到拥有该组件的被包含 `registry.json` 文件中。
+例如，将 UI 组件添加到 `components/ui/registry.json`。
 
 ```json title="registry.json" showLineNumbers {6-17}
 {
@@ -74,14 +233,14 @@ registry
   "homepage": "https://acme.com",
   "items": [
     {
-      "name": "hello-world",
-      "type": "registry:block",
-      "title": "Hello World",
-      "description": "一个简单的 hello world 组件。",
+      "name": "button",
+      "type": "registry:ui",
+      "title": "按钮",
+      "description": "一个简单的按钮组件。",
       "files": [
         {
-          "path": "registry/new-york/hello-world/hello-world.tsx",
-          "type": "registry:component"
+          "path": "components/ui/button.tsx",
+          "type": "registry:ui"
         }
       ]
     }
@@ -91,74 +250,139 @@ registry
 
 你需要通过添加 `name`、`type`、`title`、`description` 和 `files` 来定义注册表条目。
 
-对于每个文件，必须指定 `path` 和 `type`。`path` 是相对于项目根目录的文件路径，`type` 是文件类型。
+对于你添加的每个文件，都必须指定文件的 `path` 和 `type`。在单文件注册表中，`path` 相对于项目根目录。使用 `include` 时，`path` 相对于声明该条目的 `registry.json` 文件。`type` 是文件类型。
 
 你可以在[注册表条目模式文档](/docs/registry/registry-item-json)中查看更多关于注册表条目模式和文件类型的介绍。
 
-## 构建你的注册表
+## 提供你的注册表
 
-### 安装 shadcn CLI
+你可以将注册表作为静态 JSON 文件或通过动态路由处理器来提供。
 
-```bash
-npm install shadcn@latest
-```
+### 选项 A：静态 JSON 文件
 
-### 添加构建脚本
-
-在 `package.json` 文件中添加一个 `registry:build` 脚本。
-
-```json title="package.json" showLineNumbers
-{
-  "scripts": {
-    "registry:build": "shadcn build"
-  }
-}
-```
-
-### 运行构建脚本
-
-运行构建脚本以生成注册表 JSON 文件。
+运行构建命令以生成静态注册表 JSON 文件。
 
 ```bash
-npm run registry:build
+npx shadcn@latest build
 ```
+
+如果你的源注册表使用了 `include`，`shadcn build` 会解析被包含的注册表并将扁平化后的注册表写入输出目录。生成的 `registry.json` 不包含 `include`。
 
 <Callout className="mt-6">
-  **注意：** 默认情况下，构建脚本会将注册表 JSON 文件生成到 `public/r` 目录，例如 `public/r/hello-world.json`。
+  **注意：** 默认情况下，构建命令会将注册表 JSON 文件生成到 `public/r`，例如 `public/r/button.json`。你可以通过传递 `--output` 选项来更改输出目录。详情请参阅 [shadcn build 命令](/docs/cli#build)。
 
 你可以通过传递 `--output` 选项来更改输出目录。详情请参阅[shadcn build 命令](/docs/cli#build)。
 </Callout>
 
-## 提供你的注册表服务
-
-如果你在使用 Next.js 运行注册表，可以通过启动 `next` 服务器来提供服务。其他框架启动命令可能不同。
+如果你在 Next.js 中运行注册表，可以通过运行 `next` 服务器来提供这些文件。对于其他框架，命令可能会有所不同。
 
 ```bash
 npm run dev
 ```
 
-你的文件现在将通过 `http://localhost:3000/r/[NAME].json` 访问，例如 `http://localhost:3000/r/hello-world.json`。
+你的文件现在将托管在 `http://localhost:3000/r/[NAME].json`，例如 `http://localhost:3000/r/button.json`。
 
-## 内容协商
+### 选项 B：动态路由处理器
+
+如果你希望在请求时直接从源 `registry.json` 提供注册表 JSON，请使用 `shadcn/registry` 中的生产端加载器 API。
+
+将 `shadcn` 安装为运行时依赖：
+
+```bash
+npm install shadcn
+```
+
+使用 `loadRegistry` 来提供注册表目录。
+
+```ts title="app/r/registry.json/route.ts" showLineNumbers
+import { loadRegistry } from "shadcn/registry"
+
+export async function GET() {
+  try {
+    const registry = await loadRegistry()
+
+    return Response.json(registry)
+  } catch (error) {
+    console.error(error)
+
+    return Response.json({ error: "Failed to load registry." }, { status: 500 })
+  }
+}
+```
+
+使用 `loadRegistryItem` 来提供单个注册表条目。
+
+```ts title="app/r/[name].json/route.ts" showLineNumbers
+import { loadRegistryItem, RegistryItemNotFoundError } from "shadcn/registry"
+
+export async function GET(
+  _request: Request,
+  context: {
+    params: Promise<{
+      name: string
+    }>
+  }
+) {
+  const { name } = await context.params
+
+  try {
+    const item = await loadRegistryItem(name)
+
+    return Response.json(item)
+  } catch (error) {
+    if (error instanceof RegistryItemNotFoundError) {
+      return Response.json(
+        { error: `Registry item "${name}" was not found.` },
+        { status: 404 }
+      )
+    }
+
+    console.error(error)
+
+    return Response.json(
+      { error: "Failed to load registry item." },
+      { status: 500 }
+    )
+  }
+}
+```
+
+这两个加载器在返回 JSON 之前都会解析 `include`，因此路由处理器可以使用相同的源 `registry.json` 结构，而无需运行 `shadcn build`。
+
+<Accordion type="single" collapsible>
+  <AccordionItem value="content-negotiation">
+    <AccordionTrigger>内容协商</AccordionTrigger>
+    <AccordionContent>
 
 `shadcn` CLI 支持 **HTTP 内容协商**。这使你可以将注册表托管在任何端点——包括你的域名根路径——并根据请求方返回不同的内容。
 
 通过同一个 URL，你可以提供：
 
-- **HTML** 给浏览器——着陆页、文档或营销站点。
-- **JSON** 给 `shadcn` CLI——可安装的注册表条目。
-- **Markdown** 给 AI 代理和 LLM——内容的机器可读版本。
+<ul>
+  <li>
+    <strong>HTML</strong> 给浏览器——一个落地页、文档或
+    营销站点。
+  </li>
+  <li>
+    <strong>JSON</strong> 给 <code>shadcn</code> CLI——一个可安装的
+    注册表条目。
+  </li>
+  <li>
+    <strong>Markdown</strong> 给 AI 代理和 LLM——一种机器可读的内容
+    版本。
+  </li>
+</ul>
 
 客户端使用 `Accept` 请求头来表明其偏好，由你的服务器决定返回什么。
 
-### 请求头
+#### 请求头
 
 当 CLI 向注册表发起请求时，它会发送以下请求头：
 
 - **User-Agent**: `shadcn`
 - **Accept**: `application/vnd.shadcn.v1+json, application/json;q=0.9`
 
-### 根路径托管
+#### 根路径托管
 
 通过在服务器上检查这些请求头，你可以将 CLI 流量路由到可安装的注册表条目，同时让浏览器流量继续访问你的文档或主页。
 
@@ -235,32 +459,167 @@ app.get("/", (req, res) => {
 
 这可以实现：
 
-- **品牌化注册表 URL**：`shadcn add https://ui.example.com`
-- **更短的 URL**：用户输入你的域名根路径，而不是 `/r/` 或 `/registry/` 子路径。
-- **更容易记忆**：用户更容易记住并分享你的注册表。
+<ul>
+  <li>
+    <strong>品牌化注册表 URL</strong>:{" "}
+    <code>shadcn add https://ui.example.com</code>
+  </li>
+  <li>
+    <strong>更短的 URL</strong>: 用户输入你的域名根路径，而不是{" "}
+    <code>/r/</code> 或 <code>/registry/</code> 子路径。
+  </li>
+  <li>
+    <strong>易于记忆</strong>: 用户更容易记住并分享你的
+    注册表。
+  </li>
+</ul>
+
+      </AccordionContent>
+
+    </AccordionItem>
+
+</Accordion>
+
+## 测试你的注册表
+
+在你的注册表开始提供服务后，使用其他开发者也会使用的相同 CLI 命令来测试它。
+
+### 使用 URL
+
+将目录 URL 用于发现条目的命令，例如 `list` 和 `search`。将条目 URL 用于读取或安装特定条目的命令，例如 `view` 和 `add`。
+
+#### 列出条目
+
+首先确认可以发现注册表目录。
+
+```bash
+npx shadcn@latest list http://localhost:3000/r/registry.json
+```
+
+#### 搜索条目
+
+按查询搜索注册表。
+
+```bash
+npx shadcn@latest search http://localhost:3000/r/registry.json --query button
+```
+
+#### 查看条目
+
+然后按名称查看某个注册表条目。
+
+```bash
+npx shadcn@latest view http://localhost:3000/r/button.json
+```
+
+#### 添加条目
+
+要测试安装流程，请在你希望安装该条目的项目中运行 `add`。
+
+```bash
+npx shadcn@latest add http://localhost:3000/r/button.json
+```
+
+### 使用命名空间
+
+#### 添加注册表
+
+你也可以使用命名空间来测试你的注册表。在带有 `components.json` 文件的项目中，将你的注册表 URL 模板添加到项目中。
+
+```bash
+npx shadcn@latest registry add @acme=http://localhost:3000/r/{name}.json
+```
+
+`{name}` 占位符必须解析为一个条目的 JSON 文件。例如，`@acme/button` 会解析为 `http://localhost:3000/r/button.json`。目录仍然单独托管在 `http://localhost:3000/r/registry.json`。
+
+#### 列出条目
+
+然后列出你注册表中的条目。
+
+```bash
+npx shadcn@latest list @acme
+```
+
+#### 搜索条目
+
+按查询搜索注册表。
+
+```bash
+npx shadcn@latest search @acme --query button
+```
+
+#### 查看条目
+
+按名称查看某个注册表条目。
+
+```bash
+npx shadcn@latest view @acme/button
+```
+
+#### 添加条目
+
+要测试安装流程，请在你希望安装该条目的项目中运行 `add`。
+
+```bash
+npx shadcn@latest add @acme/button
+```
+
+更多信息请参阅[命名空间注册表](/docs/registry/namespace)文档。
 
 ## 发布你的注册表
 
-为了让其他开发者访问你的注册表，你可以将项目部署到一个公开的 URL。
+为了让你的注册表可供其他开发者使用，请将你的项目发布到一个
+公开 URL。部署完成后，用户可以直接通过项目项 URL 安装条目，或者
+他们也可以将你的注册表作为命名空间添加到他们的项目中。
+
+### 分享命名空间设置说明
+
+如果你希望用户通过类似 `@acme/button` 这样的命名空间安装条目，请告诉
+他们将你的注册表 URL 模板添加到他们的项目中。CLI 解析注册表
+条目时，`{name}` 占位符会被替换为条目名称。
+
+该模板必须能够解析到条目的 JSON 文件。例如，`@acme/button`
+会解析到 `https://acme.com/r/button.json`。你的注册表目录仍应单独
+托管在 `https://acme.com/r/registry.json`。
+
+他们可以通过 CLI 添加该命名空间。
+
+```bash
+npx shadcn@latest registry add @acme=https://acme.com/r/{name}.json
+```
+
+或者，他们也可以在自己的 `components.json` 文件中的 `registries` 字段下手动添加。
+
+```json title="components.json" showLineNumbers
+{
+  "registries": {
+    "@acme": "https://acme.com/r/{name}.json"
+  }
+}
+```
+
+然后，用户就可以通过命名空间从你的注册表中使用条目。
+
+```bash
+npx shadcn@latest add @acme/button
+```
+
+### 将你的命名空间添加到注册表索引
+
+如果你的注册表是开源且公开可用的，你可以将你的
+命名空间提交到官方注册表索引。这样用户就可以通过名称而不是粘贴完整的 URL 模板来
+添加你的命名空间。
+
+有关提交要求，请参阅 [注册表索引](/docs/registry/registry-index) 文档。
 
 ## 指南
 
 构建注册表组件时，请遵循以下指南：
 
-- 将注册表条目放在 `registry/[STYLE]/[NAME]` 目录下。示例中使用了 `new-york`，你可以根据需要选择任何名称，只要它位于 `registry` 目录下。
-- 块定义中必需的属性有：`name`、`description`、`type` 和 `files`。
-- 推荐为注册表条目添加合适的名称和描述，这有助于大型语言模型理解该组件及其用途。
-- 确保在 `registryDependencies` 中列出所有注册表依赖。注册表依赖是注册表中组件的名称，例如 `input`、`button`、`card` 等，或者注册表条目的 URL，例如 `http://localhost:3000/r/editor.json`。
-- 确保在 `dependencies` 中列出所有依赖。依赖是注册表中包的名称，例如 `zod`、`sonner` 等。你可以用 `name@version` 格式指定版本，如 `zod@^3.20.0`。
-- **导入始终应使用 `@/registry` 路径。** 例如 `import { HelloWorld } from "@/registry/new-york/hello-world/hello-world"`。
-- 理想情况下，将文件放置在注册表条目的 `components`、`hooks`、`lib` 目录中。
-
-## 使用 CLI 安装
-
-使用 `shadcn` CLI 安装注册表条目，使用 `add` 命令并跟上注册表条目的 URL。
-
-```bash
-npx shadcn@latest add http://localhost:3000/r/hello-world.json
-```
-
-有关如何从命名空间注册表安装条目的详细信息，请参阅[带命名空间的注册表](/docs/registry/namespace)文档。
+- 将你的注册表条目放在 `registry/[STYLE]/[NAME]` 目录中。我这里以 `default` 作为示例。只要它嵌套在 `registry` 目录下，名称可以是任意的。
+- 对于 blocks，以下属性是必需的：`name`、`description`、`type` 和 `files`。
+- 建议为你的注册表条目添加合适的名称和描述。这有助于 LLM 理解该组件及其用途。
+- 确保在 `registryDependencies` 中列出所有注册表依赖项。注册表依赖项是一个条目地址，例如 `button`、`@acme/input-form`、`acme/ui/button` 或 `http://localhost:3000/r/editor.json`。
+- 确保在 `dependencies` 中列出所有依赖项。依赖项是注册表中包的名称，例如 `zod`、`sonner` 等。要设置版本，可以使用 `name@version` 格式，例如 `zod@^3.20.0`。
+- **导入应始终使用 `@/registry` 路径。** 例如 `import { HelloWorld } from "@/registry/default/hello-world/hello-world"`
+- 理想情况下，将你的文件放在注册表条目中的 `components`、`hooks`、`lib` 目录下。

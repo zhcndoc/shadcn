@@ -1,79 +1,80 @@
-# shadcn MCP Server
+# shadcn MCP 服务器
 
-The CLI includes an MCP server that lets AI assistants search, browse, view, and install components from registries.
+CLI 包含一个 MCP 服务器，可让 AI 助手搜索、浏览、查看并从注册源中安装项目。
 
 ---
 
-## Setup
+## 设置
 
 ```bash
-shadcn mcp        # start the MCP server (stdio)
-shadcn mcp init   # write config for your editor
+shadcn mcp        # 启动 MCP 服务器（stdio）
+shadcn mcp init   # 为你的编辑器写入配置
 ```
 
-Editor config files:
+编辑器配置文件：
 
-| Editor | Config file |
-|--------|------------|
-| Claude Code | `.mcp.json` |
-| Cursor | `.cursor/mcp.json` |
-| VS Code | `.vscode/mcp.json` |
-| OpenCode | `opencode.json` |
-| Codex | `~/.codex/config.toml` (manual) |
+| 编辑器        | 配置文件                      |
+| ------------- | ----------------------------- |
+| Claude Code   | `.mcp.json`                   |
+| Cursor        | `.cursor/mcp.json`            |
+| VS Code       | `.vscode/mcp.json`           |
+| OpenCode      | `opencode.json`              |
+| Codex         | `~/.codex/config.toml`（手动） |
 
 ---
 
-## Tools
+## 工具
 
-> **Tip:** MCP tools handle registry operations (search, view, install). For project configuration (aliases, framework, Tailwind version), use `npx shadcn@latest info` — there is no MCP equivalent.
+> **提示：** MCP 工具负责注册源操作（搜索、查看、安装）。对于项目配置（别名、框架、Tailwind 版本），请使用 `npx shadcn@latest info` —— 这里没有 MCP 对应项。
 
 ### `shadcn:get_project_registries`
 
-Returns registry names from `components.json`. Errors if no `components.json` exists.
+返回 `components.json` 中的注册源名称。如果不存在 `components.json`，则报错。
 
-**Input:** none
+**输入：** 无
 
 ### `shadcn:list_items_in_registries`
 
-Lists all items from one or more registries.
+列出一个或多个注册源中的所有项目。注册源可以是已配置的命名空间，例如 `@acme`，公共 GitHub 源，例如 `owner/repo`，或注册源目录 URL。
 
-**Input:** `registries` (string[]), `limit` (number, optional), `offset` (number, optional)
+**输入：** `registries`（string[]）、`limit`（number，可选）、`offset`（number，可选）
 
 ### `shadcn:search_items_in_registries`
 
-Fuzzy search across registries.
+跨注册源进行模糊搜索。注册源可以是已配置的命名空间、公共 GitHub 源或注册源目录 URL。
 
-**Input:** `registries` (string[]), `query` (string), `limit` (number, optional), `offset` (number, optional)
+**输入：** `registries`（string[]）、`query`（string）、`limit`（number，可选）、`offset`（number，可选）
 
 ### `shadcn:view_items_in_registries`
 
-View item details including full file contents.
+查看项目详情，包括完整文件内容。
 
-**Input:** `items` (string[]) — e.g. `["@shadcn/button", "@shadcn/card"]`
+**输入：** `items`（string[]）—— 例如
+`["@shadcn/button", "@shadcn/card", "owner/repo/item"]`
 
 ### `shadcn:get_item_examples_from_registries`
 
-Find usage examples and demos with source code.
+查找带源代码的使用示例和演示。
 
-**Input:** `registries` (string[]), `query` (string) — e.g. `"accordion-demo"`, `"button example"`
+**输入：** `registries`（string[]）、`query`（string）—— 例如 `"accordion-demo"`、`"button example"`
 
 ### `shadcn:get_add_command_for_items`
 
-Returns the CLI install command.
+返回 CLI 安装命令。
 
-**Input:** `items` (string[]) — e.g. `["@shadcn/button"]`
+**输入：** `items`（string[]）—— 例如 `["@shadcn/button"]`
 
 ### `shadcn:get_audit_checklist`
 
-Returns a checklist for verifying components (imports, deps, lint, TypeScript).
+返回用于验证组件的检查清单（导入、依赖、lint、TypeScript）。
 
-**Input:** none
+**输入：** 无
 
 ---
 
-## Configuring Registries
+## 配置注册源
 
-Registries are set in `components.json`. The `@shadcn` registry is always built-in.
+命名空间和已认证的注册源在 `components.json` 中设置。`@shadcn` 注册源始终内置可用。只要仓库根目录下有 `registry.json`，公共 GitHub 注册源也可以直接作为 `owner/repo` 注册源使用；它们不需要 `components.json` 配置。
 
 ```json
 {
@@ -87,8 +88,8 @@ Registries are set in `components.json`. The `@shadcn` registry is always built-
 }
 ```
 
-- Names must start with `@`.
-- URLs must contain `{name}`.
-- `${VAR}` references are resolved from environment variables.
+- 名称必须以 `@` 开头。
+- URL 必须包含 `{name}`。
+- `${VAR}` 引用会从环境变量中解析。
 
-Community registry index: `https://ui.shadcn.com/r/registries.json`
+社区注册源索引：`https://ui.shadcn.com/r/registries.json`

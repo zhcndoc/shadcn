@@ -1,0 +1,45 @@
+---
+title: 2026年5月 - 介绍 Rhea
+description: 更紧凑的 Luma。更小的间距。更高的密度。专为聚焦型产品界面打造。
+date: 2026-05-26
+---
+
+介绍 Rhea，一种新的 shadcn/ui 风格。更紧凑的 Luma。更小的间距。更高的密度。专为聚焦型产品界面打造。
+
+<a href="/create?preset=b27GcrRo">
+  <Image
+    src="/images/rhea-light.png"
+    width="3840"
+    height="2160"
+    alt="Rhea 风格预览"
+    className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
+  />
+  <Image
+    src="/images/rhea-dark.png"
+    width="3840"
+    height="2160"
+    alt="Rhea 风格预览"
+    className="mt-6 hidden w-full overflow-hidden rounded-lg border shadow-sm dark:block"
+  />
+  <span className="sr-only">在 shadcn/create 中试用 Rhea</span>
+</a>
+
+Rhea 的起点是一个我们经常听到的简单请求：Luma，但更紧凑一些。我们研究了人们如何使用这些新风格，以及他们想要什么，结果模式非常清晰。很多团队希望保留 Luma 的柔和感和形状，同时拥有更紧凑的间距、更小的控件，以及更高的信息密度。
+
+Rhea 保留了同样圆润的基础，但将其做得更紧凑，适用于那些空间很重要的产品界面。按钮、输入框、菜单、卡片和列表都排得稍微更紧凑一些，这样界面可以承载更多内容，同时不会显得拥挤。
+
+## 为什么要有一种新风格？
+
+我们曾考虑把这只是作为 Luma 的间距调整，但 `--spacing` 是一个乘数。改动它会改变整个应用中熟悉的工具类含义。`p-2`、`w-4` 和 `m-16` 将不再表示相同的尺寸。
+
+这种取舍让人感觉不对。紧凑不应该迫使你重新学习 Tailwind 的间距刻度，或者怀疑同一个工具类在一种风格里是否和另一种风格含义不同。
+
+所以，Rhea 作为一种新风格出现。它让我们能够直接调整组件尺寸、间距和密度，同时保持底层工具类刻度的可预测性。
+
+现已在 [shadcn/create](/create) 中提供，适用于 Radix 和 Base UI。
+
+<Button asChild size="sm">
+  <Link href="/create?preset=b27GcrRo" className="mt-6 no-underline!">
+    试用 Rhea
+  </Link>
+</Button>

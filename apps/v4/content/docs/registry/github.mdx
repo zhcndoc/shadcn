@@ -1,0 +1,598 @@
+---
+title: GitHub Registries
+description: 使用公共 GitHub 仓库作为注册表。
+---
+
+你现在可以将**任何公共 GitHub 仓库变成注册表。**
+
+在仓库根目录添加一个 `registry.json` 文件，描述你想共享的文件，用户就可以通过 `shadcn` CLI 安装它们。
+
+```bash
+npx shadcn@latest add <username>/<repo>/<item>
+```
+
+你不需要搭建注册表服务器或发布生成的 JSON 文件。**GitHub 仓库会成为源注册表。**
+
+## 分发任何内容
+
+注册表项**不局限于组件或 React 代码。**它们可以包含仓库中的任何文件：源文件、配置、文档、模板、工作流、规则或项目约定。
+
+<div className="not-prose my-6 overflow-hidden rounded-lg border text-sm">
+  <div className="hidden grid-cols-[220px_1fr] border-b bg-muted/50 px-4 py-3 font-medium md:grid">
+    <div>用例</div>
+    <div>示例文件</div>
+  </div>
+  {[
+    ["组件", "components/date-picker.tsx", "components/data-table.tsx"],
+    [
+      "辅助函数和工具",
+      "lib/format-date.ts",
+      "lib/cn.ts",
+      "hooks/use-copy.ts",
+    ],
+    [
+      "设计系统包",
+      "tokens/colors.json",
+      "styles/theme.css",
+      "components/*",
+    ],
+    [
+      "功能套件",
+      "app/(auth)/*",
+      "lib/auth.ts",
+      "components/login-form.tsx",
+    ],
+    ["Agent 工作流", "AGENTS.md", ".cursor/rules/*", ".claude/commands/*"],
+    [
+      "项目约定",
+      ".editorconfig",
+      "biome.json",
+      "docs/conventions.md",
+    ],
+    [
+      "Codemod 和迁移套件",
+      "codemods/*",
+      "scripts/migrate.ts",
+      "docs/migration.md",
+    ],
+    ["测试设置", "vitest.config.ts", "test/setup.ts", "docs/testing.md"],
+    [
+      "CI 和发布工作流",
+      ".github/workflows/ci.yml",
+      ".github/workflows/release.yml",
+    ],
+    [
+      "项目自动化",
+      "scripts/release.ts",
+      "scripts/checks.ts",
+      "docs/automation.md",
+    ],
+    [
+      "问题和拉取请求模板",
+      ".github/ISSUE_TEMPLATE/*",
+      ".github/pull_request_template.md",
+    ],
+    ["MCP 配置", ".mcp.json", ".cursor/mcp.json"],
+  ].map(([label, ...files]) => (
+    <div
+      className="grid gap-2 border-b px-4 py-3 last:border-b-0 md:grid-cols-[220px_1fr]"
+      key={label}
+    >
+      <div className="font-medium">{label}</div>
+      <div className="flex min-w-0 flex-wrap gap-1.5">
+        {files.map((file) => (
+          <code key={file}>{file}</code>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
+## 何时使用 GitHub
+
+在以下情况下使用 GitHub 注册表：
+
+- 你已经在一个公共 GitHub 仓库中拥有可复用代码。
+- 你希望用户可以直接从 `owner/repo/item` 安装。
+- 你想分发配置文件、规则、文档、模板、工具或同一仓库中的其他任何文件。
+- 你不需要私有仓库访问或自定义请求认证。
+
+## 要求
+
+GitHub 注册表必须：
+
+- 是一个公开的 `github.com` 仓库。
+- 在仓库根目录包含 `registry.json` 文件。
+- 使用有效的 `registry.json` 和 `registry-item.json` 模式。
+- 引用仓库中实际存在的源文件。
+
+GitHub 地址目前不支持私有仓库和 GitHub Enterprise 主机。对于私有或需要认证的注册表，请使用带有[身份验证](/docs/registry/authentication)的[命名空间](/docs/registry/namespace)。
+
+## 第 1 步：添加 registry.json
+
+给定一个现有的公共仓库：
+
+```txt
+.
+├── ...
+├── .editorconfig
+├── AGENTS.md
+└── docs
+    └── conventions.md
+```
+
+在仓库根目录添加 `registry.json`。
+
+```txt
+.
+├── ...
+├── registry.json
+├── .editorconfig
+├── AGENTS.md
+└── docs
+    └── conventions.md
+```
+
+定义你想分发的项目。
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "items": [
+    {
+      "name": "project-conventions",
+      "type": "registry:item",
+      "title": "项目约定",
+      "description": "共享的项目约定、编辑器设置和代理指令。",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "type": "registry:file",
+          "target": "~/AGENTS.md"
+        },
+        {
+          "path": ".editorconfig",
+          "type": "registry:file",
+          "target": "~/.editorconfig"
+        },
+        {
+          "path": "docs/conventions.md",
+          "type": "registry:file",
+          "target": "~/docs/conventions.md"
+        }
+      ]
+    }
+  ]
+}
+```
+
+提交并推送该文件。
+
+```bash
+git add registry.json
+```
+
+```bash
+git commit -m "添加注册表"
+```
+
+```bash
+git push
+```
+
+用户现在可以从 GitHub 安装该项目。
+
+```bash
+npx shadcn@latest add acme/toolkit/project-conventions
+```
+
+## 第 2 步：分发任意文件
+
+一个注册表项目可以安装一个文件或多个文件。使用 `files` 数组声明属于同一组的文件。
+
+例如，一个测试设置可以安装 Vitest 配置、一个设置文件和一份简短的团队指南。
+
+```txt
+registry.json
+config
+└── vitest.config.ts
+docs
+└── testing.md
+test
+└── setup.ts
+```
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "items": [
+    {
+      "name": "vitest-setup",
+      "type": "registry:item",
+      "title": "Vitest 设置",
+      "description": "包含项目默认配置和文档的 Vitest 设置。",
+      "files": [
+        {
+          "path": "config/vitest.config.ts",
+          "type": "registry:file",
+          "target": "~/vitest.config.ts"
+        },
+        {
+          "path": "test/setup.ts",
+          "type": "registry:file",
+          "target": "~/test/setup.ts"
+        },
+        {
+          "path": "docs/testing.md",
+          "type": "registry:file",
+          "target": "~/docs/testing.md"
+        }
+      ]
+    }
+  ]
+}
+```
+
+用户以相同方式安装它。
+
+```bash
+npx shadcn@latest add acme/toolkit/vitest-setup
+```
+
+当文件需要写入用户项目中的特定目标位置时，使用 `target`。
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "items": [
+    {
+      "name": "editorconfig",
+      "type": "registry:file",
+      "files": [
+        {
+          "path": "config/.editorconfig",
+          "type": "registry:file",
+          "target": "~/.editorconfig"
+        }
+      ]
+    }
+  ]
+}
+```
+
+```bash
+npx shadcn@latest add acme/toolkit/editorconfig
+```
+
+## 第 3 步：验证注册表
+
+在共享注册表之前，先通过 CLI 验证它。
+
+```bash
+npx shadcn@latest registry validate acme/toolkit
+```
+
+该命令会读取根目录的 `registry.json`，解析 include，验证注册表项目，并检查引用的文件是否存在。
+
+你也可以验证分支、标签或 commit SHA。
+
+```bash
+npx shadcn@latest registry validate acme/toolkit#v1.0.0
+```
+
+## 第 4 步：列出和搜索项目
+
+使用 `list` 查看仓库注册表中的每个项目。
+
+```bash
+npx shadcn@latest list acme/toolkit
+```
+
+使用 `search` 过滤目录。
+
+```bash
+npx shadcn@latest search acme/toolkit --query conventions
+```
+
+使用 `view` 查看单个项目负载。
+
+```bash
+npx shadcn@latest view acme/toolkit/project-conventions
+```
+
+## 使用 include 进行组织
+
+对于更大的仓库，将项目定义放在它们所描述的源文件附近。
+
+```txt
+registry.json
+config
+├── prettier.config.mjs
+└── registry.json
+rules
+├── agent.md
+└── registry.json
+```
+
+根目录的 `registry.json` 可以包含嵌套的注册表文件。
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "include": ["config/registry.json", "rules/registry.json"]
+}
+```
+
+被包含的注册表文件会为该目录声明项目。
+
+```json title="rules/registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "agent-rules",
+      "type": "registry:file",
+      "files": [
+        {
+          "path": "agent.md",
+          "type": "registry:file",
+          "target": "~/AGENTS.md"
+        }
+      ]
+    }
+  ]
+}
+```
+
+使用 `include` 时，文件路径相对于声明该项目的 `registry.json` 文件。
+
+```bash
+npx shadcn@latest add acme/toolkit/project-conventions
+```
+
+## 注册表依赖
+
+当一个注册表项目依赖另一个注册表项目时，使用 `registryDependencies`。
+
+### 同仓库依赖
+
+对于同一个 GitHub 仓库中的依赖，使用完整的 GitHub 项目地址。
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "items": [
+    {
+      "name": "project-setup",
+      "type": "registry:item",
+      "registryDependencies": [
+        "acme/toolkit/agent-rules",
+        "acme/toolkit/prettier-config",
+        "acme/toolkit/tsconfig"
+      ],
+      "files": [
+        {
+          "path": "docs/project-setup.md",
+          "type": "registry:file",
+          "target": "~/docs/project-setup.md"
+        }
+      ]
+    }
+  ]
+}
+```
+
+一个文档项目可以依赖同一仓库中的模板项目。
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "items": [
+    {
+      "name": "contributing-guide",
+      "type": "registry:item",
+      "registryDependencies": ["acme/toolkit/readme-template"],
+      "files": [
+        {
+          "path": "docs/contributing.md",
+          "type": "registry:file",
+          "target": "~/docs/contributing.md"
+        }
+      ]
+    }
+  ]
+}
+```
+
+CI 设置可以依赖用户也能单独安装的相同格式化和测试默认配置。
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "items": [
+    {
+      "name": "ci-setup",
+      "type": "registry:item",
+      "registryDependencies": [
+        "acme/toolkit/prettier-config",
+        "acme/toolkit/vitest-setup"
+      ],
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "type": "registry:file",
+          "target": "~/.github/workflows/ci.yml"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### 外部注册表依赖
+
+项目也可以依赖外部注册表。使用拥有该依赖项的注册表的完整项目地址。
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "items": [
+    {
+      "name": "workspace-setup",
+      "type": "registry:item",
+      "registryDependencies": [
+        "@acme/tsconfig",
+        "contoso/devtools/prettier-config"
+      ],
+      "files": [
+        {
+          "path": "docs/workspace.md",
+          "type": "registry:file",
+          "target": "~/docs/workspace.md"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### 依赖引用
+
+引用不会跨依赖继承。如果某个依赖应该被固定，请包含它自己的引用。
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "items": [
+    {
+      "name": "project-setup",
+      "type": "registry:item",
+      "registryDependencies": [
+        "acme/toolkit/agent-rules#v1.0.0",
+        "acme/toolkit/tsconfig#c0ffee254729296a45d6691db565cf707a3fef5d"
+      ],
+      "files": [
+        {
+          "path": "docs/project-setup.md",
+          "type": "registry:file",
+          "target": "~/docs/project-setup.md"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## 有用的命令
+
+列出 GitHub registry 中的每一项。
+
+```bash
+npx shadcn@latest list acme/toolkit
+```
+
+搜索 GitHub registry。
+
+```bash
+npx shadcn@latest search acme/toolkit -q conventions
+```
+
+验证 GitHub registry。
+
+```bash
+npx shadcn@latest registry validate acme/toolkit
+```
+
+从 GitHub registry 安装一个项目。
+
+```bash
+npx shadcn@latest add acme/toolkit/project-conventions
+```
+
+查看 GitHub registry 中的一个项目。
+
+```bash
+npx shadcn@latest view acme/toolkit/project-conventions
+```
+
+安装一个其 registry 项目名称包含 `/` 的项目。
+
+```bash
+npx shadcn@latest add acme/toolkit/rules/agent
+```
+
+<Callout>
+  对于 GitHub 项目地址，前两个路径段分别是 GitHub 的 owner
+  和 repository。其余任何段都是 registry 项目名称，而不是文件
+  路径。以 `.json` 结尾的地址会被视为文件路径。
+</Callout>
+
+从标签安装。
+
+```bash
+npx shadcn@latest add acme/toolkit/project-conventions#v1.0.0
+```
+
+从完整的 commit SHA 安装。
+
+```bash
+npx shadcn@latest add acme/toolkit/project-conventions#c0ffee254729296a45d6691db565cf707a3fef5d
+```
+
+## 参考
+
+使用 `#ref` 从分支、标签或 commit SHA 安装。
+
+```bash
+npx shadcn@latest add acme/toolkit/project-conventions#main
+```
+
+ref 可以包含斜杠。
+
+```bash
+npx shadcn@latest add acme/toolkit/project-conventions#feature/conventions
+```
+
+如果未提供 ref，CLI 将使用仓库的默认分支。
+
+在读取文件之前，CLI 会使用 Git 将分支、标签和短 ref 解析为 commit SHA。
+完整的 40 个字符的 commit SHA 会被直接使用，不需要 Git。
+
+## 安装前审查
+
+GitHub registry 项目会从公开仓库安装代码和项目文件。
+请将 GitHub 项目地址视为其他任何第三方代码依赖项。
+
+在从你不控制的来源安装之前：
+
+- 审查仓库和根目录下的 `registry.json`。
+- 审查项目定义，尤其是 `files`、`target`、`dependencies`、
+  `devDependencies`、`registryDependencies` 和 `envVars`。
+- 检查任何外部 registry 依赖项。它们可以从其他
+  registry 安装文件。
+- 对于已发布的安装命令，优先使用固定的 ref。完整的 40 个字符的 commit SHA 是最具可复现性的选项。
+- 使用 `shadcn view acme/toolkit/project-conventions` 在安装前检查解析后的
+  项目有效载荷。
+- 如果你想要帮助检查该项目，可以将 `shadcn view` 的输出通过管道传给你的代理或审查工具。
+- 使用 `shadcn add acme/toolkit/project-conventions --dry-run` 在不写入文件的情况下预览
+  安装。
+- 使用 `shadcn add` 配合 `--diff` 或 `--view` 在应用更改之前检查文件变化或文件
+  内容。

@@ -3,6 +3,8 @@ title: shadcn
 description: 使用 shadcn CLI 将组件添加到您的项目中。
 ---
 
+import { TriangleAlertIcon } from "lucide-react"
+
 ## init
 
 使用 `init` 命令来初始化现有项目的配置和依赖项，或使用 `--name` 创建新项目。
@@ -501,4 +503,88 @@ npx shadcn@latest migrate radix "src/components/ui/**"
 
 如果未提供路径，迁移将转换 `components.json` 中您的 `ui` 目录下的所有文件。
 
-迁移完成后，您可以从 `package.json` 中移除未使用的 `@radix-ui/react-*` 包。
+完成后，您可以从 `package.json` 中移除任何未使用的 `@radix-ui/react-*` 包。
+
+---
+
+## eject
+
+当您运行 `init` 时，shadcn 会将 `@import "shadcn/tailwind.css"` 添加到您的全局 CSS 文件中。此导入提供了共享的 Tailwind v4 实用工具，例如自定义变体（`data-open:`、`data-closed:` 等）和手风琴动画。
+
+使用 `eject` 命令将 `shadcn/tailwind.css` 内联到您的全局 CSS 文件中，并从项目中移除 `shadcn` 依赖。
+
+<Callout icon={<TriangleAlertIcon />}>
+  **注意：此操作不可逆。** 执行 eject 后，未来 shadcn CLI
+  对 `shadcn/tailwind.css` 的更新将不会自动应用。
+</Callout>
+
+```bash
+npx shadcn@latest eject
+```
+
+**之前**
+
+```css
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+```
+
+**之后**
+
+```css
+@import "tailwindcss";
+@import "tw-animate-css";
+/* 从 shadcn@4.8.3 中 eject */
+@theme inline {
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(
+        --radix-accordion-content-height,
+        var(--accordion-panel-height, auto)
+      );
+    }
+  }
+}
+
+@custom-variant data-open {
+  &:where([data-state="open"]),
+  &:where([data-open]:not([data-open="false"])) {
+    @slot;
+  }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+```
+
+**Monorepo**
+
+在 monorepo 中，请从包含您的 `components.json` 和全局 CSS 文件的工作区运行该命令：
+
+```bash
+npx shadcn@latest eject -c packages/ui
+```
+
+**选项**
+
+```bash
+Usage: shadcn eject [options]
+
+内联 shadcn/tailwind.css 并移除 shadcn 依赖
+
+Options:
+  -c, --cwd <cwd>  工作目录。默认为当前目录。
+  -y, --yes        跳过确认提示。（默认值：false）
+  -s, --silent     静默输出。（默认值：false）
+  -h, --help       显示命令帮助
+```

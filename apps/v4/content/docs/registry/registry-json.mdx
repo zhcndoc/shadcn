@@ -24,7 +24,7 @@ description: 运行你自己的组件注册表的架构。
       "dependencies": ["is-even@3.0.0", "motion"],
       "files": [
         {
-          "path": "registry/new-york/hello-world/hello-world.tsx",
+          "path": "registry/default/hello-world/hello-world.tsx",
           "type": "registry:component"
         }
       ]
@@ -32,6 +32,23 @@ description: 运行你自己的组件注册表的架构。
   ]
 }
 ```
+
+你也可以使用 `include` 将一个大型注册表组织到多个 `registry.json` 文件中。
+
+{/* prettier-ignore */}
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme",
+  "homepage": "https://acme.com",
+  "include": [
+    "components/ui/registry.json",
+    "hooks/registry.json"
+  ]
+}
+```
+
+公共 GitHub 仓库使用相同的源注册表格式。CLI 读取根目录下的 `registry.json`，解析 `include`，并从仓库中安装文件。更多信息请参阅 [GitHub registry](/docs/registry/github) 文档。
 
 ## 定义
 
@@ -67,6 +84,59 @@ description: 运行你自己的组件注册表的架构。
 }
 ```
 
+### include
+
+`include` 属性用于将其他 `registry.json` 文件组合成一个注册表。
+
+{/* prettier-ignore */}
+```json title="registry.json" showLineNumbers
+{
+  "include": [
+    "components/ui/registry.json",
+    "hooks/registry.json"
+  ]
+}
+```
+
+每个 include 路径必须是指向明确 `registry.json` 文件的相对路径。  
+不支持文件夹简写。
+
+{/* prettier-ignore */}
+```json title="registry.json" showLineNumbers
+{
+  "include": [
+    "components/ui/registry.json"
+  ]
+}
+```
+
+包含的 `registry.json` 文件可以省略 `name` 和 `homepage`。这些字段
+仅在根 `registry.json` 中是必需的。
+
+```json title="components/ui/registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
+```
+
+当 `shadcn build` 解析 `include` 时，项目文件路径会相对于声明该项目的
+`registry.json` 文件读取。生成的注册表输出会被展平，并且不包含 `include`。
+
+注册表项目名称在解析后的注册表中必须唯一，包括所有
+包含的文件。
+
 ### items
 
 注册表中的 `items`。每个 item 必须实现[registry-item 架构规范](https://ui.shadcn.com/schema/registry-item.json)。
@@ -87,7 +157,7 @@ description: 运行你自己的组件注册表的架构。
       "dependencies": ["is-even@3.0.0", "motion"],
       "files": [
         {
-          "path": "registry/new-york/hello-world/hello-world.tsx",
+          "path": "registry/default/hello-world/hello-world.tsx",
           "type": "registry:component"
         }
       ]
@@ -96,4 +166,7 @@ description: 运行你自己的组件注册表的架构。
 }
 ```
 
-更多信息请参阅[registry-item 架构文档](/docs/registry/registry-item-json)。
+根 `registry.json` 必须至少定义 `items` 或 `include` 其中之一。如果
+省略 `items`，其默认值为空数组。
+
+有关更多信息，请参阅[registry-item 架构文档](/docs/registry/registry-item-json)。

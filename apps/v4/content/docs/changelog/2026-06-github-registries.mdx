@@ -1,0 +1,88 @@
+---
+title: 2026年6月 - GitHub 注册表
+description: 将任何公开的 GitHub 仓库转换为 shadcn 注册表。
+date: 2026-06-01
+---
+
+**现在你可以将任何公开的 GitHub 仓库转换为一个注册表。**
+
+在仓库根目录添加一个 `registry.json` 文件，定义你想要分发的项目，用户就可以使用 `shadcn` CLI 直接从 GitHub 安装它们。
+
+```bash
+npx shadcn@latest add <username>/<repo>/<item>
+```
+
+例如，要从 `acme/toolkit` 仓库安装 `project-conventions` 项目：
+
+```bash
+npx shadcn@latest add acme/toolkit/project-conventions
+```
+
+GitHub 注册表是源注册表。你不需要运行 `shadcn build`、发布生成的项目 JSON 文件或搭建注册表服务器。CLI 会读取根目录下的 `registry.json`，解析 `include` 条目，找到请求的项目，并安装该项目声明的文件。
+
+## 分发任何内容
+
+注册表项目不限于组件。GitHub 注册表可以分发组件、hooks、实用工具、设计 token、功能套件、项目规范、代理指令、测试配置、CI 工作流、发布工作流、模板、codemod、迁移套件以及其他项目文件。
+
+例如，某个仓库可以公开一个 `project-conventions` 项目，用于安装共享文档、编辑器设置和代理指令：
+
+```json title="registry.json" showLineNumbers
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "acme-toolkit",
+  "homepage": "https://github.com/acme/toolkit",
+  "items": [
+    {
+      "name": "project-conventions",
+      "type": "registry:item",
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "type": "registry:file",
+          "target": "~/AGENTS.md"
+        },
+        {
+          "path": ".editorconfig",
+          "type": "registry:file",
+          "target": "~/.editorconfig"
+        },
+        {
+          "path": "docs/conventions.md",
+          "type": "registry:file",
+          "target": "~/docs/conventions.md"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## 命令
+
+GitHub 注册表地址与其他注册表地址使用相同的命令。
+
+列出 GitHub 注册表中的项目：
+
+```bash
+npx shadcn@latest list acme/toolkit
+```
+
+搜索项目：
+
+```bash
+npx shadcn@latest search acme/toolkit --query conventions
+```
+
+查看某个项目：
+
+```bash
+npx shadcn@latest view acme/toolkit/project-conventions
+```
+
+安装某个项目：
+
+```bash
+npx shadcn@latest add acme/toolkit/project-conventions
+```
+
+查看 [GitHub 注册表](/docs/registry/github) 文档以获取完整指南。

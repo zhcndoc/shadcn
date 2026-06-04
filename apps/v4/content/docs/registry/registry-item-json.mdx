@@ -161,23 +161,31 @@ description: 注册表项规范。
 
 ### registryDependencies
 
-用于注册表依赖。可以用名称、命名空间或 URL。
+用于注册表依赖。每一项都是一个条目地址。
 
-- 对于 `shadcn/ui` 注册表的项目如 `button`、`input`、`select` 等，使用名称，如 `['button', 'input', 'select']`。
-- 对于命名空间下的注册表项目如 `@acme`，使用名称，如 `['@acme/input-form']`。
-- 对于自定义注册表项目，使用项目的 URL，如 `['https://example.com/r/hello-world.json']`。
+- 对于 `shadcn/ui` 注册表项，例如 `button`、`input`、`select` 等，请使用名称，例如 `['button', 'input', 'select']`。
+- 对于带命名空间的注册表项，请使用 `@namespace/item-name`，例如 `['@acme/input-form']`。
+- 对于 GitHub 注册表项，请使用 `owner/repo/item-name`，例如 `['acme/ui/button']`。对于已发布的注册表，优先使用标签或完整提交 SHA，例如 `['acme/ui/button#v1.2.0']`。
+- 对于自定义注册表项，请使用注册表项的 URL，例如 `['https://example.com/r/hello-world.json']`。
+- 对于本地注册表项文件，请使用文件路径，例如 `['./hello-world.json']`。
 
 ```json title="registry-item.json" showLineNumbers
 {
   "registryDependencies": [
     "button",
     "@acme/input-form",
-    "https://example.com/r/editor.json"
+    "acme/ui/button#v1.2.0",
+    "https://example.com/r/editor.json",
+    "./editor.json"
   ]
 }
 ```
 
-注意：CLI 会自动解析远程注册表依赖。
+注意：裸名称会保留其原有行为。`button` 表示内置的 shadcn `button` 项，而不是同一个 GitHub 仓库中的项。对于同仓库的 GitHub 依赖，请使用完整的 GitHub 条目地址。
+
+引用不会跨依赖继承。如果某个 GitHub 依赖应当具备可复现性，请将该依赖固定到其自己的标签或完整提交 SHA。
+
+更多信息请参阅 [GitHub registry](/docs/registry/github) 文档。
 
 ### files
 

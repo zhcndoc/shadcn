@@ -156,7 +156,27 @@ npx shadcn@latest add @acme/button
 
 ---
 
-## 配置
+## GitHub 与命名空间
+
+GitHub 注册表地址和命名空间解决的是不同的问题。
+
+当注册表是公开的 GitHub 仓库，并且你希望用户无需配置 `components.json` 就能安装时，使用 GitHub 地址。
+
+```bash
+npx shadcn@latest add acme/ui/button
+```
+
+当你需要稳定别名、自定义托管、认证、请求头、查询参数或私有注册表支持时，使用命名空间。
+
+```bash
+npx shadcn@latest add @acme/button
+```
+
+更多信息请参见 [GitHub 注册表](/docs/registry/github) 文档。
+
+---
+
+## Configuration
 
 命名空间注册表通过 `components.json` 文件中 `registries` 字段进行配置。
 

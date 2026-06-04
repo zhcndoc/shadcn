@@ -76,6 +76,34 @@ description: 关于运行注册中心的常见问题解答。
 
 CLI 会更新项目的 CSS 文件。更新完成后，新的颜色将可作为实用类使用：`bg-brand` 和 `text-brand-accent`。
 
+### 为什么 `registryDependencies` 中的 `button` 没有解析到我的 GitHub 仓库？
+
+裸的注册中心依赖名称会保持现有的 shadcn 行为。`button` 表示内置的 shadcn `button` 项目。
+
+对于来自 GitHub 仓库的依赖，请使用完整的 GitHub 项目地址。
+
+```json title="registry-item.json" showLineNumbers
+{
+  "registryDependencies": ["acme/ui/button"]
+}
+```
+
+### 如何固定一个 GitHub 注册中心项目？
+
+在 GitHub 项目地址后添加 `#ref`。`ref` 可以是分支、标签或完整的
+commit SHA。
+
+```bash
+npx shadcn@latest add acme/ui/button#v1.2.0
+```
+
+对于已发布的注册中心，建议优先使用标签或完整的 commit SHA。
+
+### GitHub 注册中心地址可以使用私有仓库吗？
+
+目前还不可以。GitHub 注册中心地址支持公开的 `github.com`
+仓库。对于私有注册中心，请使用带有身份验证 URL 的命名空间。
+
 ### 如何添加或覆盖 Tailwind 主题变量？
 
 添加或覆盖主题变量需将其添加到 `cssVars.theme` 下对应的键中。
