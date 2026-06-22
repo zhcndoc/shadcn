@@ -240,6 +240,8 @@ npx shadcn@latest add owner/repo/item --dry-run
 npx shadcn@latest search @shadcn -q "sidebar"
 npx shadcn@latest search @tailark -q "stats"
 npx shadcn@latest search owner/repo -q "login"
+npx shadcn@latest search                          # all configured registries
+npx shadcn@latest search @shadcn -q "menu" -t ui  # filter by item type
 
 # 获取组件文档和示例 URL。
 npx shadcn@latest docs button dialog select

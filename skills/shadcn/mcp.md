@@ -35,15 +35,15 @@ shadcn mcp init   # 为你的编辑器写入配置
 
 ### `shadcn:list_items_in_registries`
 
-列出一个或多个注册源中的所有项目。注册源可以是已配置的命名空间，例如 `@acme`，公共 GitHub 源，例如 `owner/repo`，或注册源目录 URL。
+列出一个或多个注册源中的所有项目。注册源可以是已配置的命名空间，例如 `@acme`，公共 GitHub 源例如 `owner/repo`，或者注册目录 URL。省略 `registries` 可列出 `components.json` 中配置的所有注册源。
 
-**输入：** `registries`（string[]）、`limit`（number，可选）、`offset`（number，可选）
+**输入：** `registries`（string[]，可选——省略则表示所有已配置项）、`types`（string[]，可选——例如 `["ui", "block"]`）、`limit`（number，可选，默认 100）、`offset`（number，可选）
 
 ### `shadcn:search_items_in_registries`
 
-跨注册源进行模糊搜索。注册源可以是已配置的命名空间、公共 GitHub 源或注册源目录 URL。
+跨注册源进行模糊搜索。注册源可以是已配置的命名空间、公共 GitHub 源，或者注册目录 URL。省略 `registries` 可搜索 `components.json` 中配置的所有注册源——例如在所有已配置的注册源中“帮我找一个 hero”。
 
-**输入：** `registries`（string[]）、`query`（string）、`limit`（number，可选）、`offset`（number，可选）
+**输入：** `registries`（string[]，可选——省略则表示所有已配置项）、`query`（string）、`types`（string[]，可选——例如 `["ui", "block"]`）、`limit`（number，可选，默认 100）、`offset`（number，可选）
 
 ### `shadcn:view_items_in_registries`
 
@@ -54,9 +54,9 @@ shadcn mcp init   # 为你的编辑器写入配置
 
 ### `shadcn:get_item_examples_from_registries`
 
-查找带源代码的使用示例和演示。
+查找带有源代码的使用示例和演示。省略 `registries` 可搜索 `components.json` 中配置的所有注册源。
 
-**输入：** `registries`（string[]）、`query`（string）—— 例如 `"accordion-demo"`、`"button example"`
+**输入：** `registries`（string[]，可选——省略则表示所有已配置项）、`query`（string）—— 例如 `"accordion-demo"`、`"button example"`
 
 ### `shadcn:get_add_command_for_items`
 

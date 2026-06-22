@@ -130,19 +130,19 @@ npx shadcn@latest add button --diff globals.css
 ### `search` — 搜索注册表
 
 ```bash
-npx shadcn@latest search <registries...> [options]
+npx shadcn@latest search [registries...] [options]
 ```
 
-在各注册表中进行模糊搜索。也可别名为 `npx shadcn@latest list`。
-支持命名空间（`@acme`）、公共 GitHub 注册表源（`owner/repo`），
-以及注册表目录 URL。若不带 `-q`，则列出所有条目。
+在注册表中进行模糊搜索。也可别名为 `npx shadcn@latest list`。支持命名空间（`@acme`）、公共 GitHub 注册表源（`owner/repo`）以及注册表目录 URL。若不使用 `-q`，则列出所有条目。当未传入注册表时，会搜索 `components.json` 中配置的每个注册表。
 
-| 标志               | 简写 | 描述                 | 默认值 |
-| ------------------ | ---- | -------------------- | ------ |
-| `--query <query>`  | `-q` | 搜索查询             | —      |
-| `--limit <number>` | `-l` | 每个注册表的最大条目数 | `100`  |
-| `--offset <number>`| `-o` | 跳过的条目数         | `0`    |
-| `--cwd <cwd>`      | `-c` | 工作目录             | 当前   |
+| 标志                | 简写 | 描述                                       | 默认值 |
+| ------------------- | ---- | ------------------------------------------ | ------- |
+| `--query <query>`   | `-q`  | 搜索查询                                     | —       |
+| `--type <type>`     | `-t`  | 按条目类型过滤（例如 `ui`、`block`、`hook`）；用逗号分隔 | —       |
+| `--limit <number>`  | `-l`  | 显示的最大条目数                             | `100`   |
+| `--offset <number>` | `-o`  | 跳过的条目数                                 | `0`     |
+| `--json`            |       | 以 JSON 输出                                  | `false` |
+| `--cwd <cwd>`       | `-c`  | 工作目录                                     | 当前   |
 
 ### `view` — 查看条目详情
 

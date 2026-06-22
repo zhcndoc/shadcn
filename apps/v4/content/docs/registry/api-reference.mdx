@@ -1,0 +1,409 @@
+---
+title: API 参考
+description: 用于处理 registries、schemas 和 presets 的程序化 API。
+---
+
+`shadcn` 包除了 CLI 之外，还提供了一组程序化 API。
+你可以使用这些 API 来获取并解析 registry 项、验证 registry JSON，
+以及在 registry 之上构建自定义工具。
+
+每个 API 都可通过专用的子路径导入使用。
+
+```ts
+import { getRegistryItems } from "shadcn/registry"
+import { registryItemSchema } from "shadcn/schema"
+```
+
+<Callout className="mt-6">
+  CLI 命令本身不属于公共 API。只有下面文档中列出的导入项才被视为稳定。
+</Callout>
+
+## shadcn/registry
+
+从已配置的 registries 中获取并解析项目。
+
+大多数函数都接受一个 options 对象。下面两个选项对所有函数都通用。
+在后续示例中，`config` 指这个可选值——如果省略它，将使用内置 registries。
+
+### config
+
+- **Type:** `Partial<Config>`
+- **Default:** 仅使用内置 registries
+
+`components.json` 文件解析后的内容。其 `registries` 字段会将一个命名空间（例如 `@acme`）
+映射到一个 URL，以及访问它所需的任何认证头或环境变量。
+
+```ts showLineNumbers
+import { getRegistryItems } from "shadcn/registry"
+
+const items = await getRegistryItems(["@acme/login-form"], {
+  config: {
+    registries: {
+      "@acme": "https://acme.com/r/{name}.json",
+    },
+  },
+})
+```
+
+### useCache
+
+- **Type:** `boolean`
+- **Default:** `true`
+
+Registry 响应会在**进程生命周期内以内存缓存**，
+并以解析后的 URL 作为键。由于缓存的是进行中的 promise，
+对同一 URL 的并发请求会被去重为一次 fetch。
+
+对于一次性脚本和 CLI 运行，建议保持开启。对于长期运行的进程（服务器、watchers、MCP server），
+当 registry 可能在请求之间发生变化、且你每次都需要最新数据时，请将其设为 `false`。
+
+```ts
+const fresh = await getRegistry("@shadcn", { useCache: false })
+```
+
+### getRegistry
+
+按名称获取单个 registry。
+
+```ts showLineNumbers
+import { getRegistry } from "shadcn/registry"
+
+const registry = await getRegistry("@acme", {
+  config, // 可选 Partial<Config>
+  useCache: true,
+})
+```
+
+### getRegistryItems
+
+按完整名称获取一个或多个 registry 项。
+
+```ts showLineNumbers
+import { getRegistryItems } from "shadcn/registry"
+
+const items = await getRegistryItems(["@acme/button", "@acme/card"], {
+  config,
+  useCache: true,
+})
+```
+
+返回一个 registry 项数组：
+
+```json showLineNumbers
+[
+  {
+    "name": "button",
+    "type": "registry:ui",
+    "dependencies": ["@radix-ui/react-slot"],
+    "files": [
+      {
+        "path": "ui/button.tsx",
+        "type": "registry:ui",
+        "content": "..."
+      }
+    ]
+  }
+]
+```
+
+### resolveRegistryItems
+
+将多个项目与其 registry 依赖一起解析，并合并为一棵单一树。与 [`getRegistryItems`](#getregistryitems) 不同，
+后者以列表形式返回项目，而这个方法会遍历每个项目的 `registryDependencies`，并将所有内容——文件、依赖、CSS 变量——
+扁平化为一个可安装对象。
+
+```ts showLineNumbers
+import { resolveRegistryItems } from "shadcn/registry"
+
+const tree = await resolveRegistryItems(
+  ["@acme/button", "@acme/card", "@acme/dialog"],
+  { config }
+)
+```
+
+返回一个合并后的单一树：
+
+```json showLineNumbers
+{
+  "dependencies": ["@radix-ui/react-slot", "@radix-ui/react-dialog"],
+  "files": [
+    { "path": "ui/button.tsx", "type": "registry:ui", "content": "..." },
+    { "path": "ui/card.tsx", "type": "registry:ui", "content": "..." },
+    { "path": "ui/dialog.tsx", "type": "registry:ui", "content": "..." }
+  ],
+  "cssVars": {
+    "theme": {
+      "font-heading": "Poppins, sans-serif"
+    },
+    "light": {
+      "brand": "oklch(0.205 0.015 18)"
+    },
+    "dark": {
+      "brand": "oklch(0.205 0.015 18)"
+    }
+  },
+  "docs": ""
+}
+```
+
+### getRegistries
+
+获取 registry 目录。
+
+```ts showLineNumbers
+import { getRegistries } from "shadcn/registry"
+
+const registries = await getRegistries({ useCache: true })
+```
+
+返回一个 registry 条目数组：
+
+```json
+[
+  {
+    "name": "@shadcn",
+    "url": "https://ui.shadcn.com/r/{name}.json",
+    "homepage": "https://ui.shadcn.com"
+  }
+]
+```
+
+### searchRegistries
+
+在一个或多个 registries 中使用模糊匹配进行搜索。
+
+```ts showLineNumbers
+import { searchRegistries } from "shadcn/registry"
+
+const results = await searchRegistries(["@shadcn"], {
+  query: "button",
+  types: ["registry:component"],
+  limit: 100,
+  offset: 0,
+  config,
+  continueOnError: true, // 跳过（不要对其抛错）加载失败的 registries
+})
+```
+
+返回带分页元数据的匹配项：
+
+```json
+{
+  "pagination": { "total": 1, "offset": 0, "limit": 100, "hasMore": false },
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "description": "一个按钮组件。",
+      "registry": "@shadcn",
+      "addCommandArgument": "@shadcn/button"
+    }
+  ]
+}
+```
+
+### loadRegistry
+
+从磁盘读取并解析本地 `registry.json` 文件，跟随任何 `include` 引用，
+并返回 registry 目录。
+
+```ts showLineNumbers
+import { loadRegistry } from "shadcn/registry"
+
+const catalog = await loadRegistry({
+  cwd: process.cwd(), // 默认为 process.cwd()
+  registryFile: "registry.json", // 默认为 "registry.json"
+})
+```
+
+返回的目录会列出每个项目，但**不包含文件内容**——类似一个构建后的 `registry.json` 索引。
+
+<Callout className="mt-6" title="这和 getRegistry 有什么不同？">
+  [`getRegistry`](#getregistry) 会通过网络获取一个**远程** registry（按命名空间、URL 或 GitHub 地址），
+  并且要求所提供的目录已经被扁平化——它会拒绝仍然使用 `include` 的目录。
+  `loadRegistry` 则从磁盘读取一个**本地** `registry.json`，并自行解析 `include` 引用。
+</Callout>
+
+### loadRegistryItem
+
+从本地 `registry.json` 中按名称读取单个项目，并将其文件内容从磁盘读取后内联。
+
+```ts showLineNumbers
+import { loadRegistryItem } from "shadcn/registry"
+
+const item = await loadRegistryItem("login-form", { cwd: process.cwd() })
+```
+
+返回一个包含文件内容的完全解析后的 registry 项：
+
+```json
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "login-form",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "registry/new-york/login-form.tsx",
+      "type": "registry:component",
+      "content": "..."
+    }
+  ]
+}
+```
+
+<Callout className="mt-6" title="这和 getRegistryItems 有什么不同？">
+  [`getRegistryItems`](#getregistryitems) 会从**远程** registry 通过网络解析项目。
+  `loadRegistryItem` 则根据你的**本地**源文件按需构建单个项目，并从磁盘读取每个文件。
+  在提供 `registry-item.json` 响应的动态路由中使用它。
+</Callout>
+
+### Errors
+
+所有 registry 函数都会抛出继承自 `RegistryError` 的类型化错误。使用
+`RegistryErrorCode` 枚举或 `instanceof` 检查来处理它们。
+
+```ts showLineNumbers
+import { RegistryError, RegistryNotFoundError } from "shadcn/registry"
+
+try {
+  await getRegistry("@unknown")
+} catch (error) {
+  if (error instanceof RegistryNotFoundError) {
+    // 处理缺失的 registry
+  }
+}
+```
+
+可用的错误类：
+
+- `RegistryError`
+- `RegistryNotFoundError`
+- `RegistryUnauthorizedError`
+- `RegistryForbiddenError`
+- `RegistryFetchError`
+- `RegistryNotConfiguredError`
+- `RegistryLocalFileError`
+- `RegistryParseError`
+- `RegistryValidationError`
+- `RegistryItemNotFoundError`
+- `RegistriesIndexParseError`
+- `RegistryMissingEnvironmentVariablesError`
+- `RegistryInvalidNamespaceError`
+
+## shadcn/schema
+
+用于验证 `registry.json`、`registry-item.json` 和 `components.json` 的 Zod schemas。
+可用于在你自己的工具中验证 registry 数据。
+
+```ts
+import { registryItemSchema, registrySchema } from "shadcn/schema"
+
+const result = registryItemSchema.safeParse(json)
+if (!result.success) {
+  console.error(result.error)
+}
+```
+
+关键 schemas：
+
+- `registrySchema`
+- `registryItemSchema`
+- `registryItemFileSchema`
+- `registryItemTypeSchema`
+- `registryItemCssVarsSchema`
+- `registryItemTailwindSchema`
+- `registryBaseColorSchema`
+- `configSchema`
+- `presetSchema`
+
+同时导出了推断类型：
+
+- `Registry`
+- `RegistryItem`
+- `RegistryBaseItem`
+- `RegistryFontItem`
+- `Preset`
+- `ConfigJson`
+
+## shadcn/preset
+
+对主题预设进行编码、解码和验证，以及主题编辑器使用的预设选项常量。
+
+### encodePreset
+
+将一个 `Partial<PresetConfig>` 编码为一个简短、适合 URL 的预设代码。你省略的任何字段都会回退到 `DEFAULT_PRESET_CONFIG`。
+
+```ts showLineNumbers
+import { encodePreset } from "shadcn/preset"
+
+const code = encodePreset({
+  style: "vega",
+  baseColor: "stone",
+  theme: "blue",
+  radius: "large",
+  font: "geist",
+})
+```
+
+返回一个带版本前缀的字符串：
+
+```ts showLineNumbers
+"bJ4FLU0"
+```
+
+### decodePreset
+
+将预设代码解码回完整的 `PresetConfig`。如果代码缺失或无效，则返回 `null`。
+
+```ts showLineNumbers
+import { decodePreset } from "shadcn/preset"
+
+const config = decodePreset("bJ4FLU0")
+```
+
+返回解析后的配置（省略的字段会用默认值补全）：
+
+```json
+{
+  "style": "vega",
+  "baseColor": "stone",
+  "theme": "blue",
+  "chartColor": "neutral",
+  "iconLibrary": "lucide",
+  "font": "geist",
+  "fontHeading": "inherit",
+  "radius": "large",
+  "menuAccent": "subtle",
+  "menuColor": "default"
+}
+```
+
+```ts
+decodePreset("not-a-code") // null
+```
+
+### Other exports
+
+用于验证代码和生成随机预设的其他函数：
+
+- `isPresetCode`
+- `isValidPreset`
+- `generateRandomConfig`
+- `generateRandomPreset`
+- `toBase62`
+- `fromBase62`
+
+常量：
+
+- `PRESET_BASES`
+- `PRESET_STYLES`
+- `PRESET_BASE_COLORS`
+- `PRESET_THEMES`
+- `PRESET_ICON_LIBRARIES`
+- `PRESET_FONTS`
+- `PRESET_FONT_HEADINGS`
+- `PRESET_RADII`
+- `PRESET_MENU_ACCENTS`
+- `PRESET_MENU_COLORS`
+- `PRESET_CHART_COLORS`
+- `DEFAULT_PRESET_CONFIG`

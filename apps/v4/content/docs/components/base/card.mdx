@@ -103,6 +103,24 @@ Card
   previewClassName="h-96"
 />
 
+### 间距
+
+除了 `size` 属性外，你还可以使用 `--card-spacing` CSS 变量来控制各部分之间的间距以及卡片各部分的内边距。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="card-spacing"
+  previewClassName="h-[34rem]"
+/>
+
+使用 `-mx-(--card-spacing)` 负外边距让内容铺满边缘，同时保持与卡片内边距对齐。当贴边内容位于底部栏上方时，在 `CardContent` 上使用 `-mb-(--card-spacing)` 来移除分区间隔。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="card-edge-to-edge"
+  previewClassName="h-[24rem]"
+/>
+
 ### 图片
 
 在卡片头部之前添加图片，创建带图片的卡片。
@@ -182,3 +200,70 @@ Card
 | 属性        | 类型     | 默认值 |
 | ----------- | -------- | ------- |
 | `className` | `string` | -       |
+
+## 更新日志
+
+### 间距变量
+
+如果你正在从旧版本的 `Card` 组件升级，需要应用以下更新以使用 `--card-spacing` 变量：
+
+<Steps>
+
+<Step>更新 Card 根容器的间距类。</Step>
+
+将硬编码的间隙和垂直内边距替换为 `--card-spacing`，并在根容器上设置默认值和小尺寸值：
+
+```diff
+  className={cn(
+-   "group/card flex flex-col gap-4 overflow-hidden rounded-xl bg-card py-4 text-sm text-card-foreground ring-1 ring-foreground/10 has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
++   "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+    className
+  )}
+```
+
+<Step>更新 CardHeader 的间距类。</Step>
+
+将水平内边距和边框间距替换为共享变量：
+
+```diff
+  className={cn(
+-   "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-4 group-data-[size=sm]/card:px-3 has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
++   "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)",
+    className
+  )}
+```
+
+<Step>更新 CardContent 和 CardFooter 的间距类。</Step>
+
+将 `--card-spacing` 用于内容内边距和底部栏内边距：
+
+```diff
+  function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+    return (
+      <div
+        data-slot="card-content"
+-       className={cn("px-4 group-data-[size=sm]/card:px-3", className)}
++       className={cn("px-(--card-spacing)", className)}
+        {...props}
+      />
+    )
+  }
+```
+
+```diff
+  className={cn(
+-   "flex items-center rounded-b-xl border-t bg-muted/50 p-4 group-data-[size=sm]/card:p-3",
++   "flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)",
+    className
+  )}
+```
+
+</Steps>
+
+应用这些更改后，你可以通过在 `Card` 上设置任意属性类来定制卡片间距：
+
+```tsx
+function Example() {
+  return <Card className="[--card-spacing:--spacing(6)]">...</Card>
+}
+```
