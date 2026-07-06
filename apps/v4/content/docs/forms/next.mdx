@@ -12,6 +12,7 @@ import { InfoIcon } from "lucide-react"
 我们将构建如下的表单，包含一个简单的文本输入框和一个文本区域。提交时，我们将使用服务器操作来验证表单数据并更新表单状态。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-next-demo"
   className="[&_.preview]:h-[700px] [&_pre]:h-[700px]!"
 />
@@ -328,7 +329,7 @@ export async function demoFormAction(
   // 业务逻辑。
   callYourDatabaseOrAPI(values)
 
-  // 成功时省略 values, 以重置表单状态。
+  // 成功时省略 values，以重置表单状态。
   return {
     errors: null,
     success: true,
@@ -367,6 +368,7 @@ export async function demoFormAction(
 以下示例展示了更复杂的包含多个字段和验证的表单。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-next-complex"
   className="[&_.preview]:h-[1100px] [&_pre]:h-[1100px]!"
   hideCode

@@ -1,0 +1,176 @@
+---
+title: scroll-fade
+description: 用于为滚动容器边缘添加淡入淡出效果的工具类。
+---
+
+<ComponentPreview
+  styleName="base-rhea"
+  name="scroll-fade-demo"
+  previewClassName="h-auto"
+/>
+
+## 安装
+
+如果你的项目是通过 `npx shadcn@latest init` 设置的，你已经拥有 `scroll-fade`。它随 `shadcn` 包一起提供，CLI 会在你的全局 CSS 文件中导入它。
+
+否则，请安装 `shadcn` 包：
+
+```bash
+npm install shadcn
+```
+
+然后在你的全局 CSS 文件中导入共享工具：
+
+```css
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
+```
+
+## 用法
+
+| Class                             | 样式                                                                                                               |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `scroll-fade`                     | `mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));` <br /> `animation-timeline: scroll(self y);`       |
+| `scroll-fade-y`                   | `mask-image: var(--scroll-fade-mask, var(--scroll-fade-block));` <br /> `animation-timeline: scroll(self y);`       |
+| `scroll-fade-x`                   | `mask-image: var(--scroll-fade-mask, var(--scroll-fade-inline));` <br /> `animation-timeline: scroll(self inline);` |
+| `scroll-fade-t`                   | 在顶部边缘应用渐隐蒙版。 <br /> `animation-timeline: scroll(self y);`                                             |
+| `scroll-fade-b`                   | 在底部边缘应用渐隐蒙版。 <br /> `animation-timeline: scroll(self y);`                                          |
+| `scroll-fade-l`                   | 在左侧边缘应用渐隐蒙版。 <br /> `animation-timeline: scroll(self x);`                                            |
+| `scroll-fade-r`                   | 在右侧边缘应用渐隐蒙版。 <br /> `animation-timeline: scroll(self x);`                                           |
+| `scroll-fade-s`                   | 在起始边缘应用渐隐蒙版，在 RTL 中镜像。 <br /> `animation-timeline: scroll(self inline);`                      |
+| `scroll-fade-e`                   | 在结束边缘应用渐隐蒙版，在 RTL 中镜像。 <br /> `animation-timeline: scroll(self inline);`                        |
+| `scroll-fade-<number>`            | `--scroll-fade-size: calc(var(--spacing) * <number>);`                                                              |
+| `scroll-fade-[<value>]`           | `--scroll-fade-size: <value>;`                                                                                      |
+| `scroll-fade-{t,b,s,e}-<number>`  | `--scroll-fade-{t,b,s,e}-size: calc(var(--spacing) * <number>);`                                                    |
+| `scroll-fade-{t,b,s,e}-[<value>]` | `--scroll-fade-{t,b,s,e}-size: <value>;`                                                                            |
+| `scroll-fade-none`                | `--scroll-fade-mask: none;`                                                                                         |
+
+将 `scroll-fade` 或 `scroll-fade-y` 添加到滚动容器，即具有 `overflow-y-auto` 的元素。
+
+```tsx
+<div className="scroll-fade overflow-y-auto">{/* ... */}</div>
+```
+
+这种渐隐效果可感知滚动，并跟随滚动位置变化：
+
+- 在静止时，顶部边缘是清晰的，底部边缘会渐隐，以提示还有更多内容。
+- 当你滚动时，顶部会出现渐隐效果，并且在滚动中段两侧边缘都会保持渐隐。
+- 到达末尾时，底部边缘会变得清晰，表示你已到达最后一项。
+
+渐隐效果通过 `mask-image` 应用，因此它会让内容本身逐渐消失，而不是覆盖一层颜色。蒙版使用从透明到黑色的线性渐变，所以无需配置即可适配任何背景。如果你的滚动区域位于卡片内部，请把背景和边框放在外层包装器上，并将 `scroll-fade` 放在内层滚动器上，这样渐隐效果会作用于内容而不是卡片。
+
+[`ScrollArea`](/docs/components/scroll-area) 和 [`MessageScroller`](/docs/components/message-scroller) 组件可以在其可滚动视口上使用 `scroll-fade`。
+
+## 无溢出，无淡出
+
+如果内容没有溢出，则不会显示淡出效果。你可以将 `scroll-fade` 应用于任何列表，而无需检查它是否可滚动。
+
+<ComponentPreview
+  styleName="base-rhea"
+  name="scroll-fade-overflow"
+  previewClassName="h-auto"
+/>
+
+## 水平滚动
+
+在水平滚动的容器上使用 `scroll-fade-x`，也就是带有 `overflow-x-auto` 的元素。
+
+<ComponentPreview
+  styleName="base-rhea"
+  name="scroll-fade-horizontal"
+  previewClassName="h-64"
+/>
+
+```tsx
+<div className="flex scroll-fade-x overflow-x-auto">{/* ... */}</div>
+```
+
+水平淡出效果会根据方向自动适配。在 RTL 布局中，清晰边缘和淡出效果会跟随阅读方向，无需额外的类。`scroll-fade-<number>` 和 `scroll-fade-none` 在两个轴上都以相同方式工作。
+
+## 边缘淡出
+
+当只需要一个边缘跟随滚动位置时，请使用边缘工具类。
+
+<ComponentPreview
+  styleName="base-rhea"
+  name="scroll-fade-edge"
+  previewClassName="h-auto"
+/>
+
+```tsx
+<div className="scroll-fade-b overflow-y-auto">{/* ... */}</div>
+```
+
+边缘工具类会感知滚动。开始边缘会在你滚离起始位置后淡入，结束边缘会在你到达末尾时淡出。物理边缘使用 `scroll-fade-t`、`scroll-fade-b`、`scroll-fade-l` 和 `scroll-fade-r`。逻辑内联边缘使用 `scroll-fade-s` 和 `scroll-fade-e`，它们会在 RTL 中镜像。
+
+## 渐隐尺寸
+
+渐隐深度默认是容器的 `12%`，并封顶为 `40px`，这样较高的滚动区域也能保持细腻。你也可以使用 `scroll-fade-<number>` 在间距尺度上设置固定大小，其用法与 `scroll-mt-<number>` 相同。
+
+<ComponentPreview
+  styleName="base-rhea"
+  name="scroll-fade-size"
+  previewClassName="h-auto"
+/>
+
+```tsx
+<div className="scroll-fade overflow-y-auto scroll-fade-24">{/* ... */}</div>
+```
+
+对于一次性使用的值，可以使用任意长度或百分比：
+
+```tsx
+<div className="scroll-fade overflow-y-auto scroll-fade-[15%]">{/* ... */}</div>
+```
+
+要让相对边缘以不同的量渐隐，请使用按边缘划分的修饰符 `scroll-fade-t-<number>`、`scroll-fade-b-<number>`、`scroll-fade-s-<number>` 和 `scroll-fade-e-<number>`。它们会覆盖它们所针对边缘上的 `scroll-fade-<number>`，也同样接受任意值。
+
+```tsx
+<div className="scroll-fade overflow-y-auto scroll-fade-b-8 scroll-fade-t-2">
+  {/* ... */}
+</div>
+```
+
+对于水平滚动区域，请使用逻辑上的 `s`/`e` 修饰符，这样在 RTL 中尺寸会自动镜像。
+
+渐隐会在固定的滚动距离内逐渐淡入和淡出，而不是瞬间出现。这个距离由 `--scroll-fade-reveal` 变量控制，默认是 `96px`，并且与渐隐深度无关。可以调小它以获得更迅速的显现效果，或调大它以获得更平缓的过渡：
+
+```tsx
+<div className="scroll-fade overflow-y-auto [--scroll-fade-reveal:64px]">
+  {/* ... */}
+</div>
+```
+
+## 禁用渐隐效果
+
+使用 `scroll-fade-none` 来移除渐隐效果。它在任何类名顺序下都能生效，因此通常用于响应式或状态控制：
+
+```tsx
+<div className="scroll-fade overflow-y-auto md:scroll-fade-none">
+  {/* ... */}
+</div>
+```
+
+<ComponentPreview
+  styleName="base-rhea"
+  name="scroll-fade-none"
+  previewClassName="h-auto"
+/>
+
+## 回退
+
+这种感知滚动的行为是通过 [CSS 滚动驱动动画](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations) 实现的，不需要 JavaScript，也不需要滚动监听器。在不支持滚动驱动动画的浏览器中，`scroll-fade` 会回退为两侧的静态渐隐效果，而边缘工具类会回退为所选边缘的静态渐隐效果。
+
+由于遮罩会应用到滚动容器本身，可见的滚动条也会在边缘处与内容一起渐隐。如果你想完全隐藏滚动条，可以将 `scroll-fade` 与同一包中提供的 `no-scrollbar` 组合使用。
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+`scroll-fade-x` 遵循阅读方向。静止时，起始边缘是清晰的，结束边缘会渐隐。在 RTL 布局中，这意味着右侧边缘清晰，左侧边缘渐隐，与 LTR 镜像对应。
+
+<ComponentPreview
+  styleName="base-nova"
+  name="scroll-fade-rtl"
+  direction="rtl"
+/>

@@ -1,28 +1,28 @@
-# Component Composition
+# 组件组合
 
-## Contents
+## 目录
 
-- Items always inside their Group component
-- Callouts use Alert
-- Empty states use Empty component
-- Toast notifications use sonner
-- Choosing between overlay components
-- Dialog, Sheet, and Drawer always need a Title
-- Card structure
-- Button has no isPending or isLoading prop
-- TabsTrigger must be inside TabsList
-- Avatar always needs AvatarFallback
-- Use Separator instead of raw hr or border divs
-- Use Skeleton for loading placeholders
-- Use Badge instead of custom styled spans
+- 项目始终位于其 Group 组件内
+- 提示框使用 Alert
+- 空状态使用 Empty 组件
+- Toast 通知使用 sonner
+- 在覆盖层组件之间进行选择
+- Dialog、Sheet 和 Drawer 始终需要 Title
+- Card 结构
+- Button 没有 isPending 或 isLoading 属性
+- TabsTrigger 必须位于 TabsList 内
+- Avatar 始终需要 AvatarFallback
+- 使用 Separator 替代原始的 hr 或带边框的 div
+- 使用 Skeleton 作为加载占位符
+- 使用 Badge 替代自定义样式的 span
 
 ---
 
-## Items always inside their Group component
+## 项目始终应放在其 Group 组件内
 
-Never render items directly inside the content container.
+不要直接在内容容器内渲染项目。
 
-**Incorrect:**
+**错误：**
 
 ```tsx
 <SelectContent>
@@ -31,7 +31,7 @@ Never render items directly inside the content container.
 </SelectContent>
 ```
 
-**Correct:**
+**正确：**
 
 ```tsx
 <SelectContent>
@@ -42,82 +42,88 @@ Never render items directly inside the content container.
 </SelectContent>
 ```
 
-This applies to all group-based components:
+这适用于所有基于 group 的组件：
 
-| Item | Group |
+| 项目 | Group |
 |------|-------|
 | `SelectItem`, `SelectLabel` | `SelectGroup` |
 | `DropdownMenuItem`, `DropdownMenuLabel`, `DropdownMenuSub` | `DropdownMenuGroup` |
 | `MenubarItem` | `MenubarGroup` |
 | `ContextMenuItem` | `ContextMenuGroup` |
 | `CommandItem` | `CommandGroup` |
+| `MessageScrollerItem` | `MessageScrollerContent` |
+| `Message`（连续、相同发送者） | `MessageGroup` |
+| `Bubble`（堆叠） | `BubbleGroup` |
+| `Attachment`（在一行中） | `AttachmentGroup` |
+
+聊天组件按固定顺序嵌套（`MessageScrollerProvider` → `MessageScroller` → `MessageScrollerViewport` → `MessageScrollerContent` → `MessageScrollerItem`）。参见 [chat.md](./chat.md)。
 
 ---
 
-## Callouts use Alert
+## 提示框使用 Alert
 
 ```tsx
 <Alert>
-  <AlertTitle>Warning</AlertTitle>
-  <AlertDescription>Something needs attention.</AlertDescription>
+  <AlertTitle>警告</AlertTitle>
+  <AlertDescription>有些内容需要注意。</AlertDescription>
 </Alert>
 ```
 
 ---
 
-## Empty states use Empty component
+## 空状态使用 Empty 组件
 
 ```tsx
 <Empty>
   <EmptyHeader>
     <EmptyMedia variant="icon"><FolderIcon /></EmptyMedia>
-    <EmptyTitle>No projects yet</EmptyTitle>
-    <EmptyDescription>Get started by creating a new project.</EmptyDescription>
+    <EmptyTitle>暂无项目</EmptyTitle>
+    <EmptyDescription>通过创建一个新项目开始吧。</EmptyDescription>
   </EmptyHeader>
   <EmptyContent>
-    <Button>Create Project</Button>
+    <Button>创建项目</Button>
   </EmptyContent>
 </Empty>
 ```
 
 ---
 
-## Toast notifications use sonner
+## Toast 通知使用 sonner
 
 ```tsx
 import { toast } from "sonner"
 
-toast.success("Changes saved.")
-toast.error("Something went wrong.")
-toast("File deleted.", {
-  action: { label: "Undo", onClick: () => undoDelete() },
+toast.success("更改已保存。")
+toast.error("出了点问题。")
+toast("文件已删除。", {
+  action: { label: "撤销", onClick: () => undoDelete() },
 })
 ```
 
 ---
 
-## Choosing between overlay components
+## 在覆盖层组件之间进行选择
 
-| Use case | Component |
+| 用例 | 组件 |
 |----------|-----------|
-| Focused task that requires input | `Dialog` |
-| Destructive action confirmation | `AlertDialog` |
-| Side panel with details or filters | `Sheet` |
-| Mobile-first bottom panel | `Drawer` |
-| Quick info on hover | `HoverCard` |
-| Small contextual content on click | `Popover` |
+| 需要输入的聚焦任务 | `Dialog` |
+| 破坏性操作确认 | `AlertDialog` |
+| 带有详情或筛选器的侧边面板 | `Sheet` |
+| 以移动端优先的底部面板 | `Drawer` |
+| 悬停时显示的简要信息 | `HoverCard` |
+| 点击时显示的小型上下文内容 | `Popover` |
 
 ---
 
-## Dialog, Sheet, and Drawer always need a Title
+## 对话框、底部抽屉和抽屉始终需要标题
 
-`DialogTitle`, `SheetTitle`, `DrawerTitle` are required for accessibility. Use `className="sr-only"` if visually hidden.
+`DialogTitle`、`SheetTitle`、`DrawerTitle` 对于无障碍访问是必需的。如果需要视觉上隐藏，请使用 `className="sr-only"`。
 
 ```tsx
 <DialogContent>
   <DialogHeader>
-    <DialogTitle>Edit Profile</DialogTitle>
-    <DialogDescription>Update your profile.</DialogDescription>
+    <DialogTitle>编辑个人资料</DialogTitle>
+    <DialogDescription>更新你的个人资料。</DialogDescription>
   </DialogHeader>
   ...
 </DialogContent>
@@ -125,47 +131,47 @@ toast("File deleted.", {
 
 ---
 
-## Card structure
+## 卡片结构
 
-Use full composition — don't dump everything into `CardContent`:
+使用完整组合——不要把所有内容都塞进 `CardContent` 中：
 
 ```tsx
 <Card>
   <CardHeader>
-    <CardTitle>Team Members</CardTitle>
-    <CardDescription>Manage your team.</CardDescription>
+    <CardTitle>团队成员</CardTitle>
+    <CardDescription>管理你的团队。</CardDescription>
   </CardHeader>
   <CardContent>...</CardContent>
   <CardFooter>
-    <Button>Invite</Button>
+    <Button>邀请</Button>
   </CardFooter>
 </Card>
 ```
 
 ---
 
-## Button has no isPending or isLoading prop
+## 按钮没有 isPending 或 isLoading 属性
 
-Compose with `Spinner` + `data-icon` + `disabled`:
+使用 `Spinner` + `data-icon` + `disabled` 组合：
 
 ```tsx
 <Button disabled>
   <Spinner data-icon="inline-start" />
-  Saving...
+  保存中...
 </Button>
 ```
 
 ---
 
-## TabsTrigger must be inside TabsList
+## TabsTrigger 必须位于 TabsList 内
 
-Never render `TabsTrigger` directly inside `Tabs` — always wrap in `TabsList`:
+不要直接在 `Tabs` 内渲染 `TabsTrigger`——始终将其包裹在 `TabsList` 中：
 
 ```tsx
 <Tabs defaultValue="account">
   <TabsList>
-    <TabsTrigger value="account">Account</TabsTrigger>
-    <TabsTrigger value="password">Password</TabsTrigger>
+    <TabsTrigger value="account">账户</TabsTrigger>
+    <TabsTrigger value="password">密码</TabsTrigger>
   </TabsList>
   <TabsContent value="account">...</TabsContent>
 </Tabs>
@@ -173,23 +179,23 @@ Never render `TabsTrigger` directly inside `Tabs` — always wrap in `TabsList`:
 
 ---
 
-## Avatar always needs AvatarFallback
+## Avatar 始终需要 AvatarFallback
 
-Always include `AvatarFallback` for when the image fails to load:
+当图片加载失败时，始终包含 `AvatarFallback`：
 
 ```tsx
 <Avatar>
-  <AvatarImage src="/avatar.png" alt="User" />
+  <AvatarImage src="/avatar.png" alt="用户" />
   <AvatarFallback>JD</AvatarFallback>
 </Avatar>
 ```
 
 ---
 
-## Use existing components instead of custom markup
+## 使用现有组件而不是自定义标记
 
-| Instead of | Use |
+| 替代方案 | 使用 |
 |---|---|
-| `<hr>` or `<div className="border-t">` | `<Separator />` |
-| `<div className="animate-pulse">` with styled divs | `<Skeleton className="h-4 w-3/4" />` |
+| `<hr>` 或 `<div className="border-t">` | `<Separator />` |
+| 带有样式化 div 的 `<div className="animate-pulse">` | `<Skeleton className="h-4 w-3/4" />` |
 | `<span className="rounded-full bg-green-100 ...">` | `<Badge variant="secondary">` |

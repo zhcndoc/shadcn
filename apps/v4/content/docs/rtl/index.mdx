@@ -63,18 +63,18 @@ shadcn/ui 组件对从右到左 (RTL) 布局提供一流支持。文本对齐、
 
 ## 工作原理
 
-当您在 `components.json` 中设置 `rtl: true` 添加组件时，shadcn CLI 会自动转换类与属性，使其支持 RTL：
+当您在 `components.json` 中设置 `rtl: true` 并添加组件时，shadcn CLI 会自动转换类与属性，使其支持 RTL：
 
 - 物理定位类如 `left-*` 与 `right-*` 会转换为逻辑等价的 `start-*` 与 `end-*`。
 - 方向相关的属性将更新为使用逻辑值。
-- 文本对齐和间距类相应调整。
+- 文本对齐和间距类会相应调整。
 - 支持的图标会自动通过 `rtl:rotate-180` 翻转。
 
 ## 试用
 
 点击下面的链接，打开一个包含 RTL 支持的 Next.js v0 项目。
 
-[![Open in v0](https://v0.app/chat-static/button.svg)](https://v0.app/chat/api/open?url=https://github.com/shadcn-ui/next-template-rtl)
+[![在 v0 中打开](https://v0.app/chat-static/button.svg)](https://v0.app/chat/api/open?url=https://github.com/shadcn-ui/next-template-rtl)
 
 ## 支持的样式
 
@@ -134,9 +134,9 @@ npx shadcn@latest migrate rtl [path]
 
 以下组件不支持 CLI 自动迁移。请参考对应组件的 RTL 支持部分手动迁移。
 
-- [Calendar](/docs/components/radix/calendar#rtl-support)
-- [Pagination](/docs/components/radix/pagination#rtl-support)
-- [Sidebar](/docs/components/radix/sidebar#rtl-support)
+- [Calendar](/docs/components/base/calendar#rtl-support)
+- [Pagination](/docs/components/base/pagination#rtl-support)
+- [Sidebar](/docs/components/base/sidebar#rtl-support)
 
 ### 迁移图标
 

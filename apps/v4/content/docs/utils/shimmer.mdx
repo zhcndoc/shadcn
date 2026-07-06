@@ -1,0 +1,167 @@
+---
+title: shimmer
+description: 用于为文本元素添加闪烁效果的工具。
+---
+
+<ComponentPreview styleName="base-rhea" name="shimmer-demo" />
+
+## 安装
+
+如果你的项目是使用 `npx shadcn@latest init` 搭建的，那么你已经拥有 `shimmer`。它随 `shadcn` 包一起提供，而 CLI 会将其导入到你的全局 CSS 文件中。
+
+否则，请安装 `shadcn` 包：
+
+```bash
+npm install shadcn
+```
+
+然后在你的全局 CSS 文件中导入共享工具：
+
+```css
+@import "tailwindcss";
+@import "shadcn/tailwind.css";
+```
+
+## 用法
+
+| 类别                         | 样式                                                                                               |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `shimmer`                    | `background-clip: text;` <br /> `animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite;` |
+| `shimmer-once`               | `animation-iteration-count: 1;`                                                                      |
+| `shimmer-reverse`            | `animation-direction: reverse;`                                                                      |
+| `shimmer-none`               | `--shimmer-image: none;` <br /> `--shimmer-text-fill: currentColor;`                                 |
+| `shimmer-color-<color>`      | `--shimmer-color: <color>;`                                                                          |
+| `shimmer-color-[<value>]`    | `--shimmer-color: <value>;`                                                                          |
+| `shimmer-color-<color>/<pct>` | `--shimmer-color: color-mix(in oklch, <color> <pct>, transparent);`                                  |
+| `shimmer-duration-<number>`  | `--shimmer-duration: calc(<number> * 1ms);`                                                          |
+| `shimmer-spread-<number>`    | `--shimmer-spread: calc(var(--spacing) * <number>);`                                                 |
+| `shimmer-spread-[<value>]`   | `--shimmer-spread: <value>;`                                                                         |
+| `shimmer-angle-<number>`     | `--shimmer-angle: calc(<number> * 1deg);`                                                            |
+
+将 `shimmer` 添加到文本元素中。
+
+```tsx
+<p className="shimmer text-muted-foreground">Generating response&hellip;</p>
+```
+
+`shimmer` 基于 `currentColor` 构建，因此它会适配元素：
+
+- 高亮效果来自文本颜色，无需任何配置。
+- 它适用于任何颜色，从 `text-muted-foreground` 到品牌色都可以。
+- 在深色模式下，高亮会自动变亮以保持可见。
+
+该效果完全由 CSS 实现。文本使用 `background-clip: text` 进行绘制，而高亮会以无缝循环的方式扫过文本。
+
+## 带标记
+
+shimmer 可与任何渲染文本的组件组合使用。一种常见模式是使用一个 [Marker](/docs/components/marker) 在助手工作时显示实时状态：
+
+<ComponentPreview styleName="base-rhea" name="shimmer-marker" />
+
+```tsx
+<Marker role="status">
+  <MarkerIcon>
+    <Spinner />
+  </MarkerIcon>
+  <MarkerContent className="shimmer">思考中&hellip;</MarkerContent>
+</Marker>
+```
+
+## 颜色
+
+使用 `shimmer-color-<color>` 来显式设置高亮颜色。它接受带可选不透明度修饰符的主题颜色，或任意自定义颜色值。
+
+<ComponentPreview styleName="base-rhea" name="shimmer-color" />
+
+```tsx
+<p className="shimmer shimmer-color-blue-500/60">正在生成响应&hellip;</p>
+<p className="shimmer shimmer-color-[#378ADD]">正在生成响应&hellip;</p>
+```
+
+## 持续时间
+
+使用 `shimmer-duration-<number>` 以毫秒为单位设置一次扫过的持续时间。默认值是 `2000`，即 `2s`。
+
+<ComponentPreview styleName="base-rhea" name="shimmer-duration" />
+
+```tsx
+<p className="shimmer shimmer-duration-1000">正在生成响应&hellip;</p>
+```
+
+## 展开
+
+使用 `shimmer-spread-<number>` 通过间距刻度来设置高亮带的宽度。默认值是 `calc(3ch + 40px)`：一个固定基准，加上一个会随字体大小缩放的 `3ch` 项。
+
+<ComponentPreview styleName="base-rhea" name="shimmer-spread" />
+
+```tsx
+<p className="shimmer shimmer-spread-24">正在生成响应&hellip;</p>
+```
+
+对于一次性值，可以使用任意长度或百分比：
+
+```tsx
+<p className="shimmer shimmer-spread-[5rem]">正在生成响应&hellip;</p>
+```
+
+## 角度
+
+使用 `shimmer-angle-<number>` 以度为单位设置高光带的倾斜角度。默认值是 `20`。
+
+<ComponentPreview styleName="base-rhea" name="shimmer-angle" />
+
+```tsx
+<p className="shimmer shimmer-angle-45">生成响应&hellip;</p>
+```
+
+## 反向
+
+使用 `shimmer-reverse` 让高亮以相反方向扫过。在 RTL 布局中，扫过方向已经会跟随阅读方向。参见 [RTL](#rtl)。
+
+```tsx
+<p className="shimmer shimmer-reverse">正在生成响应&hellip;</p>
+```
+
+## 只播放一次
+
+使用 `shimmer-once` 让扫光只播放一次而不是循环播放，适合作为流式输出完成时的显示效果。可配合 `shimmer-duration-<number>` 控制扫光持续时间。
+
+<ComponentPreview styleName="base-rhea" name="shimmer-once" />
+
+```tsx
+<p className="shimmer shimmer-duration-1100 shimmer-once">
+  响应已生成。
+</p>
+```
+
+## 禁用 Shimmer
+
+使用 `shimmer-none` 可关闭该效果并按正常方式渲染文本。它在任何类名顺序下都能生效，因此通常用于响应式或状态控制：
+
+<ComponentPreview styleName="base-rhea" name="shimmer-none" />
+
+```tsx
+<p className="shimmer md:shimmer-none">正在生成响应&hellip;</p>
+```
+
+## 回退
+
+shimmer 基于现代颜色特性、[相对颜色语法](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_colors/Relative_colors) 和 `color-mix()` 构建，这些特性在当前所有浏览器中都可用。在不支持这些特性的旧版浏览器中，高亮渐变会被移除，文本可能会渲染为透明。如果你需要兼容旧版浏览器，请通过 `supports-*` 变体有条件地应用 `shimmer`：
+
+```tsx
+<p className="supports-[color:oklch(from_white_l_c_h)]:shimmer">
+  正在生成响应&hellip;
+</p>
+```
+
+## 减少动态效果
+
+当用户偏好减少动态效果时，动画会自动禁用，文本将正常渲染。无需进行任何配置。
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+扫光会遵循阅读方向，在 LTR 中从左到右，在 RTL 中从右到左，无需额外类。使用 `shimmer-reverse` 可手动翻转方向。
+
+<ComponentPreview styleName="base-rhea" name="shimmer-rtl" />

@@ -24,7 +24,7 @@ npx shadcn@latest init --monorepo
 然后选择你想使用的模板。
 
 ```bash
-? Select a template ›
+? 选择一个模板 ›
 ❯   Next.js
     Vite
     TanStack Start
@@ -111,7 +111,7 @@ turbo.json
 ```json showLineNumbers title="apps/web/components.json"
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "radix-nova",
+  "style": "base-nova",
   "rsc": true,
   "tsx": true,
   "tailwind": {
@@ -134,7 +134,7 @@ turbo.json
 ```json showLineNumbers title="packages/ui/components.json"
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "radix-nova",
+  "style": "base-nova",
   "rsc": true,
   "tsx": true,
   "tailwind": {
@@ -164,15 +164,15 @@ turbo.json
   `package.json#imports` 非常适合工作区内的包本地别名，例如 `packages/ui` 内部。对于共享工作区导入，例如 `@workspace/ui/components`，请在 `components.json` 中保留显式别名。CLI 会使用这些别名来跨工作区边界路由文件。
 </Callout>
 
-## 使用 `package.json#imports`
+## Using `package.json#imports`
 
-对于使用包导入且不依赖 `tsconfig.json` `paths` 的 monorepo，请使用：
+For monorepos that use package imports and do not rely on `tsconfig.json` `paths`, use:
 
-- 为每个工作区内的文件使用本地 `#...` 别名
-- 使用工作区包的 `exports` 来处理共享导入，例如
+- Local `#...` aliases for files within each workspace
+- The workspace package’s `exports` for shared imports, such as
   `@workspace/ui/components`
 
-例如，应用工作区可以使用本地包导入：
+For example, an app workspace can use local package imports:
 
 ```json showLineNumbers title="apps/web/package.json"
 {
@@ -202,7 +202,7 @@ turbo.json
 }
 ```
 
-而共享的 UI 包可以通过 `exports` 暴露其安装目标：
+The shared UI package can then expose its install targets through `exports`:
 
 ```json showLineNumbers title="packages/ui/package.json"
 {
@@ -235,11 +235,11 @@ turbo.json
 }
 ```
 
-在这个设置中：
+In this setup:
 
-- 从应用添加到共享 UI 包的文件会通过
-  `@workspace/ui/...` 路由
-- 在 `packages/ui` 内添加的文件使用包本地的 `#...` 别名
-- 共享包必须导出任何被另一个工作区引用的路径
+- Files added from apps to the shared UI package are routed through
+  `@workspace/ui/...`
+- Files added within `packages/ui` use the package-local `#...` aliases
+- Shared packages must export any path that is referenced by another workspace
 
-关于框架特定的包导入配置，请参阅 [package imports 指南](/docs/package-imports)。
+For framework-specific package import configuration, see the [package imports guide](/docs/package-imports).

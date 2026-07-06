@@ -7,7 +7,7 @@ links:
 
 import { InfoIcon } from "lucide-react"
 
-在本指南中，我们将了解如何使用 React Hook Form 构建表单。内容包括使用 `<Field />` 组件构建表单、使用 Zod 添加模式验证、错误处理、无障碍支持等。
+In this guide, we’ll learn how to build forms using React Hook Form. This includes building forms with the `<Field />` component, adding schema validation with Zod, error handling, accessibility support, and more.
 
 ## 演示
 
@@ -18,6 +18,7 @@ import { InfoIcon } from "lucide-react"
 </Callout>
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-rhf-demo"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -63,10 +64,10 @@ import { InfoIcon } from "lucide-react"
 
 ### 创建表单模式
 
-We'll start by defining the shape of our form using a Zod schema.
+我们将从使用 Zod 模式定义表单的结构开始。
 
 <Callout icon={<InfoIcon />}>
-  **注意：** 本示例使用 `zod v3` 进行模式验证，但您可以使用 React Hook Form 支持的任何其他标准模式验证库替代。
+  **注意：** 此示例使用 `zod v3` 进行模式验证，但您可以使用 React Hook Form 支持的任何其他标准模式验证库替代。
 </Callout>
 
 ```tsx showLineNumbers title="form.tsx"
@@ -84,7 +85,7 @@ const formSchema = z.object({
 })
 ```
 
-### Set up the form
+### 设置表单
 
 接下来，我们将使用 React Hook Form 中的 `useForm` 钩子创建表单实例，并添加 Zod 解析器用于数据验证。
 
@@ -223,6 +224,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 - 显示错误时，向 `<Input />` 组件添加 `aria-invalid` 属性，向 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-rhf-input"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -250,6 +252,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 - 显示错误时，向 `<Textarea />` 组件添加 `aria-invalid` 属性，向 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-rhf-textarea"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -286,6 +289,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 - 显示错误时，在 `<SelectTrigger />` 组件上添加 `aria-invalid`，在 `<Field />` 组件上添加 `data-invalid`。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-rhf-select"
   className="sm:[&_.preview]:h-[500px]"
   chromeLessOnMobile
@@ -335,6 +339,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 - 记得在 `<FieldGroup />` 组件上添加 `data-slot="checkbox-group"` 以获得正确的样式和间距。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-rhf-checkbox"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -390,6 +395,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 - 显示错误时，向 `<RadioGroupItem />` 组件添加 `aria-invalid`，向 `<Field />` 组件添加 `data-invalid`。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-rhf-radiogroup"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -438,6 +444,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 - 显示错误时，向 `<Switch />` 组件添加 `aria-invalid`，向 `<Field />` 组件添加 `data-invalid`。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-rhf-switch"
   className="sm:[&_.preview]:h-[500px]"
   chromeLessOnMobile
@@ -451,10 +458,10 @@ const form = useForm<z.infer<typeof formSchema>>({
     <Field orientation="horizontal" data-invalid={fieldState.invalid}>
       <FieldContent>
         <FieldLabel htmlFor="form-rhf-switch-twoFactor">
-          多因素认证
+          双重认证
         </FieldLabel>
         <FieldDescription>
-          启用多因素认证以保护您的账户安全。
+          启用双重认证以保护您的账户安全。
         </FieldDescription>
         {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
       </FieldContent>
@@ -475,6 +482,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 这是一个包含多个字段和验证的复杂表单示例。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-rhf-complex"
   className="sm:[&_.preview]:h-[1300px]"
   chromeLessOnMobile
@@ -495,6 +503,7 @@ const form = useForm<z.infer<typeof formSchema>>({
 React Hook Form 提供了 `useFieldArray` 钩子来管理动态数组字段，适用于需要动态添加或删除字段的场景。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-rhf-array"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile

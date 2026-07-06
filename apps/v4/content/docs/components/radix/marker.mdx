@@ -1,0 +1,274 @@
+---
+title: 标记
+description: 在对话中显示内联状态、系统说明、带边框的行或带标签的分隔符。
+base: radix
+component: true
+---
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="marker-demo"
+  previewClassName="h-auto theme-blue"
+/>
+
+`Marker` 组件用于显示内联对话标记，例如状态更新、系统说明、带边框的行和带标签的分隔符。可将其与对话线程中的 [`Message`](/docs/components/message) 组合使用。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add marker
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="marker"
+  title="components/ui/marker.tsx"
+  styleName="radix-rhea"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Marker, MarkerContent, MarkerIcon } from "@/components/ui/marker"
+```
+
+```tsx showLineNumbers
+<Marker>
+  <MarkerIcon>
+    <CheckIcon />
+  </MarkerIcon>
+  <MarkerContent>已浏览 4 个文件</MarkerContent>
+</Marker>
+```
+
+## 组合
+
+使用以下组合来构建一个标记：
+
+```text
+Marker
+├── MarkerIcon
+└── MarkerContent
+```
+
+## 特性
+
+- 内联标记、带边框行和带标签分隔符变体
+- 装饰性图标插槽，对辅助技术隐藏
+- 通过 `asChild` 实现多态根组件，用于链接和按钮标记
+- 可与 [`shimmer`](/docs/utils/shimmer) 工具配合使用，用于流式状态文本
+- 通过每个部分上的 `className` 属性自定义样式
+
+## 示例
+
+### 变体
+
+使用 `variant` 在内联标记、带边框的行和带标签的分隔符之间切换。
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="marker-variants"
+  previewClassName="h-auto theme-blue"
+/>
+
+| 变体        | 描述                                               |
+| ----------- | -------------------------------------------------- |
+| `default`   | 用于状态、备注和操作的内联标记。                    |
+| `border`    | 在行下方带有底部边框的默认标记。                    |
+| `separator` | 居中标签，两侧带有分隔线。                          |
+
+### 状态
+
+设置 `role="status"`，并为流式或进行中的标记包含一个 [`Spinner`](/docs/components/spinner)，这样更新就会被播报出来。
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="marker-status"
+  previewClassName="h-auto theme-blue"
+/>
+
+### 闪烁效果
+
+为 `MarkerContent` 添加 [`shimmer`](/docs/utils/shimmer) 工具类，以实现动画式流式文本效果。该工具随 `shadcn` 包一起提供——安装方法请参见 shimmer 文档。
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="marker-shimmer"
+  previewClassName="h-auto theme-blue"
+/>
+
+### 分隔符
+
+在对话中，使用 `separator` 变体来表示带标签的分隔线，例如日期或章节分隔。
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="marker-separator"
+  previewClassName="h-auto theme-blue"
+/>
+
+### 边框
+
+对于需要保持默认标记对齐，同时将下一行分隔开的状态行，使用 `border` 变体。
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="marker-border"
+  previewClassName="h-auto theme-blue"
+/>
+
+### 带图标
+
+使用 `MarkerIcon` 在内容旁边渲染图标。使用 `flex-col` 将图标堆叠在内容上方。
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="marker-icon"
+  previewClassName="h-auto theme-blue"
+/>
+
+### 链接和按钮
+
+在 `Marker` 上使用 `asChild` 属性，可将标记变成链接或按钮。
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="marker-link-button"
+  previewClassName="h-auto theme-blue"
+/>
+
+```tsx showLineNumbers
+import { Marker, MarkerContent } from "@/components/ui/marker"
+
+export function MarkerLinkDemo() {
+  return (
+    <Marker asChild>
+      <a href="#">
+        <MarkerContent>查看拉取请求</MarkerContent>
+      </a>
+    </Marker>
+  )
+}
+```
+
+## 无障碍
+
+`Marker` 默认是展示性元素。正确的语义取决于你的使用方式，因此应根据意图选择角色，而不是依赖单一默认值。
+
+### 状态和进度
+
+对于诸如“Thinking...”或正在运行的工具之类的流式或进度标记，请设置 `role="status"`，这样辅助技术会在更新出现时播报。`Marker` 会将 `role` 传递到底层元素。
+
+```tsx showLineNumbers
+<Marker role="status">
+  <MarkerIcon>
+    <Spinner />
+  </MarkerIcon>
+  <MarkerContent>压缩对话</MarkerContent>
+</Marker>
+```
+
+### 带标签的分隔符
+
+带有文本的分隔符，例如日期或章节标签，不需要角色。分隔线是装饰性的 CSS 伪元素，文本会作为普通内容被播报。
+
+```tsx showLineNumbers
+<Marker variant="separator">
+  <MarkerContent>今天</MarkerContent>
+</Marker>
+```
+
+<Callout>
+  **注意：**不要给带标签的分隔线添加 `role="separator"`。分隔符的可访问名称来自 `aria-label`，而不是来自其文本，并且其内容会被视为展示性内容，因此可见标签不会被播报。`role="separator"` 仅适用于没有有意义文本的分隔线。
+</Callout>
+
+### 带边框的标记
+
+带边框的标记与默认标记保持相同的语义。底部边框是装饰性的，因此应根据标记的用途选择 `role="status"`、`asChild`，或不设置角色。
+
+```tsx showLineNumbers
+<Marker variant="border">
+  <MarkerIcon>
+    <FileTextIcon />
+  </MarkerIcon>
+  <MarkerContent>已打开实现说明</MarkerContent>
+</Marker>
+```
+
+### 装饰性图标
+
+`MarkerIcon` 是装饰性的，并通过 `aria-hidden` 对辅助技术隐藏，因此相邻的 `MarkerContent` 承载含义。对于仅图标的标记，请提供 `aria-label` 或可见文本，以免它被播报为空内容。
+
+```tsx showLineNumbers
+<Marker aria-label="已同步">
+  <MarkerIcon>
+    <CheckIcon />
+  </MarkerIcon>
+</Marker>
+```
+
+### 交互式标记
+
+当标记用于链接或触发操作时，请使用 `asChild` 属性将其渲染为真实的 `<button>` 或 `<a>`，这样它才能获得焦点并暴露正确的角色。可访问名称来自标记文本。
+
+```tsx showLineNumbers
+<Marker asChild>
+  <a href="/files">
+    <MarkerIcon>
+      <FileTextIcon />
+    </MarkerIcon>
+    <MarkerContent>已浏览 4 个文件</MarkerContent>
+  </a>
+</Marker>
+```
+
+## API 参考
+
+### Marker
+
+根标记元素。该文件还导出 `markerVariants`，用于将标记样式组合到自定义组件中。
+
+| 属性        | 类型                                   | 默认值     | 描述                                      |
+| ----------- | -------------------------------------- | ----------- | ------------------------------------------------ |
+| `variant`   | `"default" \| "border" \| "separator"` | `"default"` | 标记布局。                               |
+| `asChild`   | `boolean`                              | `false`     | 作为子元素渲染，例如链接。     |
+| `className` | `string`                               | -           | 应用于根元素的附加类。 |
+
+### MarkerIcon
+
+一个装饰性图标槽位。使用 `aria-hidden` 对辅助技术隐藏。
+
+| 属性        | 类型     | 默认值 | 描述                                   |
+| ----------- | -------- | ------- | --------------------------------------------- |
+| `className` | `string` | -       | 应用于图标槽位的附加类。 |
+
+### MarkerContent
+
+标记文本内容。
+
+| 属性        | 类型     | 默认值 | 描述                                      |
+| ----------- | -------- | ------- | ------------------------------------------------ |
+| `className` | `string` | -       | 应用于内容槽位的附加类。 |

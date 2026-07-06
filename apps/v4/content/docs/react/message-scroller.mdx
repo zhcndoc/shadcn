@@ -1,0 +1,261 @@
+---
+title: Message Scroller
+description: 直接从 @shadcn/react 包中使用 MessageScroller 行为，并使用你自己的标记和样式。
+---
+
+`MessageScroller` 作为 `@shadcn/react` 包中的无头原语提供。
+该包负责所有滚动行为、锚定转向、跟随流式输出、在历史记录加载时保持读者位置以及跟踪可见性，
+并且本身不渲染任何样式。
+
+注册表中的 `message-scroller.tsx` 组件是一个薄包装器，只是在其上添加
+Tailwind 类。 当你想要完全控制标记和样式，或者当你没有使用注册表时，请直接使用该包。
+
+有关行为指南和实时示例，请参阅
+[Message Scroller](/docs/components/base/message-scroller) 组件。
+
+## 安装
+
+```bash
+npm install @shadcn/react
+```
+
+## 用法
+
+```tsx
+import {
+  MessageScroller,
+  useMessageScroller,
+} from "@shadcn/react/message-scroller"
+```
+
+该包导出的是一个命名空间对象，而不是扁平的组件。其组成部分和行为与样式化组件相同，只是没有样式。
+
+```tsx
+<MessageScroller.Provider>
+  <MessageScroller.Root>
+    <MessageScroller.Viewport>
+      <MessageScroller.Content>
+        {messages.map((message) => (
+          <MessageScroller.Item
+            key={message.id}
+            messageId={message.id}
+            scrollAnchor={message.role === "user"}
+          >
+            {/* 你的消息 UI */}
+          </MessageScroller.Item>
+        ))}
+      </MessageScroller.Content>
+    </MessageScroller.Viewport>
+    <MessageScroller.Button />
+  </MessageScroller.Root>
+</MessageScroller.Provider>
+```
+
+## 部件
+
+如果你来自 styled component，那么扁平化的部件会映射到命名空间
+对象，如下所示。
+
+| Styled component          | 未样式化部件                |
+| ------------------------- | -------------------------- |
+| `MessageScrollerProvider` | `MessageScroller.Provider` |
+| `MessageScroller`         | `MessageScroller.Root`     |
+| `MessageScrollerViewport` | `MessageScroller.Viewport` |
+| `MessageScrollerContent`  | `MessageScroller.Content`  |
+| `MessageScrollerItem`     | `MessageScroller.Item`     |
+| `MessageScrollerButton`   | `MessageScroller.Button`   |
+
+这些 hooks 的导入方式相同，行为也完全一致，因为它们读取自
+`MessageScroller.Provider`。
+
+```tsx
+import {
+  useMessageScroller,
+  useMessageScrollerScrollable,
+  useMessageScrollerVisibility,
+} from "@shadcn/react/message-scroller"
+```
+
+## 示例
+
+这里有一个完整示例，它自带样式，并将滚动器连接到
+AI SDK。
+
+```tsx showLineNumbers
+"use client"
+
+import { useChat } from "@ai-sdk/react"
+import { MessageScroller } from "@shadcn/react/message-scroller"
+import { DefaultChatTransport } from "ai"
+
+import { ChatInput } from "@/components/chat-input"
+
+export function Chat() {
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({ api: "/api/chat" }),
+  })
+
+  return (
+    <div className="flex h-svh w-full flex-col">
+      <MessageScroller.Provider>
+        <MessageScroller.Root className="relative flex flex-1 flex-col overflow-hidden">
+          <MessageScroller.Viewport className="flex flex-1 flex-col overflow-y-auto">
+            <MessageScroller.Content className="flex flex-col gap-4 p-6 text-base">
+              {messages.map((message, index) => (
+                <MessageScroller.Item
+                  key={message.id}
+                  messageId={`message-${index}`}
+                  scrollAnchor={message.role === "user"}
+                >
+                  <div className="rounded-lg bg-muted p-4">
+                    {message.parts.map((part, i) =>
+                      part.type === "text" ? (
+                        <span key={i}>{part.text}</span>
+                      ) : null
+                    )}
+                  </div>
+                </MessageScroller.Item>
+              ))}
+            </MessageScroller.Content>
+          </MessageScroller.Viewport>
+          <MessageScroller.Button className="absolute bottom-2 left-1/2 z-10 -translate-x-1/2 rounded-full border bg-background px-3 py-1 text-sm font-medium inert:opacity-0">
+            跳转到最新
+          </MessageScroller.Button>
+        </MessageScroller.Root>
+      </MessageScroller.Provider>
+      <ChatInput onSend={sendMessage} disabled={status !== "ready"} />
+    </div>
+  )
+}
+```
+
+## API 参考
+
+### MessageScroller.Provider
+
+无头根组件。它负责滚动状态和行为属性，并将它们提供给各个部分和 hooks。它自身不渲染任何 DOM。
+
+| Prop                     | Type                                | Default | Description                                                                                                                                                                          |
+| ------------------------ | ----------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `autoScroll`             | `boolean`                           | `false` | 仅在读者已经处于实时边缘时，才跟随新内容。鼠标滚轮、触摸、键盘滚动以及显式跳转都会解除该状态。                                                  |
+| `defaultScrollPosition`  | `"start" \| "end" \| "last-anchor"` | `"end"` | 第一次非空渲染时的初始位置，仅应用一次。`"last-anchor"` 会在最后一个 `scrollAnchor` 行处打开；当这一轮内容刚好放得下或不存在锚点时，则回退到 `"end"`。 |
+| `scrollEdgeThreshold`    | `number`                            | `8`     | 距离任一边缘仍然算作位于开始或末尾的距离。控制状态属性和滚动按钮可见性。                                                    |
+| `scrollMargin`           | `number`                            | `0`     | 应用于 `scrollToMessage`、可见性和程序化目标对齐边缘的外边距。                                                                                      |
+| `scrollPreviousItemPeek` | `number`                            | `64`    | 当新追加的 `scrollAnchor` 项被定位时，额外加到 `scrollMargin` 上的边距，使前一项的一部分保持可见。                                             |
+
+### MessageScroller.Root
+
+框架和布局容器。它会填满其父容器，因此请将其放在有高度约束的布局中，并置于 `MessageScroller.Provider` 之内。
+
+| Prop       | Type                          | Default | Description                        |
+| ---------- | ----------------------------- | ------- | ---------------------------------- |
+| `...props` | `React.ComponentProps<"div">` | -       | 传递给框架元素的 props。 |
+
+根组件会同步下面的滚动状态属性（viewport 也会带有这些属性），因此你可以根据滚动状态来为容器设置样式，例如为框架添加边缘淡出效果。
+
+| Data attribute       | Value                                             | Description                                                                                            |
+| -------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `data-scrollable`    | `"start"` \| `"end"` \| `"start end"` \| _absent_ | 视口可滚动的方向。可通过 `[data-scrollable~="end"]` 查询其中一个方向；若缺失则表示内容刚好适配。 |
+| `data-autoscrolling` | present                                           | 当视口正在以程序方式滚动到最新消息时存在。                        |
+
+### MessageScroller.Viewport
+
+可滚动的视口。
+
+| Prop                      | Type                          | Default      | Description                                                               |
+| ------------------------- | ----------------------------- | ------------ | ------------------------------------------------------------------------- |
+| `preserveScrollOnPrepend` | `boolean`                     | `true`       | 在旧行被前置插入时，保持第一个可见消息项的位置稳定。 |
+| `role`                    | `string`                      | `"region"`   | 带有标签的可滚动转录视口的地标角色。            |
+| `aria-label`              | `string`                      | `"Messages"` | 可滚动聊天转录的可访问名称。                       |
+| `tabIndex`                | `number`                      | `0`          | 使转录视口支持键盘滚动。                        |
+| `...props`                | `React.ComponentProps<"div">` | -            | 传递给视口元素的 props。                                     |
+
+| Data attribute       | Value                                             | Description                                                                                            |
+| -------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `data-scrollable`    | `"start"` \| `"end"` \| `"start end"` \| _absent_ | 视口可滚动的方向。可通过 `[data-scrollable~="end"]` 查询其中一个方向；若缺失则表示内容刚好适配。 |
+| `data-autoscrolling` | present                                           | 当视口正在以程序方式滚动到最新消息时存在。                        |
+
+### MessageScroller.Content
+
+转录内容元素。每个直接子元素都应为 `MessageScroller.Item`。
+
+| Prop              | Type                          | Default       | Description                                                             |
+| ----------------- | ----------------------------- | ------------- | ----------------------------------------------------------------------- |
+| `role`            | `string`                      | `"log"`       | 应用于消息列表的 ARIA 角色，用于实时播报。           |
+| `aria-relevant`   | `string`                      | `"additions"` | 需要播报的实时区域更新。默认仅播报新增的转录行。  |
+| `aria-busy`       | `boolean`                     | -             | 如有需要，在一轮内容流式输出时将实时区域标记为忙碌。             |
+| `spacerClassName` | `string`                      | -             | 内部占位元素的类名，用于为锚定行预留空间。 |
+| `...props`        | `React.ComponentProps<"div">` | -             | 传递给内容元素的 props。                                    |
+
+### MessageScroller.Item
+
+一条转录行：消息、标记、输入中行、分隔线或加载更多行。
+
+| Prop           | Type                          | Default | Description                                                                    |
+| -------------- | ----------------------------- | ------- | ------------------------------------------------------------------------------ |
+| `messageId`    | `string`                      | -       | 由 `scrollToMessage`、可见性和前置保持使用的稳定行 id。 |
+| `scrollAnchor` | `boolean`                     | `false` | 将此行标记为可为新追加的轮次提供锚点的轮次边界。        |
+| `...props`     | `React.ComponentProps<"div">` | -       | 传递给条目元素的 props。                                              |
+
+| Data attribute       | Value                 | Description                        |
+| -------------------- | --------------------- | ---------------------------------- |
+| `data-message-id`    | `string`              | 如果提供，则映射 `messageId`。 |
+| `data-scroll-anchor` | `"true"` \| `"false"` | 映射 `scrollAnchor`。            |
+
+### MessageScroller.Button
+
+一个滚动到转录开头或末尾的按钮。当没有可滚动方向时，它会失效并从 Tab 顺序中移除。
+
+| Prop        | Type                                    | Default    | Description                                                              |
+| ----------- | --------------------------------------- | ---------- | ------------------------------------------------------------------------ |
+| `behavior`  | `ScrollBehavior`                        | `"smooth"` | 按钮滚动到目标边缘时使用的原生滚动行为。  |
+| `direction` | `"start" \| "end"`                      | `"end"`    | 按钮滚动的转录边缘方向。                               |
+| `children`  | `React.ReactNode`                       | -          | 自定义按钮内容。默认显示滚动图标和可访问标签。 |
+| `render`    | `React.ReactElement \| render function` | -          | 自定义渲染目标。                                                    |
+| `...props`  | `React.ComponentProps<"button">`        | -          | 传递给按钮的 props。                                              |
+
+| Data attribute   | Value                 | Description                               |
+| ---------------- | --------------------- | ----------------------------------------- |
+| `data-direction` | `"start"` \| `"end"`  | 映射 `direction`。                      |
+| `data-active`    | `"true"` \| `"false"` | 此按钮当前是否可以滚动。 |
+
+### useMessageScroller
+
+用于命令式控制转录。
+
+| Method            | Type                                       | Description                     |
+| ----------------- | ------------------------------------------ | ------------------------------- |
+| `scrollToMessage` | `(messageId: string, options?) => boolean` | 滚动到已挂载的消息 id。 |
+| `scrollToEnd`     | `(options?) => boolean`                    | 滚动到最新消息。   |
+| `scrollToStart`   | `(options?) => boolean`                    | 滚动到顶部。              |
+
+当命令无法执行时，所有命令都会返回 `false`。
+`scrollToStart` 和 `scrollToEnd` 只有在 viewport 还未挂载时才会返回 `false`。`scrollToMessage` 在目标未挂载且无法排队时返回 `false`。
+
+命令选项：
+
+| Option         | Type                                              | Default                 | Description                                          |
+| -------------- | ------------------------------------------------- | ----------------------- | ---------------------------------------------------- |
+| `align`        | `"start"` \| `"center"` \| `"end"` \| `"nearest"` | `"start"`               | 消息目标在视口中的对齐方式。         |
+| `behavior`     | `ScrollBehavior`                                  | `"auto"`                | 该命令使用的原生滚动行为。              |
+| `scrollMargin` | `number`                                          | provider `scrollMargin` | 应用于此命令对齐边缘的边距。 |
+
+### useMessageScrollerScrollable
+
+视口可以向哪些边缘滚动，供需要在 JavaScript 中获取这些值的相邻 UI 使用。为 scroller 本身设置样式时，优先使用 `data-scrollable` 属性。
+
+| Value   | Type      | Description                                                                                            |
+| ------- | --------- | ------------------------------------------------------------------------------------------------------ |
+| `start` | `boolean` | 视口是否可以向开始方向滚动。内容在上方被隐藏（`!start` 表示已经在顶部）。 |
+| `end`   | `boolean` | 视口是否可以向末尾方向滚动。内容在下方被隐藏（`!end` 表示已经在底部）。  |
+
+### useMessageScrollerVisibility
+
+用于轮廓、搜索和当前轮次 UI 的可见性状态。它与 `useMessageScrollerScrollable` 分开订阅，因此只有在消费者需要时才会付出可见性计算的代价。
+
+| Value               | Type             | Description                                                                                    |
+| ------------------- | ---------------- | ---------------------------------------------------------------------------------------------- |
+| `currentAnchorId`   | `string \| null` | 当前锚定的轮次，基于位于阅读线处或其上方的最后一个 `scrollAnchor` 项。 |
+| `visibleMessageIds` | `string[]`       | 与视口相交的消息 id，按文档顺序排列。                                      |
+
+当你的应用需要更窄的轮廓范围时，可以过滤 `visibleMessageIds`，例如只显示用户消息、锚定轮次或搜索命中项。

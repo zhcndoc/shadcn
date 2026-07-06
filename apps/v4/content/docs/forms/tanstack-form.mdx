@@ -18,6 +18,7 @@ import { InfoIcon } from "lucide-react"
 </Callout>
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-tanstack-demo"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -52,7 +53,7 @@ import { InfoIcon } from "lucide-react"
           field.state.meta.isTouched && !field.state.meta.isValid
         return (
           <Field data-invalid={isInvalid}>
-            <FieldLabel htmlFor={field.name}>Bug Title</FieldLabel>
+            <FieldLabel htmlFor={field.name}>漏洞标题</FieldLabel>
             <Input
               id={field.name}
               name={field.name}
@@ -60,11 +61,11 @@ import { InfoIcon } from "lucide-react"
               onBlur={field.handleBlur}
               onChange={(e) => field.handleChange(e.target.value)}
               aria-invalid={isInvalid}
-              placeholder="Login button not working on mobile"
+              placeholder="移动端登录按钮无法正常工作"
               autoComplete="off"
             />
             <FieldDescription>
-              Provide a concise title for your bug report.
+              为你的漏洞报告提供一个简洁的标题。
             </FieldDescription>
             {isInvalid && <FieldError errors={field.state.meta.errors} />}
           </Field>
@@ -72,7 +73,7 @@ import { InfoIcon } from "lucide-react"
       }}
     />
   </FieldGroup>
-  <Button type="submit">Submit</Button>
+  <Button type="submit">提交</Button>
 </form>
 ```
 
@@ -92,12 +93,12 @@ import * as z from "zod"
 const formSchema = z.object({
   title: z
     .string()
-    .min(5, "Bug title must be at least 5 characters.")
-    .max(32, "Bug title must be at most 32 characters."),
+    .min(5, "Bug 标题长度必须至少为 5 个字符。")
+    .max(32, "Bug 标题长度必须至多为 32 个字符。"),
   description: z
     .string()
-    .min(20, "Description must be at least 20 characters.")
-    .max(100, "Description must be at most 100 characters."),
+    .min(20, "描述长度必须至少为 20 个字符。")
+    .max(100, "描述长度必须至多为 100 个字符。"),
 })
 ```
 
@@ -124,7 +125,7 @@ export function BugReportForm() {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      toast.success("Form submitted successfully")
+      toast.success("表单提交成功")
     },
   })
 
@@ -228,7 +229,7 @@ const form = useForm({
 
     return (
       <Field data-invalid={isInvalid}>
-        <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+        <FieldLabel htmlFor={field.name}>电子邮件</FieldLabel>
         <Input
           id={field.name}
           name={field.name}
@@ -253,6 +254,7 @@ const form = useForm({
 - 显示错误时，在 `<Input />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-tanstack-input"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -265,7 +267,7 @@ const form = useForm({
     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
     return (
       <Field data-invalid={isInvalid}>
-        <FieldLabel htmlFor="form-tanstack-input-username">Username</FieldLabel>
+        <FieldLabel htmlFor="form-tanstack-input-username">用户名</FieldLabel>
         <Input
           id="form-tanstack-input-username"
           name={field.name}
@@ -277,8 +279,8 @@ const form = useForm({
           autoComplete="username"
         />
         <FieldDescription>
-          This is your public display name. Must be between 3 and 10 characters.
-          Must only contain letters, numbers, and underscores.
+          这是你的公开显示名称。必须介于 3 到 10 个字符之间。
+          只能包含字母、数字和下划线。
         </FieldDescription>
         {isInvalid && <FieldError errors={field.state.meta.errors} />}
       </Field>
@@ -293,6 +295,7 @@ const form = useForm({
 - 显示错误时，在 `<Textarea />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-tanstack-textarea"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -306,7 +309,7 @@ const form = useForm({
     return (
       <Field data-invalid={isInvalid}>
         <FieldLabel htmlFor="form-tanstack-textarea-about">
-          More about you
+          关于你的更多信息
         </FieldLabel>
         <Textarea
           id="form-tanstack-textarea-about"
@@ -315,12 +318,11 @@ const form = useForm({
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
           aria-invalid={isInvalid}
-          placeholder="I'm a software engineer..."
+          placeholder="我是软件工程师……"
           className="min-h-[120px]"
         />
         <FieldDescription>
-          Tell us more about yourself. This will be used to help us personalize
-          your experience.
+          告诉我们更多关于你的信息。这将用于帮助我们个性化你的体验。
         </FieldDescription>
         {isInvalid && <FieldError errors={field.state.meta.errors} />}
       </Field>
@@ -335,6 +337,7 @@ const form = useForm({
 - 显示错误时，在 `<SelectTrigger />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-tanstack-select"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -349,10 +352,10 @@ const form = useForm({
       <Field orientation="responsive" data-invalid={isInvalid}>
         <FieldContent>
           <FieldLabel htmlFor="form-tanstack-select-language">
-            Spoken Language
+            使用语言
           </FieldLabel>
           <FieldDescription>
-            For best results, select the language you speak.
+            为获得最佳效果，请选择你所说的语言。
           </FieldDescription>
           {isInvalid && <FieldError errors={field.state.meta.errors} />}
         </FieldContent>
@@ -366,11 +369,11 @@ const form = useForm({
             aria-invalid={isInvalid}
             className="min-w-[120px]"
           >
-            <SelectValue placeholder="Select" />
+            <SelectValue placeholder="选择" />
           </SelectTrigger>
           <SelectContent position="item-aligned">
-            <SelectItem value="auto">Auto</SelectItem>
-            <SelectItem value="en">English</SelectItem>
+            <SelectItem value="auto">自动</SelectItem>
+            <SelectItem value="en">英语</SelectItem>
           </SelectContent>
         </Select>
       </Field>
@@ -387,6 +390,7 @@ const form = useForm({
 - 别忘了给 `<FieldGroup />` 组件添加 `data-slot="checkbox-group"` 以实现正确的样式和间距。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-tanstack-checkbox"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -400,9 +404,9 @@ const form = useForm({
     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
     return (
       <FieldSet>
-        <FieldLegend variant="label">Tasks</FieldLegend>
+        <FieldLegend variant="label">任务</FieldLegend>
         <FieldDescription>
-          Get notified when tasks you&apos;ve created have updates.
+          当你创建的任务有更新时接收通知。
         </FieldDescription>
         <FieldGroup data-slot="checkbox-group">
           {tasks.map((task) => (
@@ -449,6 +453,7 @@ const form = useForm({
 - 显示错误时，在 `<RadioGroupItem />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-tanstack-radiogroup"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile
@@ -461,9 +466,9 @@ const form = useForm({
     const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid
     return (
       <FieldSet>
-        <FieldLegend>Plan</FieldLegend>
+        <FieldLegend>方案</FieldLegend>
         <FieldDescription>
-          You can upgrade or downgrade your plan at any time.
+          你可以随时升级或降级你的方案。
         </FieldDescription>
         <RadioGroup
           name={field.name}
@@ -502,6 +507,7 @@ const form = useForm({
 - 显示错误时，在 `<Switch />` 组件添加 `aria-invalid` 属性，在 `<Field />` 组件添加 `data-invalid` 属性。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-tanstack-switch"
   className="sm:[&_.preview]:h-[500px]"
   chromeLessOnMobile
@@ -516,10 +522,10 @@ const form = useForm({
       <Field orientation="horizontal" data-invalid={isInvalid}>
         <FieldContent>
           <FieldLabel htmlFor="form-tanstack-switch-twoFactor">
-            Multi-factor authentication
+            多因素身份验证
           </FieldLabel>
           <FieldDescription>
-            Enable multi-factor authentication to secure your account.
+            启用多因素身份验证以保护你的账户。
           </FieldDescription>
           {isInvalid && <FieldError errors={field.state.meta.errors} />}
         </FieldContent>
@@ -541,6 +547,7 @@ const form = useForm({
 下面是一个包含多个字段和验证的更复杂表单示例。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-tanstack-complex"
   className="sm:[&_.preview]:h-[1100px]"
   chromeLessOnMobile
@@ -561,6 +568,7 @@ const form = useForm({
 TanStack Form 提供了强大的数组字段管理功能，使用 `mode="array"`。您可以动态添加、移除和更新数组项，并支持完整的验证功能。
 
 <ComponentPreview
+  styleName="new-york-v4"
   name="form-tanstack-array"
   className="sm:[&_.preview]:h-[700px]"
   chromeLessOnMobile

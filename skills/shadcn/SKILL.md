@@ -1,6 +1,6 @@
 ---
 name: shadcn
-description: 管理 shadcn 组件和项目 — 添加、搜索、修复、调试、样式设置和组合 UI。提供项目上下文、组件文档和使用示例。适用于使用 shadcn/ui、组件注册表、预设、--preset 代码或任何带有 components.json 文件的项目。也会在执行 "shadcn init"、"使用 --preset 创建应用" 或 "切换到 --preset" 时触发。
+description: Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI, including chat interfaces. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for "shadcn init", "create an app with --preset", or "switch to --preset".
 user-invocable: false
 allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(bunx --bun shadcn@latest *)
 ---
@@ -71,9 +71,15 @@ allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(b
 
 ### 图标 → [icons.md](./rules/icons.md)
 
-- **按钮中的图标使用 `data-icon`。** 在图标上使用 `data-icon="inline-start"` 或 `data-icon="inline-end"`。
-- **组件内的图标不要添加尺寸类。** 组件通过 CSS 处理图标尺寸。不要加 `size-4` 或 `w-4 h-4`。
-- **将图标作为对象传递，而非字符串键。** `icon={CheckIcon}`，而不是字符串查找。
+- **Icons in `Button` use `data-icon`.** `data-icon="inline-start"` or `data-icon="inline-end"` on the icon.
+- **No sizing classes on icons inside components.** Components handle icon sizing via CSS. No `size-4` or `w-4 h-4`.
+- **Pass icons as objects, not string keys.** `icon={CheckIcon}`, not a string lookup.
+
+### Chat & Messaging → [chat.md](./rules/chat.md)
+
+- **Chat UI composes the chat primitives.** Conversations use `MessageScroller`, rows use `Message`, surfaces use `Bubble`. Never hand-rolled bubble `div`s or a raw scroll container.
+- **`MessageScroller` owns scroll behavior.** Streaming follow, anchoring, and jump-to-latest (`MessageScrollerButton`) are built in. Don't write a `useStickToBottom`/`ResizeObserver` hook.
+- **Attachments use `Attachment`; system notes and dividers use `Marker`.** Not `Item` cards or `Separator` + a label.
 
 ### CLI
 
@@ -123,19 +129,20 @@ allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(b
 
 | 需求                       | 使用                                                                                                 |
 | -------------------------- | --------------------------------------------------------------------------------------------------- |
-| 按钮/操作              | 具有适当变体的 `Button`                                                                   |
-| 表单输入                | `Input`、`Select`、`Combobox`、`Switch`、`Checkbox`、`RadioGroup`、`Textarea`、`InputOTP`、`Slider` |
-| 2-5 个选项之间的切换 | `ToggleGroup` + `ToggleGroupItem`                                                                   |
-| 数据显示               | `Table`、`Card`、`Badge`、`Avatar`                                                                  |
-| 导航                 | `Sidebar`、`NavigationMenu`、`Breadcrumb`、`Tabs`、`Pagination`                                     |
-| 遮罩层                   | `Dialog` (模态框)、`Sheet` (侧面板)、`Drawer` (底部工作表)、`AlertDialog` (确认)       |
-| 反馈                   | `sonner` (toast)、`Alert`、`Progress`、`Skeleton`、`Spinner`                                        |
-| 命令面板            | `Dialog` 内的 `Command`                                                                           |
-| 图表                     | `Chart` (封装 Recharts)                                                                            |
-| 布局                     | `Card`、`Separator`、`Resizable`、`ScrollArea`、`Accordion`、`Collapsible`                          |
-| 空状态               | `Empty`                                                                                             |
-| 菜单                      | `DropdownMenu`、`ContextMenu`、`Menubar`                                                            |
-| 工具提示/信息              | `Tooltip`、`HoverCard`、`Popover`                                                                   |
+| Button/action              | `Button` with appropriate variant                                                                   |
+| Form inputs                | `Input`, `Select`, `Combobox`, `Switch`, `Checkbox`, `RadioGroup`, `Textarea`, `InputOTP`, `Slider` |
+| Toggle between 2–5 options | `ToggleGroup` + `ToggleGroupItem`                                                                   |
+| Data display               | `Table`, `Card`, `Badge`, `Avatar`                                                                  |
+| Navigation                 | `Sidebar`, `NavigationMenu`, `Breadcrumb`, `Tabs`, `Pagination`                                     |
+| Overlays                   | `Dialog` (modal), `Sheet` (side panel), `Drawer` (bottom sheet), `AlertDialog` (confirmation)       |
+| Feedback                   | `sonner` (toast), `Alert`, `Progress`, `Skeleton`, `Spinner`                                        |
+| Command palette            | `Command` inside `Dialog`                                                                           |
+| Charts                     | `Chart` (wraps Recharts)                                                                            |
+| Layout                     | `Card`, `Separator`, `Resizable`, `ScrollArea`, `Accordion`, `Collapsible`                          |
+| Empty states               | `Empty`                                                                                             |
+| Menus                      | `DropdownMenu`, `ContextMenu`, `Menubar`                                                            |
+| Tooltips/info              | `Tooltip`, `HoverCard`, `Popover`                                                                   |
+| Chat / conversation UI     | `MessageScroller`, `Message`, `Bubble`, `Attachment`, `Marker`                                      |
 
 ## Key Fields
 
@@ -259,6 +266,7 @@ npx shadcn@latest view owner/repo/item
 
 - [rules/forms.md](./rules/forms.md) — FieldGroup, Field, InputGroup, ToggleGroup, FieldSet, validation states
 - [rules/composition.md](./rules/composition.md) — Groups, overlays, Card, Tabs, Avatar, Alert, Empty, Toast, Separator, Skeleton, Badge, Button loading
+- [rules/chat.md](./rules/chat.md) — MessageScroller, Message, Bubble, Attachment, Marker; streaming, anchoring, jump-to-latest
 - [rules/icons.md](./rules/icons.md) — data-icon, icon sizing, passing icons as objects
 - [rules/styling.md](./rules/styling.md) — Semantic colors, variants, className, spacing, size, truncate, dark mode, cn(), z-index
 - [rules/base-vs-radix.md](./rules/base-vs-radix.md) — asChild vs render, Select, ToggleGroup, Slider, Accordion

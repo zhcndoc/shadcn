@@ -5,7 +5,7 @@ description: 使用 shadcn CLI 将组件添加到您的项目中。
 
 import { TriangleAlertIcon } from "lucide-react"
 
-## init
+## 初始化
 
 使用 `init` 命令来初始化现有项目的配置和依赖项，或使用 `--name` 创建新项目。
 
@@ -25,24 +25,24 @@ npx shadcn@latest init
 参数：
   components                 组件名称、URL 或本地路径
 
-Options:
-  -t, --template <template>  要使用的模板。（next、vite、start、react-router、laravel、astro）
-  -b, --base <base>          要使用的组件库。（radix、base）
+选项：
+  -t, --template <template>  使用的模板。（next、vite、start、react-router、laravel、astro）
+  -b, --base <base>          使用的组件库。（base、radix）
   -p, --preset [name]        使用预设配置
-  -y, --yes                  跳过确认提示。（默认值：true）
-  -d, --defaults             使用默认配置：--template=next --preset=nova（默认值：false）
-  -f, --force                强制覆盖现有配置。（默认值：false）
+  -y, --yes                  跳过确认提示。（默认：true）
+  -d, --defaults             使用默认配置：--template=next --preset=nova（默认：false）
+  -f, --force                强制覆盖现有配置。（默认：false）
   -c, --cwd <cwd>            工作目录。默认为当前目录。
   -n, --name <name>          新项目的名称。
-  -s, --silent               静默输出。（默认值：false）
-  --css-variables            使用 CSS 变量进行主题定制。（默认值：true）
-  --no-css-variables         不使用 CSS 变量进行主题定制。
+  -s, --silent               静默输出。（默认：false）
+  --css-variables            使用 CSS 变量进行主题设置。（默认：true）
+  --no-css-variables         不使用 CSS 变量进行主题设置。
   --monorepo                 搭建 monorepo 项目。
   --no-monorepo              跳过 monorepo 提示。
   --rtl                      启用 RTL 支持。
   --no-rtl                   禁用 RTL 支持。
   --pointer                  为按钮启用指针光标。
-  --no-pointer               禁用按钮的指针光标。
+  --no-pointer               为按钮禁用指针光标。
   --reinstall                重新安装现有 UI 组件。
   --no-reinstall             不重新安装现有 UI 组件。
   -h, --help                 显示命令帮助
@@ -56,7 +56,7 @@ npx shadcn@latest create
 
 ---
 
-## add
+## 添加
 
 使用 `add` 命令向项目中添加组件和依赖项。
 
@@ -89,7 +89,7 @@ npx shadcn@latest add [component]
 
 ---
 
-## apply
+## 应用
 
 使用 `apply` 命令将预设应用于现有项目。
 
@@ -108,7 +108,7 @@ npx shadcn@latest apply a2r6bw --only theme
 **选项**
 
 ```bash
-用法：shadcn apply [options] [preset]
+用法：shadcn apply [选项] [预设]
 
 将预设应用于现有项目
 
@@ -267,7 +267,7 @@ npx shadcn@latest view @acme/auth @v0/dashboard
 
 ---
 
-## search
+## 搜索
 
 使用 `search` 命令从注册表中搜索项目。
 
@@ -313,7 +313,7 @@ npx shadcn@latest list @acme
 
 ---
 
-## build
+## 构建
 
 使用 `build` 命令生成注册表 JSON 文件。
 
@@ -347,7 +347,7 @@ npx shadcn@latest build --output ./public/registry
 
 ---
 
-## docs
+## 文档
 
 使用 `docs` 命令获取组件的文档和 API 参考。
 
@@ -374,7 +374,7 @@ npx shadcn@latest docs [component]
 
 ---
 
-## info
+## 信息
 
 使用 `info` 命令获取您的项目相关信息。
 
@@ -397,7 +397,7 @@ npx shadcn@latest info
 
 ---
 
-## migrate
+## 迁移
 
 使用 `migrate` 命令对您的项目运行迁移操作。
 

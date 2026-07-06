@@ -1,0 +1,98 @@
+---
+title: 2026年6月 - 聊天界面组件
+description: MessageScroller、Message、Bubble、Attachment 和 Marker。用于构建聊天界面的组件。
+date: 2026-06-26
+---
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="message-scroller-demo"
+  className="rounded-[34px] sm:rounded-4xl"
+  previewClassName="h-auto theme-blue bg-surface dark:bg-background p-4 min-[480px]:p-8 min-[560px]:p-10 sm:px-10 sm:py-16"
+/>
+
+今天，我们发布了一组用于构建聊天界面的新组件：
+[**MessageScroller**](/docs/components/message-scroller),
+[**Message**](/docs/components/message), [**Bubble**](/docs/components/bubble),
+[**Attachment**](/docs/components/attachment), and
+[**Marker**](/docs/components/marker)。
+
+这是聊天组件工作的第一阶段。我们正在一步一步来，重新构想每个部分背后的抽象，并将它们作为你可以复制、组合并适配到产品中的 shadcn/ui 组件发布出来。
+
+我们从对话层开始：滚动、消息行、气泡、附件和标记。
+
+我们问自己：是什么造就了出色的流式聊天体验？然后我们将核心规则抽象为一组基础原语：`MessageScroller`。
+
+```bash
+npx shadcn@latest add message-scroller message bubble attachment marker
+```
+
+## MessageScroller
+
+`MessageScroller` 是对话的滚动容器。它处理那些容易出错的部分：锚定轮次、流式回复、已保存线程恢复、前置历史、跳转到消息、滚动控制以及可见性跟踪。
+
+`MessageScroller` 负责这些行为，但不负责你的消息、AI 状态、传输层、持久化或模型状态。你只需要提供内容渲染器。
+
+`MessageScroller` 也可以作为一个无样式的 headless 组件在 `@shadcn/react` 中使用。
+
+## 消息、气泡、附件和标记
+
+其余组件涵盖了围绕滚动区域你在日常中所需要的各个部分。
+
+- `Message` 用头像、对齐方式、标题、内容、页脚以及分组消息来布局对话中的一行。
+- `Bubble` 渲染消息表面，支持多种变体、对齐方式、反应、链接、按钮以及可折叠内容。
+- `Attachment` 渲染文件和图片，包含媒体、元数据、上传状态、操作，以及一个保持操作区域可单独点击的整卡触发器。
+- `Marker` 渲染状态更新、系统备注、带边框的行，以及带标签的分隔符，例如流式状态、工具活动和日期分隔。
+
+它们刻意保持小巧。将它们组合起来，可用于 AI 聊天、支持收件箱、团队线程、群聊以及特定产品的对话。
+
+## scroll-fade 和 shimmer
+
+我们还为这些细节添加了两个新的 CSS 工具类，让聊天界面感觉更好。
+
+[`scroll-fade`](/docs/utils/scroll-fade) 会为滚动容器添加与滚动状态相关的边缘淡出效果。可将其用于 `MessageScroller`、`ScrollArea`、附件列表行，以及任何你希望在不添加遮罩或滚动监听器的情况下暗示还有更多内容的长列表。
+
+<ComponentPreview
+  styleName="radix-rhea"
+  name="scroll-fade-demo"
+  previewClassName="h-auto"
+/>
+
+[`shimmer`](/docs/utils/shimmer) 会为实时状态添加文本闪烁效果。可用于诸如“Thinking…”，“Generating response…”，运行中的工具，以及流式标记等场景。
+
+<ComponentPreview styleName="radix-rhea" name="shimmer-demo" />
+
+这两个工具类都包含在 `shadcn/tailwind.css` 中，因此使用 `npx shadcn@latest init` 初始化的项目已经自带它们。
+
+## @shadcn/react
+
+我们还创建了 `@shadcn/react`，一个用于无样式、headless React
+组件的新包。
+
+第一个原语是 `@shadcn/react/message-scroller`。注册表组件
+用 shadcn/ui 样式对其进行了封装，但滚动行为位于该包中：
+锚定、自动跟随、前置保留、滚动命令和可见性。
+
+这让我们能够发布行为，而不会将其绑定到某种视觉样式。你仍然可以获得
+与你的项目相匹配的复制粘贴式组件，而复杂的交互逻辑则会在一个地方保持测试。
+
+现已适用于 Radix 和 Base UI。
+
+## AI 元素
+
+这不会取代 [AI Elements](https://ai-sdk.dev/elements/overview)。你
+可以继续使用 AI Elements 来实现 AI 界面组件和模式。这个
+版本的重点是将聊天的核心部分逐个组件引入 shadcn/ui。
+
+如果你已经在使用 AI Elements 中的某个组件，就不需要
+重写你的应用。保留有效的部分。在你想要
+更现代的抽象、更新的样式，或在 Radix 和 Base UI 之间获得支持时，再尝试 shadcn/ui 版本。
+
+我们的目标是让这些部分能够轻松独立采用。替换其中一部分，
+与现有内容组合起来，然后继续构建。
+
+<Button asChild size="sm">
+  <Link href="/docs/components" className="mt-6 no-underline!">
+    查看组件
+  </Link>
+</Button>

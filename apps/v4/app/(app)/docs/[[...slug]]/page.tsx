@@ -189,7 +189,7 @@ export default async function Page(props: {
           <div className="wwads-cn wwads-vertical my-6" data-id="354" style={{ maxWidth: "200px" }} />
         </div>
         {doc.toc?.length ? (
-          <div className="no-scrollbar flex flex-col gap-8 overflow-y-auto px-8">
+          <div className="flex scroll-fade scrollbar-none flex-col gap-8 overflow-y-auto px-8">
             <DocsTableOfContents toc={doc.toc} />
           </div>
         ) : null}
