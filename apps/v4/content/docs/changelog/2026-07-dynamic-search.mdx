@@ -1,0 +1,40 @@
+---
+title: 2026 年 7 月 - 动态搜索
+description: 现在，注册表可以在服务器端处理搜索。
+date: 2026-07-31
+---
+
+**现在，注册表可以在服务器端处理搜索。**
+
+运行 `shadcn search` 时，CLI 会将搜索参数作为查询参数转发到你的
+注册表：
+
+```txt
+GET /r/registry.json?q=button&limit=50&offset=0
+```
+
+返回匹配的项目以及一个 `pagination` 对象，CLI 会原样使用你的搜索结果。这让大型注册表的搜索速度更快：不再需要下载完整目录后再进行搜索。
+
+```json title="registry.json?q=button&limit=1"
+{
+  "name": "acme",
+  "homepage": "https://acme.com",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "description": "按钮组件。"
+    }
+  ],
+  "pagination": {
+    "total": 12,
+    "offset": 0,
+    "limit": 1,
+    "hasMore": true
+  }
+}
+```
+
+动态搜索是可选功能。静态注册表会忽略查询参数，无需任何更改即可继续运行。
+
+请参阅[动态搜索](/docs/registry/dynamic-search)文档，了解完整指南。

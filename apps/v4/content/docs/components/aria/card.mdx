@@ -1,0 +1,267 @@
+---
+title: 卡片
+description: 显示带有页眉、内容和页脚的卡片。
+base: aria
+component: true
+---
+
+<ComponentPreview
+  name="card-demo"
+  styleName="aria-nova"
+  previewClassName="h-[30rem]"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add card
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="card"
+  title="components/ui/card.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+```
+
+```tsx showLineNumbers
+<Card>
+  <CardHeader>
+    <CardTitle>卡片标题</CardTitle>
+    <CardDescription>卡片描述</CardDescription>
+    <CardAction>卡片操作</CardAction>
+  </CardHeader>
+  <CardContent>
+    <p>卡片内容</p>
+  </CardContent>
+  <CardFooter>
+    <p>卡片页脚</p>
+  </CardFooter>
+</Card>
+```
+
+## 组合
+
+使用以下组合来构建一个 `Card`：
+
+```text
+Card
+├── CardHeader
+│   ├── CardTitle
+│   ├── CardDescription
+│   └── CardAction
+├── CardContent
+└── CardFooter
+```
+
+## 大小
+
+使用 `size="sm"` 属性将卡片的大小设置为小号。小号尺寸变体使用更小的间距。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="card-small"
+  previewClassName="h-96"
+/>
+
+## 间距
+
+除了 `size` 属性外，还可以使用 `--card-spacing` CSS 变量来控制各个区块之间的间距以及卡片各部分的内边距。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="card-spacing"
+  previewClassName="h-[34rem]"
+/>
+
+使用 `-mx-(--card-spacing)` 设置负外边距，可以让内容延伸到边缘，同时保持与卡片内边距对齐。当边缘延伸的内容位于页脚上方时，在 `CardContent` 上使用 `-mb-(--card-spacing)` 来移除区块间距。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="card-edge-to-edge"
+  previewClassName="h-[24rem]"
+/>
+
+## 图片
+
+在卡片标题之前添加图片，以创建带图片的卡片。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="card-image"
+  previewClassName="h-[32rem]"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="card-rtl"
+  direction="rtl"
+  previewClassName="h-[30rem]"
+/>
+
+## API 参考
+
+### Card
+
+`Card` 组件是卡片内容的根容器。
+
+| 属性        | 类型                | 默认值      |
+| ----------- | ------------------- | ----------- |
+| `size`      | `"default" \| "sm"` | `"default"` |
+| `className` | `string`            | -           |
+
+### CardHeader
+
+`CardHeader` 组件用于显示标题、描述和可选操作。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardTitle
+
+`CardTitle` 组件用于显示卡片标题。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardDescription
+
+`CardDescription` 组件用于显示标题下方的辅助文本。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardAction
+
+`CardAction` 组件将内容放置在标题区域的右上角（例如按钮或徽章）。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardContent
+
+`CardContent` 组件用于显示卡片主体内容。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### CardFooter
+
+`CardFooter` 组件用于显示卡片底部的操作和辅助内容。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+## 更新日志
+
+### 间距变量
+
+如果你要从之前版本的 `Card` 组件升级，则需要应用以下更新以使用 `--card-spacing` 变量：
+
+<Steps>
+
+<Step>更新 Card 根元素的间距类。</Step>
+
+将硬编码的间隙和垂直内边距替换为 `--card-spacing`，并在根元素上设置默认值和小尺寸值：
+
+```diff
+  className={cn(
+-   "group/card flex flex-col gap-4 overflow-hidden rounded-xl bg-card py-4 text-sm text-card-foreground ring-1 ring-foreground/10 has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
++   "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl",
+    className
+  )}
+```
+
+<Step>更新 CardHeader 的间距类。</Step>
+
+使用共享变量替换水平内边距和边框间距：
+
+```diff
+  className={cn(
+-   "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-4 group-data-[size=sm]/card:px-3 has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-4 group-data-[size=sm]/card:[.border-b]:pb-3",
++   "group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)",
+    className
+  )}
+```
+
+<Step>更新 CardContent 和 CardFooter 的间距类。</Step>
+
+使用 `--card-spacing` 设置内容内嵌间距和页脚内边距：
+
+```diff
+  function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+    return (
+      <div
+        data-slot="card-content"
+-       className={cn("px-4 group-data-[size=sm]/card:px-3", className)}
++       className={cn("px-(--card-spacing)", className)}
+        {...props}
+      />
+    )
+  }
+```
+
+```diff
+  className={cn(
+-   "flex items-center rounded-b-xl border-t bg-muted/50 p-4 group-data-[size=sm]/card:p-3",
++   "flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)",
+    className
+  )}
+```
+
+</Steps>
+
+应用这些更改后，你可以通过在 `Card` 上设置任意属性类中的 `--card-spacing` 来自定义卡片间距：
+
+```tsx
+function Example() {
+  return <Card className="[--card-spacing:--spacing(6)]">...</Card>
+}
+```

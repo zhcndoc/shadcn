@@ -1,5 +1,5 @@
 ---
-title: 日历 Calendar
+title: 日历 日历
 description: 一个允许用户输入和编辑日期的日期字段组件。
 base: radix
 component: true
@@ -83,7 +83,7 @@ return (
 
 `Calendar` 组件基于 [React DayPicker](https://react-day-picker.js.org) 构建。
 
-## Date Picker
+## 日期选择器
 
 您可以使用 `<Calendar>` 组件构建日期选择器。更多信息请参阅 [日期选择器](/docs/components/date-picker) 页面。
 
@@ -131,9 +131,7 @@ export function CalendarWithTimezone() {
 
 **为什么是客户端？** 时区是通过在 `useEffect` 中使用 `Intl.DateTimeFormat().resolvedOptions().timeZone` 来检测的，以确保与服务器端渲染的兼容性。在渲染期间检测时区会导致水合不匹配，因为服务器和客户端可能处于不同的时区。
 
-## 示例
-
-### 基础
+## 基础
 
 基础日历组件。我们使用了 `className="rounded-lg border"` 来样式化日历。
 
@@ -143,7 +141,7 @@ export function CalendarWithTimezone() {
   previewClassName="h-96"
 />
 
-### 范围日历
+## 范围日历
 
 使用 `mode="range"` 属性启用范围选择。
 
@@ -153,7 +151,7 @@ export function CalendarWithTimezone() {
   previewClassName="h-[36rem] md:h-96"
 />
 
-### 月份和年份选择器
+## 月份和年份选择器
 
 使用 `captionLayout="dropdown"` 显示月份和年份下拉框。
 
@@ -163,7 +161,7 @@ export function CalendarWithTimezone() {
   previewClassName="h-96"
 />
 
-### 预设
+## 预设
 
 <ComponentPreview
   styleName="radix-nova"
@@ -171,7 +169,7 @@ export function CalendarWithTimezone() {
   previewClassName="h-[650px]"
 />
 
-### 日期和时间选择器
+## 日期和时间选择器
 
 <ComponentPreview
   styleName="radix-nova"
@@ -179,7 +177,7 @@ export function CalendarWithTimezone() {
   previewClassName="h-[600px]"
 />
 
-### 已预订日期
+## 已预订日期
 
 <ComponentPreview
   styleName="radix-nova"
@@ -187,7 +185,7 @@ export function CalendarWithTimezone() {
   previewClassName="h-96"
 />
 
-### 自定义单元格大小
+## 自定义单元格大小
 
 <ComponentPreview
   styleName="radix-nova"
@@ -219,7 +217,7 @@ export function CalendarWithTimezone() {
 />
 ```
 
-### 显示周数
+## 周数
 
 使用 `showWeekNumber` 属性显示周数。
 
@@ -233,7 +231,7 @@ export function CalendarWithTimezone() {
 
 要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
-请参阅 [Hijri Guide](#persian--hijri--jalali-calendar) 以启用波斯历 / 希吉拉历 / 贾拉利历。
+请参阅 [希吉拉历指南](#persian--hijri--jalali-calendar) 以启用波斯历 / 希吉拉历 / 贾拉利历。
 
 <ComponentPreview
   styleName="radix-nova"

@@ -1,0 +1,302 @@
+---
+title: 气泡
+description: 在消息气泡中显示对话内容。支持变体、对齐、分组、反应和可折叠内容。
+base: aria
+component: true
+---
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="bubble-demo"
+  previewClassName="h-auto theme-blue"
+/>
+
+`Bubble` 组件用于显示带边框的对话内容。可将其用于聊天文本、简短的结构化输出、引用回复、建议和反应。
+
+如需功能完整的聊天界面，请使用 [`Message`](/docs/components/aria/message) 组件。`Bubble` 专门用于气泡表面。请将头像、名称、时间戳、元数据和消息级操作放置在 [`Message`](/docs/components/aria/message) 中。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add bubble
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="bubble"
+  title="components/ui/bubble.tsx"
+  styleName="aria-rhea"
+/>
+
+<Step>更新导入路径，使其与你的项目设置相匹配。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Bubble, BubbleContent, BubbleReactions } from "@/components/ui/bubble"
+```
+
+```tsx showLineNumbers
+<Bubble>
+  <BubbleContent>
+    我检查了注册表输出，并移除了过时的路由。
+  </BubbleContent>
+  <BubbleReactions>
+    <span>👍</span>
+  </BubbleReactions>
+</Bubble>
+```
+
+## 组合
+
+使用以下组合来构建气泡：
+
+```text
+Bubble
+├── BubbleContent
+└── BubbleReactions
+```
+
+使用 `BubbleGroup` 将来自同一发送者的连续气泡分组：
+
+```text
+BubbleGroup
+├── Bubble
+│   └── BubbleContent
+└── Bubble
+    └── BubbleContent
+```
+
+## 功能
+
+- 七种视觉变体，从醒目的主要气泡到无边框的幽灵内容
+- 发送方和接收方气泡的起始和结束对齐方式
+- 反应固定在气泡边缘，并可配置位置和对齐方式
+- 气泡大小根据其内容调整，最大不超过容器宽度的 80%
+- 通过 `render` 为链接和按钮气泡提供多态内容
+- 通过每个部分的 `className` 属性自定义样式
+
+## 变体
+
+使用 `variant` 更改气泡的视觉样式。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="bubble-variants"
+  previewClassName="h-auto theme-blue"
+/>
+
+| 变体          | 描述                                  |
+| ------------- | ------------------------------------- |
+| `default`     | 强调的主色气泡，通常用于当前用户。    |
+| `secondary`   | 用于对话内容的标准中性色气泡。        |
+| `muted`       | 用于低调辅助内容的弱强调气泡。        |
+| `tinted`      | 微妙的主色调气泡。                    |
+| `outline`     | 用于次要或丰富内容的带边框气泡。      |
+| `ghost`       | 用于助手文本或丰富内容的无框内容。    |
+| `destructive` | 用于错误或失败操作的破坏性气泡。      |
+
+气泡会根据其内容调整大小，最大不超过容器宽度的 80%。`ghost` 变体会移除最大宽度限制，使助手文本和丰富内容可以横跨整行。
+
+## 对齐
+
+在 `Bubble` 上使用 `align`，将气泡对齐到对话的起始位置或结束位置。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="bubble-alignment"
+  previewClassName="h-auto theme-blue"
+/>
+
+| align   | 描述                                   |
+| ------- | -------------------------------------- |
+| `start` | 将气泡对齐到对话的起始位置。           |
+| `end`   | 将气泡对齐到对话的结束位置。           |
+
+**注意：** 构建聊天界面时，你可能需要在 `Message` 组件本身上使用对齐功能，而不是在 `Bubble` 组件上使用。你可以在 `Message` 组件上使用 `role` 属性，自动将气泡对齐到对话的起始位置或结束位置。
+
+## 气泡组
+
+使用 `BubbleGroup` 将来自同一发送者的连续气泡进行分组。请注意，`align` 属性应设置在 `Bubble` 组件本身上，而不是 `BubbleGroup` 组件上。
+
+```text
+BubbleGroup
+├── Bubble
+│   └── BubbleContent
+└── Bubble
+    └── BubbleContent
+```
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="bubble-group-demo"
+  previewClassName="h-auto theme-blue"
+/>
+
+## 链接和按钮
+
+你可以通过在 `BubbleContent` 上使用 `render` 属性，将气泡变成链接或按钮。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="bubble-link-button"
+  previewClassName="h-auto theme-blue"
+/>
+
+```tsx showLineNumbers
+import { Bubble, BubbleContent } from "@/components/ui/bubble"
+
+export function BubbleLinkDemo() {
+  return (
+    <Bubble variant="muted">
+      <BubbleContent render={(props) => <button {...props} type="button" />}>
+        点击这里
+      </BubbleContent>
+    </Bubble>
+  )
+}
+```
+
+## 反应
+
+使用 `BubbleReactions` 添加气泡反应。你可以使用它来显示反应或快捷操作按钮。使用 `side` 和 `align` 来定位该行的位置——`side="top"` 会将其固定在上边缘。反应会与气泡边缘重叠，因此请在各行之间留出垂直空间——下面的示例使用了较大的 `gap`，原因就在于此。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="bubble-reactions"
+  previewClassName="h-auto theme-blue"
+/>
+
+## 显示更多 / 可折叠
+
+较长的气泡内容可以与 [`Collapsible`](/docs/components/aria/collapsible) 组合使用，以实现显示更多或显示更少的交互。使用 `CollapsibleTrigger` 组件来触发可折叠内容。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="bubble-collapsible"
+  previewClassName="h-auto theme-blue"
+/>
+
+## 工具提示
+
+将气泡包裹在 [`工具提示`](/docs/components/aria/tooltip) 中，以便在悬停时显示元数据，例如消息的已读状态。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="bubble-tooltip"
+  previewClassName="h-auto theme-blue"
+/>
+
+## 气泡提示框
+
+将气泡与 [`Popover`](/docs/components/aria/popover) 配对，以便按需显示更多信息，例如操作失败时的完整错误消息。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="bubble-popover"
+  previewClassName="h-auto theme-blue"
+/>
+
+## 无障碍
+
+`Bubble` 用于渲染呈现性消息表面。请将对话级语义保留在外围容器上，并遵循以下指南。
+
+### 标记反应
+
+反应会以一行表情符号的形式呈现。屏幕阅读器会在没有上下文的情况下读出每个字符，而像 `+8` 这样的计数器会被读作“加八”。请将这一行组合为单个图像，并使用描述性的 `aria-label`，使其只播报一次。`role="img"` 还会对辅助技术隐藏单个表情符号，因此无需使用 `aria-hidden`。
+
+```tsx showLineNumbers
+<BubbleReactions role="img" aria-label="反应：点赞、火焰，以及另外 8 个">
+  <span>👍</span>
+  <span>🔥</span>
+  <span>+8</span>
+</BubbleReactions>
+```
+
+当反应具有交互性时，请改为渲染按钮，并为仅包含图标的按钮提供 `aria-label`。
+
+```tsx showLineNumbers
+<BubbleReactions>
+  <Button aria-label="点赞" variant="secondary" size="icon-xs">
+    <ThumbsUpIcon />
+  </Button>
+</BubbleReactions>
+```
+
+### 可交互气泡
+
+当气泡可点击时，请使用 `render` 属性将其渲染为真正的 `<button>` 或 `<a>`，使其可获得焦点并公开正确的角色。`BubbleContent` 为可交互元素提供可见的焦点环，而可访问名称来自气泡文本。无需额外的标签。
+
+```tsx showLineNumbers
+<Bubble variant="muted" align="end">
+  <BubbleContent
+    render={(props) => <button {...props} type="button" onClick={onReply} />}
+  >
+    我忘记了密码
+  </BubbleContent>
+</Bubble>
+```
+
+### 超越颜色的含义
+
+气泡变体通过颜色传达角色和语气。请将其与文本、对齐方式或图标结合使用，确保含义不只通过颜色传达。对于 `destructive` 气泡，请将错误上下文保留在消息文本中，而不要依赖颜色样式。
+
+## API 参考
+
+### Bubble
+
+气泡根包装器。
+
+| 属性        | 类型                                                                                       | 默认值      | 描述                                      |
+| ----------- | ------------------------------------------------------------------------------------------ | ----------- | ----------------------------------------- |
+| `variant`   | `"default" \| "secondary" \| "muted" \| "tinted" \| "outline" \| "ghost" \| "destructive"` | `"default"` | 气泡的视觉样式。                          |
+| `align`     | `"start" \| "end"`                                                                         | `"start"`   | 气泡的行内对齐方式。                      |
+| `className` | `string`                                                                                   | -           | 应用于根元素的其他类名。                  |
+
+### BubbleContent
+
+气泡内容包装器。
+
+| 属性        | 类型                       | 默认值 | 描述                                               |
+| ----------- | -------------------------- | ------- | -------------------------------------------------- |
+| `render`    | `ReactElement \| function` | -       | 将内容渲染为其他元素，例如链接。                   |
+| `className` | `string`                   | -       | 应用于内容元素的其他类名。                         |
+
+### BubbleReactions
+
+显示气泡的重叠反应。
+
+| 属性        | 类型                | 默认值     | 描述                                      |
+| ----------- | ------------------- | ---------- | ----------------------------------------- |
+| `side`      | `"top" \| "bottom"` | `"bottom"` | 反应所锚定的气泡一侧。                    |
+| `align`     | `"start" \| "end"`  | `"end"`    | 反应的行内对齐方式。                      |
+| `className` | `string`            | -          | 应用于反应行的其他类名。                  |
+
+### BubbleGroup
+
+将来自同一发送者的连续气泡分组。
+
+| 属性        | 类型     | 默认值 | 描述                                    |
+| ----------- | -------- | ------- | --------------------------------------- |
+| `className` | `string` | -       | 应用于分组根元素的其他类名。            |

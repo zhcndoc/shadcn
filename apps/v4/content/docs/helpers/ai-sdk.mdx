@@ -1,0 +1,837 @@
+---
+title: AI SDK
+description: 创建 AI SDK 消息，并通过 useChat 流式传输预定义对话，无需模型、API 路由、网络请求或 API 密钥。
+---
+
+`@shadcn/helpers/ai-sdk` 让你可以用代码编写 AI 对话，并通过 `useChat` 进行流式传输，
+无需模型、API 路由、网络请求或 API 密钥。
+
+由于对话通过真实的 `useChat` 生命周期进行流式传输，你的组件行为
+会与生产环境中的表现完全一致。
+
+它支持 AI SDK 支持的所有部分类型：推理、工具、数据、文件、
+来源和自定义部分。
+
+```ts showLineNumbers
+import { createChat } from "@shadcn/helpers/ai-sdk"
+
+const chat = createChat()
+  .user("What changed in this release?")
+  .assistant("The release adds keyboard shortcuts and faster search.")
+  .user("Can you show me the shortcuts?")
+  .assistant("Press ⌘K to search and ⌘Enter to submit.")
+```
+
+将聊天及其初始消息和本地传输传递给 `useChat`。
+`useChat` 接收的 `UIMessage[]` 类型与它从流式响应中获得的类型相同。
+
+```tsx showLineNumbers
+import { useChat } from "@ai-sdk/react"
+
+function Chat() {
+  const { messages, sendMessage } = useChat({
+    messages: chat.get(0), // 初始状态不包含任何消息。
+    transport: chat.transport(),
+  })
+
+  const nextMessage = chat.next(messages)
+
+  return (
+    <button
+      disabled={!nextMessage}
+      onClick={() => {
+        if (nextMessage) {
+          void sendMessage(nextMessage)
+        }
+      }}
+    >
+      Send next message
+    </button>
+  )
+}
+```
+
+`get(0)` 的初始状态不包含任何消息。`sendMessage(nextMessage)` 会发送下一条
+预定义的用户消息；随后传输会流式传输对应的助手响应。
+
+---
+
+## 用途
+
+该辅助工具将聊天 UI 与模型和后端解耦，让你可以独立开发前端。它无需联网即可运行、响应迅速，并且每次运行的结果都完全一致。
+
+- **构建组件。** 基于逼真的流式输出开发消息气泡、工具卡片和推理面板，无需先接入模型。
+- **预览和演示。** 发布可复现的预览、截图和视频，完全不依赖实时模型。
+- **编写文档。** 使用每次加载时渲染结果都相同的对话，为文档示例提供支持。
+- **测试。** 在 CI 中针对确定性流进行断言，无需网络请求、消耗令牌，也不会受到不稳定的模型输出影响。
+
+---
+
+## 安装
+
+```bash
+npm install @shadcn/helpers
+```
+
+此辅助工具可与您现有的 AI SDK 配置（`ai` 和
+`@ai-sdk/react`）配合使用。请从 `@shadcn/helpers/ai-sdk` 导入这些辅助工具。
+
+---
+
+## 用法
+
+创建一个对话，将其消息和传输方式传递给 `useChat`，然后使用 `next()` 发送每条预定义的用户消息。
+
+```tsx showLineNumbers {3-4,6-10,12-13,16-21,28-34}
+"use client"
+
+import { useChat } from "@ai-sdk/react"
+import { createChat } from "@shadcn/helpers/ai-sdk"
+
+const chat = createChat()
+  .user("What changed in this release?")
+  .assistant("The release adds keyboard shortcuts and faster search.")
+  .user("Can you show me the shortcuts?")
+  .assistant("Press ⌘K to search and ⌘Enter to submit.")
+
+const initialMessages = chat.get(0)
+const transport = chat.transport()
+
+export function Chat() {
+  const { messages, sendMessage, status } = useChat({
+    messages: initialMessages,
+    transport,
+  })
+  const nextMessage = chat.next(messages)
+  const isBusy = status === "submitted" || status === "streaming"
+
+  return (
+    <div>
+      {messages.map((message) => (
+        <div key={message.id}>{/* 渲染消息 */}</div>
+      ))}
+      <button
+        disabled={!nextMessage || isBusy}
+        onClick={() => {
+          if (nextMessage && !isBusy) {
+            void sendMessage(nextMessage)
+          }
+        }}
+      >
+        Send
+      </button>
+    </div>
+  )
+}
+```
+
+<ComponentPreview
+  styleName="base-rhea"
+  name="ai-sdk-helper-demo"
+  className="rounded-[34px] sm:rounded-4xl"
+  previewClassName="h-auto theme-blue bg-surface p-4 min-[480px]:p-8 min-[560px]:p-10 sm:px-10 sm:py-16 dark:bg-background"
+/>
+
+---
+
+## 用户消息
+
+使用此辅助函数添加的消息会使用 `user` 和 `assistant` 角色。当你使用 `createChat({ messages })` 开始时，现有的 AI SDK 消息会被保留。
+
+```ts
+const chat = createChat().user("What changed in this release?")
+
+const [message] = chat.get()
+
+message.role // "user"
+message.parts // [{ type: "text", text: "What changed in this release?" }]
+```
+
+当你需要传递 `id` 或元数据时，将其作为第二个参数传入。
+
+```ts
+chat.user("What changed in this release?", {
+  id: "user-release-question",
+  metadata: {
+    source: "docs",
+  },
+})
+```
+
+用户消息也可以包含文件。请参阅[文件](#files)。
+
+---
+
+## Assistant 消息
+
+使用 `assistant()` 添加一条 assistant 消息。
+
+```ts
+const chat = createChat().assistant(
+  "The release adds keyboard shortcuts and faster search."
+)
+
+const [message] = chat.get()
+
+message.role // "assistant"
+message.parts // [{ type: "text", text: "The release adds...", state: "done" }]
+```
+
+字符串会创建一个文本部分。你也可以传入 AI SDK 消息部分的数组。
+
+```ts
+chat.assistant([
+  { type: "text", text: "The release adds keyboard shortcuts." },
+  { type: "text", text: "Search is faster too." },
+])
+```
+
+当消息不仅包含纯文本时，请使用 writer 回调。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.reasoning("I should summarize the release.")
+  writer.text("The release adds keyboard shortcuts and faster search.")
+})
+```
+
+writer 会按照调用顺序添加各个部分。
+
+---
+
+## 消息部分
+
+助手消息可以包含许多部分类型。使用传递给 `assistant()` 的
+`writer` 按调用顺序添加它们：
+
+- [文本](#text)和[推理](#reasoning)
+- [工具调用](#tool-calls)
+- [数据](#data)
+- [文件](#files)和[来源](#sources)
+- [步骤开始](#step-starts)和[自定义部分](#custom-parts)
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.reasoning("Let me check the weather.")
+  writer
+    .tool("getWeather", { input: { city: "San Francisco" } })
+    .output({ city: "San Francisco", temperature: 18, condition: "Breezy" })
+  writer.text("It is 18°C and breezy in San Francisco.")
+})
+```
+
+---
+
+## 文本
+
+使用 `text()` 添加文本部分。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.text("The release adds keyboard shortcuts.")
+  writer.text(" Search is faster too.")
+})
+```
+
+每次调用都会创建一个单独的文本部分。当聊天与 `chat.transport()` 一起使用时，文本会逐词进行流式传输。
+
+使用 `mode: "instant"` 一次性发送整个部分，或使用 `delayMs` 更改文本增量之间的延迟。
+
+```ts
+writer.text("Done.", { mode: "instant" })
+writer.text("This part streams more slowly.", { delayMs: 100 })
+```
+
+当文本部分需要稳定的标识符时，传入 `id`。
+
+```ts
+writer.text("The final answer.", { id: "answer" })
+```
+
+---
+
+## 推理
+
+使用 `reasoning()` 添加推理部分。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.reasoning("I should check the latest conditions first.")
+  writer.text("Let me check the weather.")
+})
+```
+
+推理使用与文本相同的 `id`、`delayMs` 和 `mode` 选项。
+
+```ts
+writer.reasoning("Checking the forecast.", { mode: "instant" })
+```
+
+---
+
+## 工具调用
+
+使用 `tool()` 添加工具调用。它会返回一个从输入到输出跟随该工具的句柄。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer
+    .tool("getWeather", {
+      title: "Checking weather",
+      input: { city: "San Francisco" },
+    })
+    .sleep(900)
+    .output({
+      city: "San Francisco",
+      temperature: 18,
+      condition: "Breezy",
+    })
+
+  writer.text("It is 18°C and breezy in San Francisco.")
+})
+```
+
+工具可以通过 `output()`、`error()` 或 `denied()` 完成。
+
+```ts
+writer.tool("getWeather", { input: { city: "San Francisco" } }).error()
+
+writer.tool("getWeather", { input: { city: "San Francisco" } }).denied()
+```
+
+传入 `dynamic: true`，即可创建 AI SDK 的 `dynamic-tool` 部分，而不是类型化的
+`tool-<name>` 部分。
+
+```ts
+writer.tool("getWeather", {
+  dynamic: true,
+  input: { city: "San Francisco" },
+  output: { city: "San Francisco", temperature: 18, condition: "Breezy" },
+})
+```
+
+将工具定义传递给 `createChat`，即可为工具名称、输入和输出指定类型。
+
+```ts
+type Tools = {
+  getWeather: {
+    input: { city: string }
+    output: { city: string; temperature: number; condition: string }
+  }
+}
+
+type DataParts = Record<string, never>
+
+const chat = createChat<unknown, DataParts, Tools>()
+```
+
+---
+
+## 数据
+
+使用 `data()` 添加一个具有类型的 `data-*` 部分。
+
+```ts
+type DataParts = {
+  weather: {
+    city: string
+    status: "loading" | "success"
+    temperature?: number
+    condition?: string
+  }
+}
+
+const chat = createChat<unknown, DataParts>().assistant(({ writer }) => {
+  writer.data({
+    type: "data-weather",
+    id: "weather-sf",
+    data: { city: "San Francisco", status: "loading" },
+  })
+})
+```
+
+再次发送相同的 `type` 和 `id`，即可就地更新该部分。这对于从加载到成功等状态转换非常有用。
+
+```ts
+writer.data({
+  type: "data-weather",
+  id: "weather-sf",
+  data: {
+    city: "San Francisco",
+    status: "success",
+    temperature: 27,
+    condition: "Breezy",
+  },
+})
+```
+
+将 `transient: true` 设置为 `true`，即可让更新流式传输到客户端，但不会保留在最终消息中。
+
+```ts
+writer.data({
+  type: "data-weather",
+  data: { city: "San Francisco", status: "loading" },
+  transient: true,
+})
+```
+
+---
+
+## 文件
+
+使用 `files` 选项将文件添加到用户消息中。
+
+```ts
+chat.user("Summarize this report.", {
+  files: [
+    {
+      filename: "report.pdf",
+      mediaType: "application/pdf",
+      url: "https://example.com/report.pdf",
+    },
+  ],
+})
+```
+
+使用 `file()` 将文件添加到助手消息中。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.file({
+    filename: "summary.md",
+    mediaType: "text/markdown",
+    url: "https://example.com/summary.md",
+  })
+})
+```
+
+使用 `reasoningFile()` 将文件附加到推理部分。
+
+```ts
+writer.reasoningFile({
+  filename: "notes.txt",
+  mediaType: "text/plain",
+  url: "https://example.com/notes.txt",
+})
+```
+
+---
+
+## 来源
+
+使用 `sourceUrl()` 添加 URL 来源。
+
+```ts
+writer.sourceUrl({
+  sourceId: "source-1",
+  title: "Release notes",
+  url: "https://example.com/releases",
+})
+```
+
+使用 `sourceDocument()` 添加文档来源。
+
+```ts
+writer.sourceDocument({
+  sourceId: "source-2",
+  title: "Product brief",
+  mediaType: "application/pdf",
+  filename: "brief.pdf",
+})
+```
+
+---
+
+## 步骤开始
+
+使用 `stepStart()` 添加 AI SDK 步骤边界。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.stepStart()
+  writer.reasoning("I should search the release notes.")
+  writer.stepStart()
+  writer.text("Here is what changed.")
+})
+```
+
+---
+
+## 自定义部件
+
+使用 `custom()` 添加自定义部件。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.custom("app.approval")
+})
+```
+
+消息会收到一个具有给定 `kind` 的 `custom` 部件。AI SDK 要求 `kind` 使用 `{provider}.{provider-type}` 格式。不带 `kind` 调用 `custom()` 时，将使用 `"test.output"`。
+
+---
+
+## 读取消息
+
+使用 `get()` 从对话开头返回消息。
+
+```ts
+chat.get() // 每条消息。
+chat.get(2) // 前两条消息。
+chat.get(0) // 空的初始对话。
+```
+
+`get()` 返回消息的克隆副本，不会更改聊天内容。
+
+使用 `next()` 在已显示的消息之后查找下一条预定义的用户消息。
+
+```ts
+const initialMessages = chat.get(2)
+const nextMessage = chat.next(initialMessages)
+```
+
+`next()` 始终接受消息记录，而不是索引。当没有剩余消息时，它会返回下一条用户消息或 `null`。
+
+---
+
+## 从现有消息开始
+
+传入 `messages`，以便从已保存的对话或固定数据继续。
+
+```ts
+import { createChat } from "@shadcn/helpers/ai-sdk"
+import type { UIMessage } from "ai"
+
+declare const savedMessages: UIMessage[]
+
+const chat = createChat({ messages: savedMessages })
+  .user("What should we do next?")
+  .assistant("Turn the open questions into a checklist.")
+```
+
+现有的 ID、元数据和部分内容都会被保留。
+
+---
+
+## 传输
+
+`transport()` 创建一个 AI SDK `ChatTransport`，你可以将其直接传递给
+`useChat`。
+
+```ts
+const transport = chat.transport()
+
+const { messages, sendMessage } = useChat({
+  messages: chat.get(0),
+  transport,
+})
+```
+
+当运行 `sendMessage()` 时，传输会查找当前对话记录之后的 assistant 消息，并通过标准的 AI SDK 聊天生命周期对其进行流式传输。它会优先使用消息 ID，如果找不到，则会匹配最新消息的角色和文本。
+
+### 选项
+
+| 选项       | 类型                                       | 默认值  | 描述                                                        |
+| ---------- | ------------------------------------------ | ------- | ----------------------------------------------------------- |
+| `delayMs`  | `number`                                   | `50`    | 文本增量和推理增量之间的延迟。使用 `0` 或 `undefined` 可移除延迟。 |
+| `fallback` | `string`、`UIMessagePart[]` 或回调函数 | 无      | 没有预定义 assistant 响应时的流式响应。                    |
+
+传输级别的 `delayMs` 是每个流式文本和推理部分的默认值。你可以通过
+`writer.text(..., { delayMs })` 或 `writer.reasoning(..., { delayMs })`
+为某个部分覆盖该值。
+
+```ts
+const transport = chat.transport({
+  delayMs: 25,
+})
+```
+
+### 回退响应
+
+当对话中没有剩余的预定义 assistant 响应时，可以使用 `fallback`。这样，即使预定义回复已经耗尽，演示仍然可以继续使用。
+
+```ts
+const transport = chat.transport({
+  fallback: "This demo has no more predefined replies.",
+})
+```
+
+回退响应也可以是 AI SDK 消息部分数组或 writer 回调。该回调会接收传入的对话记录，因此可以根据当前状态创建响应。
+
+```ts
+const transport = chat.transport({
+  fallback: ({ writer, messages }) => {
+    writer.text(`This example already has ${messages.length} messages.`, {
+      mode: "instant",
+    })
+  },
+})
+```
+
+回退响应会像 assistant 响应一样进行流式传输，但不会添加到预定义对话中。如果没有提供回退响应，当对话耗尽时，传输会抛出
+`"No assistant response found for this transcript."`。
+
+从 `useChat` 调用 `stop()` 会中止活动的传输流。不支持重新连接；`reconnectToStream()` 会返回 `null`。
+
+---
+
+## 时序
+
+使用延迟来重现真实响应的节奏。
+
+```ts
+const chat = createChat()
+  .user("Give me a project update.")
+  .sleep(800)
+  .assistant(({ writer }) => {
+    writer.text("The first milestone is complete.", { mode: "instant" })
+    writer.sleep(500)
+    writer.text(" The next one is ready.")
+  })
+
+const transport = chat.transport({ delayMs: 50 })
+```
+
+- `chat.sleep(ms)` 会在下一次助手响应开始前等待。
+- `writer.sleep(ms)` 会在助手响应的各个部分之间等待。
+- `tool.sleep(ms)` 会在工具的输入和结果之间等待。
+- `transport({ delayMs })` 设置文本增量和推理增量之间的默认延迟。
+- `writer.text(text, { delayMs })` 和 `writer.reasoning(text, { delayMs })` 会为某个部分覆盖该延迟。
+- `mode: "instant"` 会将整个文本或推理部分一次性发送为一个增量。
+
+如需进行快速测试，请使用 `chat.transport({ delayMs: 0 })` 和即时文本。
+
+---
+
+## 错误
+
+当整个助手响应都应失败时，在聊天中使用 `error()`。
+
+```ts
+const chat = createChat()
+  .user("Load the report.")
+  .error("The report could not be loaded.")
+```
+
+在其他部分已经流式传输后，使用 `writer.error()` 使其失败。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.text("I found the report.")
+  writer.error("The connection closed before it could be read.")
+})
+```
+
+---
+
+## 元数据和 ID
+
+在单条消息上添加元数据。其类型会通过 `get()`、
+`next()` 和传输过程得到保留。
+
+```ts
+type Metadata = {
+  model: string
+}
+
+const chat = createChat<Metadata>()
+  .user("Hello", { metadata: { model: "demo" } })
+  .assistant("Hi.", {
+    id: "assistant-welcome",
+    metadata: { model: "demo" },
+  })
+```
+
+当测试样例需要自定义前缀或固定时钟时，使用聊天选项。
+
+```ts
+const chat = createChat({
+  messageIdPrefix: "demo-message",
+  toolCallIdPrefix: "demo-tool",
+  sourceIdPrefix: "demo-source",
+  now: "2026-01-01T00:00:00.000Z",
+})
+```
+
+---
+
+## API 参考
+
+上面的章节介绍了常见流程。本参考列出了每个公共导出项和选项。
+
+### `createChat()`
+
+创建一个类型化会话，并返回流式聊天接口。
+
+```ts
+function createChat<
+  METADATA = unknown,
+  DATA_PARTS extends UIDataTypes = UIDataTypes,
+  TOOLS extends UITools = UITools,
+>(
+  options?: CreateChatOptions<METADATA, DATA_PARTS, TOOLS>
+): AiSdkChat<METADATA, DATA_PARTS, TOOLS>
+```
+
+#### 类型参数
+
+| 参数         | 描述                                                   |
+| ------------ | ------------------------------------------------------ |
+| `METADATA`   | 存储在每条 `UIMessage` 上的元数据结构。                |
+| `DATA_PARTS` | 用于类型化 `data-*` 部分的名称到负载的映射。           |
+| `TOOLS`      | 工具名称到其 `input` 和 `output` 结构的映射。          |
+
+#### 选项
+
+| 选项              | 类型                                       | 默认值                       | 描述                                                   |
+| ----------------- | ------------------------------------------ | ---------------------------- | ------------------------------------------------------ |
+| `messages`        | `UIMessage<METADATA, DATA_PARTS, TOOLS>[]` | `[]`                         | 从现有会话记录开始。消息会被克隆。                     |
+| `messageIdPrefix` | `string`                                   | `"msg"`                      | 生成的消息 ID 的前缀。                                  |
+| `toolCallIdPrefix` | `string`                                  | `"call"`                     | 生成的工具调用 ID 的前缀。                              |
+| `sourceIdPrefix`  | `string`                                   | `"source"`                   | 生成的来源 ID 的前缀。                                  |
+| `now`             | `Date \| string`                           | `"2026-01-01T00:00:00.000Z"` | 用于生成 `createdAt` 元数据的固定时间。                 |
+
+`messages` 中已有的 ID 会被保留，因此新生成的 ID 会从现有会话记录之后继续生成。
+
+### `AiSdkChat`
+
+每个添加内容的方法都会返回同一个聊天实例，因此可以链式调用。
+
+| 方法                         | 返回值              | 描述                                                   |
+| ---------------------------- | ------------------- | ------------------------------------------------------ |
+| `user(text?, options?)`       | `AiSdkChat`         | 添加一条包含文本和可选文件的用户消息。                 |
+| `assistant(input?, options?)` | `AiSdkChat`         | 根据文本、部件或 writer 回调添加一条助手消息。          |
+| `sleep(delayMs)`              | `AiSdkChat`         | 在下一条助手响应开始前等待。                            |
+| `error(errorText?)`           | `AiSdkChat`         | 添加一条会产生错误的助手响应。                          |
+| `get(count?)`                 | `UIMessage[]`       | 返回从会话开始处克隆的消息。                            |
+| `next(messages)`              | `UIMessage \| null` | 返回转录内容之后下一条预定义的用户消息。                |
+| `transport(options?)`         | `ChatTransport`     | 创建供 `useChat` 使用的传输实例。                       |
+
+不带内容调用 `user()` 或 `assistant()` 时，会使用
+`"总结上传的收据。"`。不带消息调用 `error()` 时，会使用
+`"发生错误。"`。当 `count` 为负数或不是整数时，`get(count)` 会抛出异常。
+
+#### `user()` 选项
+
+| 选项       | 类型            | 描述                                  |
+| ---------- | --------------- | ------------------------------------- |
+| `id`       | `string`        | 使用指定的消息 ID。                    |
+| `metadata` | `METADATA`      | 设置此消息的元数据。                    |
+| `files`    | `FilePayload[]` | 将文件部件追加到用户文本部件之后。      |
+
+用户文件的结构如下：
+
+```ts
+type FilePayload = {
+  type?: "file"
+  mediaType: string
+  url: string
+  filename?: string
+  providerMetadata?: Record<string, unknown>
+}
+```
+
+#### `assistant()` 输入
+
+| 输入                   | 结果                                                        |
+| ---------------------- | ----------------------------------------------------------- |
+| `string`               | 一个按单词逐个流式传输的文本部件。                           |
+| `UIMessagePart[]`       | 按其现有顺序流式传输的静态 AI SDK 部件。                     |
+| `({ writer }) => void` | 用于编写部件、工具、错误和时间安排脚本的同步回调。            |
+
+#### `assistant()` 选项
+
+| 选项       | 类型       | 描述                       |
+| ---------- | ---------- | -------------------------- |
+| `id`       | `string`   | 使用指定的消息 ID。         |
+| `metadata` | `METADATA` | 设置此消息的元数据。         |
+
+#### `transport()` 选项
+
+| 选项       | 类型                                                          | 默认值 | 描述                                                                        |
+| ---------- | ------------------------------------------------------------- | ------- | --------------------------------------------------------------------------- |
+| `delayMs`  | `number`                                                      | `50`    | 文本增量和推理增量之间的延迟。使用 `0` 或 `undefined` 可移除此延迟。          |
+| `fallback` | `string \| UIMessagePart[] \| ({ writer, messages }) => void` | 无      | 没有剩余预定义助手响应时使用的响应。                                          |
+
+参见[传输](#transport)，了解匹配、回退、中止和流式传输行为。
+
+### Writer
+
+writer 可在 `assistant(({ writer }) => {})` 和回退回调中使用。
+
+| 方法                       | 描述                                                       |
+| -------------------------- | ---------------------------------------------------------- |
+| `text(text?, options?)`      | 添加文本部分。                                             |
+| `reasoning(text?, options?)` | 添加推理部分。                                             |
+| `tool(name, options?)`       | 添加类型化或动态工具调用，并返回其生命周期句柄。           |
+| `data(part)`                 | 添加或更新类型化数据部分。                                 |
+| `file(options?)`             | 添加文件部分。                                             |
+| `reasoningFile(options?)`    | 添加推理文件部分。                                         |
+| `sourceUrl(options?)`        | 添加 URL 来源部分。                                        |
+| `sourceDocument(options?)`   | 添加文档来源部分。                                         |
+| `stepStart()`                | 添加 AI SDK 步骤边界。                                     |
+| `custom(kind?)`              | 添加具有指定 `kind` 的自定义部分。                         |
+| `sleep(delayMs)`             | 在下一个 writer 事件之前暂停。                             |
+| `error(errorText?)`           | 发出错误并结束响应，不包含 `finish` 块。                   |
+
+不带内容调用 `text()` 时，使用 `"Summarize the uploaded receipt."`。
+不带内容调用 `reasoning()` 时，使用
+`"I need to inspect the available context before answering."`。不带消息调用
+`error()` 时，使用 `"An error occurred."`。
+
+#### 文本和推理选项
+
+| 选项      | 类型                    | 默认值     | 描述                                                   |
+| --------- | ----------------------- | ---------- | ------------------------------------------------------ |
+| `id`      | `string`                | 自动生成   | 使用稳定的部分 ID。                                    |
+| `delayMs` | `number`                | 传输层     | 覆盖此部分的传输延迟。                                 |
+| `mode`    | `"stream" \| "instant"` | `"stream"` | 流式传输单词增量，或在一个增量中发出整个部分。         |
+
+#### 工具选项
+
+| 选项               | 类型                      | 描述                                               |
+| ------------------ | ------------------------- | -------------------------------------------------- |
+| `toolCallId`       | `string`                  | 使用特定的工具调用 ID。                            |
+| `title`            | `string`                  | 为工具部分添加显示标题。                           |
+| `toolMetadata`     | `Record<string, unknown>` | 添加提供商或应用程序元数据。                       |
+| `providerExecuted` | `boolean`                 | 标记该调用已由提供商执行。                         |
+| `input`            | `TOOLS[NAME]["input"]`    | 设置类型化工具输入。                               |
+| `output`           | `TOOLS[NAME]["output"]`   | 立即以类型化输出结束。                             |
+| `errorText`        | `string`                  | 立即以错误结束。                                   |
+| `dynamic`          | `boolean`                 | 发出 `dynamic-tool` 部分，而不是 `tool-<name>`。   |
+
+`tool()` 返回一个包含 `sleep(delayMs)`、`output(value)`、
+`error(errorText?)` 和 `denied()` 的句柄。当工具生命周期需要在其输入和结果之间
+产生事件时，请使用此句柄。不带消息调用 `tool.error()` 时，使用 `"Tool call failed."`。
+
+#### 数据输入
+
+```ts
+writer.data({
+  type: "data-name",
+  id: "optional-id",
+  data: value,
+  transient: false,
+})
+```
+
+重复相同的 `type` 和 `id` 会替换之前的数据部分。临时部分会流式传输到客户端，
+但不会包含在 `get()` 返回的最终消息中。
+
+#### 文件和来源选项
+
+| 方法             | 字段                                                                  |
+| ------------------ | --------------------------------------------------------------------- |
+| `file()`           | `mediaType?`、`url?`、`filename?`、`providerMetadata?`                |
+| `reasoningFile()`  | `mediaType?`、`url?`、`filename?`、`providerMetadata?`                |
+| `sourceUrl()`      | `sourceId?`、`url?`、`title?`、`providerMetadata?`                    |
+| `sourceDocument()` | `sourceId?`、`mediaType?`、`title?`、`filename?`、`providerMetadata?` |
+
+这些方法会为省略的字段提供示例默认值。当负载对组件或测试很重要时，请传入显式值。
+
+### 类型
+
+| 导出                | 描述                              |
+| ------------------- | --------------------------------- |
+| `AiSdkChat`         | `createChat()` 返回的类型化流式聊天。 |
+| `CreateChatOptions` | `createChat()` 接受的选项。        |

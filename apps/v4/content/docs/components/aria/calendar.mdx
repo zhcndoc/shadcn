@@ -1,0 +1,202 @@
+---
+title: 日历
+description: 允许用户选择日期或日期范围的日历组件。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Calendar
+  api: https://react-aria.adobe.com/Calendar#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-demo"
+  previewClassName="h-96"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add calendar
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components @internationalized/date
+```
+
+<Step>将 `Button` 组件添加到你的项目中。</Step>
+
+`Calendar` 组件使用了 `Button` 组件。请确保已将其安装到你的项目中。
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="calendar"
+  title="components/ui/calendar.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  getLocalTimeZone,
+  today,
+  type CalendarDate,
+} from "@internationalized/date"
+
+import { Calendar } from "@/components/ui/calendar"
+```
+
+```tsx showLineNumbers
+const [date, setDate] = React.useState<CalendarDate | null>(
+  today(getLocalTimeZone())
+)
+
+return (
+  <Calendar value={date} onChange={setDate} className="rounded-lg border" />
+)
+```
+
+如需了解更多信息，请参阅 [React Aria](https://react-aria.adobe.com/Calendar) 文档。
+
+## 日期选择器
+
+你可以使用 `<Calendar>` 组件构建日期选择器。有关更多信息，请参阅[日期选择器](/docs/components/aria/date-picker)页面。
+
+## 国际日历
+
+要使用波斯历、伊斯兰历或佛历等国际日历系统，请使用 React Aria 的 `I18nProvider` 设置区域设置。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-hijri"
+  title="波斯历 / 回历 / 贾拉利历"
+  description="波斯历。"
+  previewClassName="h-[400px]"
+/>
+
+## 基础
+
+一个基础的日历组件。我们使用 `className="rounded-lg border"` 为日历设置样式。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-basic"
+  previewClassName="h-96"
+/>
+
+## 范围日历
+
+使用 `RangeCalendar` 组件启用范围选择。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-range"
+  previewClassName="h-[36rem] md:h-96"
+/>
+
+## 月份和年份选择器
+
+使用 `captionLayout="dropdown"` 显示月份和年份下拉菜单。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-caption"
+  previewClassName="h-96"
+/>
+
+## 预设
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-presets"
+  previewClassName="h-[650px]"
+/>
+
+## 日期和时间选择器
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-time"
+  previewClassName="h-[600px]"
+/>
+
+## 已预订日期
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-booked-dates"
+  previewClassName="h-96"
+/>
+
+## 自定义单元格大小
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-custom-days"
+  title="自定义单元格大小"
+  description="具有自定义单元格大小且可响应式调整的日历。"
+  className="**:[.preview]:h-[560px]"
+/>
+
+你可以使用 `--cell-size` CSS 变量自定义日历单元格的大小。还可以通过使用特定断点的值使其具有响应式效果：
+
+```tsx showLineNumbers
+<Calendar
+  value={date}
+  onChange={setDate}
+  className="rounded-lg border [--cell-size:--spacing(11)] md:[--cell-size:--spacing(12)]"
+/>
+```
+
+或者使用固定值：
+
+```tsx showLineNumbers
+<Calendar
+  value={date}
+  onChange={setDate}
+  className="rounded-lg border [--cell-size:2.75rem] md:[--cell-size:3rem]"
+/>
+```
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+另请参阅 [国际日历指南](#international-calendars)，了解如何启用波斯历 / 回历 / 贾拉利历等国际日历。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="calendar-rtl"
+  direction="rtl"
+  previewClassName="h-96"
+/>
+
+## API 参考
+
+有关 `Calendar` 组件的更多信息，请参阅 [React Aria](https://react-aria.adobe.com/Calendar) 文档。

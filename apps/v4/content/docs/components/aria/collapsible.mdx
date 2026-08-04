@@ -1,0 +1,141 @@
+---
+title: 可折叠
+description: 一个可展开/折叠面板的交互式组件。
+base: aria
+component: true
+featured: true
+links:
+  doc: https://react-aria.adobe.com/Disclosure
+  api: https://react-aria.adobe.com/Disclosure#api
+---
+
+<ComponentPreview styleName="aria-nova" name="collapsible-demo" align="start" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add collapsible
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="collapsible"
+  title="components/ui/collapsible.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
+```
+
+```tsx showLineNumbers
+<Collapsible>
+  <CollapsibleTrigger>我可以在我的项目中使用它吗？</CollapsibleTrigger>
+  <CollapsibleContent>
+    可以。个人和商业项目均可免费使用。无需注明出处。
+  </CollapsibleContent>
+</Collapsible>
+```
+
+## 组合
+
+使用以下组合来构建 `Collapsible`：
+
+```text
+Collapsible
+├── CollapsibleTrigger
+└── CollapsibleContent
+```
+
+## 受控状态
+
+使用 `isExpanded` 和 `onExpandedChange` 属性来控制状态。
+
+```tsx showLineNumbers
+import * as React from "react"
+
+export function Example() {
+  const [open, setOpen] = React.useState(false)
+
+  return (
+    <Collapsible isExpanded={open} onExpandedChange={setOpen}>
+      <CollapsibleTrigger>切换</CollapsibleTrigger>
+      <CollapsibleContent>内容</CollapsibleContent>
+    </Collapsible>
+  )
+}
+```
+
+## 基础
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="collapsible-basic"
+  align="start"
+/>
+
+## 设置面板
+
+使用触发按钮显示其他设置。
+
+<ComponentPreview styleName="aria-nova" name="collapsible-settings" />
+
+## 文件树
+
+使用嵌套的可折叠面板构建文件树。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="collapsible-file-tree"
+  previewClassName="h-[36rem]"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="collapsible-rtl"
+  direction="rtl"
+  align="start"
+/>
+
+## API 参考
+
+有关更多信息，请参阅 [React Aria](https://react-aria.adobe.com/Disclosure#api) 文档。

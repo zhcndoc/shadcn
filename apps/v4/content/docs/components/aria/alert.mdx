@@ -1,0 +1,165 @@
+---
+title: 警告
+description: 显示用于提醒用户注意的提示框。
+base: aria
+component: true
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-demo"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add alert
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource name="alert" title="components/ui/alert.tsx" />
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Alert,
+  AlertAction,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
+```
+
+```tsx showLineNumbers
+<Alert>
+  <InfoIcon />
+  <AlertTitle>请注意！</AlertTitle>
+  <AlertDescription>
+    你可以使用 cli 将组件和依赖项添加到应用中。
+  </AlertDescription>
+  <AlertAction>
+    <Button variant="outline">启用</Button>
+  </AlertAction>
+</Alert>
+```
+
+## 组合
+
+使用以下组合构建一个 `Alert`：
+
+```text
+Alert
+├── Icon
+├── AlertTitle
+├── AlertDescription
+└── AlertAction
+```
+
+## 基础
+
+带有图标、标题和描述的基础警告。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-basic"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+## 破坏性
+
+使用 `variant="destructive"` 创建破坏性警告。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-destructive"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+## 操作
+
+使用 `AlertAction` 向警告框添加按钮或其他操作元素。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-action"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+## 自定义颜色
+
+您可以通过向 `Alert` 组件添加 `bg-amber-50 dark:bg-amber-950` 等自定义类来设置警告颜色。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-colors"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-rtl"
+  direction="rtl"
+  previewClassName="h-auto sm:h-72 p-6"
+/>
+
+## API 参考
+
+### Alert
+
+`Alert` 组件显示用于提醒用户注意的提示框。
+
+| 属性      | 类型                         | 默认值      |
+| --------- | ---------------------------- | ----------- |
+| `variant` | `"default" \| "destructive"` | `"default"` |
+
+### AlertTitle
+
+`AlertTitle` 组件显示提示框的标题。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### AlertDescription
+
+`AlertDescription` 组件显示提示框的描述或内容。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### AlertAction
+
+`AlertAction` 组件显示一个操作元素（如按钮），绝对定位在提示框的右上角。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |

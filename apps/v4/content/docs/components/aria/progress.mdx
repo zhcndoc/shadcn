@@ -1,0 +1,112 @@
+---
+title: 进度
+description: 显示任务完成进度的指示器，通常显示为进度条。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/ProgressBar
+  api: https://react-aria.adobe.com/ProgressBar#api
+---
+
+<ComponentPreview styleName="aria-nova" name="progress-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add progress
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="progress"
+  title="components/ui/progress.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径，使其与你的项目设置相匹配。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Progress } from "@/components/ui/progress"
+```
+
+```tsx showLineNumbers
+<Progress aria-label="加载中" value={33} />
+```
+
+## 组合
+
+### 带标签和值
+
+使用 `ProgressLabel` 和 `ProgressValue` 添加标签和值显示。
+
+```tsx showLineNumbers
+import {
+  Progress,
+  ProgressLabel,
+  ProgressValue,
+} from "@/components/ui/progress"
+
+;<Progress value={56} className="w-full max-w-sm">
+  <ProgressLabel>上传进度</ProgressLabel>
+  <ProgressValue />
+</Progress>
+```
+
+```text
+Progress
+├── ProgressLabel
+├── ProgressValue
+└── ProgressTrack
+    └── ProgressIndicator
+```
+
+## 标签
+
+使用 `ProgressLabel` 和 `ProgressValue` 添加标签和值显示。
+
+<ComponentPreview styleName="aria-nova" name="progress-label" />
+
+## 受控
+
+一个可以通过滑块控制的进度条。
+
+<ComponentPreview styleName="aria-nova" name="progress-controlled" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="progress-rtl" direction="rtl" />
+
+## API 参考
+
+请参阅 [React Aria ProgressBar](https://react-aria.adobe.com/ProgressBar#api) 文档。

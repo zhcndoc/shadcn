@@ -113,7 +113,7 @@ import {
 ```
 
 ```tsx
-<MessageScrollerProvider autoScroll>
+<MessageScrollerProvider>
   <MessageScroller>
     <MessageScrollerViewport>
       <MessageScrollerContent>
@@ -166,7 +166,7 @@ import {
 - **`MessageScrollerProvider`** — 无界面的根组件。负责滚动状态以及打开位置、自动滚动、锚定、滚动命令和可见性跟踪等行为属性。
 - **`MessageScroller`** — 带样式的容器框架。负责在提供器内部布局视口、内容和控制组件。
 - **`MessageScrollerViewport`** — 可滚动元素。接收原生滚动事件，并在更早的消息被插入到前面时保持可见行不变。
-- **`MessageScrollerContent`** — 对话内容容器。承载各行内容，并为新消息提供默认的 live-region。
+- **`MessageScrollerContent`** — 对话内容容器。承载各行内容，并为新消息提供默认的实时区域。
 - **`MessageScrollerItem`** — 对话行边界。将内容的每个直接子元素都包裹起来，这样滚动器就可以测量、锚定、保持位置、跟踪可见性并跳转到它。一个 item 可以是消息、标记、输入中指示器、分隔符、加入/离开事件，或“加载更早内容”的行。
 - **`MessageScrollerButton`** — 滚动控制。滚动到对话的开头或结尾，并且在该方向上没有内容之前处于无效状态。
 
@@ -255,6 +255,8 @@ AI 聊天中，这通常就是用户消息以及随后助手的回复。
 后来又回到了那里，`autoScroll` 都会在流式回复增长时保持其可见。
 只要读者通过滚轮、触控、键盘滚动键或拖动滚动条离开实时边缘，
 视图就会解除跟随。显式跳转到某条消息也会解除跟随。之后即使有新的内容块到达，也不会移动读者。
+
+`autoScroll` 会与轮次锚定协同工作。当新轮次锚定在靠近顶部的位置时，回复会在其下方流入对话区域，而视图会保持不动。当回复填满视口后，读者就会回到实时边缘，此时由跟随输出接替锚定继续工作。
 
 ```tsx
 <MessageScrollerProvider autoScroll>
@@ -526,7 +528,7 @@ function VirtualizedTranscript({
 
 `MessageScroller` 中的行为来自 `@shadcn/react` 包。要直接使用
 它并结合你自己的标记和样式，请参阅
-@shadcn/react 下的 [Message Scroller](/docs/react/message-scroller)。
+@shadcn/react 下的 [消息滚动器](/docs/react/message-scroller)。
 
 ## API 参考
 

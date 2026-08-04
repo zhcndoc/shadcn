@@ -1,0 +1,75 @@
+---
+title: 滚动区域
+description: 增强原生滚动功能，以实现自定义的跨浏览器样式。
+base: aria
+component: true
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="scroll-area-demo"
+  previewClassName="h-96"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add scroll-area
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="scroll-area"
+  title="components/ui/scroll-area.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { ScrollArea } from "@/components/ui/scroll-area"
+```
+
+```tsx showLineNumbers
+<ScrollArea className="h-[200px] w-[350px] rounded-md border p-4">
+  在此放置可滚动内容。
+</ScrollArea>
+```
+
+## 水平
+
+<ComponentPreview styleName="aria-nova" name="scroll-area-horizontal-demo" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="scroll-area-rtl"
+  direction="rtl"
+  previewClassName="h-auto"
+/>

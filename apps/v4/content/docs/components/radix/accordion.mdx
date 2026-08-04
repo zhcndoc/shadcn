@@ -80,7 +80,7 @@ import {
 </Accordion>
 ```
 
-## Composition
+## 组合
 
 使用以下组合来构建 `Accordion`：
 
@@ -94,9 +94,7 @@ Accordion
     └── AccordionContent
 ```
 
-## Examples
-
-### 基础
+## 基础
 
 一个基础手风琴，每次只显示一个项目。默认展开第一个项目。
 
@@ -107,7 +105,7 @@ Accordion
   previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
 />
 
-### 多项
+## 多个
 
 使用 `type="multiple"` 允许同时打开多个项目。
 
@@ -118,7 +116,7 @@ Accordion
   previewClassName="*:data-[slot=accordion]:max-w-sm h-[36rem] md:h-[30rem]"
 />
 
-### 禁用
+## 已禁用
 
 在 `AccordionItem` 上使用 `disabled` 属性禁用单个项目。
 
@@ -129,9 +127,9 @@ Accordion
   previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
 />
 
-### 边框
+## 边框
 
-给 `Accordion` 添加 `border`，并给 `AccordionItem` 添加 `border-b last:border-b-0`，为项目添加边框。
+为 `Accordion` 添加 `border`，并为 `AccordionItem` 添加 `border-b last:border-b-0`，为项目添加边框。
 
 <ComponentPreview
   name="accordion-borders"
@@ -140,7 +138,7 @@ Accordion
   previewClassName="*:data-[slot=accordion]:max-w-sm h-96 md:h-80"
 />
 
-### 卡片
+## 卡片
 
 将 `Accordion` 包裹在 `Card` 组件中。
 

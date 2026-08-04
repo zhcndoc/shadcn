@@ -1,0 +1,101 @@
+---
+title: 滑块
+description: 用户在给定范围内选择值的输入控件。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Slider
+  api: https://react-aria.adobe.com/Slider#api
+---
+
+<ComponentPreview styleName="aria-nova" name="slider-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add slider
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="slider"
+  title="components/ui/slider.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Slider } from "@/components/ui/slider"
+```
+
+```tsx
+<Slider defaultValue={[33]} max={100} step={1} />
+```
+
+## 范围
+
+使用包含两个值的数组来设置范围滑块。
+
+<ComponentPreview styleName="aria-nova" name="slider-range" />
+
+## 多个滑块
+
+对于多个滑块，使用包含多个值的数组。
+
+<ComponentPreview styleName="aria-nova" name="slider-multiple" />
+
+## 垂直
+
+使用 `orientation="vertical"` 创建垂直滑块。
+
+<ComponentPreview styleName="aria-nova" name="slider-vertical" />
+
+## 受控
+
+<ComponentPreview styleName="aria-nova" name="slider-controlled" />
+
+## 已禁用
+
+使用 `disabled` 属性禁用滑块。
+
+<ComponentPreview styleName="aria-nova" name="slider-disabled" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="slider-rtl" direction="rtl" />
+
+## API 参考
+
+请参阅 [React Aria Slider](https://react-aria.adobe.com/Slider#api) 文档。

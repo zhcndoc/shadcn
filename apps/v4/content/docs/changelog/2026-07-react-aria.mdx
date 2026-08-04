@@ -1,0 +1,51 @@
+---
+title: 2026 年 7 月 - React Aria
+description: React Aria 现已作为 shadcn/ui 中的组件基础可用。
+date: 2026-07-17
+---
+
+**React Aria** 现已成为 shadcn/ui 中的一流组件基础。
+
+使用 React Aria Components，与 Base UI 和 Radix 一起构建。可在
+shadcn/create 中选择它，或使用 `--base aria` 初始化项目。CLI 会处理
+依赖项、注册表解析、样式和组件安装。
+
+<div className="mt-6 flex w-full items-center justify-center rounded-2xl bg-muted/50 py-32 text-foreground ring ring-border dark:bg-muted">
+  <svg viewBox="200 206 800 790" fill="none" className="size-16">
+    <path
+      fill="currentColor"
+      d="M720.67 205.995C867.583 205.995 986.679 325.091 986.68 472.003C986.68 590.753 908.865 691.325 801.446 725.521L979.312 948.055C994.438 966.98 980.963 995 956.736 995H795.612C778.743 995 762.715 987.629 751.734 974.823L697.365 911.421L493.126 653.39C457.134 607.918 489.518 540.979 547.511 540.977L720.67 540.971C758.758 540.971 789.635 510.091 789.635 472.003C789.634 433.915 758.758 403.038 720.67 403.038H429.939C404.955 403.038 388.623 391.886 373.994 373.623L277.349 252.966C262.194 234.045 275.664 205.996 299.905 205.995H720.67Z M396.605 720.706C407.798 705.406 430.443 704.843 442.381 719.568L503.816 797.018H502.786L535.569 838.934C548.074 854.358 549.943 877.191 538.047 893.09L476.638 972.545C465.692 986.707 448.803 995 430.903 995H242.276C218.18 995 204.665 967.248 219.523 948.278L337.992 797.018H337.923L396.605 720.706Z"
+    />
+  </svg>
+</div>
+
+## 最新内容
+
+- **一流的 React Aria 基础** - 在 CLI、预设以及 shadcn/create 中，凡是可以选择
+  Base UI 或 Radix 的地方，都可以选择 React Aria。
+- **完整的组件文档** - React Aria 组件拥有专门的安装、使用、组合、示例和 API
+  参考部分。
+- **全部八种样式** - 将 React Aria 与 Vega、Nova、Maia、Lyra、Mira、Luma、
+  Rhea 或 Sera 搭配使用。
+- **特定基础的输出** - React Aria 状态选择器和依赖项限定在 Aria 注册表中。
+  现有的 Base UI 和 Radix 组件保持不变。
+
+## 从 React Aria 开始
+
+初始化项目时使用 `aria` 基础：
+
+```bash
+npx shadcn@latest init --base aria
+```
+
+或者在 [shadcn/create](/create?base=aria) 中选择 **React Aria**。项目初始化后，`shadcn add` 会为每个组件安装 React Aria 实现。
+
+Base UI 仍然是默认选项，Radix 也仍然得到完全支持。现有项目将继续使用当前的基础。
+
+<div className="flex flex-wrap gap-2">
+  <Button asChild size="sm">
+    <Link href="/create?base=aria" className="mt-6 no-underline!">
+      创建 React Aria 项目
+    </Link>
+  </Button>
+</div>

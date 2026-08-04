@@ -1,0 +1,52 @@
+---
+title: 2026 年 7 月 - 介绍 shadcn/typeset
+description: 一套完整的 HTML 排版系统，适用于博客文章到流式聊天。只需一个由你掌控的 CSS 文件。
+date: 2026-07-10
+---
+
+今天我们发布了 **shadcn/typeset**：一个用于 HTML 和渲染后 Markdown 的样式系统，全部集中在一个 CSS 文件中。
+
+你的应用在各处渲染相同的 HTML 元素：标题、段落、列表、表格和代码。你先为博客设置样式，然后是文档，现在又要为聊天设置样式。Typeset 让你只需设置一次，然后针对不同场景调整节奏。
+
+```tsx
+<div className="typeset">{content}</div>
+```
+
+添加一个类名，内部所有内容都会应用样式。Typeset 会遵循容器的大小，使用你的主题，并提供三个控制项：大小、行距和间距。
+
+你可以根据需要创建任意多个 typeset。聊天使用更紧凑的节奏，文档使用更宽松的节奏：
+
+```css
+.typeset-chat {
+  --typeset-leading: 1.6;
+  --typeset-flow: 1em;
+}
+
+.typeset-docs {
+  --typeset-size: 15px;
+  --typeset-leading: 1.75;
+  --typeset-flow: 1.5em;
+}
+```
+
+```tsx
+<div className="typeset typeset-chat">{message}</div>
+<article className="typeset typeset-docs">{page}</article>
+```
+
+它也专为流式内容而设计，因此新添加的区块不会重新设置之前内容的样式。该文件位于你的项目中。无需处理额外的包或配置层。
+
+打开 [typeset 构建器](/typeset) 来创建你的 typeset，或阅读 [Typeset 文档](/docs/typeset) 了解完整指南。
+
+<div className="flex gap-2">
+  <Button asChild size="sm">
+    <Link href="/typeset" className="mt-6 no-underline!">
+      构建你的 typeset
+    </Link>
+  </Button>
+  <Button asChild size="sm" variant="outline">
+    <Link href="/docs/typeset" className="mt-6 no-underline!">
+      阅读文档
+    </Link>
+  </Button>
+</div>

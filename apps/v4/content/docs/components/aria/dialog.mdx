@@ -1,0 +1,133 @@
+---
+title: 对话框
+description: 覆盖在主窗口或另一个对话框窗口之上的窗口，使下方的内容变为非活动状态。
+featured: true
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Modal
+  api: https://react-aria.adobe.com/Modal#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="dialog-demo"
+  description="用于编辑个人资料详细信息的对话框。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add dialog
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="dialog"
+  title="components/ui/dialog.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+```
+
+```tsx showLineNumbers
+<DialogTrigger>
+  <Button>打开</Button>
+  <Dialog>
+    <DialogHeader>
+      <DialogTitle>你确定要继续吗？</DialogTitle>
+      <DialogDescription>
+        此操作无法撤销。这将永久删除你的账户，并从我们的服务器中移除你的数据。
+      </DialogDescription>
+    </DialogHeader>
+  </Dialog>
+</DialogTrigger>
+```
+
+## 组合
+
+使用以下组合来构建一个 `Dialog`：
+
+```text
+DialogTrigger
+├── Button
+└── Dialog
+    ├── DialogHeader
+    │   ├── DialogTitle
+    │   └── DialogDescription
+    └── DialogFooter
+```
+
+## 自定义关闭按钮
+
+使用您自己的按钮替换默认关闭控件。
+
+<ComponentPreview styleName="aria-nova" name="dialog-close-button" />
+
+## 无关闭按钮
+
+使用 `showCloseButton={false}` 隐藏关闭按钮。
+
+<ComponentPreview styleName="aria-nova" name="dialog-no-close-button" />
+
+## 固定页脚
+
+在内容滚动时保持操作可见。
+
+<ComponentPreview styleName="aria-nova" name="dialog-sticky-footer" />
+
+## 可滚动内容
+
+较长的内容可以滚动，同时保持标题处于视野内。
+
+<ComponentPreview styleName="aria-nova" name="dialog-scrollable-content" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="dialog-rtl" direction="rtl" />
+
+## API 参考
+
+更多信息请参阅 [React Aria](https://react-aria.adobe.com/Modal#api) 文档。

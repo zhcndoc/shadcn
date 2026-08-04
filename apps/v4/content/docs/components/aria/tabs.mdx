@@ -1,0 +1,117 @@
+---
+title: 选项卡
+description: 一组分层的内容区域——称为选项卡面板——每次显示一个。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Tabs
+  api: https://react-aria.adobe.com/Tabs#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="tabs-demo"
+  previewClassName="h-96"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add tabs
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="tabs"
+  title="components/ui/tabs.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+```
+
+```tsx showLineNumbers
+<Tabs defaultSelectedKey="account" className="w-[400px]">
+  <TabsList>
+    <TabsTrigger id="account">账户</TabsTrigger>
+    <TabsTrigger id="password">密码</TabsTrigger>
+  </TabsList>
+  <TabsContent id="account">在此处更改您的账户信息。</TabsContent>
+  <TabsContent id="password">在此处更改您的密码。</TabsContent>
+</Tabs>
+```
+
+## 组合
+
+使用以下组合来构建 `Tabs`：
+
+```text
+Tabs
+├── TabsList
+│   ├── TabsTrigger
+│   └── TabsTrigger
+├── TabsContent
+└── TabsContent
+```
+
+## 线条
+
+在 `TabsList` 上使用 `variant="line"` 属性以应用线条样式。
+
+<ComponentPreview styleName="aria-nova" name="tabs-line" />
+
+## 垂直
+
+使用 `orientation="vertical"` 创建垂直选项卡。
+
+<ComponentPreview styleName="aria-nova" name="tabs-vertical" />
+
+## 已禁用
+
+<ComponentPreview styleName="aria-nova" name="tabs-disabled" />
+
+## 图标
+
+<ComponentPreview styleName="aria-nova" name="tabs-icons" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="tabs-rtl" direction="rtl" />
+
+## API 参考
+
+请参阅 [React Aria Tabs](https://react-aria.adobe.com/Tabs#api) 文档。

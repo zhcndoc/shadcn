@@ -1,0 +1,210 @@
+---
+title: 分页
+description: 带有页面导航、下一页和上一页链接的分页。
+base: aria
+component: true
+---
+
+<ComponentPreview styleName="aria-nova" name="pagination-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add pagination
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="pagination"
+  title="components/ui/pagination.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
+```
+
+```tsx showLineNumbers
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious href="#" />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive>
+        2
+      </PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext href="#" />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
+```
+
+## 组成
+
+使用以下组成来构建一个 `Pagination`：
+
+```text
+分页
+└── 分页内容
+    ├── 分页项
+    │   └── 上一页分页
+    ├── 分页项
+    │   └── 分页链接
+    ├── 分页项
+    │   └── 分页省略号
+    └── 分页项
+        └── 下一页分页
+```
+
+## 简单
+
+仅包含页码的简单分页。
+
+<ComponentPreview styleName="aria-nova" name="pagination-simple" />
+
+## 仅图标
+
+仅使用“上一页”和“下一页”按钮，不显示页码。这适用于带有每页行数选择器的数据表。
+
+<ComponentPreview styleName="aria-nova" name="pagination-icons-only" />
+
+## Next.js
+
+默认情况下，`<PaginationLink />` 组件会渲染一个 `<a />` 标签。
+
+要使用 Next.js 的 `<Link />` 组件，请对 `pagination.tsx` 做出以下更新。
+
+```diff showLineNumbers /typeof Link/ {1}
++ import Link from "next/link"
+
+- type PaginationLinkProps = ... & React.ComponentProps<"a">
++ type PaginationLinkProps = ... & React.ComponentProps<typeof Link>
+
+const PaginationLink = ({...props }: ) => (
+  <PaginationItem>
+-   <a>
++   <Link>
+      // ...
+-   </a>
++   </Link>
+  </PaginationItem>
+)
+
+```
+
+<Callout className="mt-6">
+
+**注意：** 我们正在更新 cli，以便自动为你完成此操作。
+
+</Callout>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="pagination-rtl" direction="rtl" />
+
+## 更新日志
+
+### RTL 支持
+
+如果你要从 `Pagination` 组件的先前版本进行升级，则需要应用以下更新来添加 `text` 属性：
+
+<Steps>
+
+<Step>更新 `PaginationPrevious`。</Step>
+
+```diff
+  function PaginationPrevious({
+    className,
++   text = "Previous",
+    ...props
+- }: React.ComponentProps<typeof PaginationLink>) {
++ }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+    return (
+      <PaginationLink
+        aria-label="Go to previous page"
+        size="default"
+        className={cn("cn-pagination-previous", className)}
+        {...props}
+      >
+        <ChevronLeftIcon />
+        <span className="cn-pagination-previous-text hidden sm:block">
+-         Previous
++         {text}
+        </span>
+      </PaginationLink>
+    )
+  }
+```
+
+<Step>更新 `PaginationNext`。</Step>
+
+```diff
+  function PaginationNext({
+    className,
++   text = "Next",
+    ...props
+- }: React.ComponentProps<typeof PaginationLink>) {
++ }: React.ComponentProps<typeof PaginationLink> & { text?: string }) {
+    return (
+      <PaginationLink
+        aria-label="Go to next page"
+        size="default"
+        className={cn("cn-pagination-next", className)}
+        {...props}
+      >
+-       <span className="cn-pagination-next-text hidden sm:block">Next</span>
++       <span className="cn-pagination-next-text hidden sm:block">{text}</span>
+        <ChevronRightIcon />
+      </PaginationLink>
+    )
+  }
+```
+
+</Steps>

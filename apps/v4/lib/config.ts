@@ -34,6 +34,10 @@ export const siteConfig = {
       label: "目录",
     },
     {
+      href: "/typeset",
+      label: "Typeset",
+    },
+    {
       href: "/create",
       label: "创建",
     },

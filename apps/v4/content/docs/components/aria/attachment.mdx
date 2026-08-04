@@ -1,0 +1,303 @@
+---
+title: 附件
+description: 显示包含媒体、元数据、上传状态和操作的文件或图像附件。
+base: aria
+component: true
+---
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="attachment-demo"
+  previewClassName="h-auto theme-blue bg-surface dark:bg-background"
+/>
+
+`Attachment` 组件显示文件或图像附件及其媒体、名称和元数据，并支持可选操作和上传状态。可将其用于聊天编辑器、消息线程和上传列表中的文件与图像。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add attachment
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装所需的 shadcn/ui 依赖：</Step>
+
+```bash
+npx shadcn@latest add button
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="attachment"
+  title="components/ui/attachment.tsx"
+  styleName="aria-rhea"
+/>
+
+<Step>更新导入路径以匹配你的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import {
+  Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentContent,
+  AttachmentDescription,
+  AttachmentMedia,
+  AttachmentTitle,
+} from "@/components/ui/attachment"
+```
+
+```tsx
+<Attachment>
+  <AttachmentMedia>
+    <FileTextIcon />
+  </AttachmentMedia>
+  <AttachmentContent>
+    <AttachmentTitle>sales-dashboard.pdf</AttachmentTitle>
+    <AttachmentDescription>PDF · 2.4 MB</AttachmentDescription>
+  </AttachmentContent>
+  <AttachmentActions>
+    <AttachmentAction aria-label="移除 sales-dashboard.pdf">
+      <XIcon />
+    </AttachmentAction>
+  </AttachmentActions>
+</Attachment>
+```
+
+## 组合
+
+使用以下组合来构建附件：
+
+```text
+Attachment
+├── AttachmentMedia
+├── AttachmentContent
+│   ├── AttachmentTitle
+│   └── AttachmentDescription
+├── AttachmentActions
+│   └── AttachmentAction
+└── AttachmentTrigger
+```
+
+使用 `AttachmentGroup` 将多个附件排列在可滚动的行中：
+
+```text
+AttachmentGroup
+├── Attachment
+└── Attachment
+```
+
+## 功能
+
+- 通过 `AttachmentMedia` 支持图标和图片媒体
+- 上传状态：`idle`、`uploading`、`processing`、`error` 和 `done`，内置样式，并在进行中显示闪烁效果
+- 三种尺寸，以及水平或垂直方向
+- 全卡片式 `AttachmentTrigger`，可打开链接或对话框，同时操作按钮仍可独立点击
+- 可滚动、带吸附效果的 `AttachmentGroup`，并带有边缘渐隐效果
+- 通过每个部分的 `className` 属性自定义样式
+
+## 图像
+
+在 `AttachmentMedia` 上设置 `variant="image"`，并在其中渲染一个 `<img>`。使用 `orientation="vertical"` 将媒体堆叠在内容上方。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="attachment-image"
+  previewClassName="h-auto theme-blue bg-surface dark:bg-background"
+/>
+
+## 状态
+
+设置 `state` 以反映上传生命周期。`uploading` 和 `processing` 会使标题呈现闪烁效果，而 `error` 则会切换为破坏性样式。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="attachment-states"
+  previewClassName="h-auto theme-blue bg-surface dark:bg-background"
+/>
+
+## 尺寸
+
+使用 `size` 在 `default`、`sm` 和 `xs` 之间切换。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="attachment-sizes"
+  previewClassName="h-auto theme-blue bg-surface dark:bg-background"
+/>
+
+## 组
+
+将附件包裹在 `AttachmentGroup` 中，以将它们排列成一行支持水平滚动、自动吸附并带有边缘渐隐效果的布局。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="attachment-group"
+  previewClassName="h-auto theme-blue bg-surface dark:bg-background"
+/>
+
+## 触发器
+
+添加一个 `AttachmentTrigger`，使整个卡片打开链接或对话框。它会填充操作区域后面的卡片空间，因此操作仍然可以点击。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="attachment-trigger"
+  previewClassName="h-auto theme-blue bg-surface dark:bg-background"
+/>
+
+```tsx showLineNumbers
+<Dialog>
+  <Attachment>
+    {/* 媒体、内容、操作 */}
+    <DialogTrigger>
+      <AttachmentTrigger aria-label="预览 research-summary.pdf" />
+    </DialogTrigger>
+  </Attachment>
+  <DialogContent>{/* ... */}</DialogContent>
+</Dialog>
+```
+
+## 无障碍
+
+`AttachmentAction` 渲染一个 `Button`，而 `AttachmentTrigger` 渲染一个真正的 `<button>`（或者通过 `render` 使用你提供的元素）。请遵循以下指南，确保两者都可操作且能被正确播报。
+
+### 为仅包含图标的操作添加标签
+
+`AttachmentAction` 通常仅包含图标，因此请为每个操作添加描述操作及其目标的 `aria-label`。
+
+```tsx showLineNumbers
+<AttachmentAction aria-label="移除 sales-dashboard.pdf">
+  <XIcon />
+</AttachmentAction>
+```
+
+### 为触发器添加标签
+
+`AttachmentTrigger` 会覆盖整个卡片且自身没有文本，因此请为其添加一个 `aria-label`，说明激活它会执行什么操作。
+
+```tsx showLineNumbers
+<AttachmentTrigger
+  render={(props) => (
+    <a
+      {...props}
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="打开 workspace.png"
+    />
+  )}
+/>
+```
+
+触发器在堆叠顺序中位于操作之后，因此 `AttachmentAction` 和 `AttachmentTrigger` 不会互相造成焦点陷阱——两者都可以分别聚焦和点击。
+
+### 键盘滚动
+
+`AttachmentGroup` 支持水平滚动。当其中的附件具有交互功能时，例如包含触发器或操作，键盘用户可以通过 Tab 键移动到它们，从而访问屏幕外的项目。对于一行仅用于展示的附件，请为组本身添加 `tabIndex={0}`、`role="group"` 和 `aria-label"`，使其可聚焦并支持滚动。
+
+### 不仅依赖颜色传达含义
+
+`error` 状态使用具有破坏性的颜色。请将失败原因保留在 `AttachmentDescription` 中，确保该状态并非仅通过颜色传达。
+
+## API 参考
+
+### Attachment
+
+附件的根容器。
+
+| Prop          | Type                                                         | Default        | Description                                   |
+| ------------- | ------------------------------------------------------------ | -------------- | --------------------------------------------- |
+| `state`       | `"idle" \| "uploading" \| "processing" \| "error" \| "done"` | `"done"`       | 上传状态。驱动样式和闪烁效果。                |
+| `size`        | `"default" \| "sm" \| "xs"`                                  | `"default"`    | 附件尺寸。                                    |
+| `orientation` | `"horizontal" \| "vertical"`                                 | `"horizontal"` | 将媒体内容放置在内容旁边或上方。              |
+| `className`   | `string`                                                     | -              | 应用于根元素的其他类名。                      |
+
+### AttachmentMedia
+
+用于图标或图片预览的媒体插槽。
+
+| Prop        | Type                | Default  | Description                                  |
+| ----------- | ------------------- | -------- | -------------------------------------------- |
+| `variant`   | `"icon" \| "image"` | `"icon"` | 媒体内容是图标还是 `<img>`。                 |
+| `className` | `string`            | -        | 应用于媒体插槽的其他类名。                   |
+
+### AttachmentContent
+
+包裹标题和描述。
+
+| Prop        | Type     | Default | Description                                    |
+| ----------- | -------- | ------- | ---------------------------------------------- |
+| `className` | `string` | -       | 应用于内容插槽的其他类名。                     |
+
+### AttachmentTitle
+
+附件名称。当附件处于 `uploading` 或 `processing` 状态时显示闪烁效果。
+
+| Prop        | Type     | Default | Description                              |
+| ----------- | -------- | ------- | ---------------------------------------- |
+| `className` | `string` | -       | 应用于标题的其他类名。                   |
+
+### AttachmentDescription
+
+次要元数据，例如文件类型、大小或上传状态。
+
+| Prop        | Type     | Default | Description                                    |
+| ----------- | -------- | ------- | ---------------------------------------------- |
+| `className` | `string` | -       | 应用于描述的其他类名。                         |
+
+### AttachmentActions
+
+用于容纳一个或多个操作的容器，排列在附件末端。
+
+| Prop        | Type     | Default | Description                                |
+| ----------- | -------- | ------- | ------------------------------------------ |
+| `className` | `string` | -       | 应用于操作的其他类名。                     |
+
+### AttachmentAction
+
+操作按钮。渲染一个 [`Button`](/docs/components/aria/button)，并接受其所有属性。
+
+| Prop       | Type                                  | Default     | Description                             |
+| ---------- | ------------------------------------- | ----------- | ----------------------------------------- |
+| `size`     | `Button["size"]`                      | `"icon-xs"` | 按钮尺寸。                                |
+| `...props` | `React.ComponentProps<typeof Button>` | -           | 传递给底层 `Button` 的属性。              |
+
+### AttachmentTrigger
+
+用于激活附件的全卡片覆盖层。默认渲染为 `<button>`。
+
+| Prop       | Type                             | Default | Description                                   |
+| ---------- | -------------------------------- | ------- | --------------------------------------------- |
+| `render`   | `ReactElement \| function`       | -       | 渲染为其他元素，例如链接。                    |
+| `...props` | `React.ComponentProps<"button">` | -       | 传递给触发元素的属性。                        |
+
+### AttachmentGroup
+
+将附件排列为可水平滚动并支持吸附的行。
+
+| Prop        | Type     | Default | Description                                |
+| ----------- | -------- | ------- | ------------------------------------------ |
+| `className` | `string` | -       | 应用于组的其他类名。                       |

@@ -1,0 +1,314 @@
+---
+title: 组合框
+description: 带有建议列表的自动完成输入框。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/ComboBox
+  api: https://react-aria.adobe.com/ComboBox#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="combobox-demo"
+  description="带有框架列表的组合框。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add combobox
+```
+
+</TabsContent>
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="combobox"
+  title="components/ui/combobox.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox"
+```
+
+```tsx showLineNumbers
+const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"]
+
+export function ExampleCombobox() {
+  return (
+    <Combobox allowsEmptyCollection>
+      <ComboboxInput placeholder="选择一个框架" />
+      <ComboboxContent>
+        <ComboboxList
+          renderEmptyState={() => (
+            <ComboboxEmpty>未找到任何项目。</ComboboxEmpty>
+          )}
+        >
+          {frameworks.map((item) => (
+            <ComboboxItem key={item} id={item}>
+              {item}
+            </ComboboxItem>
+          ))}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+```
+
+## 组合
+
+### 简单
+
+单行输入框和平面列表（参见[基础](#basic)）。
+
+```text
+Combobox
+├── ComboboxInput
+└── ComboboxContent
+    └── ComboboxList
+        ├── ComboboxItem
+        └── ComboboxItem
+```
+
+### 带标签
+
+使用 `multiple` 实现多选，并包含标签和标签输入框（参见[多选](#multiple)）。
+
+```text
+Combobox
+├── ComboboxChips
+│   ├── ComboboxChipList
+│   │   └── ComboboxChip
+│   └── ComboboxChipsInput
+└── ComboboxContent
+    └── ComboboxList
+        ├── ComboboxItem
+        └── ComboboxItem
+```
+
+### 带分组和集合
+
+使用 `ComboboxGroup` 按分组嵌套项目，并在分组之间添加分隔符（参见[分组](#groups)）。
+
+```text
+Combobox
+├── ComboboxInput
+└── ComboboxContent
+    └── ComboboxList
+        ├── ComboboxGroup
+        │   ├── ComboboxLabel
+        │   ├── ComboboxItem
+        │   └── ComboboxItem
+        ├── ComboboxSeparator
+        └── ComboboxGroup
+            ├── ComboboxLabel
+            ├── ComboboxItem
+            └── ComboboxItem
+```
+
+## 自定义项目
+
+当你的项目渲染 JSX 子元素时，使用 `textValue`。
+
+```tsx showLineNumbers
+import * as React from "react"
+
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox"
+
+type Framework = {
+  label: string
+  value: string
+}
+
+const frameworks: Framework[] = [
+  { label: "Next.js", value: "next" },
+  { label: "SvelteKit", value: "sveltekit" },
+  { label: "Nuxt", value: "nuxt" },
+]
+
+export function ExampleComboboxCustomItems() {
+  return (
+    <Combobox allowsEmptyCollection>
+      <ComboboxInput placeholder="选择一个框架" />
+      <ComboboxContent>
+        <ComboboxList
+          renderEmptyState={() => (
+            <ComboboxEmpty>未找到项目。</ComboboxEmpty>
+          )}
+          items={frameworks}
+        >
+          {(framework) => (
+            <ComboboxItem id={framework.value} textValue={framework.label}>
+              <span>{framework.label}</span>
+            </ComboboxItem>
+          )}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+```
+
+## 多项选择
+
+使用带有芯片的 `multiple` 实现多项选择行为。
+
+```tsx showLineNumbers
+import * as React from "react"
+
+import {
+  Combobox,
+  ComboboxChip,
+  ComboboxChipList,
+  ComboboxChips,
+  ComboboxChipsInput,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox"
+
+const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"]
+
+export function ExampleComboboxMultiple() {
+  const [value, setValue] = React.useState<string[]>([])
+
+  return (
+    <Combobox
+      selectionMode="multiple"
+      value={value}
+      onChange={setValue}
+      allowsEmptyCollection
+    >
+      <ComboboxChips>
+        <ComboboxChipList<{ name: string }>>
+          {(value) => <ComboboxChip id={value.name}>{value.name}</ComboboxChip>}
+        </ComboboxChipList>
+        <ComboboxChipsInput placeholder="添加框架" />
+      </ComboboxChips>
+      <ComboboxContent>
+        <ComboboxList
+          renderEmptyState={() => (
+            <ComboboxEmpty>未找到任何项目。</ComboboxEmpty>
+          )}
+        >
+          {frameworks.map((item) => (
+            <ComboboxItem key={item} id={item}>
+              {item}
+            </ComboboxItem>
+          ))}
+        </ComboboxList>
+      </ComboboxContent>
+    </Combobox>
+  )
+}
+```
+
+## 基础
+
+一个带有框架列表的简单组合框。
+
+<ComponentPreview styleName="aria-nova" name="combobox-basic" />
+
+## 多选
+
+使用 `multiple` 和 `ComboboxChips` 实现多选的组合框。
+
+<ComponentPreview styleName="aria-nova" name="combobox-multiple" />
+
+## 清除按钮
+
+使用 `showClear` 属性显示清除按钮。
+
+<ComponentPreview styleName="aria-nova" name="combobox-clear" />
+
+## 分组
+
+使用 `ComboboxGroup` 和 `ComboboxSeparator` 对项目进行分组。
+
+<ComponentPreview styleName="aria-nova" name="combobox-groups" />
+
+## 自定义项目
+
+你可以在 `ComboboxItem` 中渲染自定义组件。
+
+<ComponentPreview styleName="aria-nova" name="combobox-custom" />
+
+## 无效
+
+使用 `isInvalid` 属性将组合框标记为无效。
+
+<ComponentPreview styleName="aria-nova" name="combobox-invalid" />
+
+## 已禁用
+
+使用 `isDisabled` 属性来禁用组合框。
+
+<ComponentPreview styleName="aria-nova" name="combobox-disabled" />
+
+## 输入组
+
+您可以通过在 `ComboboxInput` 中使用 `InputGroupAddon` 组件，为组合框添加附加项。
+
+<ComponentPreview styleName="aria-nova" name="combobox-input-group" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="combobox-rtl"
+  direction="rtl"
+  align="start"
+/>
+
+## API 参考
+
+如需更多信息，请参阅 [React Aria](https://react-aria.adobe.com/ComboBox#api) 文档。

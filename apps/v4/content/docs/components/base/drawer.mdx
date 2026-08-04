@@ -167,9 +167,7 @@ Drawer
 | `data-swiping`            | 存在                         | 正在进行滑动。                         |
 | `data-nested-drawer-open` | 存在                         | 上方打开了一个嵌套抽屉。               |
 
-## 示例
-
-### 位置
+## 位置
 
 使用 `swipeDirection` 属性来设置抽屉的侧边。
 
@@ -177,25 +175,25 @@ Drawer
 
 <ComponentPreview styleName="base-rhea" name="drawer-sides" />
 
-### 滑动把手
+## 滑动把手
 
 在 `Drawer` 上使用 `showSwipeHandle` 来渲染一个滑动把手。
 
 <ComponentPreview styleName="base-rhea" name="drawer-swipe-handle" />
 
-### 嵌套
+## 嵌套
 
 从另一个抽屉内部打开抽屉。父抽屉会保持挂载，并堆叠在最前面的抽屉后面。
 
 <ComponentPreview styleName="base-rhea" name="drawer-nested" />
 
-### 非模态
+## 非模态
 
 设置 `modal={false}` 以允许在抽屉打开时与页面其余部分交互。可与 `disablePointerDismissal` 结合使用，以防止在点击外部时关闭抽屉。使用 `modal="trap-focus"` 可以在保持滚动和指针交互不受限制的同时，将焦点保持在抽屉内。
 
 <ComponentPreview styleName="base-rhea" name="drawer-non-modal" />
 
-### 吸附点
+## 吸附点
 
 使用 `snapPoints` 将抽屉吸附到预设高度。介于 `0` 和 `1` 之间的数字表示视口的比例。大于 `1` 的数字将被视为像素值。字符串值支持 `px` 和 `rem` 单位。吸附点适用于垂直抽屉。
 
@@ -203,7 +201,7 @@ Drawer
 
 <ComponentPreview styleName="base-rhea" name="drawer-snap-points" />
 
-### 响应式
+## 响应式
 
 你可以将 `Dialog` 和 `Drawer` 组件结合使用，创建响应式对话框。在桌面端渲染 `Dialog` 组件，在移动端渲染 `Drawer` 组件。
 

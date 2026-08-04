@@ -1,0 +1,90 @@
+---
+title: 标签
+description: 渲染与控件关联的可访问标签。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/TextField
+  api: https://react-aria.adobe.com/TextField#api
+---
+
+<ComponentPreview styleName="aria-nova" name="label-demo" />
+
+<Callout>
+  对于表单字段，请使用 [Field](/docs/components/aria/field) 组件，该组件内置了标签、描述和错误处理功能。
+</Callout>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add label
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="label"
+  title="components/ui/label.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Label } from "@/components/ui/label"
+```
+
+```tsx
+<Label htmlFor="email">您的电子邮件地址</Label>
+```
+
+## 字段中的标签
+
+对于表单字段，请使用 [Field](/docs/components/aria/field) 组件，其中包含内置的 `FieldLabel`、`FieldDescription` 和 `FieldError` 组件。
+
+```tsx
+<Field>
+  <FieldLabel htmlFor="email">Your email address</FieldLabel>
+  <Input id="email" />
+</Field>
+```
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="field-demo"
+  previewClassName="h-[44rem]"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="label-rtl" direction="rtl" />

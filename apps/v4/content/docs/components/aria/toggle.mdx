@@ -1,0 +1,93 @@
+---
+title: 切换
+description: 一种可以处于开启或关闭状态的双状态按钮。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/ToggleButton
+  api: https://react-aria.adobe.com/ToggleButton#api
+---
+
+<ComponentPreview styleName="aria-nova" name="toggle-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add toggle
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="toggle"
+  title="components/ui/toggle.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Toggle } from "@/components/ui/toggle"
+```
+
+```tsx
+<Toggle>Toggle</Toggle>
+```
+
+## 概述
+
+使用 `variant="outline"` 设置轮廓样式。
+
+<ComponentPreview styleName="aria-nova" name="toggle-outline" />
+
+## 带文本
+
+<ComponentPreview styleName="aria-nova" name="toggle-text" />
+
+## 尺寸
+
+使用 `size` 属性更改切换开关的尺寸。
+
+<ComponentPreview styleName="aria-nova" name="toggle-sizes" />
+
+## 已禁用
+
+<ComponentPreview styleName="aria-nova" name="toggle-disabled" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="toggle-rtl" direction="rtl" />
+
+## API 参考
+
+请参阅 [React Aria ToggleButton](https://react-aria.adobe.com/ToggleButton#api) 文档。

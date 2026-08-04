@@ -1,0 +1,136 @@
+---
+title: 复选框
+description: 允许用户在选中和未选中状态之间切换的控件。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Checkbox
+  api: https://react-aria.adobe.com/Checkbox#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="checkbox-demo"
+  previewClassName="h-80"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add checkbox
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="checkbox"
+  title="components/ui/checkbox.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Checkbox } from "@/components/ui/checkbox"
+```
+
+```tsx
+<Checkbox />
+```
+
+## 选中状态
+
+对于非受控复选框，请使用 `defaultSelected`；或者使用 `isSelected` 和
+`onChange` 来控制状态。
+
+```tsx showLineNumbers
+import * as React from "react"
+
+export function Example() {
+  const [checked, setChecked] = React.useState(false)
+
+  return <Checkbox isSelected={checked} onChange={setChecked} />
+}
+```
+
+## 无效状态
+
+在复选框上设置 `isInvalid`，并在字段包装器上设置 `data-invalid`，
+以显示无效样式。
+
+<ComponentPreview styleName="aria-nova" name="checkbox-invalid" />
+
+## 基础
+
+将复选框与 `Field` 和 `FieldLabel` 配对，以实现正确的布局和标签。
+
+<ComponentPreview styleName="aria-nova" name="checkbox-basic" />
+
+## 描述
+
+使用 `FieldContent` 和 `FieldDescription` 添加辅助文本。
+
+<ComponentPreview styleName="aria-nova" name="checkbox-description" />
+
+## 已禁用
+
+使用 `isDisabled` 属性来阻止交互，并将 `data-disabled` 属性添加到 `<Field>` 组件，以应用禁用样式。
+
+<ComponentPreview styleName="aria-nova" name="checkbox-disabled" />
+
+## 组
+
+使用多个字段创建复选框列表。
+
+<ComponentPreview styleName="aria-nova" name="checkbox-group" />
+
+## 表格
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="checkbox-table"
+  previewClassName="p-4 md:p-8"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="checkbox-rtl"
+  direction="rtl"
+  previewClassName="h-80"
+/>
+
+## API 参考
+
+如需更多信息，请参阅 [React Aria](https://react-aria.adobe.com/Checkbox#api) 文档。

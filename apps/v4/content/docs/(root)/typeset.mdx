@@ -1,0 +1,242 @@
+---
+title: Typeset
+description: 用于 HTML 和渲染后 Markdown 的样式系统，从博客文章到流式聊天。一个由你掌控的 CSS 文件。
+---
+
+你渲染 Markdown，得到的却是没有样式的纯 HTML：标题、段落、列表和表格。于是你逐个设置这些元素的样式：字号、行高、间距。
+
+你会为博客这样做。然后又为文档再做一遍。接着还要为聊天应用再做一遍。每次你都在处理同一个问题：尺寸和间距。
+
+为了解决这个问题，我们创建了 **shadcn/typeset**。它是一个 CSS 文件，可以为 `typeset` 容器内的所有内容设置样式。该文件位于你的项目中，因此需要时可以直接修改。
+
+typeset 只是一个小型预设类。你可以在应用中使用多个 typeset，以适应不同的场景。
+
+```css
+.typeset-docs {
+  --typeset-font-body: var(--font-geist);
+  --typeset-font-heading: var(--font-geist);
+  --typeset-font-mono: var(--font-geist-mono);
+  --typeset-size: 15px;
+  --typeset-leading: 1.75;
+  --typeset-flow: 1.25em;
+}
+```
+
+<Button asChild className="mt-6" size="sm">
+  <Link href="/typeset">构建你的 typeset</Link>
+</Button>
+
+---
+
+## 原则
+
+我们阅读了大量关于字体的资料：比例缩放、字距、字偶距、光学尺寸、行宽、行距，以及每个元素上下的间距。我们尝试将所有这些都暴露出来，但结果太复杂了。没有人想要设置十几个变量，只为让 Markdown 看起来正确。
+
+于是我们坐下来，将一切凝练成三个控制项：字号、行距和流动。其他所有内容——标题字号、列表缩进、标题下方的间距、分隔线周围的留白——都由它们衍生而来。三个控制项。我们称之为节奏。
+
+---
+
+## 特性
+
+- **它会适应容器。** 将它放入聊天气泡中，它会跟随周围较小的字号。将它放入文章中，它会随页面一起放大。在较小的屏幕上，它会略微增大，以提升可读性。
+- **它会使用你的主题。** 颜色、字体和圆角半径均来自你的应用。深色模式也会遵循相同的设计令牌。
+- **它易于调整。** 三个值控制基础字号、行高和块之间的间距。在预设中修改它们，整个文档都会随之调整。
+- **它适合流式传输。** 当新的块到达时，Typeset 不会让之前的块切换边距、边框或样式。
+
+---
+
+## 构建你的排版样式
+
+在 [排版样式构建器](/typeset) 中创建你的排版样式。选择字体和节奏，然后在文档、聊天、文章及其他真实内容中预览效果。
+
+面板会提供 `typeset.css` 文件、适用于你的框架的字体设置、包含你所选配置的预设类，以及需要添加到内容外层的包装器。
+
+将 `typeset.css` 复制到主 CSS 文件旁边，并在 Tailwind 之后导入：
+
+```css
+@import "tailwindcss";
+@import "./typeset.css";
+```
+
+然后使用 `typeset` 和你的预设类包裹渲染后的 Markdown：
+
+```tsx
+<div className="typeset typeset-docs">
+  <YourMarkdownRenderer>{content}</YourMarkdownRenderer>
+</div>
+```
+
+`typeset` 会启用这些样式。`typeset-docs` 是你在构建器中创建的预设。
+
+---
+
+## 自定义排版
+
+该文件包含默认值，因此你可以直接使用 `typeset`。大部分阅读节奏由以下三个值决定：
+
+```css
+.typeset {
+  --typeset-font-body: inherit;
+  --typeset-font-heading: var(--font-heading);
+  --typeset-font-mono: var(--font-mono);
+
+  --typeset-size: 1em; /* 正文字号 */
+  --typeset-leading: 1.75; /* 行高 */
+  --typeset-flow: 1.25em; /* 区块之间的间距 */
+}
+```
+
+- **`--typeset-size`** 设置基础文本大小。`1em` 会遵循周围布局。在较小的屏幕上，Typeset 会将其略微调大。
+- **`--typeset-leading`** 设置行间距。
+- **`--typeset-flow`** 设置区块之间的间距。标题和其他元素会根据它推导间距。
+
+字体变量告诉 Typeset 要使用哪些字体族。保持默认值不变，它就会遵循你的应用设置。颜色和圆角也来自你的主题。
+
+Typeset 不会设置最大宽度，这由你的布局负责。构建器中的 Measure 控件会为包装器添加 `max-width`，而不是将其隐藏在样式表中。
+
+你可以在同一个应用中保留多个预设。下面是一个更紧凑的聊天预设和一个更宽松的文档预设：
+
+```css
+.typeset-chat {
+  --typeset-flow: 1em;
+  --typeset-leading: 1.6;
+}
+
+.typeset-docs {
+  --typeset-size: 15px;
+  --typeset-flow: 1.5em;
+}
+```
+
+```tsx
+<div className="typeset typeset-chat">{message}</div>
+<article className="typeset typeset-docs">{page}</article>
+```
+
+如需进行一次性调整，可以跳过预设，直接在容器上设置值：
+
+```tsx
+<article className="typeset [--typeset-flow:1.75em]">...</article>
+```
+
+---
+
+## 自定义主题
+
+预设可以改变内容的整体观感，而不仅仅是间距。你可以为读者提供衬线字体阅读模式、紧凑 UI 模式，或任何适合你产品的其他样式。
+
+```css
+/* 阅读：衬线字体、更大的字号、更宽松的节奏。 */
+.typeset-reading {
+  --typeset-font-body: var(--font-lora);
+  --typeset-font-heading: var(--font-lora);
+  --typeset-size: 18px;
+  --typeset-leading: 1.9;
+  --typeset-flow: 2em;
+}
+
+/* 紧凑：无衬线字体、更小的字号、更紧凑的节奏。 */
+.typeset-compact {
+  --typeset-font-body: var(--font-geist);
+  --typeset-font-heading: var(--font-geist);
+  --typeset-size: 14px;
+  --typeset-leading: 1.6;
+  --typeset-flow: 1em;
+}
+```
+
+---
+
+## 无障碍与深色模式
+
+对于偏好更大字号和更宽松间距的读者，可以创建更宽松的排版样式，并将其作为设置项提供：
+
+```css
+.typeset-large {
+  --typeset-size: 16px;
+  --typeset-leading: 2;
+  --typeset-flow: 2em;
+}
+```
+
+深色模式已经遵循你的主题颜色。如果文字在深色背景上显得有些拥挤，可以在那里适当增加行距：
+
+```css
+.dark .typeset {
+  --typeset-leading: 1.9;
+}
+```
+
+---
+
+## 响应式表格
+
+表格保持为真正的表格，并自动换行以适应空间。如果想改为水平滚动宽表格，请将其包裹在 `typeset-scroll` 中：
+
+```tsx
+<div className="typeset-scroll">
+  <table>...</table>
+</div>
+```
+
+请在渲染器的表格组件中，或通过一个小型 rehype 插件来实现。它适用于任何宽内容块，而不仅仅是表格。
+
+---
+
+## 覆盖样式
+
+Typeset 位于 `components` 层，并使用 `:where()` 作为其元素选择器。元素上的 Tailwind 工具类无需使用 `!important` 即可覆盖：
+
+```tsx
+<div className="typeset typeset-docs">
+  <p className="text-lg">...</p>
+</div>
+```
+
+普通的 CSS 也可以通过常规选择器覆盖 Typeset。
+
+---
+
+## 选择退出
+
+要让组件不受 Typeset 影响，请添加 `not-typeset` 或 `data-not-typeset`：
+
+```tsx
+<div className="typeset">
+  <p>经过样式处理的文章内容。</p>
+  <Card className="not-typeset">未进行处理的组件。</Card>
+</div>
+```
+
+这两种选项都会涵盖该组件及其内部的所有内容。该子树内部的另一个 `typeset` 容器也会继续保持选择退出状态。
+
+---
+
+## 流式传输
+
+Typeset 的设计使得添加新块不会改变屏幕上已有块的样式。
+
+- 不使用前瞻选择器。由于内容添加后匹配结果可能发生变化，布局规则中不会使用 `:last-child`、`:has()` 和 `:empty`。
+- 间距只沿一个方向流动，仅使用 `margin-block-start`。新块会添加自身的间距。
+- 表格分隔线应用于正在添加的单元格，因此新行不会重新设置其上方行的样式。
+
+仍在流式传输的文本可以正常增长和换行。Typeset 只是避免重新设置其之前块的样式。
+
+---
+
+## 既有方案
+
+`@tailwindcss/typography` 中的 `prose` 类非常擅长其设计目标：为纯 HTML 添加美观的排版默认样式，包括从 Markdown 或 CMS 渲染的内容。
+
+Typeset 采用了不同的方法，提供容器感知的尺寸、应用主题令牌、针对不同场景的预设，以及流式渲染稳定性。以下是两者的区别：
+
+|              | @tailwindcss/typography                      | Typeset                                          |
+| ------------ | -------------------------------------------- | ------------------------------------------------ |
+| 尺寸         | 固定的 `rem` 比例，从 `prose-sm` 到 `prose-2xl` | 相对于容器，可使用任意尺寸              |
+| 暗色模式     | `prose-invert`，使用第二套调色板             | 你的令牌会自动切换，无需添加任何内容                 |
+| 主题         | Prose 颜色变量；比例已内置        | 你的主题令牌，加上字体和节奏控制 |
+| 覆盖         | `prose-a:`、`prose-headings:` 修饰符 API   | 普通工具类和 CSS 具有更高优先级                      |
+| 流式渲染     | 没有追加稳定性约定                 | 专为稳定追加而设计                      |
+| 分发         | npm 插件，生成 CSS                    | 由你自行维护的单个 CSS 文件                             |
+
+Typeset 借鉴了该插件的两个最佳创意：零特异性的 `:where()` 防护模式，以及逃生舱类（`not-typeset`，理念上对应 `not-prose`）。

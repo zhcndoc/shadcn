@@ -1,0 +1,150 @@
+---
+title: 命令
+description: 用于搜索和快速操作的命令菜单。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Autocomplete
+  api: https://react-aria.adobe.com/Autocomplete#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="command-demo"
+  align="start"
+  previewClassName="h-[24.5rem]"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add command
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="command"
+  title="components/ui/command.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@/components/ui/command"
+```
+
+```tsx showLineNumbers
+<Command className="max-w-sm rounded-lg border">
+  <CommandInput placeholder="输入命令或搜索..." />
+  <CommandList
+    renderEmptyState={() => <CommandEmpty>未找到结果。</CommandEmpty>}
+  >
+    <CommandGroup heading="建议">
+      <CommandItem>日历</CommandItem>
+      <CommandItem>搜索表情</CommandItem>
+      <CommandItem>计算器</CommandItem>
+    </CommandGroup>
+    <CommandSeparator />
+    <CommandGroup heading="设置">
+      <CommandItem>个人资料</CommandItem>
+      <CommandItem>账单</CommandItem>
+      <CommandItem>设置</CommandItem>
+    </CommandGroup>
+  </CommandList>
+</Command>
+```
+
+## 组合
+
+使用以下组合构建一个 `Command`：
+
+```text
+Command
+├── CommandInput
+└── CommandList
+    ├── CommandGroup
+    │   ├── CommandItem
+    │   └── CommandItem
+    ├── CommandSeparator
+    └── CommandGroup
+        ├── CommandItem
+        └── CommandItem
+```
+
+## 基础
+
+对话框中的简单命令菜单。
+
+<ComponentPreview styleName="aria-nova" name="command-basic" />
+
+## 快捷键
+
+<ComponentPreview styleName="aria-nova" name="command-shortcuts" />
+
+## 分组
+
+带有分组、图标和分隔符的命令菜单。
+
+<ComponentPreview styleName="aria-nova" name="command-groups" />
+
+## 可滚动
+
+包含多个项目的可滚动命令菜单。
+
+<ComponentPreview styleName="aria-nova" name="command-scrollable" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="command-rtl"
+  direction="rtl"
+  align="start"
+  previewClassName="h-[24.5rem]"
+/>
+
+## API 参考
+
+有关更多信息，请参阅 [React Aria](https://react-aria.adobe.com/Autocomplete) 文档。

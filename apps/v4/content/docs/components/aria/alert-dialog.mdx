@@ -1,0 +1,181 @@
+---
+title: 警告对话框
+description: 一个会以重要内容打断用户并等待用户响应的模态对话框。
+featured: true
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Modal
+  api: https://react-aria.adobe.com/Modal#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-dialog-demo"
+  previewClassName="h-56"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add alert-dialog
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="alert-dialog"
+  title="components/ui/alert-dialog.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+```
+
+```tsx showLineNumbers
+<AlertDialogTrigger>
+  <Button variant="outline">显示对话框</Button>
+  <AlertDialog>
+    <AlertDialogHeader>
+      <AlertDialogTitle>您确定要继续吗？</AlertDialogTitle>
+      <AlertDialogDescription>
+        此操作无法撤销。您的帐户将从我们的服务器中永久删除。
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>取消</AlertDialogCancel>
+      <AlertDialogAction>继续</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialog>
+</AlertDialogTrigger>
+```
+
+## 组成
+
+使用以下组成构建一个 `AlertDialog`：
+
+```text
+AlertDialogTrigger
+├── Button
+└── AlertDialog
+    ├── AlertDialogHeader
+    │   ├── AlertDialogMedia
+    │   ├── AlertDialogTitle
+    │   └── AlertDialogDescription
+    └── AlertDialogFooter
+        ├── AlertDialogCancel
+        └── AlertDialogAction
+```
+
+## 基础
+
+一个包含标题、描述以及取消和继续按钮的基础警告对话框。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-dialog-basic"
+  previewClassName="h-56"
+/>
+
+## 小型
+
+使用 `size="sm"` 属性使警告对话框变小。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-dialog-small"
+  previewClassName="h-56"
+/>
+
+## 媒体
+
+使用 `AlertDialogMedia` 组件向警告对话框添加图标或图像等媒体元素。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-dialog-media"
+  previewClassName="h-56"
+/>
+
+## 带媒体的小尺寸
+
+使用 `size="sm"` 属性使警告对话框变小，并使用 `AlertDialogMedia` 组件向警告对话框添加图标或图像等媒体元素。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-dialog-small-media"
+  previewClassName="h-56"
+/>
+
+## 危险操作
+
+使用 `AlertDialogAction` 组件向警告对话框添加危险操作按钮。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-dialog-destructive"
+  previewClassName="h-56"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="alert-dialog-rtl"
+  direction="rtl"
+  previewClassName="h-56"
+/>
+
+## API 参考
+
+### size
+
+在 `AlertDialogContent` 组件上使用 `size` props 来控制警告对话框的大小。它接受以下值：
+
+| Prop   | Type                | Default     |
+| ------ | ------------------- | ----------- |
+| `size` | `"default" \| "sm"` | `"default"` |
+
+有关其他组件及其 props 的更多信息，请参阅 [React Aria 文档](https://react-aria.adobe.com/Modal#api)。

@@ -1,0 +1,114 @@
+---
+title: 日期选择器
+description: 带有范围选择和预设选项的日期选择器组件。
+base: aria
+component: true
+---
+
+<ComponentPreview styleName="aria-nova" name="date-picker-demo" />
+
+## 安装
+
+Date Picker 由 `<Popover />` 和 `<Calendar />` 组件组合构建而成。
+
+请参阅 [Popover](/docs/components/aria/popover#installation) 和 [Calendar](/docs/components/aria/calendar#installation) 组件的安装说明。
+
+## 用法
+
+```tsx showLineNumbers title="components/example-date-picker.tsx"
+"use client"
+
+import * as React from "react"
+import { getLocalTimeZone, type CalendarDate } from "@internationalized/date"
+import { Calendar as CalendarIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Calendar } from "@/components/ui/calendar"
+import { Popover, PopoverTrigger } from "@/components/ui/popover"
+
+export function DatePickerDemo() {
+  const [date, setDate] = React.useState<CalendarDate | null>(null)
+
+  return (
+    <PopoverTrigger>
+      <Button
+        variant="outline"
+        data-empty={!date}
+        className="justify-start text-left font-normal data-[empty=true]:text-muted-foreground"
+      >
+        <CalendarIcon />
+        {date ? (
+          date
+            .toDate(getLocalTimeZone())
+            .toLocaleDateString(undefined, { dateStyle: "long" })
+        ) : (
+          <span>选择日期</span>
+        )}
+      </Button>
+      <Popover className="w-auto p-0">
+        <Calendar value={date} onChange={setDate} />
+      </Popover>
+    </PopoverTrigger>
+  )
+}
+```
+
+有关更多信息，请参阅 [React Aria](https://react-aria.adobe.com/Calendar) 文档。
+
+## 组成
+
+日期选择器由 `Popover` 和 `Calendar` 构建而成（没有 `DatePicker` 根组件）：
+
+```text
+PopoverTrigger
+├── Button
+└── Popover
+    └── Calendar
+```
+
+## 基础
+
+一个基础的日期选择器组件。
+
+<ComponentPreview styleName="aria-nova" name="date-picker-basic" />
+
+## 范围选择器
+
+用于选择日期范围的日期选择器组件。
+
+<ComponentPreview styleName="aria-nova" name="date-picker-range" />
+
+## 出生日期
+
+用于选择出生日期的日期选择器组件。此组件包含用于选择日期和月份的下拉标题布局。
+
+<ComponentPreview styleName="aria-nova" name="date-picker-dob" />
+
+## 输入
+
+一个带有输入字段、用于选择日期的日期选择器组件。
+
+<ComponentPreview styleName="aria-nova" name="date-picker-input" />
+
+## 时间选择器
+
+带有时间输入字段的日期选择器组件，用于选择时间。
+
+<ComponentPreview styleName="aria-nova" name="date-picker-time" />
+
+## 自然语言选择器
+
+此组件使用 `chrono-node` 库解析自然语言日期。
+
+<ComponentPreview styleName="aria-nova" name="date-picker-natural-language" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="date-picker-rtl"
+  direction="rtl"
+/>

@@ -1,0 +1,333 @@
+---
+title: 轮播图
+description: 使用 Embla 构建的支持动画和滑动手势的轮播图。
+base: aria
+component: true
+links:
+  doc: https://www.embla-carousel.com/docs/get-started/react
+  api: https://www.embla-carousel.com/docs/api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="carousel-demo"
+  previewClassName="h-80 sm:h-[32rem]"
+/>
+
+## 关于
+
+轮播组件使用 [Embla Carousel](https://www.embla-carousel.com/) 库构建。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add carousel
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install embla-carousel-react
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="carousel"
+  title="components/ui/carousel.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+```
+
+```tsx showLineNumbers
+<Carousel>
+  <CarouselContent>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious />
+  <CarouselNext />
+</Carousel>
+```
+
+## 组合
+
+使用以下组合来构建 `Carousel`：
+
+```text
+Carousel
+├── CarouselContent
+│   ├── CarouselItem
+│   └── CarouselItem
+├── CarouselPrevious
+└── CarouselNext
+```
+
+## 尺寸
+
+要设置项目的尺寸，可以在 `<CarouselItem />` 上使用 `basis` 工具类。
+
+<ComponentPreview styleName="aria-nova" name="carousel-size" />
+
+```tsx showLineNumbers {4-6}
+// 占轮播宽度的 33%。
+<Carousel>
+  <CarouselContent>
+    <CarouselItem className="basis-1/3">...</CarouselItem>
+    <CarouselItem className="basis-1/3">...</CarouselItem>
+    <CarouselItem className="basis-1/3">...</CarouselItem>
+  </CarouselContent>
+</Carousel>
+```
+
+```tsx showLineNumbers {4-6}
+// 小屏幕上占 50%，较大屏幕上占 33%。
+<Carousel>
+  <CarouselContent>
+    <CarouselItem className="md:basis-1/2 lg:basis-1/3">...</CarouselItem>
+    <CarouselItem className="md:basis-1/2 lg:basis-1/3">...</CarouselItem>
+    <CarouselItem className="md:basis-1/2 lg:basis-1/3">...</CarouselItem>
+  </CarouselContent>
+</Carousel>
+```
+
+## 间距
+
+要设置项目之间的间距，我们在 `<CarouselItem />` 上使用 `pl-[VALUE]` 工具类，并在 `<CarouselContent />` 上使用负值 `-ml-[VALUE]`。
+
+<ComponentPreview styleName="aria-nova" name="carousel-spacing" />
+
+```tsx showLineNumbers /-ml-4/ /pl-4/
+<Carousel>
+  <CarouselContent className="-ml-4">
+    <CarouselItem className="pl-4">...</CarouselItem>
+    <CarouselItem className="pl-4">...</CarouselItem>
+    <CarouselItem className="pl-4">...</CarouselItem>
+  </CarouselContent>
+</Carousel>
+```
+
+```tsx showLineNumbers /-ml-2/ /pl-2/ /md:-ml-4/ /md:pl-4/
+<Carousel>
+  <CarouselContent className="-ml-2 md:-ml-4">
+    <CarouselItem className="pl-2 md:pl-4">...</CarouselItem>
+    <CarouselItem className="pl-2 md:pl-4">...</CarouselItem>
+    <CarouselItem className="pl-2 md:pl-4">...</CarouselItem>
+  </CarouselContent>
+</Carousel>
+```
+
+## 方向
+
+使用 `orientation` 属性设置轮播图的方向。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="carousel-orientation"
+  previewClassName="h-[32rem]"
+/>
+
+```tsx showLineNumbers /vertical | horizontal/
+<Carousel orientation="vertical | horizontal">
+  <CarouselContent>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+  </CarouselContent>
+</Carousel>
+```
+
+## 选项
+
+你可以使用 `opts` 属性向轮播图传递选项。更多信息请参阅 [Embla Carousel 文档](https://www.embla-carousel.com/docs/api/options)。
+
+```tsx showLineNumbers {2-5}
+<Carousel
+  opts={{
+    align: "start",
+    loop: true,
+  }}
+>
+  <CarouselContent>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+  </CarouselContent>
+</Carousel>
+```
+
+## API
+
+使用状态和 `setApi` 属性来获取轮播图 API 的实例。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="carousel-api"
+  previewClassName="sm:h-[32rem]"
+/>
+
+```tsx showLineNumbers {1,4,22}
+import { type CarouselApi } from "@/components/ui/carousel"
+
+export function Example() {
+  const [api, setApi] = React.useState<CarouselApi>()
+  const [current, setCurrent] = React.useState(0)
+  const [count, setCount] = React.useState(0)
+
+  React.useEffect(() => {
+    if (!api) {
+      return
+    }
+
+    setCount(api.scrollSnapList().length)
+    setCurrent(api.selectedScrollSnap() + 1)
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1)
+    })
+  }, [api])
+
+  return (
+    <Carousel setApi={setApi}>
+      <CarouselContent>
+        <CarouselItem>...</CarouselItem>
+        <CarouselItem>...</CarouselItem>
+        <CarouselItem>...</CarouselItem>
+      </CarouselContent>
+    </Carousel>
+  )
+}
+```
+
+## 事件
+
+你可以使用 `setApi` 中的 api 实例监听事件。
+
+```tsx showLineNumbers {1,4-14,16}
+import { type CarouselApi } from "@/components/ui/carousel"
+
+export function Example() {
+  const [api, setApi] = React.useState<CarouselApi>()
+
+  React.useEffect(() => {
+    if (!api) {
+      return
+    }
+
+    api.on("select", () => {
+      // 在选择时执行某些操作。
+    })
+  }, [api])
+
+  return (
+    <Carousel setApi={setApi}>
+      <CarouselContent>
+        <CarouselItem>...</CarouselItem>
+        <CarouselItem>...</CarouselItem>
+        <CarouselItem>...</CarouselItem>
+      </CarouselContent>
+    </Carousel>
+  )
+}
+```
+
+有关如何使用事件的更多信息，请参阅 [Embla Carousel 文档](https://www.embla-carousel.com/docs/api/events)。
+
+## 插件
+
+你可以使用 `plugins` 属性向轮播图添加插件。
+
+```ts showLineNumbers {1,6-10}
+import Autoplay from "embla-carousel-autoplay"
+
+export function Example() {
+  return (
+    <Carousel
+      plugins={[
+        Autoplay({
+          delay: 2000,
+        }),
+      ]}
+    >
+      // ...
+    </Carousel>
+  )
+}
+```
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="carousel-plugin"
+  previewClassName="sm:h-[32rem]"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="carousel-rtl"
+  direction="rtl"
+  previewClassName="h-80 sm:h-[32rem]"
+/>
+
+为 RTL 语言本地化轮播组件时，需要在 `opts` 属性中设置 `direction` 选项，使其与文本方向匹配。这样可以确保轮播组件沿正确的方向滚动。
+
+```tsx showLineNumbers {2-5}
+<Carousel
+  dir={dir}
+  opts={{
+    direction: dir,
+  }}
+>
+  <CarouselContent>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+    <CarouselItem>...</CarouselItem>
+  </CarouselContent>
+  <CarouselPrevious className="rtl:rotate-180" />
+  <CarouselNext className="rtl:rotate-180" />
+</Carousel>
+```
+
+`direction` 选项接受 `"ltr"` 或 `"rtl"`，并应与 `dir` 属性值匹配。你也可以使用 `rtl:rotate-180` 类旋转导航按钮，以确保它们指向正确的方向。
+
+## API 参考
+
+有关属性和插件的更多信息，请参阅 [Embla Carousel 文档](https://www.embla-carousel.com/docs/api/plugins)。

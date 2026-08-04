@@ -1,0 +1,172 @@
+---
+title: 输入一次性密码
+description: 支持复制粘贴功能的无障碍一次性密码组件。
+base: aria
+component: true
+links:
+  doc: https://input-otp.rodz.dev
+---
+
+<ComponentPreview styleName="aria-nova" name="input-otp-demo" />
+
+## 关于
+
+Input OTP 构建于 [input-otp](https://github.com/guilhermerodz/input-otp) 之上，由 [@guilherme_rodz](https://twitter.com/guilherme_rodz) 开发。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add input-otp
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install input-otp
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="input-otp"
+  title="components/ui/input-otp.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
+```
+
+```tsx showLineNumbers
+<InputOTP maxLength={6}>
+  <InputOTPGroup>
+    <InputOTPSlot index={0} />
+    <InputOTPSlot index={1} />
+    <InputOTPSlot index={2} />
+  </InputOTPGroup>
+  <InputOTPSeparator />
+  <InputOTPGroup>
+    <InputOTPSlot index={3} />
+    <InputOTPSlot index={4} />
+    <InputOTPSlot index={5} />
+  </InputOTPGroup>
+</InputOTP>
+```
+
+## 组合
+
+使用以下组合构建一个 `InputOTP`：
+
+```text
+InputOTP
+├── InputOTPGroup
+│   ├── InputOTPSlot
+│   ├── InputOTPSlot
+│   └── InputOTPSlot
+├── InputOTPSeparator
+├── InputOTPGroup
+│   ├── InputOTPSlot
+│   ├── InputOTPSlot
+│   └── InputOTPSlot
+├── InputOTPSeparator
+└── InputOTPGroup
+    ├── InputOTPSlot
+    └── InputOTPSlot
+```
+
+## 模式
+
+使用 `pattern` 属性为 OTP 输入框定义自定义模式。
+
+```tsx showLineNumbers {1,5}
+import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp"
+
+;<InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
+  ...
+</InputOTP>
+```
+
+<ComponentPreview styleName="aria-nova" name="input-otp-pattern" />
+
+## 分隔符
+
+使用 `<InputOTPSeparator />` 组件在输入组之间添加分隔符。
+
+<ComponentPreview styleName="aria-nova" name="input-otp-separator" />
+
+## 已禁用
+
+使用 `disabled` 属性禁用输入框。
+
+<ComponentPreview styleName="aria-nova" name="input-otp-disabled" />
+
+## 受控
+
+使用 `value` 和 `onChange` 属性来控制输入值。
+
+<ComponentPreview styleName="aria-nova" name="input-otp-controlled" />
+
+## 无效
+
+在插槽上使用 `aria-invalid` 来显示错误状态。
+
+<ComponentPreview styleName="aria-nova" name="input-otp-invalid" />
+
+## 四位数字
+
+PIN 码的一种常见模式。使用 `pattern={REGEXP_ONLY_DIGITS}` 属性。
+
+<ComponentPreview styleName="aria-nova" name="input-otp-four-digits" />
+
+## 字母数字
+
+使用 `REGEXP_ONLY_DIGITS_AND_CHARS` 接受字母和数字。
+
+<ComponentPreview styleName="aria-nova" name="input-otp-alphanumeric" />
+
+## 表单
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-otp-form"
+  previewClassName="h-[30rem]"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="input-otp-rtl" direction="rtl" />
+
+## API 参考
+
+有关更多信息，请参阅 [input-otp](https://input-otp.rodz.dev) 文档。

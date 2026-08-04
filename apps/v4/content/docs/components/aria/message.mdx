@@ -1,0 +1,247 @@
+---
+title: 消息
+description: 在对话中显示一条消息，可选择头像、页眉、页脚和对齐方式。
+base: aria
+component: true
+---
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="message-demo"
+  previewClassName="h-auto theme-blue"
+/>
+
+`Message` 组件用于在对话中布局一条消息。它负责处理消息区域周围的头像、对齐方式、页眉和页脚。
+
+对于 AI 应用，你可以使用 `Message` 组件渲染推理步骤、工具调用和助手消息。
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add message
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="message"
+  title="components/ui/message.tsx"
+  styleName="aria-rhea"
+/>
+
+<Step>更新导入路径，使其与您的项目设置相匹配。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Bubble, BubbleContent } from "@/components/ui/bubble"
+import { Message, MessageAvatar, MessageContent } from "@/components/ui/message"
+```
+
+```tsx showLineNumbers
+<Message>
+  <MessageAvatar>
+    <Avatar>
+      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+      <AvatarFallback>CN</AvatarFallback>
+    </Avatar>
+  </MessageAvatar>
+  <MessageContent>
+    <Bubble>
+      <BubbleContent>How can I help you today?</BubbleContent>
+    </Bubble>
+  </MessageContent>
+</Message>
+```
+
+**注意：** `Message` 负责行布局，包括头像、对齐方式、页眉和页脚。
+在其中使用
+[`Bubble`](/docs/components/aria/bubble) 渲染可见的消息内容。
+对于围绕会话的滚动容器，请使用
+[`MessageScroller`](/docs/components/aria/message-scroller)。
+
+## 组合
+
+使用以下组合来构建消息：
+
+```text
+Message
+├── MessageAvatar
+└── MessageContent
+    ├── MessageHeader
+    ├── Bubble
+    └── MessageFooter
+```
+
+使用 `MessageGroup` 将同一发送者连续发送的消息堆叠起来：
+
+```text
+MessageGroup
+├── Message
+└── Message
+```
+
+## 功能
+
+- 通过 `align` 属性设置发送者和接收者消息行的起始端和末端对齐方式
+- 头像插槽锚定在消息底部，并与页脚保持间距
+- 用于发送者姓名、状态和消息操作的页眉和页脚插槽
+- 页脚跟随消息所在的一侧；在 `align="end"` 的行中，操作保持对齐
+- 用于堆叠同一发送者连续消息的分组包装器
+- 通过每个部分的 `className` 属性自定义样式
+
+## 头像
+
+使用 `MessageAvatar` 在消息旁边渲染头像。在消息上设置 `align="end"`，使头像与消息末尾对齐。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="message-avatar"
+  previewClassName="h-auto theme-blue"
+/>
+
+| align   | 描述                           |
+| ------- | ------------------------------ |
+| `start` | 将消息对齐到对话的开头。       |
+| `end`   | 将消息对齐到对话的末尾。       |
+
+## 群组
+
+使用 `MessageGroup` 将来自同一发送者的连续消息堆叠在一起。在较早的消息上渲染一个空的 `MessageAvatar`，使其与最后一条消息中的头像保持对齐。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="message-group"
+  previewClassName="h-auto theme-blue"
+/>
+
+## 页眉和页脚
+
+使用 `MessageHeader` 设置发送者名称，使用 `MessageFooter` 设置投递状态或已读状态等元数据。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="message-header-footer"
+  previewClassName="h-auto theme-blue"
+/>
+
+## 操作
+
+将消息级操作（例如复制、重试或反馈按钮）放置在 `MessageFooter` 中。
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="message-actions"
+  previewClassName="h-auto theme-blue"
+/>
+
+## 附件
+
+<ComponentPreview
+  styleName="aria-rhea"
+  name="message-attachment"
+  previewClassName="h-auto theme-blue"
+/>
+
+## 无障碍
+
+`Message` 是一个用于展示的布局包装器。无障碍体验取决于你放置在其中的内容。
+
+### 为仅图标操作添加标签
+
+`MessageFooter` 中的操作按钮通常仅显示图标，因此请为每个按钮提供一个 `aria-label`。
+
+```tsx showLineNumbers
+<MessageFooter>
+  <Button variant="ghost" size="icon" aria-label="复制">
+    <CopyIcon />
+  </Button>
+</MessageFooter>
+```
+
+### 状态更新
+
+对于进行中的消息，请使用带有 `role="status"` 的 [`Marker`](/docs/components/aria/marker)，这样辅助技术会在更新出现时播报它。
+
+```tsx showLineNumbers
+<Message>
+  <Marker role="status">
+    <MarkerIcon>
+      <Spinner />
+    </MarkerIcon>
+    <MarkerContent>正在检查日志……</MarkerContent>
+  </Marker>
+</Message>
+```
+
+## API 参考
+
+### Message
+
+消息行包装器。
+
+| Prop        | Type               | Default   | Description                     |
+| ----------- | ------------------ | --------- | ------------------------------- |
+| `align`     | `"start" \| "end"` | `"start"` | 消息在对话中的对齐方式。          |
+| `className` | `string`           | -         | 要应用于该行的其他类名。          |
+
+### MessageGroup
+
+将来自同一发送者的连续消息分组。
+
+| Prop        | Type     | Default | Description                    |
+| ----------- | -------- | ------- | ------------------------------ |
+| `className` | `string` | -       | 要应用于分组根元素的其他类名。 |
+
+### MessageAvatar
+
+头像插槽，与消息底部对齐。当消息包含 `MessageFooter` 时，头像会向上移动，以便与消息表面而不是页脚保持对齐。
+
+| Prop        | Type     | Default | Description                    |
+| ----------- | -------- | ------- | ------------------------------ |
+| `className` | `string` | -       | 要应用于头像插槽的其他类名。   |
+
+### MessageContent
+
+包裹消息头、消息表面和页脚。
+
+| Prop        | Type     | Default | Description                     |
+| ----------- | -------- | ------- | ------------------------------- |
+| `className` | `string` | -       | 要应用于内容插槽的其他类名。    |
+
+### MessageHeader
+
+显示消息上方的内容，例如发送者姓名。无论 `align` 为何值，始终与起始端对齐。
+
+| Prop        | Type     | Default | Description                  |
+| ----------- | -------- | ------- | ---------------------------- |
+| `className` | `string` | -       | 要应用于消息头的其他类名。   |
+
+### MessageFooter
+
+显示消息下方的内容，例如状态或操作。与消息所在的一侧对齐。
+
+| Prop        | Type     | Default | Description                  |
+| ----------- | -------- | ------- | ---------------------------- |
+| `className` | `string` | -       | 要应用于页脚的其他类名。     |

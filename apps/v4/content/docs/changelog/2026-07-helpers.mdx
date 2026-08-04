@@ -1,0 +1,82 @@
+---
+title: 2026 年 7 月 - 推出 @shadcn/helpers
+description: 用于开发应用的小型、专注型辅助工具，现已支持 AI SDK 和 TanStack AI。
+date: 2026-07-14
+---
+
+我们将 **@shadcn/helpers** 开源，这是一个用于提供小型、专注型辅助工具的新软件包，让应用开发更加轻松。
+
+首先推出的是一个适用于 AI SDK 和 TanStack AI 的辅助工具。它可以让你在代码中编写对话，然后通过真实的 `useChat` 生命周期运行，无需模型、API 路由、网络请求或 API 密钥。
+
+你的 UI 会接收原生的
+框架消息和流式事件，因此推理、工具调用、加载状态和消息组件的行为都会与生产环境中的表现一致。
+
+下面是使用 AI SDK 辅助工具编写的对话：
+
+```ts showLineNumbers
+import { createChat } from "@shadcn/helpers/ai-sdk"
+
+const chat = createChat()
+  .user("What changed in this release?")
+  .assistant("The release adds keyboard shortcuts and faster search.")
+  .user("Can you check the full release notes?")
+  .sleep(500)
+  .assistant(({ writer }) => {
+    writer.stepStart()
+
+    // 推理。
+    writer.reasoning("I should read the release notes first.")
+
+    // 工具调用。
+    writer
+      .tool("getReleaseNotes", {
+        title: "Reading release notes",
+        input: { version: "latest" },
+      })
+      .sleep(500)
+      .output({
+        highlights: ["Keyboard shortcuts", "Faster search"],
+      })
+
+    // 来源。
+    writer.sourceUrl({
+      title: "Release notes",
+      url: "https://example.com/releases",
+    })
+
+    // 响应。
+    writer.text("The release adds keyboard shortcuts and faster search.")
+  })
+```
+
+将消息和传输对象传递给 `useChat`：
+
+```tsx showLineNumbers
+import { useChat } from "@ai-sdk/react"
+
+const initialMessages = chat.get(0)
+const transport = chat.transport()
+
+export function Chat() {
+  const { messages } = useChat({
+    messages: initialMessages,
+    transport,
+  })
+}
+```
+
+该软件包包含两个适配器：
+
+- [`@shadcn/helpers/ai-sdk`](/docs/helpers/ai-sdk) 作为传输对象接入 AI SDK 的 `useChat`。
+- [`@shadcn/helpers/tanstack-ai`](/docs/helpers/tanstack-ai) 作为连接接入 TanStack
+  AI 的 `useChat`，并流式传输真实的 AG-UI 事件。
+
+你可以使用它来构建组件、创建预览和演示、编写文档，或使用确定性的输出且无需后端依赖来测试流式界面。
+
+<div className="flex flex-wrap gap-2">
+  <Button asChild size="sm">
+    <Link href="/docs/helpers/ai-sdk" className="mt-6 no-underline!">
+      阅读文档
+    </Link>
+  </Button>
+</div>

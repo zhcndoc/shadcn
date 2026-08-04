@@ -112,7 +112,7 @@ import {
 ```
 
 ```tsx
-<MessageScrollerProvider autoScroll>
+<MessageScrollerProvider>
   <MessageScroller>
     <MessageScrollerViewport>
       <MessageScrollerContent>
@@ -255,6 +255,8 @@ anchor 是视口应该视为该 turn 起点的那一行。用
 离开实时边缘会释放视图，无论是通过滚轮、触摸、
 键盘滚动键，还是拖动滚动条。显式跳转到某条消息
 也会释放它。这样，新的分段内容就可以到来，而不会移动读者视图。
+
+`autoScroll` 与 turn 锚定协同工作。当新的 turn 在靠近顶部的位置锚定时，回复会在其下方流入对话区域，而视图保持不动。当回复填满视口后，读者就会回到实时边缘，此时跟随输出会接替锚点继续工作。
 
 ```tsx
 <MessageScrollerProvider autoScroll>

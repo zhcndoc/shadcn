@@ -1,0 +1,196 @@
+---
+title: 下拉菜单
+description: 向用户显示菜单——例如一组操作或功能——由按钮触发。
+featured: true
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Menu
+  api: https://react-aria.adobe.com/Menu#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="dropdown-menu-demo"
+  description="带有图标、快捷键和子菜单项的下拉菜单。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add dropdown-menu
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="dropdown-menu"
+  title="components/ui/dropdown-menu.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+```
+
+```tsx showLineNumbers
+<DropdownMenuTrigger>
+  <Button variant="outline">打开</Button>
+  <DropdownMenu>
+    <DropdownMenuGroup>
+      <DropdownMenuLabel>我的账户</DropdownMenuLabel>
+      <DropdownMenuItem>个人资料</DropdownMenuItem>
+      <DropdownMenuItem>账单</DropdownMenuItem>
+    </DropdownMenuGroup>
+    <DropdownMenuSeparator />
+    <DropdownMenuGroup>
+      <DropdownMenuItem>团队</DropdownMenuItem>
+      <DropdownMenuItem>订阅</DropdownMenuItem>
+    </DropdownMenuGroup>
+  </DropdownMenu>
+</DropdownMenuTrigger>
+```
+
+## 组合
+
+使用以下组合来构建 `DropdownMenu`：
+
+```text
+DropdownMenuTrigger
+├── Button
+└── DropdownMenu
+    ├── DropdownMenuGroup
+    │   ├── DropdownMenuLabel
+    │   ├── DropdownMenuItem
+    │   └── DropdownMenuItem
+    ├── DropdownMenuSeparator
+    ├── DropdownMenuGroup
+    │   ├── DropdownMenuLabel
+    │   ├── DropdownMenuItem
+    │   └── DropdownMenuItem
+    └── DropdownMenuSub
+        ├── DropdownMenuSubTrigger
+        └── DropdownMenuSubContent
+            └── DropdownMenuGroup
+                ├── DropdownMenuLabel
+                ├── DropdownMenuItem
+                └── DropdownMenuItem
+```
+
+## 基础
+
+带有标签和分隔线的基础下拉菜单。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-basic" />
+
+## 子菜单
+
+使用 `DropdownMenuSub` 嵌套次级操作。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-submenu" />
+
+## 快捷键
+
+添加 `DropdownMenuShortcut` 以显示键盘提示。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-shortcuts" />
+
+## 图标
+
+将图标与标签结合，便于快速浏览。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-icons" />
+
+## 复选框
+
+对于切换控件，请使用 `selectionMode="multiple"`。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-checkboxes" />
+
+## 复选框图标
+
+为复选框项目添加图标。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-checkboxes-icons" />
+
+## 单选组
+
+使用 `selectionMode="single"` 进行互斥选择。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-radio-group" />
+
+## 单选图标
+
+使用图标显示单选选项。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-radio-icons" />
+
+## 危险操作
+
+对于不可逆操作，请使用 `variant="destructive"`。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-destructive" />
+
+## 头像
+
+由头像触发的账户切换下拉菜单。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-avatar" />
+
+## 复杂示例
+
+一个结合了分组、图标和子菜单的更丰富示例。
+
+<ComponentPreview styleName="aria-nova" name="dropdown-menu-complex" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="dropdown-menu-rtl"
+  direction="rtl"
+/>
+
+## API 参考
+
+请参阅 [React Aria 文档](https://react-aria.adobe.com/Menu) 以获取完整的 API 参考。

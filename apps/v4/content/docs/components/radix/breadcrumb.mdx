@@ -95,27 +95,25 @@ Breadcrumb
         └── BreadcrumbPage
 ```
 
-## 示例
-
-### 基础示例
+## 基础
 
 一个基础的面包屑，包含首页链接和组件链接。
 
 <ComponentPreview styleName="radix-nova" name="breadcrumb-basic" />
 
-### 自定义分隔符
+## 自定义分隔符
 
 通过给 `<BreadcrumbSeparator />` 传入自定义组件作为 `children`，实现自定义分隔符。
 
 <ComponentPreview styleName="radix-nova" name="breadcrumb-separator" />
 
-### 下拉菜单
+## 下拉菜单
 
 你可以将 `<BreadcrumbItem />` 与 `<DropdownMenu />` 组合，实现面包屑中的下拉菜单。
 
 <ComponentPreview styleName="radix-nova" name="breadcrumb-dropdown" />
 
-### 折叠状态
+## 折叠
 
 我们提供了 `<BreadcrumbEllipsis />` 组件来在面包屑过长时显示折叠状态。
 
@@ -125,7 +123,7 @@ Breadcrumb
   previewClassName="p-2"
 />
 
-### 自定义链接组件
+## 链接组件
 
 若想使用路由库中的自定义链接组件，可以在 `<BreadcrumbLink />` 上使用 `asChild` 属性。
 
@@ -190,7 +188,7 @@ Breadcrumb
 
 | 属性         | 类型             | 默认值 |
 | ------------ | ---------------- | ------ |
-| `children`   | `React.ReactNode`| -      |
+| `children`   | `React.ReactNode` | -      |
 | `className`  | `string`         | -      |
 
 ### BreadcrumbEllipsis

@@ -1,0 +1,197 @@
+---
+title: 面包屑
+description: 使用链接层次结构显示当前资源的路径。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Breadcrumbs
+  api: https://react-aria.adobe.com/Breadcrumbs#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="breadcrumb-demo"
+  previewClassName="p-2"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add breadcrumb
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="breadcrumb"
+  title="components/ui/breadcrumb.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+} from "@/components/ui/breadcrumb"
+```
+
+```tsx showLineNumbers
+<Breadcrumb>
+  <BreadcrumbList>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/">首页</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbLink href="/components">组件</BreadcrumbLink>
+    </BreadcrumbItem>
+    <BreadcrumbItem>
+      <BreadcrumbPage>面包屑</BreadcrumbPage>
+    </BreadcrumbItem>
+  </BreadcrumbList>
+</Breadcrumb>
+```
+
+## 组合
+
+使用以下组合构建 `Breadcrumb`：
+
+```text
+Breadcrumb
+└── BreadcrumbList
+    ├── BreadcrumbItem
+    │   └── BreadcrumbLink
+    ├── BreadcrumbItem
+    │   └── BreadcrumbLink
+    └── BreadcrumbItem
+        └── BreadcrumbPage
+```
+
+## 基础
+
+包含首页链接和组件链接的基础面包屑。
+
+<ComponentPreview styleName="aria-nova" name="breadcrumb-basic" />
+
+## 自定义分隔符
+
+使用自定义组件作为 `<BreadcrumbSeparator />` 的 `children`，以创建自定义分隔符。
+
+<ComponentPreview styleName="aria-nova" name="breadcrumb-separator" />
+
+## 下拉菜单
+
+你可以将 `<BreadcrumbItem />` 与 `<DropdownMenu />` 组合使用，在面包屑中创建下拉菜单。
+
+<ComponentPreview styleName="aria-nova" name="breadcrumb-dropdown" />
+
+## 折叠
+
+我们提供了一个 `<BreadcrumbEllipsis />` 组件，用于在面包屑过长时显示折叠状态。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="breadcrumb-ellipsis"
+  previewClassName="p-2"
+/>
+
+## 链接组件
+
+要使用路由库中的自定义链接组件，可以在 `<BreadcrumbLink />` 上使用 `render` 属性。
+
+<ComponentPreview styleName="aria-nova" name="breadcrumb-link" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="breadcrumb-rtl"
+  direction="rtl"
+  previewClassName="p-2"
+/>
+
+## API 参考
+
+### Breadcrumb
+
+`Breadcrumb` 组件是包裹所有面包屑组件的根导航元素。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### BreadcrumbList
+
+`BreadcrumbList` 组件显示面包屑项目的有序列表。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### BreadcrumbItem
+
+`BreadcrumbItem` 组件包裹单个面包屑项目。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### BreadcrumbLink
+
+`BreadcrumbLink` 组件在面包屑中显示可点击的链接。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### BreadcrumbPage
+
+`BreadcrumbPage` 组件在面包屑中显示当前页面（不可点击）。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+### BreadcrumbEllipsis
+
+`BreadcrumbEllipsis` 组件为折叠的面包屑项目显示省略号指示器。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | -       |
+
+如需更多信息，请参阅 [React Aria 文档](https://react-aria.adobe.com/Breadcrumbs#api)。

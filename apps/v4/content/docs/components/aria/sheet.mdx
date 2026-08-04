@@ -1,0 +1,115 @@
+---
+title: 抽屉
+description: 扩展 Dialog 组件，用于显示补充屏幕主要内容的内容。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Modal
+  api: https://react-aria.adobe.com/Modal#api
+---
+
+<ComponentPreview styleName="aria-nova" name="sheet-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add sheet
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="sheet"
+  title="components/ui/sheet.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 使用
+
+```tsx showLineNumbers
+import {
+  Sheet,
+  SheetClose,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+```
+
+```tsx showLineNumbers
+<SheetTrigger>
+  <Button>打开</Button>
+  <Sheet>
+    <SheetHeader>
+      <SheetTitle>你确定吗？</SheetTitle>
+      <SheetDescription>此操作无法撤销。</SheetDescription>
+    </SheetHeader>
+  </Sheet>
+</SheetTrigger>
+```
+
+## 组合
+
+使用以下组合来构建一个 `Sheet`：
+
+```text
+SheetTrigger
+├── Button
+└── Sheet
+    ├── SheetHeader
+    │   ├── SheetTitle
+    │   └── SheetDescription
+    └── SheetFooter
+```
+
+## 侧边
+
+在 `SheetContent` 上使用 `side` 属性来设置面板出现的屏幕边缘。可选值为 `top`、`right`、`bottom` 或 `left`。
+
+<ComponentPreview styleName="aria-nova" name="sheet-side" />
+
+## 无关闭按钮
+
+在 `SheetContent` 上使用 `showCloseButton={false}` 来隐藏关闭按钮。
+
+<ComponentPreview styleName="aria-nova" name="sheet-no-close-button" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="sheet-rtl" direction="rtl" />
+
+## API 参考
+
+请参阅 [React Aria Modal](https://react-aria.adobe.com/Modal#api) 文档。

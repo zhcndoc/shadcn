@@ -1,11 +1,11 @@
 ---
 title: API 参考
-description: 用于处理 registries、schemas 和 presets 的程序化 API。
+description: 用于处理注册表、模式和预设的程序化 API。
 ---
 
 `shadcn` 包除了 CLI 之外，还提供了一组程序化 API。
-你可以使用这些 API 来获取并解析 registry 项、验证 registry JSON，
-以及在 registry 之上构建自定义工具。
+你可以使用这些 API 获取、解析和安装注册表项目，验证注册表 JSON，
+并基于注册表构建自定义工具。
 
 每个 API 都可通过专用的子路径导入使用。
 
@@ -30,8 +30,9 @@ import { registryItemSchema } from "shadcn/schema"
 - **Type:** `Partial<Config>`
 - **Default:** 仅使用内置 registries
 
-`components.json` 文件解析后的内容。其 `registries` 字段会将一个命名空间（例如 `@acme`）
-映射到一个 URL，以及访问它所需的任何认证头或环境变量。
+要使用的 registry 配置。其 `registries` 字段将命名空间
+（例如 `@acme`）映射到 URL，以及访问该 registry 所需的身份验证标头或环境变量。使用
+[`getRegistriesConfig`](#getregistriesconfig) 从项目中加载配置。
 
 ```ts showLineNumbers
 import { getRegistryItems } from "shadcn/registry"
@@ -59,6 +60,17 @@ Registry 响应会在**进程生命周期内以内存缓存**，
 
 ```ts
 const fresh = await getRegistry("@shadcn", { useCache: false })
+```
+
+### getRegistriesConfig
+
+从项目目录加载 registry 配置。该函数会在 `components.json` 存在时读取它；
+否则会从 `package.json` 的顶层 `registries` 字段读取配置。
+
+```ts showLineNumbers
+import { getRegistriesConfig } from "shadcn/registry"
+
+const config = await getRegistriesConfig(process.cwd())
 ```
 
 ### getRegistry
@@ -146,6 +158,37 @@ const tree = await resolveRegistryItems(
 }
 ```
 
+### addRegistryItems
+
+将 registry 项解析并安装到现有项目中。这是 `shadcn add` 的
+编程等效操作，并会应用项目声明的文件、包依赖、
+环境变量、CSS 和 Tailwind 配置。
+
+```ts showLineNumbers
+import { addRegistryItems, getRegistriesConfig } from "shadcn/registry"
+
+const cwd = process.cwd()
+const config = await getRegistriesConfig(cwd)
+
+await addRegistryItems(["@acme/agent"], {
+  cwd,
+  config,
+  overwrite: false,
+  silent: true,
+})
+```
+
+`addRegistryItems` 不会自行读取项目配置文件。传入
+[`getRegistriesConfig`](#getregistriesconfig) 的结果，或直接提供 `config`。
+当每个请求的项目及其依赖都是通用项目时，仅包含 `registries` 的配置就足够了：
+即 `registry:item` 或 `registry:file` 的所有文件都声明了明确的目标路径。
+其他项目则需要完整解析后的项目配置，包括其别名和 `resolvedPaths`。
+项目或依赖引用的每个自定义 registry 命名空间都必须存在于 `config` 中。
+
+该函数会抛出错误而不是退出进程，并且从不显示提示。
+除非启用 `overwrite`，否则会跳过现有文件；对于 React 19 对等依赖冲突，npm 会使用
+`--force`。
+
 ### getRegistries
 
 获取 registry 目录。
@@ -193,6 +236,7 @@ const results = await searchRegistries(["@shadcn"], {
   "items": [
     {
       "name": "button",
+      "title": "Button",
       "type": "registry:ui",
       "description": "一个按钮组件。",
       "registry": "@shadcn",
@@ -257,7 +301,7 @@ const item = await loadRegistryItem("login-form", { cwd: process.cwd() })
   在提供 `registry-item.json` 响应的动态路由中使用它。
 </Callout>
 
-### Errors
+### 错误
 
 所有 registry 函数都会抛出继承自 `RegistryError` 的类型化错误。使用
 `RegistryErrorCode` 枚举或 `instanceof` 检查来处理它们。
@@ -292,7 +336,7 @@ try {
 
 ## shadcn/schema
 
-用于验证 `registry.json`、`registry-item.json` 和 `components.json` 的 Zod schemas。
+用于验证 `registry.json`、`registry-item.json` 和 `components.json` 的 Zod 模式。
 可用于在你自己的工具中验证 registry 数据。
 
 ```ts
@@ -304,7 +348,7 @@ if (!result.success) {
 }
 ```
 
-关键 schemas：
+关键模式：
 
 - `registrySchema`
 - `registryItemSchema`
@@ -316,7 +360,7 @@ if (!result.success) {
 - `configSchema`
 - `presetSchema`
 
-同时导出了推断类型：
+同时导出了推断出的类型：
 
 - `Registry`
 - `RegistryItem`
@@ -382,7 +426,7 @@ const config = decodePreset("bJ4FLU0")
 decodePreset("not-a-code") // null
 ```
 
-### Other exports
+### 其他导出项
 
 用于验证代码和生成随机预设的其他函数：
 

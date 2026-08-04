@@ -61,13 +61,15 @@ allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(b
 
 ### 使用组件，而非自定义标记 → [composition.md](./rules/composition.md)
 
-- **优先使用现有组件而非自定义标记。** 在编写样式化的 `div` 之前检查组件是否存在。
-- **提示使用 `Alert`。** 不要构建自定义样式化的 div。
-- **空状态使用 `Empty`。** 不要构建自定义空状态标记。
-- **通过 `sonner` 使用 Toast。** 使用 `sonner` 中的 `toast()`。
-- **使用 `Separator`** 代替 `<hr>` 或 `<div className="border-t">`。
-- **使用 `Skeleton`** 作为加载占位符。不要使用自定义的 `animate-pulse` div。
-- **使用 `Badge`** 代替自定义样式化的 span。
+- **Use existing components before custom markup.** Check if a component exists before writing a styled `div`.
+- **Callouts use `Alert`.** Don't build custom styled divs.
+- **Empty states use `Empty`.** Don't build custom empty state markup.
+- **Toast follows the project base.** Use `toast` from the `toast` component for
+  Base UI projects. Use `toast()` from `sonner` for Radix and React Aria
+  projects.
+- **Use `Separator`** instead of `<hr>` or `<div className="border-t">`.
+- **Use `Skeleton`** for loading placeholders. No custom `animate-pulse` divs.
+- **Use `Badge`** instead of custom styled spans.
 
 ### 图标 → [icons.md](./rules/icons.md)
 
@@ -135,7 +137,7 @@ allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(b
 | Data display               | `Table`, `Card`, `Badge`, `Avatar`                                                                  |
 | Navigation                 | `Sidebar`, `NavigationMenu`, `Breadcrumb`, `Tabs`, `Pagination`                                     |
 | Overlays                   | `Dialog` (modal), `Sheet` (side panel), `Drawer` (bottom sheet), `AlertDialog` (confirmation)       |
-| Feedback                   | `sonner` (toast), `Alert`, `Progress`, `Skeleton`, `Spinner`                                        |
+| Feedback                   | `toast` (Base UI), `sonner` (Radix/Aria), `Alert`, `Progress`, `Skeleton`, `Spinner`                 |
 | Command palette            | `Command` inside `Dialog`                                                                           |
 | Charts                     | `Chart` (wraps Recharts)                                                                            |
 | Layout                     | `Card`, `Separator`, `Resizable`, `ScrollArea`, `Accordion`, `Collapsible`                          |

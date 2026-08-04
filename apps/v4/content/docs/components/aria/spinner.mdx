@@ -1,0 +1,111 @@
+---
+title: 加载指示器
+description: 可用于显示加载状态的指示器。
+base: aria
+component: true
+---
+
+<ComponentPreview styleName="aria-nova" name="spinner-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add spinner
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="spinner"
+  title="components/ui/spinner.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Spinner } from "@/components/ui/spinner"
+```
+
+```tsx
+<Spinner />
+```
+
+## 自定义
+
+你可以通过编辑 `Spinner` 组件，将默认的加载图标替换为其他任意图标。
+
+<ComponentPreview styleName="aria-nova" name="spinner-custom" />
+
+```tsx showLineNumbers title="components/ui/spinner.tsx"
+import { LoaderIcon } from "lucide-react"
+
+import { cn } from "@/lib/utils"
+
+function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+  return (
+    <LoaderIcon
+      role="status"
+      aria-label="加载中"
+      className={cn("size-4 animate-spin", className)}
+      {...props}
+    />
+  )
+}
+
+export { Spinner }
+```
+
+## 尺寸
+
+使用 `size-*` 工具类更改加载指示器的尺寸。
+
+<ComponentPreview styleName="aria-nova" name="spinner-size" />
+
+## 按钮
+
+为按钮添加加载指示器，以表示加载状态。将 `<Spinner />` 放置在标签之前，并使用 `data-icon="inline-start"` 表示起始位置；或者将其放置在标签之后，并使用 `data-icon="inline-end"` 表示末尾位置。
+
+<ComponentPreview styleName="aria-nova" name="spinner-button" />
+
+## 徽章
+
+在徽章中添加微调器以指示加载状态。将 `<Spinner />` 放置在标签文本之前，并使用 `data-icon="inline-start"` 表示起始位置；或将其放置在标签文本之后，并使用 `data-icon="inline-end"` 表示末尾位置。
+
+<ComponentPreview styleName="aria-nova" name="spinner-badge" />
+
+## 输入组
+
+<ComponentPreview styleName="aria-nova" name="spinner-input-group" />
+
+## 空
+
+<ComponentPreview styleName="aria-nova" name="spinner-empty" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="spinner-rtl" direction="rtl" />

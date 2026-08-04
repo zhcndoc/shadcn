@@ -1,0 +1,732 @@
+---
+title: TanStack AI
+description: 创建 TanStack AI 消息，并通过 useChat 流式传输预定义的对话，无需模型、API 路由、网络请求或 API 密钥。
+---
+
+`@shadcn/helpers/tanstack-ai` 允许你在代码中编写 AI 对话，并通过 TanStack AI 的
+`useChat` 对其进行流式传输，无需模型、API 路由、网络请求或 API 密钥。
+
+它会创建原生的 TanStack `UIMessage[]` 值，并通过本地连接适配器将每条助手
+响应作为真实的 AG-UI 事件重新播放，因此你的组件表现会与生产环境中的完全一致：文本和推理
+会逐词流式传输，工具调用则会从输入流转移到结果。
+
+```ts showLineNumbers
+import { createChat } from "@shadcn/helpers/tanstack-ai"
+
+const chat = createChat()
+  .user("What changed in this release?")
+  .assistant("The release adds keyboard shortcuts and faster search.")
+  .user("Can you show me the shortcuts?")
+  .assistant("Press ⌘K to search and ⌘Enter to submit.")
+```
+
+将聊天对象及其初始消息和本地连接传递给 `useChat`。
+TanStack AI 接收到的 AG-UI 事件与从服务器接收的完全相同。
+
+```tsx showLineNumbers
+import { useChat } from "@tanstack/ai-react"
+
+function Chat() {
+  const { messages, append } = useChat({
+    initialMessages: chat.get(0), // 从无消息开始。
+    connection: chat.transport(),
+  })
+
+  const nextMessage = chat.next(messages)
+
+  return (
+    <button
+      disabled={!nextMessage}
+      onClick={() => {
+        if (nextMessage) {
+          void append(nextMessage)
+        }
+      }}
+    >
+      Send next message
+    </button>
+  )
+}
+```
+
+`get(0)` 从无消息开始。`append(nextMessage)` 添加下一个
+预定义的用户消息；随后连接会将其助手响应作为 AG-UI 事件进行流式传输。
+
+---
+
+## 用途
+
+该辅助工具将聊天界面与模型和后端解耦，让你可以独立开发前端。它无需联网即可运行、响应迅速，并且每次运行的结果都完全一致。
+
+- **构建组件。** 针对真实的流式输出开发消息气泡、工具卡片和推理面板，无需先接入模型。
+- **预览和演示。** 提供可复现的预览、截图和视频，完全不依赖在线模型。
+- **编写文档。** 使用每次加载时渲染结果都一致的对话，为文档示例提供支持。
+- **测试。** 在 CI 中针对确定性的流进行断言，无需网络请求、消耗 token，也不会受到不稳定的模型输出影响。
+
+---
+
+## 安装
+
+```bash
+npm install @shadcn/helpers
+```
+
+---
+
+## 使用
+
+创建一个对话，将其消息和连接传递给 `useChat`，然后使用 `next()` 发送每条预定义的用户消息。
+
+```tsx showLineNumbers {3-4,6-10,12-13,16-21,28-34}
+"use client"
+
+import { createChat } from "@shadcn/helpers/tanstack-ai"
+import { useChat } from "@tanstack/ai-react"
+
+const chat = createChat()
+  .user("What changed in this release?")
+  .assistant("The release adds keyboard shortcuts and faster search.")
+  .user("Can you show me the shortcuts?")
+  .assistant("Press ⌘K to search and ⌘Enter to submit.")
+
+const initialMessages = chat.get(0)
+const connection = chat.transport()
+
+export function Chat() {
+  const { messages, append, status } = useChat({
+    initialMessages,
+    connection,
+  })
+  const nextMessage = chat.next(messages)
+  const isBusy = status === "submitted" || status === "streaming"
+
+  return (
+    <div>
+      {messages.map((message) => (
+        <div key={message.id}>{/* 渲染消息 */}</div>
+      ))}
+      <button
+        disabled={!nextMessage || isBusy}
+        onClick={() => {
+          if (nextMessage && !isBusy) {
+            void append(nextMessage)
+          }
+        }}
+      >
+        Send
+      </button>
+    </div>
+  )
+}
+```
+
+<ComponentPreview
+  styleName="base-rhea"
+  name="tanstack-ai-helper-demo"
+  className="rounded-[34px] sm:rounded-4xl"
+  previewClassName="h-auto theme-blue bg-surface p-4 min-[480px]:p-8 min-[560px]:p-10 sm:px-10 sm:py-16 dark:bg-background"
+/>
+
+---
+
+## 用户消息
+
+使用此辅助方法添加的消息会使用 `user` 和 `assistant` 角色。当你使用
+`createChat({ messages })` 开始时，现有的 TanStack 消息会被保留。
+
+```ts
+const chat = createChat().user("What changed in this release?")
+
+const [message] = chat.get()
+
+message.role // "user"
+message.parts // [{ type: "text", content: "What changed in this release?" }]
+```
+
+当你需要这些信息时，将 `id` 或通过 `metadata` 传递的 `createdAt` 时间戳作为第二个参数传入。
+
+```ts
+chat.user("What changed in this release?", {
+  id: "user-release-question",
+  metadata: {
+    createdAt: "2026-01-01T10:00:00.000Z",
+  },
+})
+```
+
+用户消息也可以包含文件。请参阅[文件](#files)。
+
+---
+
+## Assistant 消息
+
+使用 `assistant()` 添加一条助手消息。
+
+```ts
+const chat = createChat().assistant(
+  "The release adds keyboard shortcuts and faster search."
+)
+
+const [message] = chat.get()
+
+message.role // "assistant"
+message.parts // [{ type: "text", content: "The release adds..." }]
+```
+
+字符串会创建一个文本部分。你也可以传入一个 TanStack 消息部分数组。
+
+```ts
+chat.assistant([
+  { type: "thinking", content: "I should summarize the release." },
+  { type: "text", content: "The release adds keyboard shortcuts." },
+])
+```
+
+当消息需要以更小的步骤流式传输时，请使用 writer 回调。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.reasoning("I should summarize the release.")
+  writer.text("The release adds keyboard shortcuts and faster search.")
+})
+```
+
+writer 会按照调用顺序添加各个部分。
+
+---
+
+## 消息部分
+
+TanStack writer 支持可以通过其 AG-UI 连接进行往返传输的部分：文本、推理和工具调用。它还支持计时和错误。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.reasoning("I should answer directly.")
+  writer.text("Hello.")
+})
+```
+
+有关在此连接中没有等效项的部分，请参阅[适配器差异](#adapter-differences)。
+
+---
+
+## 文本
+
+使用 `text()` 添加文本。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.text("The release adds keyboard shortcuts.")
+  writer.text(" Search is faster too.")
+})
+```
+
+当聊天与 `chat.transport()` 一起使用时，文本会逐词流式传输。
+连续的文本调用会在 `get()` 中呈现为独立部分，但 TanStack 的
+流处理器会在播放期间将它们合并为一个文本部分。
+
+使用 `mode: "instant"` 一次性发送完整值，或使用 `delayMs` 更改
+文本增量之间的延迟。
+
+```ts
+writer.text("Done.", { mode: "instant" })
+writer.text("This part streams more slowly.", { delayMs: 100 })
+```
+
+---
+
+## 推理
+
+使用 `reasoning()` 添加推理内容。它会成为 TanStack 的 `thinking` 部分。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.reasoning("I should check the latest conditions first.")
+  writer.text("Let me check the weather.")
+})
+```
+
+推理使用与文本相同的 `delayMs` 和 `mode` 选项。
+
+```ts
+writer.reasoning("Checking the forecast.", { mode: "instant" })
+```
+
+---
+
+## 工具调用
+
+使用 `tool()` 添加工具调用。它会返回一个句柄，该句柄会跟随工具从输入到输出。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer
+    .tool("getWeather", {
+      input: { city: "San Francisco" },
+    })
+    .sleep(900)
+    .output({
+      city: "San Francisco",
+      temperature: 18,
+      condition: "Breezy",
+    })
+
+  writer.text("It is 18°C and breezy in San Francisco.")
+})
+```
+
+工具可以通过 `output()` 或 `error()` 结束。
+
+```ts
+writer.tool("getWeather", { input: { city: "San Francisco" } }).error()
+```
+
+完成后的 TanStack 消息包含一个 `tool-call` 部分和一个同级的
+`tool-result` 部分。
+
+传入应用中使用的相同客户端工具元组，以便为工具名称、输入和输出提供类型。
+
+```ts
+import { clientTools } from "@tanstack/ai-client"
+
+import { getWeatherTool } from "@/lib/tools"
+
+const tools = clientTools(getWeatherTool.client())
+const chat = createChat<typeof tools>()
+
+chat.assistant(({ writer }) => {
+  writer
+    .tool("getWeather", {
+      input: { city: "San Francisco" },
+    })
+    .output({
+      city: "San Francisco",
+      temperature: 18,
+      condition: "Breezy",
+    })
+})
+```
+
+---
+
+## 文件
+
+使用 `files` 选项将文件添加到用户消息中。
+
+```ts
+chat.user("Describe this image.", {
+  files: [
+    {
+      mediaType: "image/png",
+      url: "https://example.com/screenshot.png",
+    },
+  ],
+})
+```
+
+该辅助函数会根据每个文件的媒体类型，将其转换为 TanStack 媒体部分：
+
+| 媒体类型 | TanStack 部分 |
+| -------- | ------------- |
+| `image/*`  | `image`       |
+| `audio/*`  | `audio`       |
+| `video/*`  | `video`       |
+| 其他      | `document`    |
+
+这些部分可通过 `get()` 获取。由于 `next()` 返回完整的用户 `UIMessage`，因此 `append()` 会保留其中的文本和媒体部分。
+
+```ts
+const nextMessage = chat.next(messages)
+
+if (nextMessage) {
+  void append(nextMessage)
+}
+```
+
+助手媒体部分可以包含在静态部分数组中，并通过 `get()` 读取，但 AG-UI 连接不会流式传输助手文件。
+
+---
+
+## 适配器差异
+
+TanStack AI 和 AI SDK 使用不同的消息和流式传输模型。此适配器仅公开它能够端到端表示的操作。
+
+| 功能                                  | 行为                                                                      |
+| ------------------------------------- | ------------------------------------------------------------------------- |
+| 文本                                  | 以 AG-UI 文本流式传输，并成为一个 `text` 部分。                           |
+| 推理                                  | 以 AG-UI 推理流式传输，并成为一个 `thinking` 部分。                       |
+| 工具调用                              | 将输入、输出和错误流式传输到 `tool-call` 和 `tool-result`。               |
+| 数据和结构化输出                      | 没有写入方法；现有消息部分仍可通过 `get()` 获取。                         |
+| 自定义事件                            | 公共适配器中没有写入方法。                                                |
+| 来源、推理文件、步骤开始              | 此适配器中没有对应的 TanStack 消息或 AG-UI 等价物。                       |
+| 助手文件                              | 可在 `get()` 中获取，但不会包含在连接流中。                               |
+| 停止                                  | 关闭流；AG-UI 没有单独的中止事件。                                        |
+
+当预览需要使用 AI SDK 的完整消息部分模型时，请使用 [AI SDK 辅助工具](/docs/helpers/ai-sdk)。
+
+---
+
+## 读取消息
+
+使用 `get()` 从对话开头返回消息。
+
+```ts
+chat.get() // 每条消息。
+chat.get(2) // 前两条消息。
+chat.get(0) // 空的初始对话。
+```
+
+`get()` 返回克隆的 TanStack `UIMessage[]` 值，不会更改
+聊天内容。
+
+使用 `next()` 在已显示的消息之后查找下一条预定义的用户消息。
+
+```ts
+const initialMessages = chat.get(2)
+const nextMessage = chat.next(initialMessages)
+```
+
+`next()` 始终接受消息记录，而不是索引。没有剩余消息时，它会返回下一条用户消息或 `null`。
+
+---
+
+## 从现有消息开始
+
+传入 `messages`，以便从已保存的对话或 fixture 继续。
+
+```ts
+import { createChat } from "@shadcn/helpers/tanstack-ai"
+import type { UIMessage } from "@tanstack/ai-client"
+
+declare const savedMessages: UIMessage[]
+
+const chat = createChat({ messages: savedMessages })
+  .user("What should we do next?")
+  .assistant("Turn the open questions into a checklist.")
+```
+
+现有的 ID、时间戳和部分内容都会被保留。
+
+---
+
+## 传输
+
+`transport()` 创建一个 TanStack `ConnectConnectionAdapter`，你可以将其作为
+`connection` 传递给 `useChat`。
+
+```ts
+const connection = chat.transport()
+
+const { messages, append, sendMessage } = useChat({
+  initialMessages: chat.get(0),
+  connection,
+})
+
+const nextMessage = chat.next(messages)
+
+// 重放下一条预定义的用户消息。
+if (nextMessage) {
+  void append(nextMessage)
+}
+
+// 或者以文本或多模态内容的形式发送普通用户输入。
+void sendMessage("Tell me more.")
+```
+
+当 `append()` 或 `sendMessage()` 开始一次运行时，连接会查找当前消息记录之后的
+assistant 消息，并通过 TanStack 的标准流处理器发出 AG-UI 事件。它会优先匹配消息 ID，
+如果匹配不到，则回退到最新消息的角色和文本。
+
+使用 `append(nextMessage)` 重放预定义的用户消息。它会保留该消息的 ID 和媒体部分。
+对于普通用户输入，请使用 `sendMessage()`；它接受字符串或多模态内容，而不是完整的
+`UIMessage`。
+
+### 事件
+
+响应可能发出以下序列：
+
+```txt
+RUN_STARTED
+REASONING_MESSAGE_START → REASONING_MESSAGE_CONTENT → REASONING_MESSAGE_END
+TOOL_CALL_START → TOOL_CALL_ARGS → TOOL_CALL_END → TOOL_CALL_RESULT
+TEXT_MESSAGE_START → TEXT_MESSAGE_CONTENT → TEXT_MESSAGE_END
+RUN_FINISHED
+```
+
+预定义的错误会发出 `RUN_ERROR`。TanStack 会为每次运行提供所使用的 `threadId` 和
+`runId`。
+
+### 选项
+
+| 选项       | 类型                                     | 默认值 | 描述                                                                         |
+| ---------- | ---------------------------------------- | ------ | ---------------------------------------------------------------------------- |
+| `delayMs`  | `number`                                 | `50`   | 文本增量和推理增量之间的延迟。使用 `0` 或 `undefined` 可移除该延迟。 |
+| `fallback` | `string`、`MessagePart[]` 或回调函数 | 无     | 没有预定义的 assistant 响应剩余时，对流的响应。             |
+
+连接级别的 `delayMs` 是每个流式文本和推理部分的默认值。可以使用
+`writer.text(..., { delayMs })` 或 `writer.reasoning(..., { delayMs })` 为单个部分覆盖它。
+
+```ts
+const connection = chat.transport({
+  delayMs: 25,
+})
+```
+
+### 回退
+
+当对话中没有剩余的预定义 assistant 响应时，使用 `fallback`。这样可以让演示在预定义
+回复耗尽后仍然可用。
+
+```ts
+const connection = chat.transport({
+  fallback: "This demo has no more predefined replies.",
+})
+```
+
+回退也可以是 TanStack 消息部分的数组或 writer 回调。该回调会接收传入的消息记录，因此
+可以根据当前状态创建响应。
+
+```ts
+const connection = chat.transport({
+  fallback: ({ writer, messages }) => {
+    writer.text(`This example already has ${messages.length} messages.`, {
+      mode: "instant",
+    })
+  },
+})
+```
+
+回退响应的流式传输方式与 assistant 响应相同，但不会添加到预定义对话中。如果没有设置
+回退，当对话耗尽时，连接会抛出
+`"No assistant response found for this transcript."`。
+
+从 `useChat` 调用 `stop()` 会关闭活动连接流。
+
+---
+
+## 时间控制
+
+使用延迟来重现真实响应的节奏。
+
+```ts
+const chat = createChat()
+  .user("Give me a project update.")
+  .sleep(800)
+  .assistant(({ writer }) => {
+    writer.reasoning("I should lead with the completed milestone.")
+    writer.sleep(500)
+    writer.text("The first milestone is complete.", { mode: "instant" })
+  })
+
+const connection = chat.transport({ delayMs: 50 })
+```
+
+- `chat.sleep(ms)` 会在下一次助手响应开始前等待。
+- `writer.sleep(ms)` 会在助手响应的各部分之间等待。
+- `tool.sleep(ms)` 会在工具的输入与结果之间等待。
+- `transport({ delayMs })` 设置文本和推理增量之间的默认延迟。
+- `writer.text(text, { delayMs })` 和 `writer.reasoning(text, { delayMs })`
+  可覆盖某一部分的延迟。
+- `mode: "instant"` 会在一个增量中发送完整的文本或推理值。
+
+进行快速测试时，使用 `chat.transport({ delayMs: 0 })` 和即时文本。
+
+## 错误
+
+当整个助手响应都应失败时，在聊天中使用 `error()`。
+
+```ts
+const chat = createChat()
+  .user("Load the report.")
+  .error("The report could not be loaded.")
+```
+
+这会发出 TanStack `RUN_ERROR` 事件。
+
+当其他内容已经流式传输后，使用 `writer.error()` 使其失败。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.text("I found the report.")
+  writer.error("The connection closed before it could be read.")
+})
+```
+
+---
+
+## 元数据和 ID
+
+TanStack 消息支持 `createdAt` 时间戳。将其作为消息元数据传入；
+它会在 `get()` 和 `next()` 中保留。AG-UI 连接不会流式传输消息元数据。
+
+```ts
+const chat = createChat()
+  .user("Hello", {
+    metadata: { createdAt: "2026-01-01T10:00:00.000Z" },
+  })
+  .assistant("Hi.", {
+    id: "assistant-welcome",
+    metadata: { createdAt: new Date("2026-01-01T10:00:01.000Z") },
+  })
+```
+
+当 fixture 需要自定义前缀或固定时钟时，使用聊天选项。
+
+```ts
+const chat = createChat({
+  messageIdPrefix: "demo-message",
+  toolCallIdPrefix: "demo-tool",
+  now: "2026-01-01T00:00:00.000Z",
+})
+```
+
+---
+
+## API 参考
+
+上面的章节介绍了常见流程。本参考列出了每个公开导出项和选项。
+
+### `createChat()`
+
+创建一个类型化会话，并返回流式 TanStack chat 接口。
+
+```ts
+function createChat<
+  TOOLS extends ReadonlyArray<AnyClientTool> = AnyClientTool[],
+  DATA = unknown,
+>(options?: CreateChatOptions<TOOLS, DATA>): TanStackChat<TOOLS, DATA>
+```
+
+#### 类型参数
+
+| 参数      | 描述                                                                        |
+| --------- | --------------------------------------------------------------------------- |
+| `TOOLS`   | 用于对工具名称、输入和输出进行类型化的客户端工具元组。                      |
+| `DATA`    | 现有 TanStack 消息中 `structured-output` 部分的负载类型。                   |
+
+辅助 writer 不会创建 `structured-output` 部分。当聊天从现有消息开始时，`DATA`
+会保留这些部分的类型。
+
+#### 选项
+
+| 选项               | 类型                       | 默认值                       | 描述                                                   |
+| ------------------ | -------------------------- | ---------------------------- | ------------------------------------------------------ |
+| `messages`         | `UIMessage<TOOLS, DATA>[]` | `[]`                         | 从现有对话记录开始。消息会被克隆。                     |
+| `messageIdPrefix`  | `string`                   | `"msg"`                      | 生成的消息 ID 前缀。                                    |
+| `toolCallIdPrefix` | `string`                   | `"call"`                     | 生成的工具调用 ID 前缀。                               |
+| `now`              | `Date \| string`           | `"2026-01-01T00:00:00.000Z"` | 用于生成 `createdAt` 值的固定时间。                    |
+
+`messages` 中的 ID 会被保留，因此新生成的 ID 会接续现有对话记录。
+
+### `TanStackChat`
+
+每个添加内容的方法都会返回同一个 chat，因此可以链式调用。
+
+| 方法                          | 返回值                     | 描述                                                         |
+| ----------------------------- | -------------------------- | ------------------------------------------------------------ |
+| `user(text?, options?)`       | `TanStackChat`             | 添加一条带文本和可选文件的用户消息。                         |
+| `assistant(input?, options?)` | `TanStackChat`             | 根据文本、部分或 writer 回调添加一条助手消息。               |
+| `sleep(delayMs)`              | `TanStackChat`             | 在下一条助手响应开始前等待。                                 |
+| `error(errorText?)`           | `TanStackChat`             | 添加一条会发出 `RUN_ERROR` 的助手响应。                      |
+| `get(count?)`                 | `UIMessage[]`              | 返回从会话开头开始的克隆消息。                               |
+| `next(messages)`              | `UIMessage \| null`        | 返回对话记录之后下一条预定义的用户消息。                     |
+| `transport(options?)`         | `ConnectConnectionAdapter` | 创建 `useChat` 使用的连接。                                  |
+
+调用不带内容的 `user()` 或 `assistant()` 会使用
+`"Summarize the uploaded receipt."`。调用不带消息的 `error()` 会使用
+`"An error occurred."`。当 `count` 为负数或不是整数时，`get(count)` 会抛出异常。
+
+#### `user()` 选项
+
+| 选项       | 类型                      | 描述                                         |
+| ---------- | ------------------------- | -------------------------------------------- |
+| `id`       | `string`                  | 使用指定的消息 ID。                          |
+| `metadata` | `TanStackMessageMetadata` | 设置消息的 `createdAt` 时间戳。               |
+| `files`    | `FilePayload[]`           | 将媒体部分追加到用户文本部分之后。           |
+
+用户文件的形状如下：
+
+```ts
+type FilePayload = {
+  type?: "file"
+  mediaType: string
+  url: string
+  filename?: string
+  providerMetadata?: Record<string, unknown>
+}
+```
+
+TanStack 媒体部分会保留 URL 和媒体类型。其消息形状不会保留 `filename` 或
+`providerMetadata`。
+
+#### `assistant()` 输入
+
+| 输入                   | 结果                                                     |
+| ---------------------- | -------------------------------------------------------- |
+| `string`               | 一个按单词逐个流式传输的文本部分。                       |
+| `MessagePart[]`        | 按原有顺序排列的静态 TanStack 部分。                     |
+| `({ writer }) => void` | 用于编排部分、工具、错误和时间安排的同步回调。           |
+
+#### `assistant()` 选项
+
+| 选项       | 类型                      | 描述                                  |
+| ---------- | ------------------------- | ------------------------------------- |
+| `id`       | `string`                  | 使用指定的消息 ID。                   |
+| `metadata` | `TanStackMessageMetadata` | 设置消息的 `createdAt` 时间戳。        |
+
+#### `transport()` 选项
+
+| 选项       | 类型                                                        | 默认值 | 描述                                                                    |
+| ---------- | ----------------------------------------------------------- | ------ | ----------------------------------------------------------------------- |
+| `delayMs`  | `number`                                                    | `50`   | 文本和推理增量之间的延迟。使用 `0` 或 `undefined` 可移除该延迟。        |
+| `fallback` | `string \| MessagePart[] \| ({ writer, messages }) => void` | 无     | 没有剩余预定义助手响应时使用的响应。                                    |
+
+有关匹配、回退、错误和 AG-UI 行为，请参阅[传输](#transport)。
+
+### Writer
+
+在 `assistant(({ writer }) => {})` 和回调中可以使用 writer。
+
+| 方法                         | 描述                                             |
+| ---------------------------- | ------------------------------------------------ |
+| `text(text?, options?)`      | 添加流式文本。                                   |
+| `reasoning(text?, options?)` | 添加流式推理，并将其转换为 `thinking` 部分。     |
+| `tool(name, options?)`       | 添加类型化工具调用并返回其生命周期句柄。         |
+| `sleep(delayMs)`             | 在下一次 writer 事件前暂停。                     |
+| `error(errorText?)`          | 发出 `RUN_ERROR`，并在不发送 `RUN_FINISHED` 事件的情况下结束。 |
+
+调用不带内容的 `text()` 会使用 `"Summarize the uploaded receipt."`。
+调用不带内容的 `reasoning()` 会使用
+`"I need to inspect the available context before answering."`。调用不带消息的
+`error()` 会使用 `"An error occurred."`。
+
+#### 文本和推理选项
+
+| 选项      | 类型                    | 默认值     | 描述                                             |
+| --------- | ----------------------- | ---------- | ------------------------------------------------ |
+| `delayMs` | `number`                | 连接设置   | 覆盖此值使用的连接延迟。                         |
+| `mode`    | `"stream" \| "instant"` | `"stream"` | 流式传输单词增量，或在一个增量中发出完整值。     |
+
+#### 工具选项
+
+| 选项        | 类型                     | 描述                              |
+| ----------- | ------------------------ | --------------------------------- |
+| `toolCallId` | `string`                | 使用指定的工具调用 ID。           |
+| `input`      | `TOOLS[NAME]["input"]`   | 设置类型化工具输入。              |
+| `output`     | `TOOLS[NAME]["output"]`  | 立即以类型化输出结束。            |
+| `errorText`  | `string`                 | 立即以错误结束。                  |
+
+`tool()` 会返回一个带有 `sleep(delayMs)`、`output(value)` 和
+`error(errorText?)` 的句柄。当工具生命周期需要在其输入和结果之间插入事件时，
+请使用该句柄。调用不带消息的 `tool.error()` 会使用
+`"Tool call failed."`。
+
+### 类型
+
+| 导出项                    | 描述                                                    |
+| ------------------------- | ------------------------------------------------------- |
+| `TanStackChat`            | `createChat()` 返回的类型化流式 chat。                  |
+| `CreateChatOptions`       | `createChat()` 接受的选项。                             |
+| `TanStackMessageMetadata` | 支持的 `{ createdAt? }` 消息元数据。                    |
+| `TanStackToolHandle`      | `writer.tool()` 返回的生命周期句柄。                    |
+| `TanStackWriter`          | 在助手和回退回调中可用的 writer。                       |

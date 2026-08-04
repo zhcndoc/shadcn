@@ -1,0 +1,183 @@
+---
+title: 动态搜索
+description: 为大型注册表实现服务器端搜索。
+---
+
+默认情况下，`shadcn search` 会获取完整的 `registry.json`，并在本地筛选
+项目。这适用于大多数注册表，且只需要一个静态文件。
+
+对于包含数千个项目的大型注册表，你可以改为在注册表服务器上实现搜索。CLI 会将搜索参数转发给你的
+注册表，而你的服务器只返回匹配的项目。
+
+动态搜索是可选功能，并且完全向后兼容。静态注册表无需任何更改即可继续运行。
+
+## 工作原理
+
+当你运行 `shadcn search` 时，CLI 会将搜索参数追加到目录请求中：
+
+```bash
+npx shadcn@latest search @acme --query button --limit 50
+```
+
+```txt
+GET https://acme.com/r/registry.json?q=button&limit=50&offset=0
+```
+
+接下来发生什么取决于你的注册表：
+
+- **静态注册表**会忽略查询参数，并返回完整的
+  `registry.json`。CLI 会在本地筛选项目。这是默认行为，无需进行任何更改。
+- **动态注册表**会在服务器端筛选项目，并返回匹配的项目以及一个
+  `pagination` 对象。当 CLI 在响应中看到 `pagination` 时，就会信任这些结果已经过预筛选，并跳过本地筛选。
+
+响应中是否存在 `pagination`，决定了 CLI 是否知道你的注册表在服务器端处理搜索。无需进行配置或能力协商。
+
+## 查询参数
+
+CLI 会在每次搜索请求中发送以下查询参数：
+
+| 参数      | 描述                                             |
+| --------- | ------------------------------------------------ |
+| `q`       | 搜索查询字符串。                                 |
+| `type`    | 以逗号分隔的项目类型，例如 `registry:ui,registry:block`。 |
+| `limit`   | 要返回的项目最大数量。                           |
+| `offset`  | 要跳过的项目数量。                               |
+
+所有参数均为可选参数。不包含 `q` 或 `type` 的请求应返回
+所有项目，并进行分页。
+
+## 响应格式
+
+返回常规的 `registry.json` 结构，并添加一个额外的 `pagination`
+对象：
+
+```json title="registry.json?q=button&limit=2"
+{
+  "name": "acme",
+  "homepage": "https://acme.com",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "description": "A button component."
+    },
+    {
+      "name": "icon-button",
+      "type": "registry:ui",
+      "description": "A button component with an icon."
+    }
+  ],
+  "pagination": {
+    "total": 12,
+    "offset": 0,
+    "limit": 2,
+    "hasMore": true
+  }
+}
+```
+
+搜索结果中的每个项目只需包含 `name`、`type` 和 `description`。您
+无需包含 `files`、`dependencies` 或其他项目属性。当用户运行
+`shadcn add` 时，CLI 会获取完整的项目定义。
+
+### pagination
+
+| 属性       | 类型      | 描述                               |
+| ---------- | --------- | ---------------------------------- |
+| `total`    | `number`  | 匹配查询条件的项目总数。           |
+| `offset`   | `number`  | 跳过的项目数。                     |
+| `limit`    | `number`  | 此响应中包含的最大项目数。         |
+| `hasMore`  | `boolean` | 是否还有更多项目可供获取。         |
+
+## 服务器实现
+
+以下是使用 Next.js 路由处理程序的示例：
+
+```typescript title="app/r/registry.json/route.ts"
+import { NextRequest, NextResponse } from "next/server"
+
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl
+
+  const query = searchParams.get("q")
+  const types = searchParams.get("type")?.split(",")
+  const limit = Number(searchParams.get("limit") ?? 100)
+  const offset = Number(searchParams.get("offset") ?? 0)
+
+  // 使用你的数据库或搜索索引筛选项目。
+  const { items, total } = await searchItems({ query, types, limit, offset })
+
+  return NextResponse.json({
+    name: "acme",
+    homepage: "https://acme.com",
+    items,
+    pagination: {
+      total,
+      offset,
+      limit,
+      hasMore: offset + limit < total,
+    },
+  })
+}
+```
+
+你可以使用任何方式为 `searchItems` 提供支持：数据库查询、全文搜索索引或外部搜索服务。
+
+## 多个注册表
+
+搜索单个注册表时，CLI 会转发所有参数，并原样使用你的
+`pagination` 响应。
+
+同时搜索多个注册表时，例如 `shadcn search @acme @lib`，全局
+`offset` 无法在多个注册表之间拆分。CLI 会将 `q` 和
+`type` 连同足以填满所请求页面的 `limit`（`offset + limit`）转发给每个注册表，
+然后在本地合并结果并进行分页。服务器端筛选仍然生效，因此每个注册表只会返回
+匹配的项目。
+
+如果你的注册表将每次响应的项目数量限制在低于所请求的
+`limit`，CLI 会将其视为已耗尽，无法继续获取更深层的页面。请尽可能遵守所请求的
+`limit`，以便通过分页访问所有匹配项。
+
+## 身份验证
+
+动态搜索适用于所有[身份验证](/docs/registry/authentication)
+模式。CLI 会将配置的请求头和参数发送到搜索请求中，因此你可以将搜索
+结果限定为经过身份验证的用户：
+
+```typescript title="app/r/registry.json/route.ts"
+export async function GET(request: NextRequest) {
+  const token = request.headers.get("authorization")?.replace("Bearer ", "")
+  const team = await getTeamFromToken(token)
+
+  // 仅搜索该团队有权访问的项目。
+  const { items, total } = await searchItems({
+    query: request.nextUrl.searchParams.get("q"),
+    team,
+  })
+
+  // ...
+}
+```
+
+## 向后兼容性
+
+- **静态注册表**无需更改。静态文件上的查询参数会被文件服务器忽略，CLI 会回退到本地筛选。
+- **较旧版本的 CLI**在不带查询参数的情况下获取目录，并忽略 `pagination` 字段。您的注册表应为不带参数的请求返回合理的默认响应，例如项目的第一页。
+- **排序**由您的服务器决定。当您的注册表返回预筛选的结果时，CLI 会保留您的排序，而不是在本地重新排序。
+
+## 测试
+
+使用 `curl` 测试您的动态注册表：
+
+```bash
+curl "https://acme.com/r/registry.json?q=button&limit=10"
+```
+
+然后使用 CLI 进行验证：
+
+```bash
+npx shadcn@latest search @acme --query button
+```
+
+要确认服务器端搜索已启用，请检查响应是否包含
+`pagination` 对象以及仅匹配的项目。

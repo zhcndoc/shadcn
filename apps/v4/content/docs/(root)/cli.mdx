@@ -26,8 +26,8 @@ npx shadcn@latest init
   components                 组件名称、URL 或本地路径
 
 选项：
-  -t, --template <template>  使用的模板。（next、vite、start、react-router、laravel、astro）
-  -b, --base <base>          使用的组件库。（base、radix）
+  -t, --template <template>  要使用的模板。（next、vite、start、react-router、laravel、astro）
+  -b, --base <base>          要使用的组件库。（base、radix、aria）
   -p, --preset [name]        使用预设配置
   -y, --yes                  跳过确认提示。（默认：true）
   -d, --defaults             使用默认配置：--template=next --preset=nova（默认：false）
@@ -42,7 +42,7 @@ npx shadcn@latest init
   --rtl                      启用 RTL 支持。
   --no-rtl                   禁用 RTL 支持。
   --pointer                  为按钮启用指针光标。
-  --no-pointer               为按钮禁用指针光标。
+  --no-pointer               禁用按钮的指针光标。
   --reinstall                重新安装现有 UI 组件。
   --no-reinstall             不重新安装现有 UI 组件。
   -h, --help                 显示命令帮助
@@ -366,10 +366,10 @@ npx shadcn@latest docs [component]
   component          要获取文档的组件名称
 
 选项：
-  -c, --cwd <cwd>    工作目录，默认当前目录。
-  -b, --base <base>  使用的基础库，'base' 或 'radix'，默认使用项目基础设置。
-  --json             以 JSON 格式输出。（默认值：false）
-  -h, --help         显示命令帮助信息
+  -c, --cwd <cwd>    工作目录。默认为当前目录。
+  -b, --base <base>  要使用的基础：base、radix 或 aria。默认为项目基础。
+  --json             以 JSON 格式输出。（默认为：false）
+  -h, --help         显示命令帮助
 ```
 
 ---
@@ -424,16 +424,54 @@ npx shadcn@latest migrate [migration]
   migration        要运行的迁移名称。
   path             可选的路径或 glob 模式，用于迁移。
 
-选项：
-  -c, --cwd <cwd>  工作目录，默认当前目录。
-  -l, --list       列出所有迁移。（默认值：false）
-  -y, --yes        跳过确认提示。（默认值：false）
-  -h, --help       显示命令帮助信息
+Options:
+  -c, --cwd <cwd>       the working directory. defaults to the current directory.
+  -l, --list            list all migrations. (default: false)
+  -y, --yes             skip confirmation prompt. (default: false)
+  -f, --from <library>  the icon library to migrate from (icons migration only).
+  -t, --to <library>    the icon library to migrate to (icons migration only).
+  -h, --help            display help for command
 ```
 
 ---
 
-### migrate rtl
+### 迁移 icons
+
+`icons` 迁移会将您的组件从一个图标库迁移到另一个图标库。
+
+```bash
+npx shadcn@latest migrate icons
+```
+
+此迁移会提示您选择源图标库和目标图标库，重写 `ui` 目录中的图标导入和 JSX 用法，安装目标图标库，并更新 `components.json` 中的 `iconLibrary`，以便之后使用 `npx shadcn add` 安装时采用新的图标库。
+
+支持以下图标库：`lucide`、`tabler`、`hugeicons`、`phosphor`、`remixicon` 和 `radix`（旧版）。
+
+**非交互模式**
+
+使用 `--from` 和 `--to` 跳过提示：
+
+```bash
+npx shadcn@latest migrate icons --from lucide --to phosphor --yes
+```
+
+**迁移特定文件**
+
+您可以迁移特定文件或使用 glob 模式。指定范围运行时不会更新 `components.json`。
+
+```bash
+# 迁移特定文件。
+npx shadcn@latest migrate icons src/components/ui/button.tsx --from lucide --to tabler
+
+# 迁移匹配 glob 模式的文件。
+npx shadcn@latest migrate icons "src/components/**" --from lucide --to tabler
+```
+
+目标图标库中没有对应图标的图标将保持不变，并在迁移结束时列出。
+
+---
+
+### 迁移 rtl
 
 `rtl` 迁移会将您的组件转变为支持 RTL（从右到左）语言。
 
@@ -463,7 +501,7 @@ npx shadcn@latest migrate rtl "src/components/ui/**"
 
 ---
 
-### migrate radix
+### 迁移 radix
 
 `radix` 迁移会将您从各个 `@radix-ui/react-*` 包的导入更新为统一的 `radix-ui` 包。
 

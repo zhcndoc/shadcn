@@ -66,7 +66,7 @@ Tailwind v4 已[切换](https://tailwindcss.com/docs/upgrade-guide#buttons-use-t
 
 如果你想保持 `cursor: pointer` 的行为，请将以下代码添加到你的 CSS 文件中：
 
-You can also enable this during project setup with `npx shadcn@latest init --pointer`.
+你也可以在项目设置期间通过 `npx shadcn@latest init --pointer` 启用此功能。
 
 ```css showLineNumbers title="globals.css"
 @layer base {
@@ -77,67 +77,65 @@ You can also enable this during project setup with `npx shadcn@latest init --poi
 }
 ```
 
-## 示例
-
-### 大小
+## 尺寸
 
 使用 `size` 属性更改按钮大小。
 
 <ComponentPreview styleName="radix-nova" name="button-size" />
 
-### 默认
+## 默认
 
 <ComponentPreview styleName="radix-nova" name="button-default" />
 
-### 描边
+## 概述
 
 <ComponentPreview styleName="radix-nova" name="button-outline" />
 
-### 次要
+## 次要
 
 <ComponentPreview styleName="radix-nova" name="button-secondary" />
 
-### 幽灵样式
+## 幽灵
 
 <ComponentPreview styleName="radix-nova" name="button-ghost" />
 
-### 危险样式
+## 危险
 
 <ComponentPreview styleName="radix-nova" name="button-destructive" />
 
-### 链接样式
+## 链接
 
 <ComponentPreview styleName="radix-nova" name="button-link" />
 
-### 图标
+## 图标
 
 <ComponentPreview styleName="radix-nova" name="button-icon" />
 
-### 带图标
+## 带图标
 
 记得给图标添加 `data-icon="inline-start"` 或 `data-icon="inline-end"` 属性，以确保间距正确。
 
 <ComponentPreview styleName="radix-nova" name="button-with-icon" />
 
-### 圆角
+## 圆形
 
 使用 `rounded-full` 类使按钮变成圆形。
 
 <ComponentPreview styleName="radix-nova" name="button-rounded" />
 
-### 加载中动画
+## Spinner
 
 在按钮内部渲染 `<Spinner />` 组件以显示加载状态。记得给 spinner 添加 `data-icon="inline-start"` 或 `data-icon="inline-end"` 属性，以保证间距正确。
 
 <ComponentPreview styleName="radix-nova" name="button-spinner" />
 
-### 按钮组
+## 按钮组
 
 要创建按钮组，请使用 `ButtonGroup` 组件。详见[按钮组](/docs/components/radix/button-group)文档。
 
 <ComponentPreview styleName="radix-nova" name="button-group-demo" />
 
-### As Child
+## 作为子元素
 
 你可以给 `<Button />` 添加 `asChild` 属性，使其他组件看起来像按钮。下面是一个看起来像按钮的链接示例。
 

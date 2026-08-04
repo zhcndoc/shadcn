@@ -1,0 +1,247 @@
+---
+title: 按钮组
+description: 将相关按钮组合在一起并保持统一样式的容器。
+base: aria
+component: true
+---
+
+<ComponentPreview styleName="aria-nova" name="button-group-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add button-group
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="button-group"
+  title="components/ui/button-group.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+} from "@/components/ui/button-group"
+```
+
+```tsx
+<ButtonGroup>
+  <Button>Button 1</Button>
+  <Button>Button 2</Button>
+</ButtonGroup>
+```
+
+## 组合
+
+使用以下组合来构建 `ButtonGroup`：
+
+```text
+ButtonGroup
+├── Button or Input
+├── ButtonGroupSeparator
+└── ButtonGroupText
+```
+
+## 无障碍访问
+
+- `ButtonGroup` 组件的 `role` 属性设置为 `group`。
+- 使用 <Kbd>Tab</Kbd> 在组内的按钮之间导航。
+- 使用 `aria-label` 或 `aria-labelledby` 为按钮组添加标签。
+
+```tsx showLineNumbers
+<ButtonGroup aria-label="Button group">
+  <Button>Button 1</Button>
+  <Button>Button 2</Button>
+</ButtonGroup>
+```
+
+## ButtonGroup 与 ToggleGroup
+
+- 当你想要将执行某项操作的按钮进行分组时，请使用 `ButtonGroup` 组件。
+- 当你想要将切换某种状态的按钮进行分组时，请使用 `ToggleGroup` 组件。
+
+## 方向
+
+设置 `orientation` 属性以更改按钮组布局。
+
+<ComponentPreview styleName="aria-nova" name="button-group-orientation" />
+
+## 尺寸
+
+使用单个按钮上的 `size` 属性控制按钮的尺寸。
+
+<ComponentPreview styleName="aria-nova" name="button-group-size" />
+
+## 嵌套
+
+嵌套 `<ButtonGroup>` 组件，以创建带间距的按钮组。
+
+<ComponentPreview styleName="aria-nova" name="button-group-nested" />
+
+## 分隔符
+
+`ButtonGroupSeparator` 组件用于在按钮组内以视觉方式分隔按钮。
+
+`outline` 变体的按钮不需要分隔符，因为它们带有边框。对于其他变体，建议使用分隔符来改善视觉层次。
+
+<ComponentPreview styleName="aria-nova" name="button-group-separator" />
+
+## 分割
+
+通过添加两个由 `ButtonGroupSeparator` 分隔的按钮来创建分割按钮组。
+
+<ComponentPreview styleName="aria-nova" name="button-group-split" />
+
+## 输入
+
+用按钮包裹一个 `Input` 组件。
+
+<ComponentPreview styleName="aria-nova" name="button-group-input" />
+
+## 输入组
+
+包裹一个 `InputGroup` 组件以创建复杂的输入布局。
+
+<ComponentPreview styleName="aria-nova" name="button-group-input-group" />
+
+## 下拉菜单
+
+使用 `DropdownMenu` 组件创建一个分割按钮组。
+
+<ComponentPreview styleName="aria-nova" name="button-group-dropdown" />
+
+## 选择
+
+与 `Select` 组件搭配使用。
+
+<ComponentPreview styleName="aria-nova" name="button-group-select" />
+
+## 弹出框
+
+与 `Popover` 组件一起使用。
+
+<ComponentPreview styleName="aria-nova" name="button-group-popover" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="button-group-rtl"
+  direction="rtl"
+/>
+
+## API 参考
+
+### ButtonGroup
+
+`ButtonGroup` 组件是一个容器，用于将相关按钮组合在一起，并保持统一的样式。
+
+| Prop          | Type                         | Default        |
+| ------------- | ---------------------------- | -------------- |
+| `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` |
+
+```tsx
+<ButtonGroup>
+  <Button>Button 1</Button>
+  <Button>Button 2</Button>
+</ButtonGroup>
+```
+
+嵌套多个按钮组，可以创建带有间距的复杂布局。有关更多详细信息，请参阅[嵌套](#nested)示例。
+
+```tsx
+<ButtonGroup>
+  <ButtonGroup />
+  <ButtonGroup />
+</ButtonGroup>
+```
+
+### ButtonGroupSeparator
+
+`ButtonGroupSeparator` 组件用于在视觉上分隔组内的按钮。
+
+| Prop          | Type                         | Default      |
+| ------------- | ---------------------------- | ------------ |
+| `orientation` | `"horizontal" \| "vertical"` | `"vertical"` |
+
+```tsx
+<ButtonGroup>
+  <Button>Button 1</Button>
+  <ButtonGroupSeparator />
+  <Button>Button 2</Button>
+</ButtonGroup>
+```
+
+### ButtonGroupText
+
+使用此组件可以在按钮组内显示文本。
+
+| Prop     | Type      | Default |
+| -------- | --------- | ------- |
+| `render` | `boolean` | `false` |
+
+```tsx
+<ButtonGroup>
+  <ButtonGroupText>Text</ButtonGroupText>
+  <Button>Button</Button>
+</ButtonGroup>
+```
+
+使用 `render` prop 将自定义组件渲染为文本，例如标签。
+
+```tsx showLineNumbers
+import { ButtonGroupText } from "@/components/ui/button-group"
+import { Label } from "@/components/ui/label"
+
+export function ButtonGroupTextDemo() {
+  return (
+    <ButtonGroup>
+      <ButtonGroupText
+        render={(props) => (
+          <Label {...props} htmlFor="name">
+            Text
+          </Label>
+        )}
+      />
+      <Input placeholder="Type something here..." id="name" />
+    </ButtonGroup>
+  )
+}
+```

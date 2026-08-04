@@ -1,0 +1,130 @@
+---
+title: 键盘按键
+description: 用于显示来自键盘的文本用户输入。
+base: aria
+component: true
+---
+
+<ComponentPreview styleName="aria-nova" name="kbd-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add kbd
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="kbd"
+  title="components/ui/kbd.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Kbd } from "@/components/ui/kbd"
+```
+
+```tsx
+<Kbd>Ctrl</Kbd>
+```
+
+## 组合
+
+使用以下组合来构建 `Kbd` 和 `KbdGroup`：
+
+```text
+Kbd
+KbdGroup
+├── Kbd
+└── Kbd
+```
+
+## 组合
+
+使用 `KbdGroup` 组件将键盘按键组合在一起。
+
+<ComponentPreview styleName="aria-nova" name="kbd-group" />
+
+## 按钮
+
+在 `Button` 组件中使用 `Kbd` 组件，以在按钮内显示键盘按键。
+
+<ComponentPreview styleName="aria-nova" name="kbd-button" />
+
+## 工具提示
+
+你可以在 `Tooltip` 组件中使用 `Kbd` 组件，以显示带有键盘按键的工具提示。
+
+<ComponentPreview styleName="aria-nova" name="kbd-tooltip" />
+
+## 输入组
+
+您可以在 `InputGroupAddon` 组件中使用 `Kbd` 组件，以在输入组内显示键盘按键。
+
+<ComponentPreview styleName="aria-nova" name="kbd-input-group" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="kbd-rtl" direction="rtl" />
+
+## API 参考
+
+### Kbd
+
+使用 `Kbd` 组件显示键盘按键。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | ``      |
+
+```tsx
+<Kbd>Ctrl</Kbd>
+```
+
+### KbdGroup
+
+使用 `KbdGroup` 组件将多个 `Kbd` 组件组合在一起。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` | ``      |
+
+```tsx
+<KbdGroup>
+  <Kbd>Ctrl</Kbd>
+  <Kbd>B</Kbd>
+</KbdGroup>
+```

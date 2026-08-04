@@ -2,19 +2,19 @@
 
 ## 目录
 
-- 项目始终位于其 Group 组件内
-- 提示框使用 Alert
+- 项目始终放在其 Group 组件内
+- 提示使用 Alert
 - 空状态使用 Empty 组件
-- Toast 通知使用 sonner
+- Toast 通知遵循项目基础规范
 - 在覆盖层组件之间进行选择
 - Dialog、Sheet 和 Drawer 始终需要 Title
 - Card 结构
 - Button 没有 isPending 或 isLoading 属性
 - TabsTrigger 必须位于 TabsList 内
 - Avatar 始终需要 AvatarFallback
-- 使用 Separator 替代原始的 hr 或带边框的 div
+- 使用 Separator 代替原始的 hr 或带边框的 div
 - 使用 Skeleton 作为加载占位符
-- 使用 Badge 替代自定义样式的 span
+- 使用 Badge 代替自定义样式的 span
 
 ---
 
@@ -88,7 +88,19 @@
 
 ---
 
-## Toast 通知使用 sonner
+## Toast 通知遵循项目基础
+
+对于 Base UI 项目，请使用 `toast` 组件：
+
+```tsx
+import { toast } from "@/components/ui/toast"
+
+toast.add({
+  title: "Changes saved.",
+})
+```
+
+对于 Radix 和 React Aria 项目，请使用 Sonner：
 
 ```tsx
 import { toast } from "sonner"

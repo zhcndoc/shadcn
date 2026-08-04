@@ -107,11 +107,9 @@ MessageGroup
 - 用于发送者名称、状态和消息操作的头部与页脚插槽
 - 页脚会跟随消息所在一侧；在 `align="end"` 的行中，操作项保持对齐
 - 用于将来自同一发送者的连续消息堆叠在一起的分组包装器
-- 通过每个部分上的 `className` 属性进行自定义样式设置
+- 通过每个部分上的 `className` 属性进行自定义样式设置。
 
-## 示例
-
-### 头像
+## 头像
 
 使用 `MessageAvatar` 在消息旁边渲染头像。在消息上设置 `align="end"` 以将头像对齐到消息末尾。
 
@@ -126,7 +124,7 @@ MessageGroup
 | `start` | 将消息对齐到会话的开头。                             |
 | `end`   | 将消息对齐到会话的末尾。                             |
 
-### 分组
+## 群组
 
 使用 `MessageGroup` 将来自同一发送者的连续消息堆叠在一起。在较早的消息上渲染一个空的 `MessageAvatar`，以使它们与最后一条消息上的头像保持对齐。
 
@@ -136,7 +134,7 @@ MessageGroup
   previewClassName="h-auto theme-blue"
 />
 
-### 头部和底部
+## 消息头部和尾部
 
 使用 `MessageHeader` 显示发送者名称，使用 `MessageFooter` 显示元数据，例如送达或已读状态。
 
@@ -146,7 +144,7 @@ MessageGroup
   previewClassName="h-auto theme-blue"
 />
 
-### 操作
+## 操作
 
 将消息级操作放在 `MessageFooter` 中，例如复制、重试或反馈按钮。
 
@@ -156,7 +154,7 @@ MessageGroup
   previewClassName="h-auto theme-blue"
 />
 
-### 附件
+## 附件
 
 <ComponentPreview
   styleName="base-rhea"

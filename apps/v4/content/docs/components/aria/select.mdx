@@ -1,0 +1,155 @@
+---
+title: 选择框
+description: 显示供用户选择的选项列表——由按钮触发。
+base: aria
+component: true
+featured: true
+links:
+  doc: https://react-aria.adobe.com/Select
+  api: https://react-aria.adobe.com/Select#api
+---
+
+<ComponentPreview styleName="aria-nova" name="select-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add select
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="select"
+  title="components/ui/select.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+```
+
+```tsx showLineNumbers
+const items = [
+  { label: "Light", value: "light" },
+  { label: "Dark", value: "dark" },
+  { label: "System", value: "system" },
+]
+
+<Select placeholder="Theme">
+  <SelectTrigger className="w-[180px]">
+    <SelectValue />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      {items.map((item) => (
+        <SelectItem key={item.value} id={item.value}>
+          {item.label}
+        </SelectItem>
+      ))}
+    </SelectGroup>
+  </SelectContent>
+</Select>
+```
+
+## 组成
+
+使用以下组成来构建一个 `Select`：
+
+```text
+Select
+├── SelectTrigger
+│   └── SelectValue
+└── SelectContent
+    ├── SelectGroup
+    │   ├── SelectLabel
+    │   ├── SelectItem
+    │   └── SelectItem
+    ├── SelectSeparator
+    └── SelectGroup
+        ├── SelectLabel
+        ├── SelectItem
+        └── SelectItem
+```
+
+## 分组
+
+使用 `SelectGroup`、`SelectLabel` 和 `SelectSeparator` 来组织项目。
+
+<ComponentPreview styleName="aria-nova" name="select-groups" />
+
+## 可滚动
+
+包含许多可滚动项目的选择框。
+
+<ComponentPreview styleName="aria-nova" name="select-scrollable" />
+
+## 已禁用
+
+<ComponentPreview styleName="aria-nova" name="select-disabled" />
+
+## 无效状态
+
+为 `Field` 组件添加 `data-invalid` 属性，并为 `SelectTrigger` 组件添加 `isInvalid` 属性，以显示错误状态。
+
+```tsx showLineNumbers /data-invalid/ /aria-invalid/
+<Field data-invalid>
+  <FieldLabel>Fruit</FieldLabel>
+  <Select isInvalid>{/* ... */}</Select>
+</Field>
+```
+
+<ComponentPreview styleName="aria-nova" name="select-invalid" />
+
+## 可搜索
+
+使用 React Aria 的 [Autocomplete](https://react-aria.adobe.com/Autocomplete) 组件添加搜索功能。
+
+<ComponentPreview styleName="aria-nova" name="select-autocomplete" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="select-rtl" direction="rtl" />
+
+## API 参考
+
+请参阅 [React Aria Select](https://react-aria.adobe.com/Select#api) 文档。

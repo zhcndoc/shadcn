@@ -1,0 +1,207 @@
+---
+title: 输入框
+description: 用于表单和用户数据输入的文本输入组件，内置样式和可访问性功能。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/TextField
+  api: https://react-aria.adobe.com/TextField#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-demo"
+  previewClassName="*:max-w-xs"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add input
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="input"
+  title="components/ui/input.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Input } from "@/components/ui/input"
+```
+
+```tsx
+<Input />
+```
+
+## 基础
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-basic"
+  previewClassName="*:max-w-xs"
+/>
+
+## 字段
+
+使用 `Field`、`FieldLabel` 和 `FieldDescription` 创建带有标签和描述的输入框。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-field"
+  previewClassName="*:max-w-xs"
+/>
+
+## 字段组
+
+使用 `FieldGroup` 显示多个 `Field` 区块并构建表单。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-fieldgroup"
+  previewClassName="*:max-w-xs"
+/>
+
+## 禁用
+
+使用 `disabled` 属性禁用输入框。要设置禁用状态的样式，请将 `data-disabled` 属性添加到 `Field` 组件。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-disabled"
+  previewClassName="*:max-w-xs"
+/>
+
+## 无效
+
+使用 `aria-invalid` 属性将输入标记为无效。要设置无效状态的样式，请将 `data-invalid` 属性添加到 `Field` 组件。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-invalid"
+  previewClassName="*:max-w-xs"
+/>
+
+## 文件
+
+使用 `type="file"` 属性创建文件输入框。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-file"
+  previewClassName="*:max-w-xs"
+/>
+
+## 内联
+
+使用 `Field` 和 `orientation="horizontal"` 创建内联输入框。  
+与 `Button` 搭配，创建带按钮的搜索输入框。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-inline"
+  previewClassName="*:max-w-xs"
+/>
+
+## 网格
+
+使用网格布局将多个输入框并排放置。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-grid"
+  previewClassName="p-6"
+/>
+
+## 必填
+
+使用 `required` 属性表示必填输入项。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-required"
+  previewClassName="*:max-w-xs"
+/>
+
+## 徽章
+
+在标签中使用 `Badge`，以突出显示推荐字段。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-badge"
+  previewClassName="*:max-w-xs"
+/>
+
+## 输入组
+
+要在输入框内添加图标、文本或按钮，请使用 `InputGroup` 组件。有关更多示例，请参阅 [输入组](/docs/components/aria/input-group) 组件。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-input-group"
+  previewClassName="*:max-w-xs"
+/>
+
+## 按钮组
+
+要将按钮添加到输入框中，请使用 `ButtonGroup` 组件。有关更多示例，请参阅[按钮组](/docs/components/aria/button-group)组件。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-button-group"
+  previewClassName="*:max-w-xs"
+/>
+
+## 表单
+
+一个包含多个输入框、一个选择框和一个按钮的完整表单示例。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-form"
+  previewClassName="h-[32rem]"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="input-rtl"
+  direction="rtl"
+  previewClassName="*:max-w-xs"
+/>

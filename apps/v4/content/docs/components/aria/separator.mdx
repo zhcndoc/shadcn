@@ -1,0 +1,91 @@
+---
+title: 分隔线
+description: 在视觉上或语义上分隔内容。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Separator
+  api: https://react-aria.adobe.com/Separator#api
+---
+
+<ComponentPreview styleName="aria-nova" name="separator-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add separator
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="separator"
+  title="components/ui/separator.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径，使其与你的项目设置相匹配。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Separator } from "@/components/ui/separator"
+```
+
+```tsx showLineNumbers
+<Separator />
+```
+
+## 垂直
+
+使用 `orientation="vertical"` 创建垂直分隔线。
+
+<ComponentPreview styleName="aria-nova" name="separator-vertical" />
+
+## 菜单
+
+带有描述的菜单项之间的垂直分隔线。
+
+<ComponentPreview styleName="aria-nova" name="separator-menu" />
+
+## 列表
+
+列表项之间的水平分隔线。
+
+<ComponentPreview styleName="aria-nova" name="separator-list" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="separator-rtl" direction="rtl" />
+
+## API 参考
+
+请参阅 [React Aria 分隔线](https://react-aria.adobe.com/Separator#api) 文档。

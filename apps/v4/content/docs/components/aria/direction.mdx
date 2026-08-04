@@ -1,0 +1,93 @@
+---
+title: 文本方向
+description: 用于为应用程序设置文本方向的提供程序组件。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/I18nProvider
+  api: https://react-aria.adobe.com/I18nProvider#api
+---
+
+`DirectionProvider` 组件用于为应用程序设置文本方向（`ltr` 或 `rtl`）。这对于支持阿拉伯语、希伯来语和波斯语等从右到左书写的语言至关重要。
+
+下面是该组件在 RTL 模式下的预览。使用语言选择器切换语言。若要查看更多示例，请在组件页面中查找 RTL 部分。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="card-rtl"
+  direction="rtl"
+  previewClassName="h-auto"
+  hideCode
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add direction
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="direction"
+  title="components/ui/direction.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { DirectionProvider } from "@/components/ui/direction"
+```
+
+```tsx showLineNumbers
+<html dir="rtl">
+  <body>
+    <DirectionProvider direction="rtl">
+      {/* 您的应用内容 */}
+    </DirectionProvider>
+  </body>
+</html>
+```
+
+## useDirection
+
+`useDirection` hook 用于获取应用程序的当前方向。
+
+```tsx showLineNumbers
+import { useDirection } from "@/components/ui/direction"
+
+function MyComponent() {
+  const direction = useDirection()
+  return <div>Current direction: {direction}</div>
+}
+```

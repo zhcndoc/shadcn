@@ -1,0 +1,192 @@
+---
+title: 上下文菜单
+description: 显示通过右键单击触发的操作菜单。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Menu
+  api: https://react-aria.adobe.com/Menu#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="context-menu-demo"
+  description="包含子菜单项的上下文菜单。"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add context-menu
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="context-menu"
+  title="components/ui/context-menu.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import { Pressable } from "react-aria-components"
+
+import {
+  ContextMenu,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu"
+```
+
+```tsx showLineNumbers
+<ContextMenuTrigger>
+  <Pressable>
+    <div role="button">在此处右键点击</div>
+  </Pressable>
+  <ContextMenu>
+    <ContextMenuItem>个人资料</ContextMenuItem>
+    <ContextMenuItem>账单</ContextMenuItem>
+    <ContextMenuItem>团队</ContextMenuItem>
+    <ContextMenuItem>订阅</ContextMenuItem>
+  </ContextMenu>
+</ContextMenuTrigger>
+```
+
+## 组成
+
+使用以下组合构建一个 `ContextMenu`：
+
+```text
+ContextMenuTrigger
+├── Pressable
+└── ContextMenuContent
+    ├── ContextMenuGroup
+    │   ├── ContextMenuLabel
+    │   ├── ContextMenuItem
+    │   └── ContextMenuItem
+    ├── ContextMenuSeparator
+    ├── ContextMenuGroup
+    │   ├── ContextMenuLabel
+    │   ├── ContextMenuItem
+    │   └── ContextMenuItem
+    └── ContextMenuSub
+        ├── ContextMenuSubTrigger
+        └── ContextMenuSubContent
+            └── ContextMenuGroup
+                ├── ContextMenuItem
+                └── ContextMenuItem
+```
+
+## 基础
+
+一个包含几个操作的简单上下文菜单。
+
+<ComponentPreview styleName="aria-nova" name="context-menu-basic" />
+
+## 子菜单
+
+使用 `ContextMenuSub` 嵌套次级操作。
+
+<ComponentPreview styleName="aria-nova" name="context-menu-submenu" />
+
+## 快捷键
+
+添加 `ContextMenuShortcut` 以显示键盘提示。
+
+<ComponentPreview styleName="aria-nova" name="context-menu-shortcuts" />
+
+## 分组
+
+将相关操作分组，并使用分隔线将它们分开。
+
+<ComponentPreview styleName="aria-nova" name="context-menu-groups" />
+
+## 图标
+
+将图标与标签结合，便于快速浏览。
+
+<ComponentPreview styleName="aria-nova" name="context-menu-icons" />
+
+## 复选框
+
+对于切换项，请使用 `selectionMode="multiple"`。
+
+<ComponentPreview styleName="aria-nova" name="context-menu-checkboxes" />
+
+## 单选框
+
+使用 `selectionMode="single"` 实现互斥选择。
+
+<ComponentPreview styleName="aria-nova" name="context-menu-radio" />
+
+## 破坏性
+
+使用 `variant="destructive"` 将菜单项设置为破坏性样式。
+
+<ComponentPreview styleName="aria-nova" name="context-menu-destructive" />
+
+## 放置位置
+
+使用 `placement` 属性控制子菜单的放置位置。
+
+<ComponentPreview styleName="aria-nova" name="context-menu-sides" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="context-menu-rtl"
+  direction="rtl"
+/>
+
+使用 `placement="end"` 将菜单放置在触发器逻辑上的末端。
+
+```tsx showLineNumbers
+<ContextMenuTrigger>
+  <Pressable>
+    <div role="button">在此处右键点击</div>
+  </Pressable>
+  <ContextMenu placement="end">
+    <ContextMenuItem>个人资料</ContextMenuItem>
+    <ContextMenuItem>账单</ContextMenuItem>
+    <ContextMenuItem>团队</ContextMenuItem>
+    <ContextMenuItem>订阅</ContextMenuItem>
+  </ContextMenu>
+</ContextMenuTrigger>
+```
+
+## API 参考
+
+有关更多信息，请参阅 [React Aria](https://react-aria.adobe.com/Menu#api) 文档。

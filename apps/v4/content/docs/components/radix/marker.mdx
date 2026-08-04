@@ -80,11 +80,9 @@ Marker
 - 装饰性图标插槽，对辅助技术隐藏
 - 通过 `asChild` 实现多态根组件，用于链接和按钮标记
 - 可与 [`shimmer`](/docs/utils/shimmer) 工具配合使用，用于流式状态文本
-- 通过每个部分上的 `className` 属性自定义样式
+- 通过每个部分上的 `className` 属性自定义样式。
 
-## 示例
-
-### 变体
+## 变体
 
 使用 `variant` 在内联标记、带边框的行和带标签的分隔符之间切换。
 
@@ -100,7 +98,7 @@ Marker
 | `border`    | 在行下方带有底部边框的默认标记。                    |
 | `separator` | 居中标签，两侧带有分隔线。                          |
 
-### 状态
+## 状态
 
 设置 `role="status"`，并为流式或进行中的标记包含一个 [`Spinner`](/docs/components/spinner)，这样更新就会被播报出来。
 
@@ -110,7 +108,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 闪烁效果
+## 闪烁
 
 为 `MarkerContent` 添加 [`shimmer`](/docs/utils/shimmer) 工具类，以实现动画式流式文本效果。该工具随 `shadcn` 包一起提供——安装方法请参见 shimmer 文档。
 
@@ -120,7 +118,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 分隔符
+## 分隔线
 
 在对话中，使用 `separator` 变体来表示带标签的分隔线，例如日期或章节分隔。
 
@@ -130,7 +128,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 边框
+## 边框
 
 对于需要保持默认标记对齐，同时将下一行分隔开的状态行，使用 `border` 变体。
 
@@ -140,7 +138,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 带图标
+## 带图标
 
 使用 `MarkerIcon` 在内容旁边渲染图标。使用 `flex-col` 将图标堆叠在内容上方。
 
@@ -150,7 +148,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 链接和按钮
+## 链接和按钮
 
 在 `Marker` 上使用 `asChild` 属性，可将标记变成链接或按钮。
 

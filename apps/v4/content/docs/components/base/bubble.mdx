@@ -95,11 +95,9 @@ import { Bubble, BubbleContent, BubbleReactions } from "@/components/ui/bubble"
 - 锚定到气泡边缘的反应，支持可配置的侧边和对齐方式
 - 气泡会根据内容自适应大小，最大可达容器宽度的 80%
 - 通过 `render` 为链接和按钮气泡提供多态内容
-- 通过每个部分上的 `className` 属性实现可自定义样式
+- 通过每个部分上的 `className` 属性实现可自定义样式。
 
-## 示例
-
-### 变体
+## 变体
 
 使用 `variant` 来改变气泡的视觉样式。
 
@@ -121,7 +119,7 @@ import { Bubble, BubbleContent, BubbleReactions } from "@/components/ui/bubble"
 
 气泡的大小会随其内容而变化，最大宽度为容器宽度的 80%。`ghost` 变体会移除最大宽度限制，因此助手文本和富内容可以占据整行。
 
-### 对齐
+## 对齐
 
 在 `Bubble` 上使用 `align` 来将气泡对齐到对话的开头或结尾。
 
@@ -138,7 +136,7 @@ import { Bubble, BubbleContent, BubbleReactions } from "@/components/ui/bubble"
 
 **注意：** 在构建聊天界面时，你可能希望在 `Message` 组件本身上使用对齐，而不是 `Bubble` 组件。你可以在 `Message` 组件上使用 `role` 属性，自动将气泡对齐到对话的开头或结尾。
 
-### 气泡组
+## 气泡组
 
 使用 `BubbleGroup` 将来自同一发送者的连续气泡分组。请注意，`align` 属性应设置在 `Bubble` 组件本身上，而不是 `BubbleGroup` 组件上。
 
@@ -156,7 +154,7 @@ BubbleGroup
   previewClassName="h-auto theme-blue"
 />
 
-### 链接和按钮
+## 链接和按钮
 
 你可以通过在 `BubbleContent` 上使用 `render` 属性，将气泡变成链接或按钮。
 
@@ -178,7 +176,7 @@ export function BubbleLinkDemo() {
 }
 ```
 
-### 反应
+## 反应
 
 使用 `BubbleReactions` 来显示气泡反应。你可以用它来展示反应或快捷操作按钮。使用 `side` 和 `align` 来定位这一行——`side="top"` 会将其固定在上边缘。反应会与气泡边缘重叠，因此行与行之间要留出垂直空间——下面的示例因此使用了更大的 `gap`。
 
@@ -188,7 +186,7 @@ export function BubbleLinkDemo() {
   previewClassName="h-auto theme-blue"
 />
 
-### 展开更多 / 可折叠
+## 显示更多 / 可折叠
 
 较长的气泡内容可以与 [`Collapsible`](/docs/components/collapsible) 组合使用，以实现展开更多或收起的交互。使用 `CollapsibleTrigger` 组件来触发可折叠内容。
 
@@ -198,9 +196,9 @@ export function BubbleLinkDemo() {
   previewClassName="h-auto theme-blue"
 />
 
-### 提示框
+## 工具提示
 
-将气泡包裹在 [`Tooltip`](/docs/components/tooltip) 中，以在悬停时显示元数据，例如消息何时被读取。
+将气泡包裹在 [`工具提示`](/docs/components/tooltip) 中，以在悬停时显示元数据，例如消息何时被读取。
 
 <ComponentPreview
   styleName="base-rhea"
@@ -208,7 +206,7 @@ export function BubbleLinkDemo() {
   previewClassName="h-auto theme-blue"
 />
 
-### 弹出框
+## 弹出框
 
 将气泡与 [`Popover`](/docs/components/popover) 配对，以按需显示更多信息，例如失败操作的完整错误消息。
 

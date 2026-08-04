@@ -1,9 +1,10 @@
 # 发布
 
-这个 monorepo 使用 [Changesets](https://github.com/changesets/changesets) 独立发布两个包：
+此 monorepo 使用 [Changesets](https://github.com/changesets/changesets) 独立发布三个包：
 
-- **`shadcn`** —— CLI 和工具。
-- **`@shadcn/react`** —— 无头 React 基础组件。
+- **`shadcn`** — CLI 和工具。
+- **`@shadcn/react`** — 无头 React 基础组件。
+- **`@shadcn/helpers`** — 用于开发应用的小型辅助工具。
 
 它们各自独立版本演进。对其中一个的更改不会导致另一个升级，除非 changeset 明确说明。
 
@@ -15,7 +16,7 @@
 pnpm changeset
 ```
 
-选择受影响的 package(s) 和升级级别。一个 PR 可以为 `shadcn` 和 `@shadcn/react` 携带分别位于不同级别的独立 changeset。没有 changeset 的 PR 不会发布任何内容。
+选择受影响的软件包及版本升级级别。一份 PR 可以为每个软件包分别携带不同升级级别的 changeset。没有 changeset 的 PR 不会发布任何内容。
 
 ## 2. 稳定版发布
 
@@ -25,7 +26,7 @@ pnpm changeset
 2. Changesets 动作会打开/更新一个 **“Version Packages”** PR，用于提升版本并生成更新日志。
 3. 合并该 PR 会触发 `changeset publish`，它会构建所有包（`pnpm build:packages`），并发布任何版本号领先于 npm 的包——每个都发布到 `latest` 标签。
 
-`pnpm build:packages`（`turbo run build --filter=./packages/*`）会构建 `shadcn` 和 `@shadcn/react`，但永远不会构建 `apps/v4`。
+`pnpm build:packages`（`turbo run build --filter=./packages/*`）会构建 `packages/` 下的每个包，但绝不会构建 `apps/v4`。
 
 ## 3. 预发布版本（每个 PR 的快照）
 
@@ -45,11 +46,11 @@ pnpm dlx @shadcn/react@0.0.0-beta-20260624120000
 
 ## 4. 预发布列车（持续的 `-beta.N` / `-rc.N`）
 
-对于一个持续进行的发布分支（例如 `1.0.0-rc.0`、`-rc.1`，……），而不是一次性快照，请使用 Changesets 的 pre 模式：
+对于一个持续进行的发布分支（例如 `1.0.0-rc.0`、`-rc.1`，……），而不是一次性快照，请使用 Changesets 的预发布模式：
 
 ```sh
 pnpm changeset pre enter rc   # 写入 .changeset/pre.json
-# ...正常的 changeset + Version PR 循环现在会在 rc 标签上生成 -rc.N 版本...
+# ……现在，正常的 changeset + Version PR 循环会在 rc 标签上生成 -rc.N 版本……
 pnpm changeset pre exit       # 回到稳定版；下一个 Version PR 会在 latest 上发布 X.Y.Z
 ```
 

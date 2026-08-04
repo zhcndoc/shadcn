@@ -54,7 +54,7 @@ npx shadcn@latest add sidebar
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers title="app/layout.tsx"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
@@ -96,9 +96,9 @@ export function AppSidebar() {
 }
 ```
 
-## Composition
+## 组合
 
-Use the following composition to build a `Sidebar` layout:
+使用以下组合构建 `Sidebar` 布局：
 
 ```text
 SidebarProvider
@@ -129,32 +129,32 @@ SidebarProvider
 └── SidebarTrigger
 ```
 
-## Structure
+## 结构
 
-- **SidebarProvider** — Handles collapsible state and provides sidebar context to child components.
-- **Sidebar** — The main collapsible sidebar panel.
-- **SidebarHeader** — Sticky at the top; use for branding, titles, or workspace switchers.
-- **SidebarFooter** — Sticky at the bottom; use for user menus, settings, or actions.
-- **SidebarContent** — Scrollable region between the header and footer.
-- **SidebarGroup** — Groups related navigation with optional label, action, and content areas.
-- **SidebarMenu** / **SidebarMenuItem** — Menu structure for links, badges, actions, and nested submenus.
-- **SidebarRail** — Resize handle for adjusting sidebar width when applicable.
-- **SidebarInset** — Wraps main content when using the `inset` variant.
-- **SidebarTrigger** — Control that toggles the sidebar open or collapsed.
+- **SidebarProvider** — 处理可折叠状态，并为子组件提供侧边栏上下文。
+- **Sidebar** — 主要的可折叠侧边栏面板。
+- **SidebarHeader** — 固定在顶部；用于品牌展示、标题或工作区切换器。
+- **SidebarFooter** — 固定在底部；用于用户菜单、设置或操作。
+- **SidebarContent** — 位于页眉和页脚之间的可滚动区域。
+- **SidebarGroup** — 将相关导航分组，并可包含标签、操作和内容区域。
+- **SidebarMenu** / **SidebarMenuItem** — 用于链接、徽章、操作和嵌套子菜单的菜单结构。
+- **SidebarRail** — 在适用时用于调整侧边栏宽度的调整手柄。
+- **SidebarInset** — 使用 `inset` 变体时包裹主要内容。
+- **SidebarTrigger** — 用于切换侧边栏打开或折叠状态的控件。
 
 <Image
   src="/images/sidebar-structure.png"
   width="716"
   height="420"
   alt="侧边栏结构"
-  className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
+  className="mt-6 w-full overflow-hidden rounded-2xl border dark:hidden"
 />
 <Image
   src="/images/sidebar-structure-dark.png"
   width="716"
   height="420"
   alt="侧边栏结构"
-  className="mt-6 hidden w-full overflow-hidden rounded-lg border dark:block"
+  className="mt-6 hidden w-full overflow-hidden rounded-2xl border dark:block"
 />
 
 ## SidebarProvider
@@ -201,7 +201,7 @@ const SIDEBAR_WIDTH_MOBILE = "18rem"
 const SIDEBAR_KEYBOARD_SHORTCUT = "b"
 ```
 
-## Sidebar
+## 侧边栏
 
 主要的 `Sidebar` 组件用于渲染可折叠的侧边栏。
 
@@ -292,7 +292,7 @@ export function AppSidebar() {
 
 ## SidebarFooter
 
-使用 `SidebarFooter` 组件为侧边栏添加一个粘性底部。
+使用 `SidebarFooter` 组件为侧边栏添加一个固定底部。
 
 ```tsx showLineNumbers
 <Sidebar>
@@ -364,14 +364,14 @@ export function AppSidebar() {
   width="716"
   height="420"
   alt="侧边栏菜单"
-  className="mt-6 w-full overflow-hidden rounded-lg border dark:hidden"
+  className="mt-6 w-full overflow-hidden rounded-2xl border dark:hidden"
 />
 <Image
   src="/images/sidebar-menu-dark.png"
   width="716"
   height="420"
   alt="侧边栏菜单"
-  className="mt-6 hidden w-full overflow-hidden rounded-lg border dark:block"
+  className="mt-6 hidden w-full overflow-hidden rounded-2xl border dark:block"
 />
 
 ```tsx showLineNumbers
@@ -438,7 +438,7 @@ export function AppSidebar() {
 
 ## SidebarMenuBadge
 
-`SidebarMenuBadge` 组件用于在 `SidebarMenuItem` 里渲染徽章。
+`SidebarMenuBadge` 组件用于在 `SidebarMenuItem` 中渲染徽章。
 
 ```tsx showLineNumbers
 <SidebarMenuItem>

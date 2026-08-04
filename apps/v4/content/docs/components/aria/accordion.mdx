@@ -1,0 +1,165 @@
+---
+title: 手风琴
+description: 垂直堆叠的一组交互式标题，每个标题都可以展开显示一个内容区域。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/DisclosureGroup
+  api: https://react-aria.adobe.com/DisclosureGroup#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="accordion-demo"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add accordion
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="accordion"
+  title="components/ui/accordion.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+```
+
+```tsx showLineNumbers
+<Accordion defaultExpandedKeys={["item-1"]}>
+  <AccordionItem id="item-1">
+    <AccordionTrigger>它具有可访问性吗？</AccordionTrigger>
+    <AccordionContent>
+      是的。它遵循 WAI-ARIA 设计模式。
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+```
+
+## 组成
+
+使用以下组成来构建一个 `Accordion`：
+
+```text
+Accordion
+├── AccordionItem
+│   ├── AccordionTrigger
+│   └── AccordionContent
+└── AccordionItem
+    ├── AccordionTrigger
+    └── AccordionContent
+```
+
+## 基础
+
+一次显示一个项目的基础手风琴。第一个项目默认处于展开状态。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="accordion-basic"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
+/>
+
+## 多个
+
+使用 `allowsMultipleExpanded` 属性允许多个项目同时展开。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="accordion-multiple"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[450px]"
+/>
+
+## 已禁用
+
+在 `AccordionItem` 上使用 `isDisabled` 属性来禁用单个项目。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="accordion-disabled"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
+/>
+
+## 边框
+
+将 `border` 添加到 `Accordion`，并将 `border-b last:border-b-0` 添加到 `AccordionItem`，即可为项目添加边框。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="accordion-borders"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[300px]"
+/>
+
+## 卡片
+
+将 `Accordion` 包裹在 `Card` 组件中。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="accordion-card"
+  align="start"
+  previewClassName="*:data-[slot=accordion]:max-w-sm h-[435px]"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="accordion-rtl"
+  align="start"
+  direction="rtl"
+/>
+
+## API 参考
+
+更多信息请参阅 [React Aria](https://react-aria.adobe.com/DisclosureGroup#api) 文档。

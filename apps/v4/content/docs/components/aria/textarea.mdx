@@ -1,0 +1,113 @@
+---
+title: 文本区域
+description: 显示表单文本区域或外观类似文本区域的组件。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/TextField
+  api: https://react-aria.adobe.com/TextField#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="textarea-demo"
+  previewClassName="*:max-w-xs"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add textarea
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="textarea"
+  title="components/ui/textarea.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Textarea } from "@/components/ui/textarea"
+```
+
+```tsx
+<Textarea />
+```
+
+## 字段
+
+使用 `Field`、`FieldLabel` 和 `FieldDescription` 创建带有标签和描述的文本区域。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="textarea-field"
+  previewClassName="*:max-w-xs"
+/>
+
+## 禁用
+
+使用 `disabled` 属性禁用文本区域。要设置禁用状态的样式，请将 `data-disabled` 属性添加到 `Field` 组件。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="textarea-disabled"
+  previewClassName="*:max-w-xs"
+/>
+
+## 无效
+
+使用 `aria-invalid` 属性将文本区域标记为无效。要设置无效状态的样式，请将 `data-invalid` 属性添加到 `Field` 组件。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="textarea-invalid"
+  previewClassName="*:max-w-xs"
+/>
+
+## 按钮
+
+与 `Button` 搭配使用，创建带有提交按钮的文本区域。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="textarea-button"
+  previewClassName="*:max-w-xs"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="textarea-rtl" direction="rtl" />

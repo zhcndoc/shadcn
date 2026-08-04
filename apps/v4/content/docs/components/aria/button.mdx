@@ -1,0 +1,166 @@
+---
+title: 按钮
+description: 显示一个按钮或外观类似按钮的组件。
+featured: true
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Button
+  api: https://react-aria.adobe.com/Button#api
+---
+
+<ComponentPreview styleName="aria-nova" name="button-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add button
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="button"
+  title="components/ui/button.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { Button } from "@/components/ui/button"
+```
+
+```tsx
+<Button variant="outline">Button</Button>
+```
+
+## 光标
+
+Tailwind v4 将按钮组件的 `cursor: pointer` 切换为 `cursor: default`。
+
+如果你希望保留 `cursor: pointer` 行为，请将以下代码添加到 CSS 文件中：
+
+你也可以在项目设置期间使用 `npx shadcn@latest init --pointer` 启用此功能。
+
+```css showLineNumbers title="globals.css"
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+```
+
+## 尺寸
+
+使用 `size` 属性更改按钮的尺寸。
+
+<ComponentPreview styleName="aria-nova" name="button-size" />
+
+## 默认
+
+<ComponentPreview styleName="aria-nova" name="button-default" />
+
+## 大纲
+
+<ComponentPreview styleName="aria-nova" name="button-outline" />
+
+## 次要
+
+<ComponentPreview styleName="aria-nova" name="button-secondary" />
+
+## 幽灵
+
+<ComponentPreview styleName="aria-nova" name="button-ghost" />
+
+## 破坏性
+
+<ComponentPreview styleName="aria-nova" name="button-destructive" />
+
+## 链接
+
+<ComponentPreview styleName="aria-nova" name="button-link" />
+
+## 图标
+
+<ComponentPreview styleName="aria-nova" name="button-icon" />
+
+## 带图标
+
+请记得为图标添加 `data-icon="inline-start"` 或 `data-icon="inline-end"` 属性，以实现正确的间距。
+
+<ComponentPreview styleName="aria-nova" name="button-with-icon" />
+
+## 圆角
+
+使用 `rounded-full` 类使按钮呈圆角。
+
+<ComponentPreview styleName="aria-nova" name="button-rounded" />
+
+## 加载指示器
+
+在按钮内渲染一个 `<Spinner />` 组件，以显示加载状态。请记得为加载指示器添加 `data-icon="inline-start"` 或 `data-icon="inline-end"` 属性，以实现正确的间距。
+
+<ComponentPreview styleName="aria-nova" name="button-spinner" />
+
+## 按钮组
+
+要创建按钮组，请使用 `ButtonGroup` 组件。有关更多详细信息，请参阅[按钮组](/docs/components/aria/button-group)文档。
+
+<ComponentPreview styleName="aria-nova" name="button-group-demo" />
+
+## 作为链接
+
+你可以使用 `buttonVariants` 辅助函数，让链接看起来像按钮。
+
+**不要将 `<Button>` 用于链接。** React Aria 的 `Button` 组件始终会应用 `role="button"`，这会覆盖 `<a>` 元素上的语义链接角色。请改用 `buttonVariants` 和普通的 `<a>` 标签。
+
+<ComponentPreview styleName="aria-nova" name="button-render" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="button-rtl" direction="rtl" />
+
+## API 参考
+
+### Button
+
+`Button` 组件是对 `button` 元素的封装，增加了多种样式和功能。
+
+| Prop      | Type                                                                                 | Default     |
+| --------- | ------------------------------------------------------------------------------------ | ----------- |
+| `variant` | `"default" \| "outline" \| "ghost" \| "destructive" \| "secondary" \| "link"`        | `"default"` |
+| `size`    | `"default" \| "xs" \| "sm" \| "lg" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg"` | `"default"` |
+
+有关更多信息，请参阅 [React Aria](https://react-aria.adobe.com/Button#api) 文档。

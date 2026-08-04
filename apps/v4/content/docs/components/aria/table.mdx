@@ -1,0 +1,153 @@
+---
+title: 表格
+description: 响应式表格组件。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Table
+  api: https://react-aria.adobe.com/Table#api
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="table-demo"
+  previewClassName="h-[30rem]"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add table
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="table"
+  title="components/ui/table.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+```
+
+```tsx showLineNumbers
+<Table>
+  <TableHeader>
+    <TableHead isRowHeader className="w-[100px]">发票</TableHead>
+    <TableHead>状态</TableHead>
+    <TableHead>方式</TableHead>
+    <TableHead className="text-right">金额</TableHead>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">INV001</TableCell>
+      <TableCell>已支付</TableCell>
+      <TableCell>信用卡</TableCell>
+      <TableCell className="text-right">$250.00</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+<TableCaption>你最近的发票列表。</TableCaption>
+```
+
+## 组成
+
+使用以下组成来构建一个 `Table`：
+
+```text
+Table
+├── TableCaption
+├── TableHeader
+│   └── TableRow
+│       ├── TableHead
+│       ├── TableHead
+│       ├── TableHead
+│       └── TableHead
+├── TableBody
+│   ├── TableRow
+│   │   ├── TableCell
+│   │   ├── TableCell
+│   │   ├── TableCell
+│   │   └── TableCell
+│   └── TableRow
+│       ├── TableCell
+│       ├── TableCell
+│       ├── TableCell
+│       └── TableCell
+└── TableFooter
+```
+
+## 页脚
+
+使用 `<TableFooter />` 组件为表格添加页脚。
+
+<ComponentPreview styleName="aria-nova" name="table-footer" />
+
+## 操作
+
+使用 `<DropdownMenu />` 组件显示每行操作的表格。
+
+<ComponentPreview styleName="aria-nova" name="table-actions" />
+
+## 数据表格
+
+你可以使用 `<Table />` 组件来构建更复杂的数据表格。将其与 [@tanstack/react-table](https://tanstack.com/table/v8) 结合使用，可以创建支持排序、筛选和分页的表格。
+
+如需了解更多信息，请参阅 [数据表格](/docs/components/aria/data-table) 文档。
+
+你还可以在 [任务](/examples/tasks) 演示中查看数据表格示例。
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="table-rtl"
+  direction="rtl"
+  previewClassName="h-auto"
+/>
+
+## API 参考
+
+请参阅 [React Aria Table](https://react-aria.adobe.com/Table#api) 文档。

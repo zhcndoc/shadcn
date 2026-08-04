@@ -68,9 +68,9 @@ import {
 
 ```tsx showLineNumbers
 const items = [
-  { label: "Light", value: "light" },
-  { label: "Dark", value: "dark" },
-  { label: "System", value: "system" },
+  { label: "浅色", value: "light" },
+  { label: "深色", value: "dark" },
+  { label: "系统", value: "system" },
 ]
 
 <Select items={items}>
@@ -89,7 +89,7 @@ const items = [
 </Select>
 ```
 
-## Composition
+## 组合
 
 使用以下组合来构建 `Select`：
 
@@ -109,31 +109,29 @@ Select
         └── SelectItem
 ```
 
-## Examples
-
-### 让选项与触发器对齐
+## 使项目与触发器对齐
 
 在 `SelectContent` 中使用 `alignItemWithTrigger` 来控制选中的项是否与触发器对齐。当设置为 `true`（默认值）时，弹出框的位置使选中的项覆盖在触发器上方。当为 `false` 时，弹出框与触发器边缘对齐。
 
 <ComponentPreview styleName="base-nova" name="select-align-item" />
 
-### 分组
+## 分组
 
 使用 `SelectGroup`、`SelectLabel` 和 `SelectSeparator` 来组织选项。
 
 <ComponentPreview styleName="base-nova" name="select-groups" />
 
-### 可滚动
+## 可滚动
 
 一个包含大量选项且可滚动的选择框。
 
 <ComponentPreview styleName="base-nova" name="select-scrollable" />
 
-### 禁用状态
+## 已禁用
 
 <ComponentPreview styleName="base-nova" name="select-disabled" />
 
-### 无效状态
+## 无效
 
 给 `Field` 组件添加 `data-invalid` 属性，给 `SelectTrigger` 组件添加 `aria-invalid` 属性，以显示错误状态。
 

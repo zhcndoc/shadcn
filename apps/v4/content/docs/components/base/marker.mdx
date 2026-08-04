@@ -1,5 +1,5 @@
 ---
-title: Marker
+title: 标记
 description: 在对话中显示内联状态、系统备注、带边框的行或带标签的分隔符。
 base: base
 component: true
@@ -80,11 +80,9 @@ Marker
 - 装饰性图标插槽，对辅助技术隐藏
 - 通过 `render` 实现多态根，用于链接和按钮标记
 - 可与 [`shimmer`](/docs/utils/shimmer) 工具配合使用，以流式展示状态文本
-- 可通过每一部分上的 `className` 属性自定义样式
+- 可通过每一部分上的 `className` 属性自定义样式。
 
-## 示例
-
-### 变体
+## 变体
 
 使用 `variant` 在内联标记、带边框的行和带标签的分隔符之间切换。
 
@@ -100,7 +98,7 @@ Marker
 | `border`    | 带有底部边框的默认标记，位于行下方。                 |
 | `separator` | 居中的标签，两侧带有分隔线。                         |
 
-### 状态
+## 状态
 
 设置 `role="status"`，并为流式或进行中的标记包含一个 [`Spinner`](/docs/components/spinner)，以便播报更新。
 
@@ -110,7 +108,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 闪烁效果
+## 闪烁
 
 将 [`shimmer`](/docs/utils/shimmer) 工具类添加到 `MarkerContent`，以实现动画流式文本效果。该工具随 `shadcn` 包一起提供——请参阅 shimmer 文档了解安装方法。
 
@@ -120,7 +118,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 分隔符
+## 分隔线
 
 在对话中，将 `separator` 变体用于带标签的分隔线，例如日期或章节分隔。
 
@@ -130,7 +128,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 边框
+## 边框
 
 对于需要保持默认标记对齐、同时将下一行分隔开的状态行，使用 `border` 变体。
 
@@ -140,7 +138,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 带图标
+## 带图标
 
 使用 `MarkerIcon` 在内容旁边渲染图标。使用 `flex-col` 将图标堆叠在内容上方。
 
@@ -150,7 +148,7 @@ Marker
   previewClassName="h-auto theme-blue"
 />
 
-### 链接和按钮
+## 链接和按钮
 
 使用 `Marker` 上的 `render` 属性将标记变为链接或按钮。
 
@@ -247,24 +245,24 @@ export function MarkerLinkDemo() {
 
 根标记元素。该文件还导出 `markerVariants`，用于将标记样式组合到自定义组件中。
 
-| Prop        | Type                                   | Default     | Description                                      |
-| ----------- | -------------------------------------- | ----------- | ------------------------------------------------ |
+| 属性        | 类型                                   | 默认值      | 描述                                      |
+| ----------- | -------------------------------------- | ----------- | ----------------------------------------- |
 | `variant`   | `"default" \| "border" \| "separator"` | `"default"` | 标记布局。                               |
-| `render`    | `ReactElement \| function`             | -           | 渲染为不同的元素，例如链接。   |
-| `className` | `string`                               | -           | 应用于根元素的附加类。 |
+| `render`    | `ReactElement \| function`             | -           | 渲染为不同的元素，例如链接。             |
+| `className` | `string`                               | -           | 应用于根元素的附加类。                   |
 
 ### MarkerIcon
 
 装饰性图标插槽。通过 `aria-hidden` 对辅助技术隐藏。
 
-| Prop        | Type     | Default | Description                                   |
-| ----------- | -------- | ------- | --------------------------------------------- |
-| `className` | `string` | -       | 应用于图标插槽的附加类。 |
+| 属性        | 类型     | 默认值 | 描述                                      |
+| ----------- | -------- | ------- | ----------------------------------------- |
+| `className` | `string` | -       | 应用于图标插槽的附加类。                 |
 
 ### MarkerContent
 
 标记文本内容。
 
-| Prop        | Type     | Default | Description                                      |
-| ----------- | -------- | ------- | ------------------------------------------------ |
-| `className` | `string` | -       | 应用于内容插槽的附加类。 |
+| 属性        | 类型     | 默认值 | 描述                                      |
+| ----------- | -------- | ------- | ----------------------------------------- |
+| `className` | `string` | -       | 应用于内容插槽的附加类。                 |

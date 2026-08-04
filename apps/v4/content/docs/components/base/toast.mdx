@@ -3,6 +3,137 @@ title: 吐司
 description: 一个暂时显示的简洁消息。
 base: base
 component: true
+links:
+  doc: https://base-ui.com/react/components/toast
+  api: https://base-ui.com/react/components/toast#api-reference
 ---
 
-吐司组件已被弃用。请改用 [sonner](/docs/components/sonner) 组件。
+<ComponentPreview styleName="base-nova" name="toast-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+<Steps className="mb-0 pt-2">
+
+<Step>运行以下命令：</Step>
+
+```bash
+npx shadcn@latest add toast
+```
+
+<Step>添加 Toaster 组件。</Step>
+
+```tsx title="app/layout.tsx" {1,9} showLineNumbers
+import { Toaster } from "@/components/ui/toast"
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <main>{children}</main>
+        <Toaster />
+      </body>
+    </html>
+  )
+}
+```
+
+</Steps>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install @base-ui/react
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="toast"
+  title="components/ui/toast.tsx"
+  styleName="base-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目设置。</Step>
+
+<Step>添加 Toaster 组件。</Step>
+
+```tsx title="app/layout.tsx" {1,8} showLineNumbers
+import { Toaster } from "@/components/ui/toast"
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Toaster />
+      </body>
+    </html>
+  )
+}
+```
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import { toast } from "@/components/ui/toast"
+```
+
+```tsx
+toast.add({
+  title: "Event created",
+  description: "Sunday, December 3 at 9:00 AM",
+})
+```
+
+## 类型
+
+设置 `type` 选项以渲染状态图标。内置渲染器支持
+`success`、`info`、`warning`、`error` 和 `loading`。
+
+<ComponentPreview styleName="base-nova" name="toast-types" />
+
+## 操作
+
+使用 `actionProps` 传递按钮属性，以渲染操作。
+
+```tsx
+const id = toast.add({
+  title: "事件已创建",
+  actionProps: {
+    children: "撤销",
+    onClick() {
+      toast.close(id)
+    },
+  },
+})
+```
+
+## Promise
+
+使用 `toast.promise`，随着异步任务经历加载、成功和错误状态，更新同一个 toast。
+
+<ComponentPreview styleName="base-nova" name="toast-promise" />
+
+## API 参考
+
+有关管理器选项、堆叠、滑动关闭以及原始 API 的详细信息，请参阅 [Base UI Toast 文档](https://base-ui.com/react/components/toast)。

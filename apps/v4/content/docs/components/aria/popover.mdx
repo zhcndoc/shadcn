@@ -1,0 +1,115 @@
+---
+title: 弹出框
+description: 在门户中显示丰富内容，由按钮触发。
+base: aria
+component: true
+links:
+  doc: https://react-aria.adobe.com/Popover
+  api: https://react-aria.adobe.com/Popover#api
+---
+
+<ComponentPreview styleName="aria-nova" name="popover-demo" />
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add popover
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>安装以下依赖：</Step>
+
+```bash
+npm install react-aria-components
+```
+
+<Step>将以下代码复制并粘贴到你的项目中。</Step>
+
+<ComponentSource
+  name="popover"
+  title="components/ui/popover.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配你的项目配置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx showLineNumbers
+import {
+  Popover,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+```
+
+```tsx showLineNumbers
+<PopoverTrigger>
+  <Button variant="outline">打开弹出框</Button>
+  <Popover>
+    <PopoverHeader>
+      <PopoverTitle>标题</PopoverTitle>
+      <PopoverDescription>此处为描述文本。</PopoverDescription>
+    </PopoverHeader>
+  </Popover>
+</PopoverTrigger>
+```
+
+## 组合
+
+使用以下组合构建一个 `Popover`：
+
+```text
+PopoverTrigger
+├── Button
+└── Popover
+```
+
+## 基础
+
+一个带有页眉、标题和描述的简单弹出框。
+
+<ComponentPreview styleName="aria-nova" name="popover-basic" />
+
+## 对齐
+
+使用 `Popover` 上的 `placement` 属性来控制水平对齐方式。
+
+<ComponentPreview styleName="aria-nova" name="popover-alignments" />
+
+## 带表单
+
+包含表单字段的弹出框。
+
+<ComponentPreview styleName="aria-nova" name="popover-form" />
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="popover-rtl" direction="rtl" />
+
+## API 参考
+
+请参阅 [React Aria Popover](https://react-aria.adobe.com/Popover#api) 文档。

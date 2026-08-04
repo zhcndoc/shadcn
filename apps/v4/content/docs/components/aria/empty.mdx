@@ -1,0 +1,240 @@
+---
+title: 空状态
+description: 使用空状态组件显示空状态。
+base: aria
+component: true
+---
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="empty-demo"
+  previewClassName="h-96 p-0"
+/>
+
+## 安装
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">命令</TabsTrigger>
+  <TabsTrigger value="manual">手动</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add empty
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>将以下代码复制并粘贴到您的项目中。</Step>
+
+<ComponentSource
+  name="empty"
+  title="components/ui/empty.tsx"
+  styleName="aria-nova"
+/>
+
+<Step>更新导入路径以匹配您的项目设置。</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## 用法
+
+```tsx
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+  EmptyTitle,
+} from "@/components/ui/empty"
+```
+
+```tsx
+<Empty>
+  <EmptyHeader>
+    <EmptyMedia variant="icon">
+      <Icon />
+    </EmptyMedia>
+    <EmptyTitle>No data</EmptyTitle>
+    <EmptyDescription>No data found</EmptyDescription>
+  </EmptyHeader>
+  <EmptyContent>
+    <Button>Add data</Button>
+  </EmptyContent>
+</Empty>
+```
+
+## 组合
+
+使用以下组合来构建一个 `Empty` 状态：
+
+```text
+Empty
+├── EmptyHeader
+│   ├── EmptyMedia
+│   ├── EmptyTitle
+│   └── EmptyDescription
+└── EmptyContent
+```
+
+## 轮廓
+
+使用 `border` 工具类创建轮廓空状态。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="empty-outline"
+  previewClassName="h-96 p-6 md:p-10"
+/>
+
+## 背景
+
+使用 `bg-*` 和 `bg-gradient-*` 工具类为无数据状态添加背景。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="empty-background"
+  previewClassName="h-96 p-0"
+/>
+
+## 头像
+
+使用 `EmptyMedia` 组件在空状态中显示头像。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="empty-avatar"
+  previewClassName="h-96 p-0"
+/>
+
+## 头像组
+
+使用 `EmptyMedia` 组件在空状态中显示头像组。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="empty-avatar-group"
+  previewClassName="h-96 p-0"
+/>
+
+## InputGroup
+
+你可以将 `InputGroup` 组件添加到 `EmptyContent` 组件中。
+
+<ComponentPreview
+  styleName="aria-nova"
+  name="empty-input-group"
+  previewClassName="h-96 p-0"
+/>
+
+## RTL
+
+要在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
+
+<ComponentPreview styleName="aria-nova" name="empty-rtl" direction="rtl" />
+
+## API 参考
+
+### Empty
+
+空状态的主要组件。封装 `EmptyHeader` 和 `EmptyContent` 组件。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` |         |
+
+```tsx
+<Empty>
+  <EmptyHeader />
+  <EmptyContent />
+</Empty>
+```
+
+### EmptyHeader
+
+`EmptyHeader` 组件封装空状态的媒体、标题和描述。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` |         |
+
+```tsx
+<EmptyHeader>
+  <EmptyMedia />
+  <EmptyTitle />
+  <EmptyDescription />
+</EmptyHeader>
+```
+
+### EmptyMedia
+
+使用 `EmptyMedia` 组件显示空状态的媒体，例如图标或图片。你也可以使用它显示其他组件，例如头像。
+
+| 属性        | 类型                  | 默认值   |
+| ----------- | --------------------- | --------- |
+| `variant`   | `"default" \| "icon"` | `default` |
+| `className` | `string`              |           |
+
+```tsx
+<EmptyMedia variant="icon">
+  <Icon />
+</EmptyMedia>
+```
+
+```tsx
+<EmptyMedia>
+  <Avatar>
+    <AvatarImage src="..." />
+    <AvatarFallback>CN</AvatarFallback>
+  </Avatar>
+</EmptyMedia>
+```
+
+### EmptyTitle
+
+使用 `EmptyTitle` 组件显示空状态的标题。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` |         |
+
+```tsx
+<EmptyTitle>暂无数据</EmptyTitle>
+```
+
+### EmptyDescription
+
+使用 `EmptyDescription` 组件显示空状态的描述。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` |         |
+
+```tsx
+<EmptyDescription>你没有任何通知。</EmptyDescription>
+```
+
+### EmptyContent
+
+使用 `EmptyContent` 组件显示空状态的内容，例如按钮、输入框或链接。
+
+| 属性        | 类型     | 默认值 |
+| ----------- | -------- | ------- |
+| `className` | `string` |         |
+
+```tsx
+<EmptyContent>
+  <Button>添加项目</Button>
+</EmptyContent>
+```
