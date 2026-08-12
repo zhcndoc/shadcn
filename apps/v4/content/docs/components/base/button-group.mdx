@@ -213,9 +213,9 @@ ButtonGroup
 
 使用此组件在按钮组内显示文本。
 
-| 属性      | 类型       | 默认值 |
-| --------- | ---------- | ------- |
-| `asChild` | `boolean`  | `false` |
+| 属性     | 类型                 | 默认值 |
+| -------- | -------------------- | ------- |
+| `render` | `React.ReactElement` |         |
 
 ```tsx
 <ButtonGroup>
@@ -224,7 +224,7 @@ ButtonGroup
 </ButtonGroup>
 ```
 
-使用 `asChild` 属性以自定义组件形式渲染文本，例如标签。
+使用 `render` 属性将自定义组件渲染为文本，例如标签。
 
 ```tsx showLineNumbers
 import { ButtonGroupText } from "@/components/ui/button-group"
@@ -233,10 +233,8 @@ import { Label } from "@/components/ui/label"
 export function ButtonGroupTextDemo() {
   return (
     <ButtonGroup>
-      <ButtonGroupText asChild>
-        <Label htmlFor="name">文本</Label>
-      </ButtonGroupText>
-      <Input placeholder="请输入内容..." id="name" />
+      <ButtonGroupText render={<Label htmlFor="name" />}>Text</ButtonGroupText>
+      <Input placeholder="Type something here..." id="name" />
     </ButtonGroup>
   )
 }

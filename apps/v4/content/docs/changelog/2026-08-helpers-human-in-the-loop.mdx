@@ -1,0 +1,61 @@
+---
+title: 2026 年 8 月 - 人在回路中
+description: 使用 @shadcn/helpers 为 AI SDK 模拟工具调用暂停、审批和继续。
+date: 2026-08-12
+---
+
+**@shadcn/helpers** 现在可以为 AI SDK 模拟人在回路中的流程。一个
+脚本化的对话可以暂停以等待真实用户输入，等待审批，并根据用户的决定继续。
+
+所有内容都会通过真实的
+`useChat` 生命周期进行流式传输，因此你的工具卡片、审批提示和问题流程
+表现会与生产环境中的完全一致。
+
+```ts showLineNumbers
+import { createChat } from "@shadcn/helpers/ai-sdk"
+
+const chat = createChat<ChatMessage>()
+  .user("Help me plan the next prototype.")
+  .assistant(({ writer }) => {
+    writer.text("A couple of questions before I start.")
+    writer.tool("askQuestions", { input: { questions } })
+  })
+  .assistant(({ writer, toolCall }) => {
+    writer.text(
+      toolCall?.name === "askQuestions" && toolCall.output
+        ? `Starting with ${toolCall.output.answers.direction}.`
+        : "Starting now."
+    )
+  })
+```
+
+传入 `needsApproval`，即可在用户做出决定之前暂停。审批通过后，脚本化输出
+会继续流式传输，而拒绝则会自动流式传输。
+
+```ts showLineNumbers
+chat
+  .assistant(({ writer }) => {
+    writer.text("That will archive 3 drafts. I need your approval.")
+    writer.tool("archiveDrafts", {
+      input: { count: 3 },
+      needsApproval: true,
+      output: { archived: 3 },
+    })
+  })
+  .assistant(({ writer, toolCall }) => {
+    writer.text(
+      toolCall?.approved ? "Archived 3 drafts." : "Okay, leaving them in place."
+    )
+  })
+```
+
+<div className="flex flex-wrap gap-2">
+  <Button asChild size="sm">
+    <Link
+      href="/docs/helpers/ai-sdk#human-in-the-loop"
+      className="mt-6 no-underline!"
+    >
+      阅读文档
+    </Link>
+  </Button>
+</div>

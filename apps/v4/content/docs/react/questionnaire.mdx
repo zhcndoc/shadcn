@@ -1,0 +1,1073 @@
+---
+title: Questionnaire
+description: 构建支持无障碍访问的多步骤问卷，支持单选、多选、自由文本和有意跳过的回答。
+---
+
+`Questionnaire` 是一个无样式的表单原语，用于一次呈现一个问题。它负责管理回答、进度、验证和导航。
+
+它非常适合用于 agent 澄清提示、入门引导、调查、信息收集表单和配置。
+
+无样式软件包让你可以完全控制标记和样式。有关带样式的版本和主题示例，请参阅
+[Questionnaire](/docs/components/base/questionnaire)。
+
+## 安装
+
+```bash
+npm install @shadcn/react
+```
+
+## 导入
+
+```tsx
+import { Questionnaire } from "@shadcn/react/questionnaire"
+```
+
+`Questionnaire` 从一个命名空间导出其各个部分。每个部分都接受其默认元素的原生属性。
+
+## 结构
+
+```tsx
+<Questionnaire.Root>
+  <Questionnaire.Progress />
+  <Questionnaire.Item name="question">
+    <Questionnaire.Title />
+    <Questionnaire.Description />
+    <Questionnaire.Choices>
+      <Questionnaire.Choice>
+        <Questionnaire.ChoiceInput />
+        <Questionnaire.ChoiceLabel />
+        <Questionnaire.ChoiceShortcut />
+      </Questionnaire.Choice>
+      <Questionnaire.Input />
+    </Questionnaire.Choices>
+    <Questionnaire.Error />
+  </Questionnaire.Item>
+  <Questionnaire.Previous />
+  <Questionnaire.Skip />
+  <Questionnaire.Next />
+  <Questionnaire.Submit />
+</Questionnaire.Root>
+```
+
+`Root` 渲染一个表单。每个 `Item` 都是一个字段集，其图例为 `Title`。
+`ChoiceInput` 渲染一个原生单选按钮或复选框。
+
+## 样式化版本
+
+样式化的 registry 组件使用扁平组件名称：
+
+| 样式化组件                                                                             | 未样式化部分                                                                                |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `Questionnaire`                                                                       | `Questionnaire.Root`                                                                         |
+| `QuestionnaireProgress`                                                               | `Questionnaire.Progress`                                                                     |
+| `QuestionnaireItem`                                                                   | `Questionnaire.Item`                                                                         |
+| `QuestionnaireTitle`                                                                  | `Questionnaire.Title`                                                                        |
+| `QuestionnaireDescription`                                                            | `Questionnaire.Description`                                                                  |
+| `QuestionnaireChoices`                                                                | `Questionnaire.Choices`                                                                      |
+| `QuestionnaireChoice`                                                                 | `Questionnaire.Choice`，以及 `ChoiceInput`、`ChoiceLabel` 和 `ChoiceShortcut`                |
+| `QuestionnaireInput`                                                                  | `Questionnaire.Input`                                                                        |
+| `QuestionnaireError`                                                                  | `Questionnaire.Error`                                                                        |
+| `QuestionnaireActions`                                                                | 无。仅用于布局；请使用你自己的容器。                                                         |
+| `QuestionnairePrevious`、`QuestionnaireSkip`、`QuestionnaireNext`、`QuestionnaireSubmit` | `Questionnaire.Previous`、`Questionnaire.Skip`、`Questionnaire.Next`、`Questionnaire.Submit` |
+
+样式化的 `QuestionnaireChoice` 会为你组合输入框、标签、快捷键和视觉指示器。使用未样式化的软件包时，请自行组合这些部分。
+
+## 基本用法
+
+每个 `Item` 都是一个步骤。它的 `name` 用于标识该步骤，并会成为其答案对应的表单字段名称。`Choice.value` 是提交的答案。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-demo"
+  hideCode
+  previewClassName="min-h-[560px] p-4 sm:p-8"
+/>
+
+```tsx
+const items = [
+  {
+    name: "prototype",
+    required: true,
+    prompt: "What should we prototype next?",
+    description: "Choose a direction or write your own.",
+    choices: [
+      {
+        value: "delegation",
+        label: "Delegation",
+        description: "Show how work moves to a specialist.",
+      },
+      {
+        value: "questions",
+        label: "Question prompts",
+        description: "Show choices while the interface waits.",
+      },
+      { value: "both", label: "Both together" },
+    ],
+    input: { label: "Another answer", placeholder: "Type another answer…" },
+  },
+  {
+    name: "detail",
+    required: false,
+    prompt: "How much detail should it include?",
+    description: "Skip this if you are not sure yet.",
+    choices: [
+      { value: "focused", label: "Focused" },
+      { value: "complete", label: "Complete flow" },
+    ],
+  },
+] as const
+```
+
+```tsx showLineNumbers
+"use client"
+
+import * as React from "react"
+import { Questionnaire } from "@shadcn/react/questionnaire"
+
+export function ProjectQuestionnaire() {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+
+    console.log({
+      prototype: formData.get("prototype"),
+      detail: formData.get("detail"),
+    })
+  }
+
+  return (
+    <Questionnaire.Root items={items} onSubmit={handleSubmit}>
+      <Questionnaire.Progress />
+      {items.map((question) => (
+        <Questionnaire.Item
+          key={question.name}
+          name={question.name}
+          required={question.required}
+        >
+          <Questionnaire.Title>{question.prompt}</Questionnaire.Title>
+          <Questionnaire.Description>
+            {question.description}
+          </Questionnaire.Description>
+          <Questionnaire.Choices>
+            {question.choices.map((choice) => (
+              <Questionnaire.Choice key={choice.value} value={choice.value}>
+                <Questionnaire.ChoiceInput />
+                <Questionnaire.ChoiceLabel>
+                  <span>{choice.label}</span>
+                  {"description" in choice ? (
+                    <span>{choice.description}</span>
+                  ) : null}
+                </Questionnaire.ChoiceLabel>
+                <Questionnaire.ChoiceShortcut />
+              </Questionnaire.Choice>
+            ))}
+            {"input" in question ? (
+              <Questionnaire.Input
+                aria-label={question.input.label}
+                placeholder={question.input.placeholder}
+              />
+            ) : null}
+          </Questionnaire.Choices>
+          <Questionnaire.Error />
+        </Questionnaire.Item>
+      ))}
+      <Questionnaire.Previous />
+      <Questionnaire.Skip />
+      <Questionnaire.Next />
+      <Questionnaire.Submit />
+    </Questionnaire.Root>
+  )
+}
+```
+
+将与渲染为 `Item` 和 `Choice` 部件的相同 `items` 集合传递给 `Root`。这样，项目顺序、进度、操作可见性和答案快捷键就能在 server-rendered HTML 中使用。
+
+## 多项选择
+
+`multiple` 会将项目的固定选项转换为原生复选框。使用
+`FormData.getAll()` 读取答案。在应用数据中保留 `multiple`，并将其传递给
+渲染的 `Item`。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-multiple"
+  hideCode
+  previewClassName="min-h-[420px] p-4 sm:p-8"
+/>
+
+```tsx
+const items = [
+  {
+    name: "signals",
+    required: true,
+    multiple: true,
+    prompt: "What should every update include?",
+    description: "Select all that apply.",
+    choices: [
+      { value: "progress", label: "Progress" },
+      { value: "decisions", label: "Decisions" },
+      { value: "risks", label: "Risks" },
+    ],
+  },
+] as const
+```
+
+```tsx
+items.map((question) => (
+  <Questionnaire.Item
+    key={question.name}
+    name={question.name}
+    multiple={question.multiple}
+    required={question.required}
+  >
+    <Questionnaire.Title>{question.prompt}</Questionnaire.Title>
+    <Questionnaire.Description>
+      {question.description}
+    </Questionnaire.Description>
+    <Questionnaire.Choices>
+      {question.choices.map((choice) => (
+        <Questionnaire.Choice key={choice.value} value={choice.value}>
+          <Questionnaire.ChoiceInput />
+          <Questionnaire.ChoiceLabel>{choice.label}</Questionnaire.ChoiceLabel>
+          <Questionnaire.ChoiceShortcut />
+        </Questionnaire.Choice>
+      ))}
+    </Questionnaire.Choices>
+    <Questionnaire.Error />
+  </Questionnaire.Item>
+))
+```
+
+```tsx
+const signals = new FormData(form).getAll("signals").map(String)
+```
+
+## 自由回答
+
+`Input` 添加自由回答，并渲染原生文本输入框。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-freeform"
+  hideCode
+  previewClassName="min-h-[420px] p-4 sm:p-8"
+/>
+
+```tsx
+const items = [
+  {
+    name: "prototype",
+    required: true,
+    prompt: "What should we prototype next?",
+    choices: [
+      { value: "delegation", label: "Delegation" },
+      { value: "questions", label: "Question prompts" },
+    ],
+    input: {
+      label: "Another prototype direction",
+      placeholder: "Type another direction…",
+    },
+  },
+] as const
+```
+
+```tsx
+items.map((question) => (
+  <Questionnaire.Item
+    key={question.name}
+    name={question.name}
+    required={question.required}
+  >
+    <Questionnaire.Title>{question.prompt}</Questionnaire.Title>
+    <Questionnaire.Choices>
+      {question.choices.map((choice) => (
+        <Questionnaire.Choice key={choice.value} value={choice.value}>
+          <Questionnaire.ChoiceInput />
+          <Questionnaire.ChoiceLabel>{choice.label}</Questionnaire.ChoiceLabel>
+          <Questionnaire.ChoiceShortcut />
+        </Questionnaire.Choice>
+      ))}
+      <Questionnaire.Input
+        aria-label={question.input.label}
+        placeholder={question.input.placeholder}
+      />
+    </Questionnaire.Choices>
+    <Questionnaire.Error />
+  </Questionnaire.Item>
+))
+```
+
+## 显式跳过
+
+`Skip` 记录某个可选项目是否被有意留空。当应用需要区分跳过的回答和缺失的回答时，请使用
+`onStatusChange`。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-skip"
+  hideCode
+  previewClassName="min-h-[520px] p-4 sm:p-8"
+/>
+
+```tsx showLineNumbers
+"use client"
+
+import * as React from "react"
+import {
+  Questionnaire,
+  type QuestionnaireItemStatus,
+} from "@shadcn/react/questionnaire"
+
+export function PlanningQuestionnaire() {
+  const [timingStatus, setTimingStatus] =
+    React.useState<QuestionnaireItemStatus>("unanswered")
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+
+    console.log({
+      timing:
+        timingStatus === "skipped"
+          ? { status: "skipped" }
+          : {
+              status: "answered",
+              value: formData.get("timing"),
+            },
+    })
+  }
+
+  return (
+    <Questionnaire.Root defaultItem="timing" onSubmit={handleSubmit}>
+      <Questionnaire.Item name="timing" onStatusChange={setTimingStatus}>
+        <Questionnaire.Title>
+          When should this be revisited?
+        </Questionnaire.Title>
+        <Questionnaire.Description>
+          Skip this if timing has not been decided.
+        </Questionnaire.Description>
+        <Questionnaire.Choices>
+          <Questionnaire.Choice value="week">
+            <Questionnaire.ChoiceInput />
+            <Questionnaire.ChoiceLabel>This week</Questionnaire.ChoiceLabel>
+            <Questionnaire.ChoiceShortcut />
+          </Questionnaire.Choice>
+          <Questionnaire.Choice value="cycle">
+            <Questionnaire.ChoiceInput />
+            <Questionnaire.ChoiceLabel>Next cycle</Questionnaire.ChoiceLabel>
+            <Questionnaire.ChoiceShortcut />
+          </Questionnaire.Choice>
+        </Questionnaire.Choices>
+      </Questionnaire.Item>
+      <Questionnaire.Skip />
+      <Questionnaire.Submit />
+    </Questionnaire.Root>
+  )
+}
+```
+
+## 答案快捷键
+
+使用 `shortcuts="letters"` 或 `shortcuts="numbers"` 为每个启用的固定选项分配一个按键；如果提供了
+`items`，则按照其中的顺序进行分配。在需要显示提示的地方放置
+`ChoiceShortcut`。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-shortcuts"
+  hideCode
+  previewClassName="min-h-[480px] p-4 sm:p-8"
+/>
+
+```tsx
+<Questionnaire.Root shortcuts="letters">
+  <Questionnaire.Item name="review" required>
+    <Questionnaire.Title>What should the agent review?</Questionnaire.Title>
+    <Questionnaire.Choices>
+      <Questionnaire.Choice value="api">
+        <Questionnaire.ChoiceInput />
+        <Questionnaire.ChoiceLabel>Public API</Questionnaire.ChoiceLabel>
+        <Questionnaire.ChoiceShortcut />
+      </Questionnaire.Choice>
+      <Questionnaire.Choice value="tests">
+        <Questionnaire.ChoiceInput />
+        <Questionnaire.ChoiceLabel>Test coverage</Questionnaire.ChoiceLabel>
+        <Questionnaire.ChoiceShortcut />
+      </Questionnaire.Choice>
+    </Questionnaire.Choices>
+  </Questionnaire.Item>
+</Questionnaire.Root>
+```
+
+`"letters"` 分配 `A` 到 `Z`；`"numbers"` 分配 `1` 到 `9`。禁用的选项会被跳过。通过快捷键选择答案不会前进到下一个项目。
+
+## 验证
+
+Questionnaire 会在向前移动前验证当前项目，并在表单提交时验证所有已启用的
+项目。
+
+- 必填项目在已有答案后有效。
+- 可选项目在已有答案或被明确跳过后有效。
+- 已禁用的项目和答案会被忽略。
+
+`required` 不会添加可见的“必填”文本。请在 `Title` 或
+`Description` 中说明。
+
+验证失败时，Questionnaire 会保留或打开无效项目，并将焦点置于答案上。添加
+`Error` 以显示消息。
+
+```tsx
+<Questionnaire.Item name="scope" required>
+  <Questionnaire.Title>
+    What should the project include? (Required)
+  </Questionnaire.Title>
+  <Questionnaire.Choices>{/* choices */}</Questionnaire.Choices>
+  <Questionnaire.Error />
+</Questionnaire.Item>
+```
+
+`Error` 在项目无效前会保持隐藏。传入子内容可替换其默认消息。
+
+```tsx
+<Questionnaire.Error>Please choose a project scope.</Questionnaire.Error>
+```
+
+即使没有 `Error`，验证仍然有效。渲染后，屏幕阅读器会读出该消息。
+
+对于 Zod 或其他外部验证器，请设置 `Item.invalid`，在
+`Error` 中渲染消息，并将 `Root.item` 移动到第一个无效项目。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-validation"
+  hideCode
+  previewClassName="min-h-[520px] p-4 sm:p-8"
+/>
+
+```tsx
+<Questionnaire.Root item={item} onItemChange={setItem} onSubmit={handleSubmit}>
+  <Questionnaire.Item invalid={Boolean(errors.detail)} name="detail" required>
+    <Questionnaire.Title>How much detail?</Questionnaire.Title>
+    <Questionnaire.Choices>{/* choices */}</Questionnaire.Choices>
+    <Questionnaire.Error>{errors.detail}</Questionnaire.Error>
+  </Questionnaire.Item>
+</Questionnaire.Root>
+```
+
+## 受控导航
+
+传入 `item` 和 `onItemChange` 以控制活动项目。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-controlled"
+  hideCode
+  previewClassName="min-h-[520px] p-4 sm:p-8"
+/>
+
+```tsx
+const [item, setItem] = React.useState("scope")
+
+<Questionnaire.Root item={item} onItemChange={setItem} onSubmit={handleSubmit}>
+  <Questionnaire.Item name="scope" required>
+    {/* question and answers */}
+  </Questionnaire.Item>
+  <Questionnaire.Item name="verification" required>
+    {/* question and answers */}
+  </Questionnaire.Item>
+  <Questionnaire.Previous />
+  <Questionnaire.Next>Next</Questionnaire.Next>
+  <Questionnaire.Submit>Submit</Questionnaire.Submit>
+</Questionnaire.Root>
+```
+
+## 使用默认值恢复
+
+使用 `defaultItem`、`defaultChecked` 和 `defaultValue` 恢复已保存的草稿。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-resume"
+  hideCode
+  previewClassName="min-h-[520px] p-4 sm:p-8"
+/>
+
+```tsx
+<Questionnaire.Root defaultItem="verification">
+  <Questionnaire.Item name="scope" required>
+    <Questionnaire.Title>Which files are in scope?</Questionnaire.Title>
+    <Questionnaire.Choices>
+      <Questionnaire.Choice value="component" defaultChecked>
+        <Questionnaire.ChoiceInput />
+        <Questionnaire.ChoiceLabel>Component only</Questionnaire.ChoiceLabel>
+      </Questionnaire.Choice>
+    </Questionnaire.Choices>
+  </Questionnaire.Item>
+  <Questionnaire.Item name="verification" required>
+    <Questionnaire.Title>Any extra instructions?</Questionnaire.Title>
+    <Questionnaire.Input
+      aria-label="Extra instructions"
+      defaultValue="Run the package tests."
+    />
+  </Questionnaire.Item>
+  <button type="reset">Reset draft</button>
+</Questionnaire.Root>
+```
+
+## 条件项
+
+设置 `disabled` 以从当前流程中移除某个项。已禁用的项不会计入进度，也不会参与导航、验证和提交。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-conditional"
+  hideCode
+  previewClassName="min-h-[520px] p-4 sm:p-8"
+/>
+
+```tsx
+const [runtime, setRuntime] = React.useState("local")
+
+<Questionnaire.Root>
+  <Questionnaire.Item name="runtime" required>
+    <Questionnaire.Title>Where should the agent run?</Questionnaire.Title>
+    <Questionnaire.Choices>
+      <Questionnaire.Choice
+        value="local"
+        checked={runtime === "local"}
+        onChange={() => setRuntime("local")}
+      >
+        <Questionnaire.ChoiceInput />
+        <Questionnaire.ChoiceLabel>Locally</Questionnaire.ChoiceLabel>
+      </Questionnaire.Choice>
+      <Questionnaire.Choice
+        value="remote"
+        checked={runtime === "remote"}
+        onChange={() => setRuntime("remote")}
+      >
+        <Questionnaire.ChoiceInput />
+        <Questionnaire.ChoiceLabel>
+          Remote environment
+        </Questionnaire.ChoiceLabel>
+      </Questionnaire.Choice>
+    </Questionnaire.Choices>
+  </Questionnaire.Item>
+  <Questionnaire.Item name="region" disabled={runtime !== "remote"} required>
+    {/* remote-only question */}
+  </Questionnaire.Item>
+</Questionnaire.Root>
+```
+
+## 导航状态
+
+导航操作默认保持启用，因此激活 Next 或 Submit 可能会显示验证错误。当你想要自行禁用某个操作时，请使用渲染状态。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-navigation-state"
+  hideCode
+  previewClassName="min-h-[480px] p-4 sm:p-8"
+/>
+
+```tsx
+<Questionnaire.Next
+  render={(props, state) => (
+    <button {...props} disabled={state.status === "unanswered"} />
+  )}
+>
+  Next
+</Questionnaire.Next>
+```
+
+渲染状态包含 `visible`、`disabled`、`shortcut` 以及当前活动项的 `status`。如果只想更改外观，请改为设置 `data-status`：
+
+```tsx
+<Questionnaire.Next data-navigation-action>Next</Questionnaire.Next>
+```
+
+```css
+[data-navigation-action][data-status="unanswered"] {
+  opacity: 0.5;
+}
+```
+
+## 自定义进度
+
+默认情况下，`Progress` 会渲染 `Question {current} of {total}`。使用 `render` 更改其元素或格式。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-progress"
+  hideCode
+  previewClassName="min-h-[520px] p-4 sm:p-8"
+/>
+
+```tsx
+<Questionnaire.Progress
+  aria-label="Setup progress"
+  render={(props, state) => (
+    <output {...props}>
+      Checkpoint {state.current} of {state.total}
+    </output>
+  )}
+/>
+```
+
+渲染状态包含 `current`、`total`、`first` 和 `last`。需要时传入本地化的 `aria-label`。
+
+## 带动画的项目
+
+为活动项目添加动画，同时保持进度和导航固定不变。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-animated"
+  hideCode
+  previewClassName="min-h-[520px] p-4 sm:p-8"
+/>
+
+```tsx
+const itemClassName =
+  "data-active:animate-in data-active:fade-in-0 data-active:slide-in-from-bottom-2 data-active:duration-300 motion-reduce:animate-none"
+
+<Questionnaire.Item
+  className={itemClassName}
+  name="task"
+  required
+>
+  {/* ... */}
+</Questionnaire.Item>
+```
+
+非活动项目会立即隐藏，因此只需为进入添加动画。
+
+## 卡片组合
+
+将根组件放置在卡片周围，并将 `Title` 和 `Description` 渲染到
+卡片头部。为标题指定一个 `id`，并将其与项目的
+`aria-labelledby` 关联，因为它取代了默认的图例。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-card"
+  hideCode
+  previewClassName="min-h-[560px] p-4 sm:p-8"
+/>
+
+```tsx
+const titleId = React.useId()
+
+<Questionnaire.Root onSubmit={handleSubmit}>
+  <Card>
+    <Questionnaire.Item aria-labelledby={titleId} name="task" required>
+      <CardHeader>
+        <Questionnaire.Title id={titleId} render={<CardTitle />}>
+          What should the agent work on?
+        </Questionnaire.Title>
+        <Questionnaire.Description render={<CardDescription />}>
+          Choose the task that should be handled next.
+        </Questionnaire.Description>
+        <CardAction>
+          <Questionnaire.Progress />
+        </CardAction>
+      </CardHeader>
+      <CardContent>
+        <Questionnaire.Choices>{/* choices */}</Questionnaire.Choices>
+        <Questionnaire.Error />
+      </CardContent>
+    </Questionnaire.Item>
+    <CardFooter>
+      <Questionnaire.Next>Next</Questionnaire.Next>
+      <Questionnaire.Submit>Submit</Questionnaire.Submit>
+    </CardFooter>
+  </Card>
+</Questionnaire.Root>
+```
+
+## 对话框组合
+
+将对话框关闭与 `Skip` 分开处理：关闭会取消流程，而跳过会记录一个有意未回答的项目。
+
+<ComponentPreview
+  align="end"
+  styleName="base-nova"
+  name="questionnaire-dialog"
+  hideCode
+  previewClassName="min-h-[320px] p-4 sm:p-8"
+/>
+
+```tsx
+const titleId = React.useId()
+
+<Dialog>
+  <DialogTrigger>Open clarification</DialogTrigger>
+  <DialogContent>
+    <Questionnaire.Root onSubmit={handleSubmit}>
+      <Questionnaire.Item aria-labelledby={titleId} name="scope" required>
+        <DialogHeader>
+          <Questionnaire.Progress />
+          <Questionnaire.Title id={titleId} render={<DialogTitle />}>
+            Which files are in scope?
+          </Questionnaire.Title>
+          <Questionnaire.Description render={<DialogDescription />}>
+            Choose how broadly the agent can update the workspace.
+          </Questionnaire.Description>
+        </DialogHeader>
+        <Questionnaire.Choices>{/* choices */}</Questionnaire.Choices>
+        <Questionnaire.Error />
+      </Questionnaire.Item>
+      <DialogFooter>
+        <DialogClose>Cancel</DialogClose>
+        <Questionnaire.Next>Next</Questionnaire.Next>
+        <Questionnaire.Submit>Send answer</Questionnaire.Submit>
+      </DialogFooter>
+    </Questionnaire.Root>
+  </DialogContent>
+</Dialog>
+```
+
+## 自定义 render 目标
+
+使用 `render` 替换部分的默认元素。当需要访问其状态时，传入一个元素或使用
+函数。
+
+```tsx
+<Questionnaire.Next render={<Button />}>Next</Questionnaire.Next>
+```
+
+`Root` 和 `Item` 始终渲染一个 `form` 和 `fieldset`。如果 `Title` 不再
+渲染 `legend`，请为其提供一个 `id`，并通过 `aria-labelledby` 将该 ID 传递给
+`Item`。
+
+该原语不会输出 `data-slot`。样式包装器负责插槽和视觉指示器。
+
+## 原生表单
+
+`Root` 始终呈现原生表单，并支持 `onSubmit`、`onReset`、`action`
+以及其他表单属性。不要将 Questionnaire 嵌套在另一个表单中。
+
+答案通过原生控件进行序列化：
+
+- `FormData.get(itemName)` 读取单个答案。
+- `FormData.getAll(itemName)` 读取多个答案。
+- 跳过的项目在 `FormData` 中不存在。
+- 使用 `Item.onStatusChange` 区分跳过和缺少答案。
+
+`Root` 默认设置 `noValidate`，因此验证使用 `Questionnaire.Error`
+而不是浏览器的约束验证界面。
+
+`form.reset()` 会恢复初始项目、默认答案、跳过状态和验证状态。
+
+## 键盘导航
+
+Questionnaire 基于原生单选框、复选框、输入框和按钮的行为。
+
+| 按键                     | 行为                                                                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| `Tab`                    | 在答案控件和可见操作之间移动焦点。                                                                                              |
+| `Shift` + `Tab`          | 将焦点移动到上一个控件或操作。                                                                                                  |
+| `ArrowUp`                | 从项目、固定答案或空的类文本自由输入框移动到上一个答案。原生单选框也会选中该答案。                                              |
+| `ArrowDown`              | 从项目、固定答案或空的类文本自由输入框移动到下一个答案。原生单选框也会选中该答案。                                              |
+| `ArrowLeft`              | 当焦点不在单选框或文本输入控件中时，移动到上一个项目。                                                                          |
+| `ArrowRight`             | 当活动项目已回答或已跳过，且焦点不在单选框或文本输入控件中时，移动到下一个项目。                                                |
+| `Space`                  | 选中单选框、切换复选框，或激活已聚焦的操作。                                                                                    |
+| `Enter`                  | 从已选中的选项或已选择且已填写的输入继续；激活已聚焦的操作。                                                                    |
+| `Command/Ctrl` + `Enter` | 从问卷中的任意位置进行验证并继续，或提交最后一个项目。                                                                          |
+
+在文本字段中输入时，快捷键和方向键导航会暂停。
+阻止根元素的 `onKeyDown` 事件会关闭问卷的按键处理。
+
+导航操作默认保持启用，因此尝试执行操作时可以显示验证反馈。请参阅[导航状态](#navigation-state)，了解如何禁用或重新设置未回答操作的样式。
+
+## 可访问性
+
+- `Item` 渲染一个 `fieldset`。
+- `Title` 默认渲染 fieldset 的 `legend`。如果它使用自定义渲染
+  目标，请通过 `aria-labelledby` 将其 `id` 与该项目关联。
+- `Description` 和活动的 `Error` 通过 `aria-describedby` 关联。
+- 无效项目和答案控件会公开 `aria-invalid`。
+- `Progress` 渲染一个带有当前值、最小值、最大值和文本值的命名进度条。
+- 固定选项使用原生单选按钮和复选框。
+- 通过 `aria-keyshortcuts` 公开已分配的快捷键和可用的导航方式。
+- 非活动项目和操作会被隐藏且不可操作。
+- 导航会聚焦新激活的 fieldset。
+- 验证会聚焦第一个可用的答案控件。
+- 禁用的项目会从进度和导航中省略。
+
+始终为 `Input` 提供可访问名称。使用带有可见
+标签的显式 `id`：
+
+```tsx
+<Label htmlFor="other-answer">Other answer</Label>
+<Questionnaire.Input
+  id="other-answer"
+  placeholder="Type another answer…"
+/>
+```
+
+当设计中没有可见标签时，请使用 `aria-label` 或 `aria-labelledby`：
+
+```tsx
+<Questionnaire.Input
+  aria-label="Other answer"
+  placeholder="Type another answer…"
+/>
+```
+
+占位符不是标签。
+
+## 数据属性
+
+使用这些属性进行样式设置。布尔属性在值为 true 时存在，在值为 false
+时不存在。
+
+### 根组件和进度
+
+| 数据属性         | 值                                             |
+| ---------------- | ---------------------------------------------- |
+| `data-current`   | 从 1 开始计数的活动项目位置。                  |
+| `data-total`     | 已启用项目的数量。                              |
+| `data-first`     | 在第一个项目上存在。                            |
+| `data-last`      | 在最后一个项目上存在。                          |
+| `data-shortcuts` | 启用时，在 Root 上为 `"letters"` \| `"numbers"`。 |
+
+### 项目
+
+| 数据属性       | 值                                          |
+| -------------- | ------------------------------------------- |
+| `data-active`  | 在活动状态下存在。                          |
+| `data-status`  | `"unanswered"` \| `"answered"` \| `"skipped"` |
+| `data-required` | 必填时存在。                                |
+| `data-multiple` | 多选时存在。                                |
+| `data-disabled` | 禁用时存在。                                |
+| `data-invalid`  | 验证失败后存在。                            |
+
+### 选项
+
+| 数据属性       | 值                            |
+| -------------- | ----------------------------- |
+| `data-type`    | `"radio"` \| `"checkbox"`     |
+| `data-checked` | 选中时存在。                  |
+| `data-unchecked` | 未选中时存在。              |
+| `data-disabled` | 禁用时存在。                 |
+| `data-invalid`  | 其项目无效时存在。           |
+| `data-shortcut` | 分配的字母或数字。           |
+
+### 选项组
+
+| 数据属性       | 值                                       |
+| -------------- | ---------------------------------------- |
+| `data-shortcuts` | 启用时为 `"letters"` \| `"numbers"`。 |
+
+### 输入
+
+| 数据属性      | 值                                         |
+| ------------- | ------------------------------------------ |
+| `data-filled` | 输入包含非空文本时存在。                   |
+| `data-empty`  | 输入没有答案文本时存在。                   |
+| `data-disabled` | 禁用时存在。                             |
+| `data-invalid`  | 其项目无效时存在。                       |
+
+### 错误
+
+| 数据属性     | 值                               |
+| ------------ | -------------------------------- |
+| `data-invalid` | 错误处于活动状态时存在。        |
+
+### 上一步、跳过、下一步和提交
+
+| 数据属性      | 值                                                       |
+| ------------- | -------------------------------------------------------- |
+| `data-visible` | 操作适用于活动项目时存在。                               |
+| `data-hidden`  | 操作不适用时存在。                                       |
+| `data-disabled` | 禁用时存在。                                            |
+| `data-shortcut` | 在已启用且可见的 Next 或 Submit 上为 `"Enter"`。       |
+| `data-status`   | 活动项目：`"unanswered"`、`"answered"` 或 `"skipped"`。 |
+
+`Title` 和 `Description` 没有状态属性。无头组件不会
+发出 `data-slot`。
+
+## API 参考
+
+### Questionnaire.Root
+
+表单和协调根组件。
+
+| 属性           | 类型                                     | 默认值             | 描述                                                                     |
+| -------------- | ---------------------------------------- | ------------------ | ------------------------------------------------------------------------ |
+| `item`         | `string`                                 | -                  | 受控的活动项目名称。                                                     |
+| `defaultItem`  | `string`                                 | first enabled item | 初始活动项目名称。                                                       |
+| `items`        | `readonly QuestionnaireItemDefinition[]` | -                  | 用于服务器渲染和项目排序的可选项目数据。                                 |
+| `onItemChange` | `(item: string) => void`                 | -                  | 当导航请求切换到其他项目时调用。                                         |
+| `shortcuts`    | `"letters" \| "numbers"`                 | -                  | 按定义顺序或渲染后的 DOM 顺序分配作用域内的答案快捷键。                   |
+| `noValidate`   | `boolean`                                | `true`             | 禁用原生约束界面，同时保留问卷验证。                                     |
+| `onSubmit`     | `FormEventHandler<HTMLFormElement>`      | -                  | 每个项目验证通过后的原生表单提交处理程序。                               |
+| `onReset`      | `FormEventHandler<HTMLFormElement>`      | -                  | 原生重置处理程序。阻止默认行为以停止问卷重置。                           |
+
+Root 通过数据属性公开 `current`、`total`、`first`、`last` 和 `shortcuts`。
+
+可选的集合类型从
+`@shadcn/react/questionnaire` 导出：
+
+```ts
+type QuestionnaireChoiceDefinition = {
+  value: string
+  disabled?: boolean
+}
+
+type QuestionnaireItemDefinition = {
+  name: string
+  required?: boolean
+  disabled?: boolean
+  choices?: readonly QuestionnaireChoiceDefinition[]
+}
+```
+
+### Questionnaire.Progress
+
+启用的项目集合中的位置。
+
+| Prop         | Type                                             | Default                         | Description                               |
+| ------------ | ------------------------------------------------ | ------------------------------- | ----------------------------------------- |
+| `children`   | `React.ReactNode`                                | `问题 {current}，共 {total} 个` | 自定义进度内容。                  |
+| `aria-label` | `string`                                         | `问卷进度`        | 可访问的进度条名称。              |
+| `render`     | `ReactElement \| (props, state) => ReactElement` | `<div>`                         | 带有进度状态的自定义渲染目标。 |
+
+渲染状态包含 `current`、`total`、`first` 和 `last`。
+
+### Questionnaire.Item
+
+一个问卷步骤。
+
+| Prop             | Type                                        | Default  | Description                                                     |
+| ---------------- | ------------------------------------------- | -------- | --------------------------------------------------------------- |
+| `name`           | `string`                                    | required | 唯一的项目标识符和原生表单字段名称。                              |
+| `invalid`        | `boolean`                                   | `false`  | 根据外部验证器将项目标记为无效。                                  |
+| `required`       | `boolean`                                   | `false`  | 要求提供答案，并阻止跳过。                                      |
+| `multiple`       | `boolean`                                   | `false`  | 将固定选项渲染为复选框。                                        |
+| `disabled`       | `boolean`                                   | `false`  | 从进度和导航中省略该项目。                                      |
+| `onStatusChange` | `(status: QuestionnaireItemStatus) => void` | -        | 观察 `"unanswered"`、`"answered"` 和 `"skipped"` 的变化。       |
+
+项目通过数据属性公开 `active`、`disabled`、`invalid`、`multiple`、`required` 和
+`status`。
+
+Root 中的项目名称必须唯一。名称属于答案控件，而不是字段集。
+
+### Questionnaire.Title
+
+项目标题。默认渲染语义化的 `legend`。
+
+| Prop     | Type                              | Default    | Description                                                            |
+| -------- | --------------------------------- | ---------- | ---------------------------------------------------------------------- |
+| `render` | `ReactElement \| render function` | `<legend>` | 自定义渲染目标。将其 `id` 与项目的 `aria-labelledby` 配对。 |
+
+### Questionnaire.Description
+
+与 `aria-describedby` 中的项目关联的辅助文本。
+
+| 属性     | 类型                              | 默认值 | 描述               |
+| -------- | --------------------------------- | ------- | --------------------- |
+| `render` | `ReactElement \| render function` | `<p>`   | 自定义渲染目标。 |
+
+### Questionnaire.Choices
+
+用于固定答案和自由格式答案的布局容器。
+
+| Prop     | Type                              | Default | Description           |
+| -------- | --------------------------------- | ------- | --------------------- |
+| `render` | `ReactElement \| render function` | `<div>` | 自定义渲染目标。 |
+
+渲染状态包含 `shortcuts`。
+
+### Questionnaire.Choice
+
+固定答案容器。在其中组合一个 `ChoiceInput`、一个 `ChoiceLabel` 和一个可选的
+`ChoiceShortcut`。默认的 `<label>` 会使整行与其原生控件关联。
+
+| Prop             | Type                                             | Default   | Description                             |
+| ---------------- | ------------------------------------------------ | --------- | --------------------------------------- |
+| `value`          | `string`                                         | 必填      | 原生答案值。                            |
+| `checked`        | `boolean`                                        | -         | 受控选中状态。                          |
+| `defaultChecked` | `boolean`                                        | `false`   | 初始选中状态。                          |
+| `disabled`       | `boolean`                                        | `false`   | 禁用原生答案控件。                      |
+| `onChange`       | `ChangeEventHandler<HTMLInputElement>`           | -         | 原生输入变更处理程序。                  |
+| `render`         | `ReactElement \| (props, state) => ReactElement` | `<label>` | 带选项状态的自定义渲染目标。            |
+
+渲染状态包含 `checked`、`disabled`、`invalid`、`shortcut` 和
+`type`。
+
+### Questionnaire.ChoiceInput
+
+其所在 `Choice` 的原生单选按钮或复选框。Questionnaire 提供选择、表单提交、验证和键盘交互所需的属性。它还接受 `className`、`id`、`ref`、`render` 以及其他不冲突的原生输入属性。
+
+`ChoiceInput` 必须在 `Choice` 内部使用。其渲染状态与 `Choice` 相匹配。
+
+### Questionnaire.ChoiceLabel
+
+固定选项的可见标签内容。它会在
+`Choice` 标签内渲染一个 `<span>`，并接受原生 span 属性和 `render`。
+
+### Questionnaire.ChoiceShortcut
+
+固定选项的可见快捷方式。它会渲染一个包含
+指定字母或数字的 `<span>`，当选项没有快捷方式时则保持隐藏。
+它接受原生 span 属性和 `render`；其渲染状态包含 `shortcut`。
+
+### Questionnaire.Input
+
+自由格式的答案。其原生 `name` 由包含它的项目管理。
+
+| Prop           | Type                                             | Default   | Description                                                   |
+| -------------- | ------------------------------------------------ | --------- | ------------------------------------------------------------- |
+| `value`        | `string \| number \| readonly string[]`          | -         | 受控原生输入值。                                |
+| `defaultValue` | `string \| number \| readonly string[]`          | -         | 初始原生输入值。                                   |
+| `disabled`     | `boolean`                                        | `false`   | 禁用输入。                                           |
+| `onChange`     | `ChangeEventHandler<HTMLInputElement>`           | -         | 原生输入变更处理程序。                                  |
+| `type`         | `QuestionnaireInputType`                         | `"text"`  | 文本输入类型，例如 `"email"`、`"number"` 或 `"date"`。 |
+| `render`       | `ReactElement \| (props, state) => ReactElement` | `<input>` | 带有输入状态的自定义渲染目标。                        |
+
+渲染状态包含 `disabled`、`filled` 和 `invalid`。
+
+### Questionnaire.Error
+
+验证消息。只有当其项目验证失败时才会显示。
+
+| 属性       | 类型                                             | 默认值            | 描述                              |
+| ---------- | ------------------------------------------------ | ------------------ | ---------------------------------------- |
+| `children` | `React.ReactNode`                                | 上下文消息 | 自定义验证消息。               |
+| `render`   | `ReactElement \| (props, state) => ReactElement` | `<p>`              | 在无效状态下的自定义渲染目标。 |
+
+### 导航操作
+
+`Previous`、`Skip`、`Next` 和 `Submit` 会渲染原生按钮，并在其可见性发生变化时保持挂载。
+
+| 部分       | 默认类型     | 可见条件                   | 禁用条件                 |
+| ---------- | ------------ | -------------------------- | ------------------------ |
+| `Previous` | `"button"`   | 不在第一项时。             | Consumer 设置 `disabled`。 |
+| `Skip`     | `"button"`   | 当前项为可选项时。         | Consumer 设置 `disabled`。 |
+| `Next`     | `"button"`   | 不在最后一项时。           | Consumer 设置 `disabled`。 |
+| `Submit`   | `"submit"`   | 在最后一项时。             | Consumer 设置 `disabled`。 |
+
+每个操作都接受原生按钮属性，并支持：
+
+| 属性     | 类型                                             | 描述                                      |
+| -------- | ------------------------------------------------ | ----------------------------------------- |
+| `render` | `ReactElement \| (props, state) => ReactElement` | 带有导航状态的自定义渲染目标。            |
+
+渲染状态包含 `visible`、`disabled`、`shortcut` 以及当前
+项的 `status`。

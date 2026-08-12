@@ -4,11 +4,11 @@ description: 使用 TanStack Table 构建的强大表格和数据网格。
 base: base
 component: true
 links:
-  doc: https://tanstack.com/table/v8/docs/introduction
+  doc: https://tanstack.com/table/latest/docs/overview
 ---
 
 <ComponentPreview
-  styleName="radix-nova"
+  styleName="base-nova"
   name="data-table-demo"
   align="start"
   previewClassName="items-start h-auto px-4 md:px-8"
@@ -19,7 +19,7 @@ links:
 
 我创建的每个数据表或数据网格都是独一无二的。它们的行为都不同，具有特定的排序和筛选要求，并且使用不同的数据源。
 
-将所有这些变化合并为一个组件没有意义。如果这么做，我们将失去 [headless UI](https://tanstack.com/table/v8/docs/introduction#what-is-headless-ui) 提供的灵活性。
+将所有这些变化整合到单个组件中是没有意义的。这样做会失去 [headless UI](https://tanstack.com/table/latest/docs/overview#what-is-headless-ui) 所提供的灵活性。
 
 所以，与其提供一个数据表组件，我认为提供一个如何构建自己的数据表的指南更加有帮助。
 
@@ -35,14 +35,15 @@ links:
 
 本指南将向你展示如何使用 [TanStack Table](https://tanstack.com/table) 和 `<Table />` 组件来构建你自己的定制数据表。我们将涵盖以下主题：
 
+- [设置表格功能](#set-up-table-features)
 - [基础表格](#basic-table)
 - [行操作](#row-actions)
 - [分页](#pagination)
 - [排序](#sorting)
 - [筛选](#filtering)
-- [显示与隐藏](#visibility)
+- [可见性](#visibility)
 - [行选择](#row-selection)
-- [复用组件](#reusable-components)
+- [可复用组件](#reusable-components)
 
 ## 安装
 
@@ -52,7 +53,7 @@ links:
 npx shadcn@latest add table
 ```
 
-2. 添加 `tanstack/react-table` 依赖：
+2. 添加 `@tanstack/react-table` 依赖。本指南使用 **TanStack Table v9**：
 
 ```bash
 npm install @tanstack/react-table
@@ -95,6 +96,7 @@ export const payments: Payment[] = [
 app
 └── payments
     ├── columns.tsx
+    ├── data-table-features.ts
     ├── data-table.tsx
     └── page.tsx
 ```
@@ -102,8 +104,55 @@ app
 这里我使用了 Next.js 示例，但它也适用于其他任何 React 框架。
 
 - `columns.tsx`（客户端组件）将包含我们的列定义。
+- `data-table-features.ts` 将包含共享的 `features` 对象，用于告知 TanStack Table 启用哪些行为。
 - `data-table.tsx`（客户端组件）将包含我们的 `<DataTable />` 组件。
-- `page.tsx`（服务器端组件）用于获取数据并渲染表格。
+- `page.tsx`（服务器组件）是我们获取数据并渲染表格的地方。
+
+## 设置表格功能
+
+TanStack Table v9 基于功能构建：通过使用 `tableFeatures()` 声明所需的行为——排序、过滤、分页等——即可选择启用。未列出的任何内容都会从你的构建包中进行 tree-shaking。这也包括内置的过滤和排序函数：在 `filterFns` 和 `sortFns` 下注册你的列所依赖的函数（我们的电子邮件过滤器使用 `includesString`，字符串列使用 `text`／`alphanumeric` 进行排序）。
+
+```tsx showLineNumbers title="app/payments/data-table-features.ts"
+import {
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  createFilteredRowModel,
+  createPaginatedRowModel,
+  createSortedRowModel,
+  filterFn_includesString,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  sortFn_alphanumeric,
+  sortFn_text,
+  tableFeatures,
+} from "@tanstack/react-table"
+
+// New in v9: declare the features this table uses — anything you don't
+// register is tree-shaken out of the bundle.
+export const features = tableFeatures({
+  columnFilteringFeature,
+  columnVisibilityFeature,
+  rowPaginationFeature,
+  rowSelectionFeature,
+  rowSortingFeature,
+  filteredRowModel: createFilteredRowModel(),
+  paginatedRowModel: createPaginatedRowModel(),
+  sortedRowModel: createSortedRowModel(),
+  filterFns: { includesString: filterFn_includesString },
+  sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
+})
+
+// Pass this as the first generic argument to `ColumnDef`, `Column`, `Table`,
+// and `Row` so each type knows which feature APIs are available.
+export type DataTableFeatures = typeof features
+```
+
+<Callout className="mt-4">
+
+**注意：**核心行模型始终包含在内，因此你无需自行注册。可选功能的行模型通过 `create*RowModel()` 创建，并在功能对象上注册——不再有 `get*RowModel` 表格选项。
+
+</Callout>
 
 ## 基础表格
 
@@ -115,10 +164,12 @@ app
 
 首先，定义我们的列。
 
-```tsx showLineNumbers title="app/payments/columns.tsx" {3,14-27}
+```tsx showLineNumbers title="app/payments/columns.tsx" {3,5,16-17,19-29}
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
+import { createColumnHelper } from "@tanstack/react-table"
+
+import { type DataTableFeatures } from "./data-table-features"
 
 // 这个类型用于定义数据的形状。
 // 如果需要，你也可以使用 Zod schema。
@@ -129,20 +180,20 @@ export type Payment = {
   email: string
 }
 
-export const columns: ColumnDef<Payment>[] = [
-  {
-    accessorKey: "status",
-    header: "状态",
-  },
-  {
-    accessorKey: "email",
-    header: "邮箱",
-  },
-  {
-    accessorKey: "amount",
-    header: "金额",
-  },
-]
+// Use `accessor` for data columns and `display` for columns without one.
+const columnHelper = createColumnHelper<DataTableFeatures, Payment>()
+
+export const columns = columnHelper.columns([
+  columnHelper.accessor("status", {
+    header: "Status",
+  }),
+  columnHelper.accessor("email", {
+    header: "Email",
+  }),
+  columnHelper.accessor("amount", {
+    header: "Amount",
+  }),
+])
 ```
 
 <Callout className="mt-4">
@@ -158,12 +209,7 @@ export const columns: ColumnDef<Payment>[] = [
 ```tsx showLineNumbers title="app/payments/data-table.tsx"
 "use client"
 
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
+import { useTable, type ColumnDef, type RowData } from "@tanstack/react-table"
 
 import {
   Table,
@@ -174,19 +220,21 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+import { features, type DataTableFeatures } from "./data-table-features"
+
+interface DataTableProps<TData extends RowData> {
+  columns: ColumnDef<DataTableFeatures, TData>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
-  const table = useReactTable({
+}: DataTableProps<TData>) {
+  const table = useTable({
+    features,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
   })
 
   return (
@@ -198,12 +246,9 @@ export function DataTable<TData, TValue>({
               {headerGroup.headers.map((header) => {
                 return (
                   <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                    {header.isPlaceholder ? null : (
+                      <table.FlexRender header={header} />
+                    )}
                   </TableHead>
                 )
               })}
@@ -219,7 +264,7 @@ export function DataTable<TData, TValue>({
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    <table.FlexRender cell={cell} />
                   </TableCell>
                 ))}
               </TableRow>
@@ -243,6 +288,12 @@ export function DataTable<TData, TValue>({
 **提示**：如果你发现自己在多个地方使用 `<DataTable />`，这就是你可以提取到 `components/ui/data-table.tsx` 以实现复用的组件。
 
 `<DataTable columns={columns} data={data} />`
+
+</Callout>
+
+<Callout className="mt-4">
+
+**`<table.FlexRender />` 与 `flexRender`：** 本指南使用 v9 的 `<table.FlexRender header={header} />` 和 `<table.FlexRender cell={cell} />` 组件，它们可以直接在表格实例上使用——无需额外导入。如果你更喜欢函数形式，或者需要在拥有 `table` 的组件之外进行渲染，也可以继续使用 v8 中经典的 `flexRender(component, context)` 辅助函数，在这种情况下你还可以导入独立的 `<FlexRender />`。
 
 </Callout>
 
@@ -290,11 +341,10 @@ export default async function DemoPage() {
 
 更新金额的 `header` 和 `cell` 定义：
 
-```tsx showLineNumbers title="app/payments/columns.tsx" {4-15}
-export const columns: ColumnDef<Payment>[] = [
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">金额</div>,
+```tsx showLineNumbers title="app/payments/columns.tsx" {3-13}
+export const columns = columnHelper.columns([
+  columnHelper.accessor("amount", {
+    header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("amount"))
       const formatted = new Intl.NumberFormat("en-US", {
@@ -304,8 +354,8 @@ export const columns: ColumnDef<Payment>[] = [
 
       return <div className="text-right font-medium">{formatted}</div>
     },
-  },
-]
+  }),
+])
 ```
 
 你也可以用同样的方法格式化其他单元格和表头。
@@ -325,7 +375,7 @@ export const columns: ColumnDef<Payment>[] = [
 ```tsx showLineNumbers title="app/payments/columns.tsx" {4,6-14,18-45}
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
+import { createColumnHelper } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -338,20 +388,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns = columnHelper.columns([
   // ...
-  {
+  columnHelper.display({
     id: "actions",
     cell: ({ row }) => {
       const payment = row.original
 
       return (
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">打开菜单</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
+          <DropdownMenuTrigger
+            render={<Button variant="ghost" className="h-8 w-8 p-0" />}
+          >
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal className="h-4 w-4" />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>操作</DropdownMenuLabel>
@@ -367,9 +417,9 @@ export const columns: ColumnDef<Payment>[] = [
         </DropdownMenu>
       )
     },
-  },
+  }),
   // ...
-]
+])
 ```
 
 你可以在 `cell` 函数中通过 `row.original` 访问行数据。使用这些数据处理你的行操作，例如利用 `id` 发起 API 删除请求。
@@ -382,50 +432,25 @@ export const columns: ColumnDef<Payment>[] = [
 
 <Steps className="mb-0 pt-2">
 
-### 更新 `<DataTable>`
+### 分页已启用
 
-```tsx showLineNumbers title="app/payments/data-table.tsx" {5,17}
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
-
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-  })
-
-  // ...
-}
-```
-
-这将自动将行分页，每页显示 10 条数据。有关自定义分页大小和手动分页的更多信息，请参阅 [分页文档](https://tanstack.com/table/v8/docs/api/features/pagination)。
+由于我们的 features 对象包含 `rowPaginationFeature` 和 `createPaginatedRowModel()`，表格会自动将行分页为每页 10 行——无需向 `useTable` 添加任何内容。有关自定义页面大小和实现手动分页的更多信息，请参阅[分页文档](https://tanstack.com/table/latest/docs/framework/react/guide/pagination)。
 
 ### 添加分页控件
 
 我们可以使用 `<Button />` 组件以及 `table.previousPage()` 和 `table.nextPage()` API 方法添加分页控件。
 
-```tsx showLineNumbers title="app/payments/data-table.tsx" {1,15,21-39}
+```tsx showLineNumbers title="app/payments/data-table.tsx" {1,20-37}
 import { Button } from "@/components/ui/button"
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
-  const table = useReactTable({
+}: DataTableProps<TData>) {
+  const table = useTable({
+    features,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   })
 
   return (
@@ -458,7 +483,7 @@ export function DataTable<TData, TValue>({
 }
 ```
 
-关于更高级的分页组件，请参阅 [复用组件](#reusable-components) 部分。
+关于更高级的分页组件，请参阅[复用组件](#reusable-components)部分。
 
 </Steps>
 
@@ -466,37 +491,34 @@ export function DataTable<TData, TValue>({
 
 让我们让邮箱列支持排序。
 
+`rowSortingFeature` 和排序后的行模型已经在我们的 features 对象中注册，因此剩下的工作就是接入排序状态。
+
 <Steps className="mb-0 pt-2">
 
 ### 更新 `<DataTable>`
 
-```tsx showLineNumbers title="app/payments/data-table.tsx" {3,6,10,18,25-29}
+```tsx showLineNumbers title="app/payments/data-table.tsx" {3,8,15,21-24}
 "use client"
 
 import * as React from "react"
 import {
-  ColumnDef,
-  SortingState,
-  flexRender,
-  getCoreRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
+  useTable,
+  type ColumnDef,
+  type RowData,
+  type SortingState,
 } from "@tanstack/react-table"
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
     },
@@ -516,15 +538,14 @@ export function DataTable<TData, TValue>({
 
 我们现在可以更新邮箱列的表头，添加排序控件。
 
-```tsx showLineNumbers title="app/payments/columns.tsx" {4,9-19}
+```tsx showLineNumbers title="app/payments/columns.tsx" {4,8-18}
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
+import { createColumnHelper } from "@tanstack/react-table"
 import { ArrowUpDown } from "lucide-react"
 
-export const columns: ColumnDef<Payment>[] = [
-  {
-    accessorKey: "email",
+export const columns = columnHelper.columns([
+  columnHelper.accessor("email", {
     header: ({ column }) => {
       return (
         <Button
@@ -536,8 +557,8 @@ export const columns: ColumnDef<Payment>[] = [
         </Button>
       )
     },
-  },
-]
+  }),
+])
 ```
 
 用户点击表头时，将自动实现在升序和降序之间切换的排序功能。
@@ -548,47 +569,42 @@ export const columns: ColumnDef<Payment>[] = [
 
 给表格添加一个搜索输入框，筛选邮箱列数据。
 
+`columnFilteringFeature` 和筛选行模型已经是我们 features 对象的一部分，因此我们只需要连接筛选状态并渲染一个输入框。
+
 <Steps className="mb-0 pt-2">
 
 ### 更新 `<DataTable>`
 
-```tsx showLineNumbers title="app/payments/data-table.tsx" {6,10,17,24-26,35-36,39,45-54}
+```tsx showLineNumbers title="app/payments/data-table.tsx" {7,13,20-22,29,32,38-46}
 "use client"
 
 import * as React from "react"
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
+  useTable,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type RowData,
+  type SortingState,
 } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data,
     columns,
     onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
       columnFilters,
@@ -615,7 +631,7 @@ export function DataTable<TData, TValue>({
 }
 ```
 
-筛选功能现在已针对 `email` 列启用。你也可以为其他列添加筛选。更多自定义筛选的信息请参考[筛选文档](https://tanstack.com/table/v8/docs/guide/filters)。
+现在已为 `email` 列启用筛选功能。你也可以为其他列添加筛选器。有关如何自定义筛选器的更多信息，请参阅[筛选文档](https://tanstack.com/table/latest/docs/framework/react/guide/column-filtering)。
 
 </Steps>
 
@@ -627,21 +643,17 @@ export function DataTable<TData, TValue>({
 
 ### 更新 `<DataTable>`
 
-```tsx showLineNumbers title="app/payments/data-table.tsx" {8,18-23,33-34,45,49,64-91}
+```tsx showLineNumbers title="app/payments/data-table.tsx" {8,14-19,29-30,38,42,57-84}
 "use client"
 
 import * as React from "react"
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
+  useTable,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type ColumnVisibilityState,
+  type RowData,
+  type SortingState,
 } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
@@ -652,26 +664,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<ColumnVisibilityState>({})
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
@@ -692,10 +701,8 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              列
-            </Button>
+          <DropdownMenuTrigger render={<Button variant="outline" className="ml-auto" />}>
+            Columns
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {table
@@ -740,22 +747,22 @@ export function DataTable<TData, TValue>({
 
 ### 更新列定义
 
-```tsx showLineNumbers title="app/payments/columns.tsx" {6,9-27}
+```tsx showLineNumbers title="app/payments/columns.tsx" {6,9-30}
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
+import { createColumnHelper } from "@tanstack/react-table"
 
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
-export const columns: ColumnDef<Payment>[] = [
-  {
+export const columns = columnHelper.columns([
+  columnHelper.display({
     id: "select",
     header: ({ table }) => (
       <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
+        checked={table.getIsAllPageRowsSelected()}
+        indeterminate={
+          table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected()
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="全选"
@@ -770,34 +777,31 @@ export const columns: ColumnDef<Payment>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-  },
-]
+  }),
+])
 ```
 
 ### 更新 `<DataTable>`
 
-```tsx showLineNumbers title="app/payments/data-table.tsx" {11,23,28}
-export function DataTable<TData, TValue>({
+```tsx showLineNumbers title="app/payments/data-table.tsx" {11,20,25}
+export function DataTable<TData extends RowData>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TData>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+    React.useState<ColumnVisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
 
-  const table = useReactTable({
+  const table = useTable({
+    features,
     data,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     state: {
@@ -835,7 +839,7 @@ export function DataTable<TData, TValue>({
 
 ## 复用组件
 
-以下是一些可用于构建数据表的组件，来自 [Tasks](/examples/tasks) 示例。
+以下是一些可用于构建数据表格的组件。它们来自 [Tasks](/examples/tasks) 演示，该演示通过 `data-table-features.ts` 模块，在每个组件之间共享其 features 对象（以及匹配的 `TasksTableFeatures` 类型）——这与我们在[设置表格功能](#set-up-table-features)中采用的模式相同。
 
 ### 列表头
 
@@ -846,20 +850,19 @@ export function DataTable<TData, TValue>({
   title="components/data-table-column-header.tsx"
 />
 
-```tsx showLineNumbers {5}
-export const columns = [
-  {
-    accessorKey: "email",
+```tsx showLineNumbers {4}
+export const columns = columnHelper.columns([
+  columnHelper.accessor("email", {
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="邮箱" />
     ),
-  },
-]
+  }),
+])
 ```
 
 ### 分页
 
-为你的表格添加分页控件，包括页大小和选择计数。
+为你的表格添加分页控件，包括页面大小和选择计数。
 
 <ComponentSource
   src="/app/(app)/examples/tasks/components/data-table-pagination.tsx"

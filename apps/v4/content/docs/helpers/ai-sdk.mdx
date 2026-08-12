@@ -9,8 +9,9 @@ description: 创建 AI SDK 消息，并通过 useChat 流式传输预定义对�
 由于对话通过真实的 `useChat` 生命周期进行流式传输，你的组件行为
 会与生产环境中的表现完全一致。
 
-它支持 AI SDK 支持的所有部分类型：推理、工具、数据、文件、
-来源和自定义部分。
+它支持 AI SDK 支持的所有 part 类型：reasoning、tools、data、files、
+sources 和 custom parts。Tool calls 还可以暂停以等待真实的用户输入，
+包括 approvals。请参阅[Human in the Loop](#human-in-the-loop)。
 
 ```ts showLineNumbers
 import { createChat } from "@shadcn/helpers/ai-sdk"
@@ -310,9 +311,11 @@ writer.tool("getWeather", {
 })
 ```
 
-将工具定义传递给 `createChat`，即可为工具名称、输入和输出指定类型。
+将消息类型传递给 `createChat`，即可为工具名称、输入和输出指定类型。它接受与 `useChat` 相同的类型参数。
 
 ```ts
+import type { UIMessage } from "ai"
+
 type Tools = {
   getWeather: {
     input: { city: string }
@@ -320,10 +323,142 @@ type Tools = {
   }
 }
 
-type DataParts = Record<string, never>
+type ChatMessage = UIMessage<unknown, Record<string, never>, Tools>
 
-const chat = createChat<unknown, DataParts, Tools>()
+const chat = createChat<ChatMessage>()
 ```
+
+定义一次消息类型，然后将其同时用于 `createChat` 和 `useChat`。
+
+```ts
+const { messages } = useChat<ChatMessage>({
+  messages: chat.get(0),
+  transport: chat.transport(),
+})
+```
+
+工具调用也可以等待用户，而不是在脚本中完成。
+请参阅[人在回路中](#human-in-the-loop)。
+
+---
+
+## 人在回路中
+
+工具调用可以暂停并将控制权交给真正的用户。该辅助工具支持
+AI SDK 的两种人在回路中流程：由客户端执行的工具，此时用户
+提供输出；以及审批门控工具，此时用户先批准或拒绝，然后才会流式传输脚本化输出。
+
+### 暂停工具调用
+
+让工具调用保持未解决状态即可暂停回合。输入会进行流式传输，回合
+结束，而该部分会保持在 `input-available` 状态，直到客户端通过 `addToolOutput`
+提供其输出。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.text("Answer these and I'll tailor the prototype.")
+  writer.tool("askQuestions", { input: { questions } })
+})
+```
+
+### 要求审批
+
+传入 `needsApproval: true`，即可在用户作出决定前暂停。此时 `output`
+表示“在批准后流式传输此内容”，而不是“立即解决”。拒绝会自动流式传输
+`tool-output-denied`，而带有 `needsApproval` 的 `errorText` 会编排一个
+在获批后失败的工具。
+
+```ts
+chat.assistant(({ writer }) => {
+  writer.text("That will archive 3 drafts. I need your approval.")
+  writer.tool("archiveDrafts", {
+    input: { count: 3 },
+    needsApproval: true,
+    output: { archived: 3 },
+  })
+})
+```
+
+对 `needsApproval` 调用的句柄调用 `output()`、`error()` 或 `denied()` 会
+抛出异常。用户的决定会解决该调用。
+
+### 继续流程
+
+紧接在暂停回合之后编排的回调回合会成为继续流程。它不会在构建脚本时
+实例化，而是在后续请求到达时运行，其上下文包含 `toolCall`：暂停的调用
+以及用户所执行的操作。
+
+```ts
+chat
+  .assistant(({ writer }) => {
+    writer.tool("askQuestions", { input: { questions } })
+  })
+  .assistant(({ writer, toolCall }) => {
+    writer.text(
+      toolCall?.name === "askQuestions" && toolCall.output
+        ? `Starting with ${toolCall.output.answers.direction}.`
+        : "Starting now."
+    )
+  })
+```
+
+对于由客户端执行的工具，`toolCall.output` 是用户提交的输出。对于审批，
+`toolCall.approved` 和 `toolCall.denied` 携带决定，并且脚本化输出会在回调内容
+之前进行流式传输。
+
+| 属性         | 描述                                                         |
+| ------------ | ------------------------------------------------------------ |
+| `name`       | 工具名称。比较它可以缩小 `input` 和 `output` 的范围。        |
+| `toolCallId` | 暂停调用的 ID。                                              |
+| `input`      | 工具输入。                                                    |
+| `output`     | 用户提交的输出，或审批后的门控输出。                         |
+| `approved`   | 用户批准时为 `true`。仅适用于审批调用。                      |
+| `denied`     | 用户拒绝时为 `true`。仅适用于审批调用。                      |
+
+继续流程的上下文还包含 `messages`，即实时记录；以及 `toolCalls`，即当一个回合
+包含多个暂停调用时的所有暂停调用。
+
+继续流程必须保持纯粹。重新生成时会根据当前记录重新解决它们，因此决定发生变化时
+会产生另一条分支。
+
+### 客户端连接
+
+客户端使用原样的 AI SDK。使用 `addToolOutput` 提交由客户端执行的工具的输出，
+使用 `addToolApprovalResponse` 回答审批，并让 `sendAutomaticallyWhen` 发送后续请求。
+
+```tsx
+import {
+  lastAssistantMessageIsCompleteWithApprovalResponses,
+  lastAssistantMessageIsCompleteWithToolCalls,
+} from "ai"
+
+const { messages, addToolOutput, addToolApprovalResponse } = useChat({
+  messages: chat.get(0),
+  transport: chat.transport(),
+  sendAutomaticallyWhen: (options) =>
+    lastAssistantMessageIsCompleteWithToolCalls(options) ||
+    lastAssistantMessageIsCompleteWithApprovalResponses(options),
+})
+```
+
+```tsx
+// In a pending tool part renderer.
+addToolOutput({
+  tool: "askQuestions",
+  toolCallId: part.toolCallId,
+  output: { answers },
+})
+
+// In an approval-requested part renderer.
+addToolApprovalResponse({ id: part.approval.id, approved: true })
+```
+
+继续流程会作为暂停的助手消息的新步骤进行流式传输。客户端会将其各部分合并到
+该消息中，而不是添加新消息；辅助工具会发出步骤边界，并省略继续流程的消息 ID，
+从而保持合并位置不变，并避免自动发送再次触发。
+
+在开发环境中，当 `needsApproval` 调用之后没有继续回合，以及当继续流程在没有
+待处理工具调用的情况下完成解决时，辅助工具会发出警告。
 
 ---
 
@@ -341,13 +476,15 @@ type DataParts = {
   }
 }
 
-const chat = createChat<unknown, DataParts>().assistant(({ writer }) => {
-  writer.data({
-    type: "data-weather",
-    id: "weather-sf",
-    data: { city: "San Francisco", status: "loading" },
-  })
-})
+const chat = createChat<UIMessage<unknown, DataParts>>().assistant(
+  ({ writer }) => {
+    writer.data({
+      type: "data-weather",
+      id: "weather-sf",
+      data: { city: "San Francisco", status: "loading" },
+    })
+  }
+)
 ```
 
 再次发送相同的 `type` 和 `id`，即可就地更新该部分。这对于从加载到成功等状态转换非常有用。
@@ -481,7 +618,7 @@ chat.get(2) // 前两条消息。
 chat.get(0) // 空的初始对话。
 ```
 
-`get()` 返回消息的克隆副本，不会更改聊天内容。
+`get()` 返回克隆的消息，不会更改对话。它会在第一个[继续轮次](#continuations)之前停止，因为没有实时记录的继续轮次不包含消息，并且当 `count` 超出范围时抛出错误。
 
 使用 `next()` 在已显示的消息之后查找下一条预定义的用户消息。
 
@@ -527,7 +664,7 @@ const { messages, sendMessage } = useChat({
 })
 ```
 
-当运行 `sendMessage()` 时，传输会查找当前对话记录之后的 assistant 消息，并通过标准的 AI SDK 聊天生命周期对其进行流式传输。它会优先使用消息 ID，如果找不到，则会匹配最新消息的角色和文本。
+当 `sendMessage()` 运行时，传输会查找当前对话记录之后的 assistant 消息，并通过标准的 AI SDK chat 生命周期对其进行流式传输。它会优先使用消息 ID，并在找不到时回退到匹配最新消息的角色和文本。在工具结果和审批响应之后自动发送时，会解析下一个[延续](#continuations)；只有重新生成会通过消息 ID 重放某个轮次。
 
 ### 选项
 
@@ -634,7 +771,7 @@ type Metadata = {
   model: string
 }
 
-const chat = createChat<Metadata>()
+const chat = createChat<UIMessage<Metadata>>()
   .user("Hello", { metadata: { model: "demo" } })
   .assistant("Hi.", {
     id: "assistant-welcome",
@@ -664,32 +801,32 @@ const chat = createChat({
 创建一个类型化会话，并返回流式聊天接口。
 
 ```ts
-function createChat<
-  METADATA = unknown,
-  DATA_PARTS extends UIDataTypes = UIDataTypes,
-  TOOLS extends UITools = UITools,
->(
-  options?: CreateChatOptions<METADATA, DATA_PARTS, TOOLS>
-): AiSdkChat<METADATA, DATA_PARTS, TOOLS>
+function createChat<UI_MESSAGE extends UIMessage = UIMessage>(
+  options?: CreateChatOptions<UI_MESSAGE>
+): AiSdkChat<UI_MESSAGE>
 ```
 
 #### 类型参数
 
-| 参数         | 描述                                                   |
-| ------------ | ------------------------------------------------------ |
-| `METADATA`   | 存储在每条 `UIMessage` 上的元数据结构。                |
-| `DATA_PARTS` | 用于类型化 `data-*` 部分的名称到负载的映射。           |
-| `TOOLS`      | 工具名称到其 `input` 和 `output` 结构的映射。          |
+| 参数         | 描述                                                                                                           |
+| ------------ | -------------------------------------------------------------------------------------------------------------- |
+| `UI_MESSAGE` | 会话的 `UIMessage` 类型，与 `useChat` 接受的类型参数相同。定义一次并共享。 |
+
+消息类型包含元数据结构、类型化的 `data-*` 部分以及工具定义。
+
+```ts
+type ChatMessage = UIMessage<Metadata, DataParts, Tools>
+```
 
 #### 选项
 
-| 选项              | 类型                                       | 默认值                       | 描述                                                   |
-| ----------------- | ------------------------------------------ | ---------------------------- | ------------------------------------------------------ |
-| `messages`        | `UIMessage<METADATA, DATA_PARTS, TOOLS>[]` | `[]`                         | 从现有会话记录开始。消息会被克隆。                     |
-| `messageIdPrefix` | `string`                                   | `"msg"`                      | 生成的消息 ID 的前缀。                                  |
-| `toolCallIdPrefix` | `string`                                  | `"call"`                     | 生成的工具调用 ID 的前缀。                              |
-| `sourceIdPrefix`  | `string`                                   | `"source"`                   | 生成的来源 ID 的前缀。                                  |
-| `now`             | `Date \| string`                           | `"2026-01-01T00:00:00.000Z"` | 用于生成 `createdAt` 元数据的固定时间。                 |
+| 选项               | 类型             | 默认值                       | 描述                                                  |
+| ------------------ | ---------------- | ---------------------------- | ----------------------------------------------------- |
+| `messages`         | `UIMessage[]`    | `[]`                         | 从现有会话记录开始。消息会被克隆。                    |
+| `messageIdPrefix`  | `string`         | `"msg"`                      | 生成的消息 ID 的前缀。                                 |
+| `toolCallIdPrefix` | `string`         | `"call"`                     | 生成的工具调用 ID 的前缀。                            |
+| `sourceIdPrefix`   | `string`         | `"source"`                   | 生成的来源 ID 的前缀。                                |
+| `now`              | `Date \| string` | `"2026-01-01T00:00:00.000Z"` | 用于生成 `createdAt` 元数据的固定时间。               |
 
 `messages` 中已有的 ID 会被保留，因此新生成的 ID 会从现有会话记录之后继续生成。
 
@@ -733,11 +870,11 @@ type FilePayload = {
 
 #### `assistant()` 输入
 
-| 输入                   | 结果                                                        |
-| ---------------------- | ----------------------------------------------------------- |
-| `string`               | 一个按单词逐个流式传输的文本部件。                           |
-| `UIMessagePart[]`       | 按其现有顺序流式传输的静态 AI SDK 部件。                     |
-| `({ writer }) => void` | 用于编写部件、工具、错误和时间安排脚本的同步回调。            |
+| 输入                   | 结果                                                                                                                                                                                       |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `string`               | 一个逐词流式传输的文本部件。                                                                                                                                                     |
+| `UIMessagePart[]`      | 按现有顺序流式传输的静态 AI SDK 部件。                                                                                                                                     |
+| `({ writer }) => void` | 用于编写部件、工具、错误和计时脚本的同步回调。暂停的轮次结束后，它会变为一个[延续](#continuations)，并接收 `toolCall`、`toolCalls` 和 `messages`。 |
 
 #### `assistant()` 选项
 
@@ -789,20 +926,22 @@ writer 可在 `assistant(({ writer }) => {})` 和回退回调中使用。
 
 #### 工具选项
 
-| 选项               | 类型                      | 描述                                               |
-| ------------------ | ------------------------- | -------------------------------------------------- |
-| `toolCallId`       | `string`                  | 使用特定的工具调用 ID。                            |
-| `title`            | `string`                  | 为工具部分添加显示标题。                           |
-| `toolMetadata`     | `Record<string, unknown>` | 添加提供商或应用程序元数据。                       |
-| `providerExecuted` | `boolean`                 | 标记该调用已由提供商执行。                         |
-| `input`            | `TOOLS[NAME]["input"]`    | 设置类型化工具输入。                               |
-| `output`           | `TOOLS[NAME]["output"]`   | 立即以类型化输出结束。                             |
-| `errorText`        | `string`                  | 立即以错误结束。                                   |
-| `dynamic`          | `boolean`                 | 发出 `dynamic-tool` 部分，而不是 `tool-<name>`。   |
+| 选项               | 类型                      | 描述                                                                                     |
+| ------------------ | ------------------------- | ---------------------------------------------------------------------------------------- |
+| `toolCallId`       | `string`                  | 使用特定的工具调用 ID。                                                                  |
+| `title`            | `string`                  | 为工具部分添加显示标题。                                                                |
+| `toolMetadata`     | `Record<string, unknown>` | 添加提供商或应用程序元数据。                                                            |
+| `providerExecuted` | `boolean`                 | 将调用标记为由提供商执行。                                                              |
+| `input`            | `TOOLS[NAME]["input"]`    | 设置类型化工具输入。                                                                    |
+| `output`           | `TOOLS[NAME]["output"]`   | 立即以类型化输出结束。使用 `needsApproval` 时，则在获得批准后再流式传输。               |
+| `errorText`        | `string`                  | 立即以错误结束。使用 `needsApproval` 时，则在获得批准后再流式传输。                     |
+| `dynamic`          | `boolean`                 | 发出 `dynamic-tool` 部分，而不是 `tool-<name>`。                                        |
+| `needsApproval`    | `boolean`                 | 根据用户的决定暂停此轮操作。请参阅[人在回路中](#human-in-the-loop)。                    |
+| `approvalId`       | `string`                  | 使用特定的批准 ID。                                                                      |
 
 `tool()` 返回一个包含 `sleep(delayMs)`、`output(value)`、
 `error(errorText?)` 和 `denied()` 的句柄。当工具生命周期需要在其输入和结果之间
-产生事件时，请使用此句柄。不带消息调用 `tool.error()` 时，使用 `"Tool call failed."`。
+插入事件时，请使用此句柄。在 `needsApproval` 调用中调用句柄的解析方法会抛出异常。
 
 #### 数据输入
 

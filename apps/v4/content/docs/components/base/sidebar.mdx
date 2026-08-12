@@ -155,7 +155,7 @@ SidebarProvider
   height="420"
   alt="侧边栏结构"
   className="mt-6 hidden w-full overflow-hidden rounded-2xl border dark:block"
-/>
+/>。
 
 ## SidebarProvider
 
@@ -272,13 +272,11 @@ export function AppSidebar() {
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton>
-              选择工作区
-              <ChevronDown className="ml-auto" />
-            </SidebarMenuButton>
+          <DropdownMenuTrigger render={<SidebarMenuButton />}>
+            选择工作区
+            <ChevronDown className="ml-auto" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
+          <DropdownMenuContent>
             <DropdownMenuItem>
               <span>Acme Inc</span>
             </DropdownMenuItem>
@@ -342,11 +340,9 @@ export function AppSidebar() {
 ```tsx showLineNumbers
 <Collapsible defaultOpen className="group/collapsible">
   <SidebarGroup>
-    <SidebarGroupLabel asChild>
-      <CollapsibleTrigger>
-        帮助
-        <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-      </CollapsibleTrigger>
+    <SidebarGroupLabel render={<CollapsibleTrigger />}>
+      Help
+      <ChevronDown className="ml-auto transition-transform group-data-open/collapsible:rotate-180" />
     </SidebarGroupLabel>
     <CollapsibleContent>
       <SidebarGroupContent />
@@ -378,11 +374,9 @@ export function AppSidebar() {
 <SidebarMenu>
   {projects.map((project) => (
     <SidebarMenuItem key={project.name}>
-      <SidebarMenuButton asChild>
-        <a href={project.url}>
-          <project.icon />
-          <span>{project.name}</span>
-        </a>
+      <SidebarMenuButton render={<a href={project.url} />}>
+        <project.icon />
+        <span>{project.name}</span>
       </SidebarMenuButton>
     </SidebarMenuItem>
   ))}
@@ -393,13 +387,13 @@ export function AppSidebar() {
 
 `SidebarMenuButton` 组件用于在 `SidebarMenuItem` 内渲染菜单按钮。
 
-默认情况下，`SidebarMenuButton` 渲染为按钮，但你可以通过 `asChild` 属性来渲染为其他组件，比如 `Link` 或 `a` 标签。
+默认情况下，`SidebarMenuButton` 会渲染一个按钮，但你可以使用 `render` 属性来渲染其他组件，例如 `Link` 或 `a` 标签。
 
 使用 `isActive` 属性标记菜单项为激活状态。
 
 ```tsx showLineNumbers
-<SidebarMenuButton asChild isActive>
-  <a href="#">首页</a>
+<SidebarMenuButton render={<a href="#" />} isActive>
+  Home
 </SidebarMenuButton>
 ```
 
@@ -409,11 +403,9 @@ export function AppSidebar() {
 
 ```tsx showLineNumbers
 <SidebarMenuItem>
-  <SidebarMenuButton asChild>
-    <a href="#">
-      <Home />
-      <span>首页</span>
-    </a>
+  <SidebarMenuButton render={<a href="#" />}>
+    <Home />
+    <span>Home</span>
   </SidebarMenuButton>
   <SidebarMenuAction>
     <Plus /> <span className="sr-only">添加项目</span>
