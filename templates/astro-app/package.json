@@ -16,7 +16,7 @@
     "typecheck": "astro check"
   },
   "dependencies": {
-    "@astrojs/react": "^5",
+    "@astrojs/react": "^7",
     "@tailwindcss/vite": "^4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
