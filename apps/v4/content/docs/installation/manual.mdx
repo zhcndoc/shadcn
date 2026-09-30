@@ -198,7 +198,7 @@ npm install shadcn class-variance-authority cn lucide-react tw-animate-css
 
 ### 添加 cn 辅助函数
 
-Components import `cn` directly from the `cn` package. Re-export it from `lib/utils.ts` so your own code has a single place to import helpers from.
+组件会直接从 `cn` 软件包导入 `cn`。你可以在 `lib/utils.ts` 中重新导出它，为自己的代码保留统一的辅助函数导入入口。
 
 ```ts showLineNumbers title="lib/utils.ts"
 export { cn } from "cn"

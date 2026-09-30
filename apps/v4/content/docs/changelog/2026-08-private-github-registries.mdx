@@ -1,33 +1,28 @@
 ---
-title: August 2026 - Private GitHub Registries
-description: Install registry items from private GitHub repositories using the GitHub CLI or a token.
+title: 2026年8月 - GitHub 私有注册表
+description: 使用 GitHub CLI 或令牌，从 GitHub 私有仓库安装注册表项。
 date: 2026-08-24
 ---
 
-**GitHub registries now work with private repositories.**
+**现在，GitHub 注册表已支持私有仓库。**
 
-In June, we made it possible to turn any public GitHub repository into a
-registry. Teams asked for the same thing for their internal code: design
-systems, feature kits, agent rules and conventions that should not be public.
+今年 6 月，我们让任何公共 GitHub 仓库都可以作为注册表。团队希望内部代码也能这样使用，例如不适合公开的设计系统、功能套件、代理规则和项目约定。
 
-You can now install from private repositories. If you can read the repository,
-the CLI can install from it.
+现在，你可以从私有仓库安装内容。只要你有权读取仓库，CLI 就可以从中安装。
 
 ```bash
 npx shadcn@latest add acme/internal-toolkit/auth-kit
 ```
 
-## Zero configuration
+## 零配置
 
-If you are logged in to the GitHub CLI, there is nothing to set up.
+如果你已经登录 GitHub CLI，就不需要额外配置。
 
 ```bash
 gh auth login
 ```
 
-When a repository is not publicly readable, the CLI reads it through `gh` using
-your stored credentials. The token stays inside the GitHub CLI. It never enters
-the shadcn process.
+如果仓库无法公开读取，CLI 会通过 `gh` 使用已保存的凭据读取仓库。令牌保留在 GitHub CLI 内，不会进入 shadcn 进程。
 
 ```txt
 ✔ Using gh credentials.
@@ -36,20 +31,19 @@ the shadcn process.
   - lib/auth.ts
 ```
 
-## CI support
+## CI 支持
 
-Where the GitHub CLI is not installed, set `GH_TOKEN` or `GITHUB_TOKEN`:
+未安装 GitHub CLI 时，请设置 `GH_TOKEN` 或 `GITHUB_TOKEN`：
 
 ```bash
 GH_TOKEN=github_pat_xxx npx shadcn@latest add acme/internal-toolkit/auth-kit
 ```
 
-We recommend a fine-grained personal access token scoped to the repository with
-**Contents: Read-only** access.
+我们建议使用范围限定到该仓库、具有 **Contents: Read-only** 权限的细粒度个人访问令牌。
 
-## Works with every command
+## 支持所有命令
 
-Private repositories work with the same commands as public GitHub registries.
+私有仓库支持与公共 GitHub 注册表相同的命令。
 
 ```bash
 npx shadcn@latest list acme/internal-toolkit
@@ -67,17 +61,11 @@ npx shadcn@latest view acme/internal-toolkit/auth-kit
 npx shadcn@latest registry validate acme/internal-toolkit
 ```
 
-## How it works
+## 工作原理
 
-- Public repositories are read anonymously, exactly as before. No credentials
-  are used and the GitHub CLI is never invoked.
-- The CLI tries anonymous access first and only uses your credentials when the
-  repository is not publicly readable.
-- Private files are read through GitHub's Contents API, pinned to the resolved
-  commit SHA.
-- A token from `GH_TOKEN` is only ever sent to `api.github.com`. Stored GitHub
-  CLI credentials are read by `gh`, not by the CLI.
+- 公共仓库仍与之前一样以匿名方式读取，不使用凭据，也不会调用 GitHub CLI。
+- CLI 会先尝试匿名访问，只有仓库无法公开读取时才会使用你的凭据。
+- 私有文件通过 GitHub Contents API 读取，并固定到已解析出的 commit SHA。
+- `GH_TOKEN` 中的令牌只会发送到 `api.github.com`。已保存的 GitHub CLI 凭据由 `gh` 读取，而不是由 CLI 读取。
 
-See the
-[Private repositories](/docs/registry/github#private-repositories) docs for
-the full guide.
+完整指南请参阅[私有仓库文档](/docs/registry/github#private-repositories)。

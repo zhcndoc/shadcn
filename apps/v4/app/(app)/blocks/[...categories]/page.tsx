@@ -24,7 +24,7 @@ export async function generateMetadata({
   const category = registryCategories.find(({ slug }) => slug === categories[0])
 
   return {
-    title: category ? `${category.name} Blocks` : undefined,
+    title: category ? `${category.name} 区块` : undefined,
     alternates: {
       canonical: `/blocks/${categories.join("/")}`,
     },

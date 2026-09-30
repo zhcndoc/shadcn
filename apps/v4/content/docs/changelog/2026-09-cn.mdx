@@ -1,19 +1,14 @@
 ---
-title: September 2026 - cn
-description: Components now import cn from the cn package. One dependency instead of two, and no local helper to maintain.
+title: 2026年9月 - cn
+description: 组件现在从 cn 软件包导入 cn。依赖项从两个减少为一个，也无需再维护本地辅助函数。
 date: 2026-09-03
 ---
 
-**Every shadcn component now imports `cn` from the `cn` package.**
+**现在，所有 shadcn 组件都会从 `cn` 软件包导入 `cn`。**
 
-For years, every shadcn project started with the same five lines in
-`lib/utils.ts`: import `clsx`, import `twMerge`, wrap one in the other, export
-it as `cn`. It worked, but it meant two dependencies and a helper you had to
-copy into every project and every registry.
+多年来，每个 shadcn 项目都会在 `lib/utils.ts` 中以相同的五行代码开始：导入 `clsx` 和 `twMerge`，将它们组合起来，再导出为 `cn`。这种方式可行，但需要两个依赖项，还得将辅助函数复制到每个项目和每个注册表中。
 
-We have moved that into a package. [`cn`](https://github.com/shadcn-ui/cn) is a
-drop-in replacement for `twMerge(clsx(...))`. It is smaller, faster and ships
-the same API, so nothing changes at the call site.
+我们已将这部分功能移入独立软件包。[`cn`](https://github.com/shadcn-ui/cn) 可直接替代 `twMerge(clsx(...))`。它更小、速度更快，并提供相同的 API，因此调用处无需更改。
 
 ```tsx
 import { cn } from "cn"
@@ -21,33 +16,26 @@ import { cn } from "cn"
 ;<div className={cn("flex items-center", className)} />
 ```
 
-## What changed
+## 变更内容
 
-- Registry components, blocks and examples import `cn` from `cn` instead of
-  `@/lib/utils`.
-- `npx shadcn init` installs `cn` and generates a one-line `lib/utils.ts`.
-- Every registry item that uses `cn` declares it as a dependency, so
-  `npx shadcn add` installs it in projects created before this change.
+- 注册表组件、区块和示例现在从 `cn` 导入 `cn`，而不是从 `@/lib/utils` 导入。
+- `npx shadcn init` 会安装 `cn`，并生成只有一行内容的 `lib/utils.ts`。
+- 每个使用 `cn` 的注册表项都会将其声明为依赖项，因此 `npx shadcn add` 也会在本次变更之前创建的项目中安装它。
 
 ## lib/utils.ts
 
-The `utils` registry item still exists. It now re-exports `cn` so your own code
-keeps working and you still have a single place for project helpers.
+`utils` 注册表项仍然存在。它现在会重新导出 `cn`，让你自己的代码继续正常工作，同时仍为项目辅助函数保留统一入口。
 
 ```ts title="lib/utils.ts"
 export { cn } from "cn"
 ```
 
-## Existing projects
+## 现有项目
 
-Nothing breaks. Your `lib/utils.ts` keeps working and new components install
-`cn` next to it. To move the rest of your project over and drop `clsx` and
-`tailwind-merge`, run the migration:
+现有功能不会受影响。你的 `lib/utils.ts` 会继续工作，新组件会在其旁边安装 `cn`。如需迁移项目的其余部分并移除 `clsx` 和 `tailwind-merge`，请运行以下迁移：
 
 ```bash
 npx shadcn@latest migrate cn
 ```
 
-It rewrites imports, replaces `twMerge(clsx(...))` calls and removes the old
-packages when nothing references them anymore. See the
-[CLI docs](/docs/cli#migrate-cn) for details.
+该迁移会重写导入，将 `twMerge(clsx(...))` 调用替换为 `cn(...)`，并在旧软件包不再被引用时将其移除。详情请参阅 [CLI 文档](/docs/cli#migrate-cn)。

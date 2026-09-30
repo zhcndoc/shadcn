@@ -129,7 +129,8 @@ export function Chat() {
 }
 ```
 
-<h2 id="avoiding-a-flash-on-reload">刷新时避免内容闪动</h2>
+<a id="avoiding-a-flash-on-reload" />
+## 刷新时避免内容闪动
 
 滚动容器总是从顶部打开。HTML 无法设置 `scrollTop`，因此服务端渲染的对话记录最初会显示最早的消息。JavaScript 运行后，`defaultScrollPosition` 会移动视图，用户就会看到跳动。
 

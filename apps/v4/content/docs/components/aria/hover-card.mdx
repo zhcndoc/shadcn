@@ -1,6 +1,6 @@
 ---
-title: Hover Card
-description: A popover that appears on hover, focus, or long press to preview content available behind a link.
+title: 悬停卡片
+description: 悬停、聚焦或长按时显示的弹出层，用于预览链接指向的内容。
 base: aria
 component: true
 links:
@@ -14,13 +14,13 @@ links:
   previewClassName="h-80"
 />
 
-## Installation
+## 安装
 
 <CodeTabs>
 
 <TabsList>
-  <TabsTrigger value="cli">Command</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
+  <TabsTrigger value="cli">命令行</TabsTrigger>
+  <TabsTrigger value="manual">手动安装</TabsTrigger>
 </TabsList>
 <TabsContent value="cli">
 
@@ -34,13 +34,13 @@ npx shadcn@latest add hover-card
 
 <Steps className="mb-0 pt-2">
 
-<Step>Install the following dependencies:</Step>
+<Step>安装以下依赖项：</Step>
 
 ```bash
 npm install react-aria-components
 ```
 
-<Step>Copy and paste the following code into your project.</Step>
+<Step>将以下代码复制并粘贴到项目中。</Step>
 
 <ComponentSource
   name="hover-card"
@@ -48,7 +48,7 @@ npm install react-aria-components
   styleName="aria-nova"
 />
 
-<Step>Update the import paths to match your project setup.</Step>
+<Step>根据项目配置更新导入路径。</Step>
 
 </Steps>
 
@@ -56,7 +56,7 @@ npm install react-aria-components
 
 </CodeTabs>
 
-## Usage
+## 用法
 
 ```tsx showLineNumbers
 import { HoverCard, HoverCardTrigger } from "@/components/ui/hover-card"
@@ -71,9 +71,9 @@ import { HoverCard, HoverCardTrigger } from "@/components/ui/hover-card"
 </HoverCardTrigger>
 ```
 
-## Composition
+## 组合结构
 
-Use the following composition to build a `HoverCard`:
+使用以下组合结构构建 `HoverCard`：
 
 ```text
 HoverCardTrigger
@@ -81,10 +81,9 @@ HoverCardTrigger
 └── HoverCard
 ```
 
-## Trigger Delays
+## 触发延迟
 
-Use `delay` and `closeDelay` on the `HoverCardTrigger` to control when the card
-opens and closes.
+在 `HoverCardTrigger` 上使用 `delay` 和 `closeDelay` 控制卡片的打开与关闭时间。
 
 ```tsx showLineNumbers
 <HoverCardTrigger delay={100} closeDelay={200}>
@@ -93,9 +92,9 @@ opens and closes.
 </HoverCardTrigger>
 ```
 
-## Positioning
+## 位置
 
-Use the `placement` prop on `HoverCard` to control placement.
+使用 `HoverCard` 的 `placement` 属性设置卡片位置。
 
 ```tsx showLineNumbers
 <HoverCardTrigger>
@@ -104,7 +103,7 @@ Use the `placement` prop on `HoverCard` to control placement.
 </HoverCardTrigger>
 ```
 
-## Basic
+## 基础示例
 
 <ComponentPreview
   styleName="aria-nova"
@@ -112,7 +111,7 @@ Use the `placement` prop on `HoverCard` to control placement.
   previewClassName="h-80"
 />
 
-## Sides
+## 方向
 
 <ComponentPreview
   styleName="aria-nova"
@@ -122,7 +121,7 @@ Use the `placement` prop on `HoverCard` to control placement.
 
 ## RTL
 
-To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl).
+如需在 shadcn/ui 中启用 RTL 支持，请参阅 [RTL 配置指南](/docs/rtl)。
 
 <ComponentPreview
   styleName="aria-nova"
@@ -131,6 +130,6 @@ To enable RTL support in shadcn/ui, see the [RTL configuration guide](/docs/rtl)
   previewClassName="h-80"
 />
 
-## API Reference
+## API 参考
 
-See the [React Aria](https://react-aria.adobe.com/PreviewTrigger#api) documentation for more information.
+更多信息请参阅 [React Aria](https://react-aria.adobe.com/PreviewTrigger#api) 文档。

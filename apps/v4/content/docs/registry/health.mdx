@@ -1,175 +1,138 @@
 ---
-title: Registry Health
-description: How public registries are monitored and scored.
+title: 注册表健康状况
+description: 公共注册表的监控方式和评分标准。
 ---
 
-Registries can change or go offline after they are added to the directory.
-Registry Health keeps checking them so users can see whether they are working
-and maintainers can catch problems early.
+注册表加入目录后可能发生变化或离线。注册表健康检查会持续监控，让用户了解注册表是否正常工作，也帮助维护者尽早发现问题。
 
-We check that a registry is online, follows the registry format, and works with
-the `shadcn` CLI. These checks are combined into a status and a score.
+我们会检查注册表是否在线、是否符合注册表格式，以及能否与 `shadcn` CLI 配合使用。检查结果会汇总为状态和评分。
 
-<Callout title="Registry Health is experimental and not live yet.">
-  Scores are collected but do not yet affect registry visibility or ordering.
-  The scoring model and its thresholds may change before launch.
+<Callout title="注册表健康检查仍处于实验阶段，尚未正式启用。">
+  我们会收集评分数据，但目前不会据此影响注册表的可见性或排序。正式上线前，评分模型和阈值可能会调整。
 </Callout>
 
-**Registry Health only applies to registries listed in the shadcn/ui Registry
-Directory.** It does not monitor or affect private registries, registries
-configured directly in your project, or GitHub registries used through
-`owner/repo/item` addresses.
+**注册表健康检查仅适用于 shadcn/ui 注册表目录中的注册表。**它不会监控或影响私有注册表、直接在项目中配置的注册表，或通过 `owner/repo/item` 地址使用的 GitHub 注册表。
 
-Monitoring starts after a registry is published. It does not decide whether a
-registry can be added, and failed checks do not unpublish it. A future version
-of the Registry Directory may hide an unavailable registry from normal
-browsing without removing it from the API.
+注册表发布后才会开始监控。监控不会决定注册表能否加入目录，检查失败也不会导致其被撤下。未来版本的注册表目录可能会在常规浏览中隐藏不可用的注册表，但仍会将它保留在 API 中。
 
-## What we check
+## 检查内容
 
-| Cadence | Check          | What we look for                                            |
+| 频率   | 检查项         | 检查内容                                                    |
 | ------- | -------------- | ----------------------------------------------------------- |
-| Hourly  | Registry index | The index is online, valid, and correctly configured.       |
-| Daily   | Registry items | A rotating sample of items can be downloaded and validated. |
-| Weekly  | CLI            | A rotating item works with `shadcn add --dry-run`.          |
+| 每小时 | 注册表索引     | 索引在线、有效且配置正确。                                  |
+| 每日   | 注册表项       | 轮换抽样的项目可下载并通过验证。                            |
+| 每周   | CLI            | 轮换抽样的项目可通过 `shadcn add --dry-run` 使用。          |
 
-Item checks rotate through the catalog over approximately 30 days. Scheduled
-runs are best-effort, so we use the time of each real observation instead of
-assuming that every scheduled check ran.
+项目检查会在约 30 天内轮流覆盖整个目录。定时任务尽力运行，因此我们使用每次实际观察的时间，而不假定所有计划中的检查都已执行。
 
-## Status
+## 状态
 
-The status tells you how a registry is doing right now:
+状态会显示注册表当前的运行情况：
 
-| Status          | What it means                                                             |
+| 状态            | 含义                                                                      |
 | --------------- | ------------------------------------------------------------------------- |
-| **Observing**   | We are collecting the first 24 index checks over at least 24 hours.       |
-| **Healthy**     | The initial observation period is complete and recent checks are passing. |
-| **Degraded**    | The registry is online, but one or more recent checks are failing.        |
-| **Unavailable** | The registry index has not passed a check for at least 24 hours.          |
+| **Observing**   | 正在至少 24 小时内收集前 24 次索引检查结果。                              |
+| **Healthy**     | 初始观察期已结束，近期检查均已通过。                                      |
+| **Degraded**    | 注册表在线，但近期有一项或多项检查失败。                                  |
+| **Unavailable** | 注册表索引已至少 24 小时未通过检查。                                     |
 
-A registry can become **Unavailable** before the initial observation period is
-complete. We mark a registry as **Degraded** when:
+初始观察期结束前，注册表也可能变为 **Unavailable**。出现以下情况时，我们会将注册表标记为 **Degraded**：
 
-- The index fails three checks in a row.
-- The latest index does not match the registry schema.
-- Fewer than 90% of sampled items pass after at least 10 checks.
-- The two most recent CLI checks fail.
+- 索引连续三次检查失败。
+- 最新索引不符合注册表模式。
+- 至少完成 10 次检查后，抽样项目的通过率仍低于 90%。
+- 最近两次 CLI 检查均失败。
 
-The status can react to a recent problem before the overall score changes much.
-This means a registry can have a high score and still be **Degraded**.
+状态可能会先于总评分对近期问题作出反应。因此，注册表即使评分较高，也可能处于 **Degraded** 状态。
 
-Each status includes a short, human-readable reason. API consumers can use the
-stable `statusReason.code` or display `statusReason.message`. Raw errors from
-the monitor are not published.
+每种状态都会附带一条简短、易读的原因说明。API 使用方可以读取稳定的 `statusReason.code`，也可以显示 `statusReason.message`。监控器的原始错误不会公开。
 
-After an availability failure, a registry needs two successful index and schema
-checks in a row to recover. Other degradations clear when their failing checks
-return to healthy levels.
+可用性检查失败后，注册表需要连续两次通过索引和模式检查才能恢复。其他降级状态会在相应失败检查恢复正常后解除。
 
-## Score
+## 评分
 
-Every registry receives one score out of **100 points**. It is the sum of four
-components. The component values are not separate scores out of 100.
+每个注册表都会获得一个满分为 **100 分**的总评分，由四个部分相加得出。各部分的分值并非各自按 100 分计算。
 
-| Component      | Points | What it measures                                                        |
+| 组成部分       | 分值 | 衡量内容                                                                |
 | -------------- | -----: | ----------------------------------------------------------------------- |
-| Reliability    |     45 | How often the registry index was available over the last 7 and 30 days. |
-| Correctness    |     25 | Whether the index and sampled items match the registry schema.          |
-| Installability |     20 | Whether sampled items work with the `shadcn` CLI.                       |
-| Registry setup |     10 | HTTPS, JSON responses, unique item names, and a matching registry name. |
+| 可靠性         |     45 | 过去 7 天和 30 天内注册表索引的可用情况。                               |
+| 正确性         |     25 | 索引和抽样项目是否符合注册表模式。                                      |
+| 可安装性       |     20 | 抽样项目能否通过 `shadcn` CLI 安装。                                    |
+| 注册表配置     |     10 | HTTPS、JSON 响应、项目名称唯一性以及注册表名称是否匹配。                |
 
-The score is about reliability and compatibility. It is not a measure of
-popularity, code quality, design quality, or how many items a registry contains.
+评分衡量的是可靠性和兼容性，不代表受欢迎程度、代码质量、设计质量或注册表包含的项目数量。
 
-### How the points are calculated
+### 分值计算方式
 
-Recent availability matters more than older availability:
+近期的可用性比更早的记录权重更高：
 
 ```text
 Reliability = 45 * (0.65 * availability7d + 0.35 * availability30d)
 ```
 
-Correctness gives up to 10 points for the index and 15 points for sampled items:
+正确性部分中，索引最多占 10 分，抽样项目最多占 15 分：
 
 ```text
 Correctness = 10 * indexSchemaPassRate30d
             + 15 * sampledItemPassRate30d
 ```
 
-Installability is based on CLI checks:
+可安装性根据 CLI 检查结果计算：
 
 ```text
 Installability = 20 * dryRunPassRate30d
 ```
 
-Registry setup has four checks worth 2.5 points each. If we have not observed a
-setup signal yet, it receives 1.25 points until it can be checked.
+注册表配置部分包含四项检查，每项 2.5 分。如果尚未观察到某项配置信号，在能够检查之前，该项先计 1.25 分。
 
-Each component is rounded to three decimal places. The published score is the
-sum of those rounded values.
+每个组成部分都四舍五入到小数点后三位。公开评分是这些舍入后数值的总和。
 
-## Scores for new registries
+## 新注册表的评分
 
-A new registry does not have enough history for a reliable score. We blend its
-early results with the average across monitored registries. As more checks are
-collected, the registry's own results have more influence.
+新注册表的历史数据不足以支撑可靠评分。我们会将早期结果与所有受监控注册表的平均值进行平滑处理。随着检查数据不断积累，该注册表自身结果所占的比重会逐渐增加。
 
-This prevents one successful check from producing a perfect score and one
-failed check from producing a zero. It also explains why an **Observing**
-registry can already have a score close to the overall average.
+这样可以避免一次成功检查就得到满分，或一次失败检查就得到零分。这也解释了为什么处于 **Observing** 状态的注册表仍可能获得接近总体平均值的评分。
 
-For API consumers, the smoothing formula is:
+供 API 使用方参考的平滑公式为：
 
 ```text
 (successes + globalMean * priorWeight) / (observations + priorWeight)
 ```
 
-The prior weight follows the cadence of each check:
+先验权重根据各项检查的频率设定：
 
-| Signal                | Prior weight |
+| 指标                  | 先验权重     |
 | --------------------- | -----------: |
-| Availability          |           24 |
-| Index schema validity |           12 |
-| Sampled item validity |           10 |
-| CLI checks            |            3 |
+| 可用性                |           24 |
+| 索引模式有效性        |           12 |
+| 抽样项目有效性        |           10 |
+| CLI 检查              |            3 |
 
-When there is not enough registry-wide data to calculate an average, we start
-with an 85% availability prior and a 90% prior for the other measured rates. A
-change to the formula, weights, or thresholds requires a new `scoreVersion`.
+当整个注册表目录的数据不足以计算平均值时，可用性先验值设为 85%，其他测量比率的先验值设为 90%。公式、权重或阈值发生变化时，必须更新 `scoreVersion`。
 
-## Health data in the API
+## API 中的健康数据
 
-`/r/registries.json` adds an optional `health` object to each registry. It
-includes:
+`/r/registries.json` 会为每个注册表添加可选的 `health` 对象，其中包括：
 
-- The current `status` and `statusReason`.
-- The overall `score` and its component `breakdown`.
-- Smoothed `availability7d` and `availability30d` rates from 0 to 1.
-- `firstObservedAt`, `checkedAt`, and `lastSuccessfulCheck` timestamps.
-- `schemaVersion` and `scoreVersion` for integrations.
+- 当前的 `status` 和 `statusReason`。
+- 总评分 `score` 及其组成部分 `breakdown`。
+- 经过平滑处理的 `availability7d` 和 `availability30d` 可用率，取值范围为 0 到 1。
+- `firstObservedAt`、`checkedAt` 和 `lastSuccessfulCheck` 时间戳。
+- 供集成使用的 `schemaVersion` 和 `scoreVersion`。
 
-The object also includes two flags:
+该对象还包含两个标记：
 
-- `monitoringLimited` means the latest registry index request was blocked by a
-  CDN or WAF challenge. Challenge responses do not count as availability or
-  sampled item validation failures.
-- `hidden` becomes `true` after seven continuous days of unavailability.
+- `monitoringLimited` 表示最近一次注册表索引请求受到 CDN 或 WAF 挑战阻拦。挑战响应不会计为可用性或抽样项目验证失败。
+- 连续七天不可用后，`hidden` 会变为 `true`。
 
-The Registry Directory does not currently use the `hidden` flag.
+目前注册表目录不会使用 `hidden` 标记。
 
-## Monitoring limitations
+## 监控限制
 
-All checks come from one hosted runner. Latency is therefore kept as a private
-diagnostic and does not affect the score because some regions would have an
-unfair advantage.
+所有检查都来自同一个托管运行器。因此，延迟只作为内部诊断数据保存，不会影响评分，以免某些地区获得不公平的优势。
 
-CDN and WAF challenges are also handled separately. A challenge tells us that
-our runner could not complete the check, not that the registry is unavailable
-to everyone.
+CDN 和 WAF 挑战也会单独处理。挑战只表示我们的运行器无法完成检查，并不代表该注册表对所有人都不可用。
 
-## What happens next
+## 后续计划
 
-We will collect and review baseline data before using Registry Health in the
-Directory. Ranking, filtering, and health UI will ship separately once the
-monitoring data is reliable.
+在注册表目录使用健康数据之前，我们会先收集并审查基线数据。监控数据达到可靠水平后，排名、筛选和健康状态界面会作为单独更新发布。
