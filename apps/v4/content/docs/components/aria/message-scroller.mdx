@@ -278,6 +278,37 @@ import {
 
 如果你希望从对话开头继续阅读，请使用 `"start"`；如果绝对最新的消息才是合适的落点，请使用 `"end"`。
 
+### 刷新时避免内容闪动
+
+滚动容器总是从顶部打开。HTML 无法设置 `scrollTop`，因此服务端渲染的对话记录最初会显示最早的消息。JavaScript 运行后，`defaultScrollPosition` 会移动视图，用户就会看到跳动。
+
+当 `defaultScrollPosition` 为 `"end"` 或 `"last-anchor"` 时，在目标位置生效前，视口会带有 `data-pending-scroll` 属性。该属性存在期间，带样式的视口会保持隐藏，因此用户看到的是外框，而不会看到跳动。`"start"` 不需要这样处理。
+
+如果希望 `"end"` 位置在首次绘制时就可见，请在视口之后添加内联脚本。为视口设置 `id`，将其滚动到底部，然后移除 `data-pending-scroll`。
+
+```tsx
+const scrollToEndScript = `(function () {
+  var viewport = document.getElementById("messages")
+  if (!viewport) {
+    return
+  }
+  viewport.scrollTop = viewport.scrollHeight
+  viewport.removeAttribute("data-pending-scroll")
+})()`
+
+<MessageScroller>
+  <MessageScrollerViewport id="messages" suppressHydrationWarning>
+    <MessageScrollerContent>{/* transcript */}</MessageScrollerContent>
+  </MessageScrollerViewport>
+  <script dangerouslySetInnerHTML={{ __html: scrollToEndScript }} />
+  <MessageScrollerButton />
+</MessageScroller>
+```
+
+请将脚本放在页面中，而不是滚动器基础组件中。它只适用于 `"end"`，并且要求消息已经存在于 HTML 中。请在视口上添加 `suppressHydrationWarning`。如果使用内容安全策略，请传入 `nonce`。
+
+不要将此脚本用于 `"last-anchor"`。如果消息由客户端加载，也请跳过此脚本。
+
 ### 加载更早的消息
 
 加载更早的消息不应移动读者当前正在查看的对话。当较早的消息行被添加到当前记录上方时，`MessageScrollerViewport` 会保留当前可见的消息行，使读者在历史消息加载到上方时仍停留在原来的位置。

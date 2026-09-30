@@ -1,8 +1,8 @@
 import { type Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { IconArrowRight } from "@tabler/icons-react"
 
+import { siteConfig } from "@/lib/config"
 import { Announcement } from "@/components/announcement"
 import {
   PageActions,
@@ -10,21 +10,43 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-header"
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-luma/ui/button"
 
 import { CardsDemo } from "./cards"
 
 const title = "设计系统的基础"
-const description =
-  "一套精美设计的组件，您可以对其进行自定义、扩展和构建。从这里开始，然后使其成为您自己的。开源，开放代码。"
+const metadataTitle = `${siteConfig.name} - ${title}`
+const description = siteConfig.description
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteConfig.url}/#website`,
+  url: siteConfig.url,
+  name: siteConfig.name,
+  alternateName: ["shadcn", "ui.shadcn.com"],
+  description: siteConfig.description,
+  inLanguage: "zh-CN",
+  sameAs: [siteConfig.links.github, siteConfig.links.twitter],
+}
 
 export const dynamic = "force-static"
 export const revalidate = false
 
 export const metadata: Metadata = {
-  title,
+  title: {
+    absolute: metadataTitle,
+  },
   description,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
+    type: "website",
+    url: siteConfig.url,
+    title: metadataTitle,
+    description,
+    siteName: siteConfig.name,
     images: [
       {
         url: `/og?title=${encodeURIComponent(
@@ -35,6 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    title: metadataTitle,
+    description,
     images: [
       {
         url: `/og?title=${encodeURIComponent(
@@ -48,15 +72,22 @@ export const metadata: Metadata = {
 export default function IndexPage() {
   return (
     <div className="flex flex-1 flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c"),
+        }}
+      />
       <PageHeader className="md:**:[.container]:pb-8 lg:**:[.container]:pb-12">
         <Announcement />
         <PageHeaderHeading className="max-w-4xl">{title}</PageHeaderHeading>
         <PageHeaderDescription>{description}</PageHeaderDescription>
         <PageActions>
-          <Button asChild className="h-[31px] rounded-lg">
-            <Link href="/create?preset=b27GcrRo">
-              自己动手打造 <IconArrowRight data-icon="inline-end" />
-            </Link>
+          <Button asChild className="h-[35px]">
+            <Link href="/docs/installation">开始使用</Link>
+          </Button>
+          <Button asChild variant="secondary">
+            <Link href="/docs/components">查看组件</Link>
           </Button>
         </PageActions>
       </PageHeader>
@@ -67,7 +98,7 @@ export default function IndexPage() {
               src="/images/full-light.png"
               width={2560}
               height={2764}
-              alt="Dashboard"
+              alt="仪表盘"
               className="block h-auto w-full dark:hidden"
               priority
             />
@@ -75,7 +106,7 @@ export default function IndexPage() {
               src="/images/full-dark.png"
               width={2560}
               height={2764}
-              alt="Dashboard"
+              alt="仪表盘"
               className="hidden h-auto w-full dark:block"
               priority
             />

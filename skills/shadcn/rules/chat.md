@@ -189,6 +189,26 @@ spinner。
 - **在流式传输时跟随实时边缘。** 带有 `autoScroll` 的 `MessageScrollerProvider` 会让视图持续固定到新内容上，并在用户向上滚动时立即让出控制权。最后一条消息在流式 token 更新中持续变长时，也会自动跟随。
 - **锚定一轮对话。** `MessageScrollerItem` 上的 `scrollAnchor` 会标记需要保持在视图中的那一行（通常是发起这一轮对话的用户消息）。
 - **跳转到最新内容。** 当用户滚离当前视图时，`MessageScrollerButton` 会出现，并在点击后滚回去。`direction="end"`（默认）或 `direction="start"`。它是一个自主管理的控件，所以不要用你自己的滚动位置状态去控制它的显示。
+- **无闪动地打开已保存的对话记录。** `defaultScrollPosition` 会在挂载后应用。当其值为 `"end"` 或 `"last-anchor"` 时，在目标位置生效前，视口会带有 `data-pending-scroll` 属性，带样式的视口会保持隐藏。如果希望服务端 HTML 中已有的消息在首次绘制时就显示在 `"end"`，请将以下脚本放到页面中，而不是基础组件中。`"last-anchor"` 和客户端获取的消息不适用此方法。请在视口上保留 `suppressHydrationWarning`。如果使用内容安全策略，请传入 `nonce`。
+
+```tsx
+const scrollToEndScript = `(function () {
+  var viewport = document.getElementById("messages")
+  if (!viewport) {
+    return
+  }
+  viewport.scrollTop = viewport.scrollHeight
+  viewport.removeAttribute("data-pending-scroll")
+})()`
+
+<MessageScroller>
+  <MessageScrollerViewport id="messages" suppressHydrationWarning>
+    <MessageScrollerContent>{/* transcript */}</MessageScrollerContent>
+  </MessageScrollerViewport>
+  <script dangerouslySetInnerHTML={{ __html: scrollToEndScript }} />
+  <MessageScrollerButton />
+</MessageScroller>
+```
 
 如果要在模型生成时显示 “thinking…” 指示器，请对文本应用 `shimmer` 工具类。不要自己编写自定义 keyframe 动画。请参见
 [styling.md](./styling.md)。

@@ -407,11 +407,13 @@ npx shadcn@latest migrate [migration]
 
 **可用的迁移**
 
-| 迁移名称  | 描述                           |
-| --------- | ------------------------------ |
-| `icons`   | 将您的 UI 组件迁移到不同的图标库。 |
-| `radix`   | 迁移到 radix-ui。              |
-| `rtl`     | 迁移您的组件以支持 RTL（从右到左）语言。 |
+| 迁移名称      | 描述                                      |
+| ------------- | ----------------------------------------- |
+| `cn`          | 将 `clsx` 和 `tailwind-merge` 迁移到 `cn`。 |
+| `icons`       | 将 UI 组件迁移到其他图标库。              |
+| `base-color`  | 将主题迁移到其他基础颜色。                |
+| `radix`       | 迁移到 radix-ui。                         |
+| `rtl`         | 迁移组件以支持 RTL（从右到左）语言。      |
 
 **选项**
 
@@ -424,14 +426,95 @@ npx shadcn@latest migrate [migration]
   migration        要运行的迁移名称。
   path             可选的路径或 glob 模式，用于迁移。
 
-Options:
-  -c, --cwd <cwd>       the working directory. defaults to the current directory.
-  -l, --list            list all migrations. (default: false)
-  -y, --yes             skip confirmation prompt. (default: false)
-  -f, --from <library>  the icon library to migrate from (icons migration only).
-  -t, --to <library>    the icon library to migrate to (icons migration only).
-  -h, --help            display help for command
+选项：
+  -c, --cwd <cwd>    工作目录，默认为当前目录。
+  -l, --list         列出所有迁移。（默认值：false）
+  -y, --yes          跳过确认提示。（默认值：false）
+  -f, --from <name>  要迁出的基础颜色或图标库。
+  -t, --to <name>    要迁入的基础颜色或图标库。
+  -h, --help         显示命令帮助信息
 ```
+
+---
+
+### 迁移 cn
+
+`cn` 迁移会使用 [`cn`](https://github.com/shadcn-ui/cn) 替换 `clsx`、`tailwind-merge` 和 `cnfast`。
+
+```bash
+npx shadcn@latest migrate cn
+```
+
+与其他迁移不同，`migrate cn` 不需要 `components.json` 文件。你可以在使用 Tailwind CSS v4 的任意 JavaScript 或 TypeScript 包项目中运行它。
+
+它会：
+
+1. 重写来自 `clsx`、`clsx/lite`、`tailwind-merge` 和 `cnfast` 的导入。
+2. 将 `twMerge(clsx(...))` 组合调用替换为直接调用 `cn(...)`。
+3. 将标准 shadcn 工具函数替换为直接重新导出。
+4. 安装 `cn`，并在不再有引用时移除旧包。
+
+**迁移前**
+
+```tsx
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+```
+
+**迁移后**
+
+```tsx
+export { cn } from "cn"
+```
+
+如果这些 API 分开使用，迁移也会保留它们各自的用法：
+
+```diff
+- import { clsx } from "clsx"
+- import { twMerge } from "tailwind-merge"
++ import { clsx, twMerge } from "cn"
+```
+
+由于 `cnfast` 的根 API 相同，它的模块说明符会直接替换：
+
+```diff
+- import { cn } from "cnfast"
++ import { cn } from "cn"
+```
+
+自定义配置 API 会迁移到 `cn/config`。如果导出名称发生变化，原有本地名称会保留下来：
+
+```diff
+- import { createTailwindMerge, getDefaultConfig } from "tailwind-merge"
++ import {
++   createTwMerge as createTailwindMerge,
++   defaultConfig as getDefaultConfig,
++ } from "cn/config"
+```
+
+<Callout icon={<TriangleAlertIcon />}>
+  `cn` 的合并引擎与 `tailwind-merge` v3 一样支持 Tailwind CSS v4。使用 Tailwind CSS v3 的项目应继续使用 `tailwind-merge` v2。在 Tailwind CSS v3 项目中，只迁移 `clsx` 是安全的。
+</Callout>
+
+**迁移指定文件**
+
+你可以迁移单个文件、目录或 glob 模式：
+
+```bash
+# 迁移指定文件。
+npx shadcn@latest migrate cn src/lib/utils.ts
+
+# 迁移匹配 glob 模式的文件。
+npx shadcn@latest migrate cn "src/**/*.{ts,tsx}"
+```
+
+限定范围的迁移会安装 `cn`，但会在 `package.json` 中保留 `clsx`、`tailwind-merge` 和 `cnfast`，因为所选路径之外的文件可能仍在使用它们。
+
+该命令会保留不支持的导入，并将其列出以供手动检查。这些情况包括 `experimentalParseClassName`、命名空间导入、动态导入形式、直接调用 `validators`，以及无法安全迁移的可变参数 `createTailwindMerge` 调用。只要旧依赖仍有引用，就会继续保留。
 
 ---
 
@@ -468,6 +551,30 @@ npx shadcn@latest migrate icons "src/components/**" --from lucide --to tabler
 ```
 
 目标图标库中没有对应图标的图标将保持不变，并在迁移结束时列出。
+
+---
+
+### 迁移 base-color
+
+`base-color` 迁移会将主题从一种基础颜色切换为另一种。
+
+```bash
+npx shadcn@latest migrate base-color
+```
+
+该命令会提示你选择源基础颜色和目标基础颜色，重写主题 CSS 变量（即 `components.json` 中 `tailwind.css` 所配置的 CSS 文件），并更新 `baseColor`，使后续通过 `npx shadcn add` 安装的组件使用新基础颜色。
+
+支持以下基础颜色：`neutral`、`zinc`、`stone`、`mauve`、`olive`、`mist` 和 `taupe`。
+
+**非交互模式**
+
+使用 `--to` 从 `components.json` 中当前的 `baseColor` 迁移，或者同时显式传入 `--from` 和 `--to`。
+
+```bash
+npx shadcn@latest migrate base-color --to zinc --yes
+```
+
+与源基础颜色不再匹配的主题令牌会保持不变，并在迁移结束时列出。
 
 ---
 

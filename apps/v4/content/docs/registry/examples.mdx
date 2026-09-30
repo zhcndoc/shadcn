@@ -48,7 +48,7 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
 
 执行 `npx shadcn add` 时，以下操作将会发生：
 
-- 安装 `tailwind-merge` 和 `clsx` 作为依赖项。
+- 安装 `cn` 作为依赖项。
 - 从 shadcn/ui 注册表添加 `utils` 注册表项。
 - 从远程注册表添加 `button`、`input`、`label` 和 `select` 组件。
 - 安装新的 CSS 变量：`main`、`bg`、`border`、`text`、`ring`。
@@ -59,7 +59,7 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
   "extends": "none",
   "name": "new-style",
   "type": "registry:style",
-  "dependencies": ["tailwind-merge", "clsx"],
+  "dependencies": ["cn"],
   "registryDependencies": [
     "utils",
     "https://example.com/r/button.json",
@@ -259,11 +259,11 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "utils",
   "type": "registry:lib",
-  "dependencies": ["clsx", "tailwind-merge"],
+  "dependencies": ["cn"],
   "files": [
     {
       "path": "lib/utils.ts",
-      "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}",
+      "content": "export { cn } from \"cn\"",
       "type": "registry:lib"
     }
   ]
@@ -560,7 +560,7 @@ description: "注册表项示例：样式、组件、CSS 变量等。"
       "baseColor": "slate"
     }
   },
-  "dependencies": ["tailwind-merge", "clsx", "tw-animate-css", "lucide-react"],
+  "dependencies": ["cn", "tw-animate-css", "lucide-react"],
   "registryDependencies": ["utils", "font-geist"],
   "cssVars": {
     "light": {

@@ -16,7 +16,7 @@ description: 手动将依赖添加到你的项目中。
 将以下依赖添加到你的项目中：
 
 ```bash
-npm install shadcn class-variance-authority clsx tailwind-merge lucide-react tw-animate-css
+npm install shadcn class-variance-authority cn lucide-react tw-animate-css
 ```
 
 ### 配置导入别名
@@ -198,13 +198,10 @@ npm install shadcn class-variance-authority clsx tailwind-merge lucide-react tw-
 
 ### 添加 cn 辅助函数
 
-```ts showLineNumbers title="lib/utils.ts"
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+Components import `cn` directly from the `cn` package. Re-export it from `lib/utils.ts` so your own code has a single place to import helpers from.
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+```ts showLineNumbers title="lib/utils.ts"
+export { cn } from "cn"
 ```
 
 ### 创建 `components.json` 文件

@@ -1,9 +1,9 @@
 ---
 title: GitHub Registries
-description: 使用公共 GitHub 仓库作为注册表。
+description: 使用 GitHub 仓库作为注册表。
 ---
 
-你现在可以将**任何公共 GitHub 仓库变成注册表。**
+现在，你可以将**任何 GitHub 仓库变成注册表。**
 
 在仓库根目录添加一个 `registry.json` 文件，描述你想共享的文件，用户就可以通过 `shadcn` CLI 安装它们。
 
@@ -92,25 +92,27 @@ npx shadcn@latest add <username>/<repo>/<item>
 
 在以下情况下使用 GitHub 注册表：
 
-- 你已经在一个公共 GitHub 仓库中拥有可复用代码。
-- 你希望用户可以直接从 `owner/repo/item` 安装。
-- 你想分发配置文件、规则、文档、模板、工具或同一仓库中的其他任何文件。
-- 你不需要私有仓库访问或自定义请求认证。
+- 你已经在 GitHub 仓库中拥有可复用代码。
+- 你希望用户可以直接通过 `owner/repo/item` 安装。
+- 你想分发配置文件、规则、文档、模板、工具或同一仓库中的其他文件。
+- 你不需要自定义注册表服务器或请求身份验证。
 
 ## 要求
 
 GitHub 注册表必须：
 
-- 是一个公开的 `github.com` 仓库。
-- 在仓库根目录包含 `registry.json` 文件。
-- 使用有效的 `registry.json` 和 `registry-item.json` 模式。
-- 引用仓库中实际存在的源文件。
+- 必须是 `github.com` 上的仓库。
+- 必须在仓库根目录包含 `registry.json` 文件。
+- 必须符合有效的 `registry.json` 和 `registry-item.json` 模式。
+- 必须引用仓库中实际存在的源文件。
 
-GitHub 地址目前不支持私有仓库和 GitHub Enterprise 主机。对于私有或需要认证的注册表，请使用带有[身份验证](/docs/registry/authentication)的[命名空间](/docs/registry/namespace)。
+公共仓库无需任何配置即可使用。私有仓库可通过 GitHub 凭据访问。请参阅[私有仓库](#private-repositories)。
+
+GitHub 地址不支持 GitHub Enterprise 主机。对于需要请求身份验证的自定义注册表服务器，请使用带有[身份验证](/docs/registry/authentication)的[命名空间](/docs/registry/namespace)。
 
 ## 第 1 步：添加 registry.json
 
-给定一个现有的公共仓库：
+以一个现有仓库为例：
 
 ```txt
 .
@@ -576,10 +578,66 @@ npx shadcn@latest add acme/toolkit/project-conventions#feature/conventions
 在读取文件之前，CLI 会使用 Git 将分支、标签和短 ref 解析为 commit SHA。
 完整的 40 个字符的 commit SHA 会被直接使用，不需要 Git。
 
+<a id="private-repositories" />
+## 私有仓库
+
+`github.com` 上的私有仓库也可以用作注册表。你不需要搭建服务器，也不必在注册表中配置任何内容。只要你有权读取仓库，CLI 就可以从中安装内容。
+
+### 使用 GitHub CLI
+
+在本地开发时，只需使用 GitHub CLI 完成一次身份验证：
+
+```bash
+gh auth login
+```
+
+然后像使用其他 GitHub 注册表一样，从私有仓库安装：
+
+```bash
+npx shadcn@latest add acme/private-toolkit/project-conventions
+```
+
+如果仓库无法公开读取，CLI 会通过 `gh` 使用已保存的凭据读取仓库。令牌保留在 GitHub CLI 内，不会进入 shadcn 进程。
+
+命令首次使用你的凭据时会显示以下提示：
+
+```txt
+✔ Using gh credentials.
+```
+
+### 在 CI 中使用令牌
+
+未安装 GitHub CLI 时，请设置 `GH_TOKEN` 或 `GITHUB_TOKEN`：
+
+```bash
+GH_TOKEN=github_pat_xxx npx shadcn@latest add acme/private-toolkit/project-conventions
+```
+
+- `GH_TOKEN` 的优先级高于 `GITHUB_TOKEN`。
+- 使用范围限定到该仓库、具有 **Contents: Read-only** 权限的细粒度个人访问令牌。这是推荐的凭据。
+- 设置令牌后，CLI 会使用它而不是 GitHub CLI，并且只会将令牌发送到 `api.github.com`。
+
+<Callout>
+  在 GitHub Actions 中，内置的 `GITHUB_TOKEN` 通常只能读取拥有该工作流的仓库。要从其他仓库的私有注册表安装，请使用细粒度个人访问令牌或 GitHub App 安装令牌。
+</Callout>
+
+### 工作原理
+
+- 公共仓库始终以匿名方式读取，不使用凭据，也不会调用 GitHub CLI。
+- CLI 会先尝试匿名访问。只有仓库根目录的 `registry.json` 无法公开读取时，才会使用你的凭据。
+- 解析 ref 时会先运行 `git ls-remote`。Git 可能已经使用你配置的凭据助手，例如通过 `gh auth setup-git` 安装的助手。
+- 私有文件通过 GitHub Contents API 读取，并固定到已解析出的 commit SHA。
+- 对私有仓库和不存在的仓库，GitHub 会返回相同的未找到响应。如果你的凭据也无法读取仓库，CLI 就无法判断具体是哪种情况。
+
+### 限制
+
+- 注册表源文件每个文件最多 5 MiB。
+- 不支持 GitHub Enterprise 主机。GitHub 地址始终解析到 `github.com`。
+- 注册表源文件中应避免使用符号链接。匿名读取会将链接目标路径作为文本返回，而通过 Contents API 进行的身份验证读取会返回目标文件内容。
+
 ## 安装前审查
 
-GitHub registry 项目会从公开仓库安装代码和项目文件。
-请将 GitHub 项目地址视为其他任何第三方代码依赖项。
+GitHub 注册表项会从 GitHub 仓库安装代码和项目文件。请将 GitHub 项目地址视为其他任何第三方代码依赖项。
 
 在从你不控制的来源安装之前：
 

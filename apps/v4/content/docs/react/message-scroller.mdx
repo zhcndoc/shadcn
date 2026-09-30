@@ -129,19 +129,56 @@ export function Chat() {
 }
 ```
 
+<h2 id="avoiding-a-flash-on-reload">刷新时避免内容闪动</h2>
+
+滚动容器总是从顶部打开。HTML 无法设置 `scrollTop`，因此服务端渲染的对话记录最初会显示最早的消息。JavaScript 运行后，`defaultScrollPosition` 会移动视图，用户就会看到跳动。
+
+当 `defaultScrollPosition` 为 `"end"` 或 `"last-anchor"` 时，在目标位置生效前，视口会带有 `data-pending-scroll` 属性。为视口设置 `id`，并在该属性存在时将其隐藏。请将样式限制在该 `id` 下，以免隐藏根元素。
+
+```css
+#messages[data-pending-scroll] {
+  visibility: hidden;
+}
+```
+
+如果希望 `"end"` 位置在首次绘制时就可见，请在视口之后添加内联脚本。使用相同的 `id` 将视口滚动到底部，然后移除 `data-pending-scroll`。
+
+```tsx
+const scrollToEndScript = `(function () {
+  var viewport = document.getElementById("messages")
+  if (!viewport) {
+    return
+  }
+  viewport.scrollTop = viewport.scrollHeight
+  viewport.removeAttribute("data-pending-scroll")
+})()`
+
+<MessageScroller.Root>
+  <MessageScroller.Viewport id="messages" suppressHydrationWarning>
+    <MessageScroller.Content>{/* transcript */}</MessageScroller.Content>
+  </MessageScroller.Viewport>
+  <script dangerouslySetInnerHTML={{ __html: scrollToEndScript }} />
+  <MessageScroller.Button />
+</MessageScroller.Root>
+```
+
+请将脚本放在页面中，而不是基础组件中。它只适用于 `"end"`，并且要求消息已经存在于 HTML 中。请在视口上添加 `suppressHydrationWarning`。如果使用内容安全策略，请传入 `nonce`。
+
+不要将此脚本用于 `"last-anchor"`。如果消息由客户端加载，也请跳过此脚本。
+
 ## API 参考
 
 ### MessageScroller.Provider
 
 无头根组件。它负责滚动状态和行为属性，并将它们提供给各个部分和 hooks。它自身不渲染任何 DOM。
 
-| Prop                     | Type                                | Default | Description                                                                                                                                                                          |
-| ------------------------ | ----------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `autoScroll`             | `boolean`                           | `false` | 仅在读者已经处于实时边缘时，才跟随新内容。鼠标滚轮、触摸、键盘滚动以及显式跳转都会解除该状态。                                                  |
-| `defaultScrollPosition`  | `"start" \| "end" \| "last-anchor"` | `"end"` | 第一次非空渲染时的初始位置，仅应用一次。`"last-anchor"` 会在最后一个 `scrollAnchor` 行处打开；当这一轮内容刚好放得下或不存在锚点时，则回退到 `"end"`。 |
-| `scrollEdgeThreshold`    | `number`                            | `8`     | 距离任一边缘仍然算作位于开始或末尾的距离。控制状态属性和滚动按钮可见性。                                                    |
-| `scrollMargin`            | `number`                            | `0`     | 应用于 `scrollToMessage`、可见性和程序化目标对齐边缘的外边距。                                                                                      |
-| `scrollPreviousItemPeek` | `number`                            | `64`    | 当新追加的 `scrollAnchor` 项被定位时，额外加到 `scrollMargin` 上的边距，使前一项的一部分保持可见。                                             |
+| Prop                     | Type                                | Default | Description                                                                                                                                                                           |
+| ------------------------ | ----------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `autoScroll`             | `boolean`                           | `false` | 仅在读者已经处于实时边缘时跟随新内容。鼠标滚轮、触摸、键盘滚动以及显式跳转都会解除该状态。                                                                                    |
+| `defaultScrollPosition`  | `"start" \| "end" \| "last-anchor"` | `"end"` | 第一次非空渲染时的初始位置，仅应用一次。`"last-anchor"` 会在最后一个 `scrollAnchor` 行处打开；当这一轮内容刚好放得下或不存在锚点时，则回退到 `"end"`。`"end"` 和 `"last-anchor"` 生效前，视口会带有 `data-pending-scroll`。参见[刷新时避免内容闪动](#avoiding-a-flash-on-reload)。 |
+| `scrollEdgeThreshold`    | `number`                            | `8`     | 距离任一边缘仍然算作位于开始或末尾的距离。控制状态属性和滚动按钮的可见性。                                                                                                         |
+| `scrollMargin`           | `number`                            | `0`     | 应用于 `scrollToMessage`、可见性和程序化目标对齐边缘的外边距。                                                                                                                       |
+| `scrollPreviousItemPeek` | `number`                            | `64`    | 定位新追加的 `scrollAnchor` 项时，额外加到 `scrollMargin` 上的边距，使前一项的一部分保持可见。                                                                                        |
 
 ### MessageScroller.Root
 
@@ -151,12 +188,13 @@ export function Chat() {
 | ---------- | ----------------------------- | ------- | ---------------------------------- |
 | `...props` | `React.ComponentProps<"div">` | -       | 传递给外框元素的 props。 |
 
-根组件会同步以下滚动状态属性（viewport 也会带有这些属性），因此你可以根据滚动状态为容器设置样式，例如为外框添加边缘淡出效果。
+根组件会同步以下滚动状态属性（viewport 也会带有这些属性），因此你可以根据滚动状态为容器设置样式，例如为外框添加边缘淡出效果。无头用法应在 `data-pending-scroll` 存在时使用 `visibility: hidden` 隐藏视口，同时保留布局，以供初始滚动使用。
 
-| Data attribute       | Value                                             | Description                                                                                            |
-| -------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `data-scrollable`    | `"start"` \| `"end"` \| `"start end"` \| _absent_ | 视口可滚动的方向。可通过 `[data-scrollable~="end"]` 查询其中一个方向；如果缺失，则表示内容刚好适配。 |
-| `data-autoscrolling` | present                                           | 当视口正在以程序方式滚动到最新消息时存在。                                                             |
+| Data attribute        | Value                                             | Description                                                                                            |
+| --------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `data-scrollable`     | `"start"` \| `"end"` \| `"start end"` \| _absent_ | 视口可滚动的方向。可通过 `[data-scrollable~="end"]` 查询其中一个方向；若缺失，则表示内容刚好适配。 |
+| `data-autoscrolling`  | present                                           | 当视口正以程序方式滚动到最新消息时存在。 |
+| `data-pending-scroll` | present                                           | 直到应用 `defaultScrollPosition`（`"end"` 或 `"last-anchor"`）或因对话记录为空而跳过时存在。该属性存在时应隐藏视口。参见[刷新时避免内容闪动](#avoiding-a-flash-on-reload)。 |
 
 ### MessageScroller.Viewport
 
@@ -170,10 +208,11 @@ export function Chat() {
 | `tabIndex`                | `number`                      | `0`          | 使转录视口支持键盘滚动。                        |
 | `...props`                | `React.ComponentProps<"div">` | -            | 传递给视口元素的 props。                                     |
 
-| Data attribute       | Value                                             | Description                                                                                            |
-| -------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| `data-scrollable`    | `"start"` \| `"end"` \| `"start end"` \| _absent_ | 视口可滚动的方向。可通过 `[data-scrollable~="end"]` 查询其中一个方向；若缺失则表示内容刚好适配。 |
-| `data-autoscrolling` | present                                           | 当视口正在以程序方式滚动到最新消息时存在。                        |
+| Data attribute        | Value                                             | Description                                                                                            |
+| --------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `data-scrollable`     | `"start"` \| `"end"` \| `"start end"` \| _absent_ | 视口可滚动的方向。可通过 `[data-scrollable~="end"]` 查询其中一个方向；若缺失则表示内容刚好适配。 |
+| `data-autoscrolling`  | present                                           | 当视口正以程序方式滚动到最新消息时存在。 |
+| `data-pending-scroll` | present                                           | 直到应用 `defaultScrollPosition`（`"end"` 或 `"last-anchor"`）或因对话记录为空而跳过时存在。该属性存在时应隐藏视口。参见[刷新时避免内容闪动](#avoiding-a-flash-on-reload)。 |
 
 ### MessageScroller.Content
 

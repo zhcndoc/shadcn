@@ -32,11 +32,11 @@ _在典型的库里，如果你想改变按钮的行为，就需要覆盖样式�
     <AccordionTrigger>
       在开放代码的方案中，我如何拉取上游更新？
     </AccordionTrigger>
-    <AccordionContent>
+    <AccordionContent className="flex flex-col gap-4">
       <p>
         shadcn/ui 采用无头组件架构。这意味着你应用的核心可以通过更新依赖项来获得修复，例如 @base-ui/react 或 input-otp。
       </p>
-      <p className="mt-4">
+      <p>
         最顶层，也就是最贴近你的设计系统的一层，并不与库的实现耦合。它保持开放，允许修改。
       </p>
     </AccordionContent>

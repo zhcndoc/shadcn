@@ -151,7 +151,7 @@
 **正确：**
 
 ```tsx
-import { cn } from "@/lib/utils"
+import { cn } from "cn"
 
 <div className={cn("flex items-center", isActive ? "bg-primary text-primary-foreground" : "bg-muted")}>
 ```
