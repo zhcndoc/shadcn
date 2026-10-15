@@ -1,12 +1,13 @@
 # 发布
 
-此 monorepo 使用 [Changesets](https://github.com/changesets/changesets) 独立发布三个包：
+此 monorepo 使用 [Changesets](https://github.com/changesets/changesets) 独立发布四个包：
 
 - **`shadcn`** — CLI 和工具。
+- **`@shadcn/registry`** — CLI 使用的注册表引擎。
 - **`@shadcn/react`** — 无头 React 基础组件。
 - **`@shadcn/helpers`** — 用于开发应用的小型辅助工具。
 
-它们各自独立版本演进。对其中一个的更改不会导致另一个升级，除非 changeset 明确说明。
+它们各自独立版本演进。对其中一个的更改不会导致另一个升级，除非 changeset 明确说明。`@shadcn/registry` 是例外：`shadcn` 依赖其精确版本，因此每次发布 `@shadcn/registry` 时也会将 `shadcn` 进行补丁版本升级以获取该版本。
 
 ## 1. 添加一个 changeset
 
@@ -17,6 +18,8 @@ pnpm changeset
 ```
 
 选择受影响的软件包及版本升级级别。一份 PR 可以为每个软件包分别携带不同升级级别的 changeset。没有 changeset 的 PR 不会发布任何内容。
+
+CLI 的注册表和安装逻辑大多位于 `packages/registry`。其中的更改需要一个 `@shadcn/registry` changeset：只有 `shadcn` 的 changeset 会发布仍然锁定旧版 `@shadcn/registry` 的新 `shadcn` 版本。缺少 `@shadcn/registry` changeset 的 PR 会被检查拦截。
 
 ## 2. 稳定版发布
 
@@ -35,13 +38,14 @@ pnpm changeset
 1. 验证该分支是否有 changeset（版本 PR 上的标签不会有任何作用，因为它们已经被消耗了）。
 2. 运行 `changeset version --snapshot <channel>` — 为每个包含 changeset 的包打上唯一的 `0.0.0-<channel>-<timestamp>` 版本号。
 3. 构建并运行 `changeset publish --tag <channel> --no-git-tag`。
-4. 上传已发布包列表；`prerelease-comment.yml` 会为每个包发布一行 `pnpm dlx` 安装命令，并移除该标签。
+4. 上传已发布包列表；`prerelease-comment.yml` 会为每个包发布一行安装命令（带有 `bin` 的包使用 `pnpm dlx`，库使用 `pnpm add`），并移除该标签。
 
 该标签用于选择 **dist-tag/channel**；分支上的 **changesets** 用于选择哪些包会发布。快照带有时间戳，因此它们永远不会触及 `latest`，也不会发生冲突。
 
 ```sh
 # 从 PR 评论中安装一个快照，例如：
-pnpm dlx @shadcn/react@0.0.0-beta-20260624120000
+pnpm dlx shadcn@0.0.0-beta-20260624120000          # CLI (has a bin)
+pnpm add @shadcn/react@0.0.0-beta-20260624120000   # library
 ```
 
 ## 4. 预发布列车（持续的 `-beta.N` / `-rc.N`）
@@ -58,3 +62,6 @@ pnpm changeset pre exit       # 回到稳定版；下一个 Version PR 会在 la
 
 - `pnpm-workspace.yaml` 设置了 `minimumReleaseAge: 2880`（48 小时），因此新发布的稳定版/测试版版本在正常安装时需要一段时间才会解析到。请使用 `pnpm dlx <pkg>@<exact-snapshot-version>` 立即进行测试。
 - 发布使用 npm OIDC/provenance（`id-token: write` + `npm@latest`）；不需要 `NPM_TOKEN` 密钥。
+- 新包需要先在 npmjs.com 上配置可信发布者，CI 才能发布；而 npm 只有在包存在后才允许配置可信发布者。请先手动发布一个占位版本（例如 `0.0.1`），再添加可信发布者。在包含该包的首次发布前完成此操作：`changeset publish` 会并行发布各个包，因此无法发布的包不会阻止其他包发布。
+- `shadcn` 锁定了精确的 `@shadcn/registry` 版本，因此两个发布作业都会使用 `.github/changeset-publish.js`，而不是普通的 `changeset publish`。它会先发布 `@shadcn/registry`（以及其他所有包），检查 `shadcn` 锁定的版本是否已在 npm 上发布且来自当前注册表源，然后才发布 `shadcn`。如果检查失败，`shadcn` 不会发布且作业会失败；修复原因后重新运行。
+- `packages/shadcn` 中的手动 `pub:*` 脚本也会在发布前检查锁定的 `@shadcn/registry` 版本是否已在 npm 上。

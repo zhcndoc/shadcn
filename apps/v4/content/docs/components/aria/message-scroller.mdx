@@ -85,7 +85,7 @@ npm install @shadcn/react
 <ComponentSource
   name="message-scroller"
   title="components/ui/message-scroller.tsx"
-  styleName="aria-nova"
+  styleName="aria-rhea"
 />
 
 <Step>更新导入路径，使其与你的项目设置相匹配。</Step>
@@ -238,6 +238,11 @@ import {
 ### 跟随实时边缘
 
 当读者位于实时边缘时，无论是一直停留在那里还是返回那里，`autoScroll` 都会在流式回复不断增长时让其保持在视野内。通过滚轮、触摸、键盘滚动键或拖动滚动条离开实时边缘，都会释放视图。显式跳转到消息也会释放视图。此后新片段可以继续到达，而不会移动读者的位置。
+
+`autoScroll` composes with turn anchoring. When a new turn anchors near the
+top, the view stays put while the reply streams into the room below it. Once
+the reply fills the viewport, the reader is back at the live edge and
+follow-output takes over from the anchor.
 
 ```tsx
 <MessageScrollerProvider autoScroll>

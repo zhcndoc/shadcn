@@ -1,6 +1,6 @@
 ---
 name: shadcn
-description: Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI, including chat interfaces. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for "shadcn init", "create an app with --preset", or "switch to --preset".
+description: Manages shadcn components and projects — adding, searching, fixing, debugging, styling, and composing UI, including chat interfaces. Provides project context, component docs, and usage examples. Applies when working with shadcn/ui, component registries, presets, --preset codes, or any project with a components.json file. Also triggers for "shadcn init", "create an app with --preset", "switch to --preset", and for building a design system or applying a DESIGN.md or brand spec to shadcn/ui.
 user-invocable: false
 allowed-tools: Bash(npx shadcn@latest *), Bash(pnpm dlx shadcn@latest *), Bash(bunx --bun shadcn@latest *)
 ---
@@ -193,6 +193,17 @@ npx shadcn@latest docs button dialog select
    - **Skip**: `npx shadcn@latest init --preset <code> --force --no-reinstall`. Only updates config and CSS, leaves components as-is.
    - **Important**: Always run preset commands inside the user's project directory. `apply` only works in an existing project with a `components.json` file. The CLI automatically preserves the current base (`base` vs `radix`) from `components.json`. If you must use a scratch/temp directory (e.g. for `--dry-run` comparisons), pass `--base <current-base>` explicitly — preset codes do not encode the base.
 
+## 根据 DESIGN.md 构建设计系统
+
+当用户要求根据 `DESIGN.md`（或品牌规范）构建设计系统时，无论是否提供 preset，都应完整遵循 [design-system.md](./design-system.md)：
+
+1. 使用 `init --preset <code> --template <vite|next> --name <app> --no-monorepo -y`。没有 preset code 时，选择最接近的样式并传入 `--base base --preset <style>`，然后运行 `add --all -y`。
+2. 编辑前阅读 DESIGN.md 的 frontmatter、Do's and Don'ts 以及 Known Gaps。
+3. 将其中的令牌映射到 `tailwindCssFile` 中的 shadcn 变量。固定圆角比例、阴影、字体和 `type-*` 工具类。
+4. 通过编辑组件的 `cva` 变体重新设置样式，同时调整所有控件的高度。
+5. 按照 [design-system-page.md](./design-system-page.md) 构建设计系统页面：检查颜色角色的对比度，添加字号示例、固定状态矩阵、边界情况、做法/避免做法对比和配方。使用 `scripts/showcase-coverage.mjs` 检查覆盖率。
+6. 在浏览器中验证：类型检查通过、没有控制台错误、从顶部开始加载、没有水平溢出，并检查深色模式。
+
 ## Updating Components
 
 When the user asks to update a component from upstream while keeping their local changes, use `--dry-run` and `--diff` to intelligently merge. **NEVER fetch raw files from GitHub manually — always use the CLI.**
@@ -213,6 +224,11 @@ npx shadcn@latest init --name my-app --preset base-nova
 npx shadcn@latest init --name my-app --preset a2r6bw --template vite
 
 # 创建 monorepo 项目。
+# Create a design system app (then follow design-system.md).
+npx shadcn@latest init --name my-ds --preset b0 --template vite --no-monorepo -y
+npx shadcn@latest init --name my-ds --base base --preset maia --template vite --no-monorepo -y
+npx shadcn@latest add --all -y
+
 npx shadcn@latest init --name my-app --preset base-nova --monorepo
 npx shadcn@latest init --name my-app --preset base-nova --template next --monorepo
 
@@ -275,3 +291,5 @@ npx shadcn@latest view owner/repo/item
 - [cli.md](./cli.md) — Commands, flags, presets, templates
 - [registry.md](./registry.md) — Authoring source registries, `include`, item definitions, dependencies, GitHub registry rules
 - [customization.md](./customization.md) — Theming, CSS variables, extending components
+- [design-system.md](./design-system.md)：将 DESIGN.md（无论是否带 preset）转换为主题化应用：样式选择、令牌映射、圆角、字体、字号比例、控件高度、展示陷阱和验证
+- [design-system-page.md](./design-system-page.md)：设计系统页面的内容与构建方式：基础、组件分层、固定状态矩阵、对比度配对、边界情况、做法/避免做法和配方
