@@ -36,6 +36,7 @@ if (process.env.NODE_ENV === "development") {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   devIndicators: false,
   typescript: {
     ignoreBuildErrors: true,

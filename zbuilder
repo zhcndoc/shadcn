@@ -1,0 +1,35 @@
+FROM node:24-bookworm AS builder
+
+WORKDIR /app
+
+ENV CI=true \
+    NEXT_PUBLIC_APP_URL=https://shadcn.zhcndoc.com \
+    NEXT_PUBLIC_V0_URL=https://v0.dev
+
+RUN corepack enable pnpm
+
+RUN npm install -g bun
+
+COPY . .
+
+RUN pnpm install --frozen-lockfile
+
+RUN pnpm run v4:build
+
+FROM node:24-bookworm-slim
+
+WORKDIR /app
+
+ENV NODE_ENV=production \
+    HOSTNAME=0.0.0.0 \
+    PORT=8080
+
+COPY --from=builder /app/apps/v4/.next/standalone ./
+
+COPY --from=builder /app/apps/v4/.next/static ./apps/v4/.next/static
+
+COPY --from=builder /app/apps/v4/public ./apps/v4/public
+
+EXPOSE 8080
+
+CMD ["node", "apps/v4/server.js"]
